@@ -16,6 +16,11 @@ namespace JustGiving.Api.Sdk.Http
         
         public HttpChannel(ClientConfiguration clientConfiguration, IHttpClient httpClient)
         {
+            if (clientConfiguration == null)
+            {
+                throw new ArgumentNullException("clientConfiguration", "clientConfiguration must not be null to access the api.");
+            }
+
             if(httpClient == null)
             {
                 throw new ArgumentNullException("httpClient", "httpClient must not be null to access the api.");
@@ -24,6 +29,11 @@ namespace JustGiving.Api.Sdk.Http
             _clientConfiguration = clientConfiguration;
             _httpClient = httpClient;
 
+            SetAuthenticationHeaders();
+        }
+
+        private void SetAuthenticationHeaders()
+        {
             if (!string.IsNullOrEmpty(_clientConfiguration.Username))
             {
                 var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(_clientConfiguration.Username + ":" + _clientConfiguration.Password));

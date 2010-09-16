@@ -14,7 +14,7 @@ namespace GG.Api.Sdk.Test.Unit
         [TestCase("")]
         public void Ctor_WhenDomainRootIsNullOrEmpty_ThrowsArgumentNullException(string root)
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => new ClientConfiguration(root, "000", 1));
+            var exception = Assert.Throws<ArgumentNullException>(() => new ClientConfiguration(root, TestContext.ApiKey, 1));
 
             Assert.That(exception.ParamName, Is.StringContaining("rootDomain"));
             Assert.That(exception.Message, Is.StringContaining("rootDomain is required."));
@@ -24,7 +24,7 @@ namespace GG.Api.Sdk.Test.Unit
         [TestCase("")]
         public void Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(string apiKey)
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => new ClientConfiguration("http://api.local.justgiving.com/", apiKey, 1));
+            var exception = Assert.Throws<ArgumentNullException>(() => new ClientConfiguration(TestContext.ApiLocation, apiKey, 1));
 
             Assert.That(exception.ParamName, Is.StringContaining("apiKey"));
             Assert.That(exception.Message, Is.StringContaining("apiKey is required."));
@@ -34,7 +34,7 @@ namespace GG.Api.Sdk.Test.Unit
         [TestCase(0)]
         public void Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(int apiVersion)
         {
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => new ClientConfiguration("http://api.local.justgiving.com/", "000", apiVersion));
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, apiVersion));
 
             Assert.That(exception.ParamName, Is.StringContaining("apiVersion"));
             Assert.That(exception.Message, Is.StringContaining("apiVersion must be valid."));

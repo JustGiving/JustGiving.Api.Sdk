@@ -13,7 +13,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [Test]
         public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent()
         {
-            var client = new JustGivingClient(new ClientConfiguration("http://api.local.justgiving.com/", "000", 1));
+            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
             var searchClient = new SearchApi(client);
 
             var items = searchClient.CharitySearch("demo");
