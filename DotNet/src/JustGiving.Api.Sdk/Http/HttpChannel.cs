@@ -61,21 +61,21 @@ namespace JustGiving.Api.Sdk.Http
             return PerformApiRequest<object, TResponseType>(method, locationFormat, null);
         }
 
-        public TResponseType PerformApiRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType requestObject) where TRequestType : class
+        public TResponseType PerformApiRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request) where TRequestType : class
         {
             var url = BuildUrl(locationFormat);
-            HttpRequestMessage request;
-            if (requestObject != null)
+            HttpRequestMessage httpRequestMessage;
+            if (request != null)
             {
-                var payload = BuildPayload(requestObject);
-                request = new HttpRequestMessage(method, url, payload);
+                var payload = BuildPayload(request);
+                httpRequestMessage = new HttpRequestMessage(method, url, payload);
             }
             else
             {
-                request = new HttpRequestMessage(method, url);
+                httpRequestMessage = new HttpRequestMessage(method, url);
             }
 
-            var response = _httpClient.Send(request);
+            var response = _httpClient.Send(httpRequestMessage);
             string responseContent = ValidateResponse(response);
             return DeserializeContentFromXml<TResponseType>(responseContent);
         }
