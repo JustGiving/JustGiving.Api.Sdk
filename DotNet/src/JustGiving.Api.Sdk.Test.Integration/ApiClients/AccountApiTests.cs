@@ -37,6 +37,15 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Errors[0].Description, Is.StringContaining("email address in use"));
         }
 
+        [Test]
+        public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages()
+        {
+            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var accountClient = new AccountApi(client);
+
+            var pages = accountClient.ListAllPages(TestContext.TestUsername);
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest
