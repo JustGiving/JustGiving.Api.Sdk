@@ -80,6 +80,11 @@ namespace JustGiving.Api.Sdk.Http
                 case HttpStatusCode.Accepted:
                 case HttpStatusCode.Continue:
                 case HttpStatusCode.Found:
+                    var errorsDespiteSuccess = TryExtractErrorsFromResponse(content);
+                    if (errorsDespiteSuccess != null)
+                    {
+                        throw new ErrorResponseException(response, content, errorsDespiteSuccess);
+                    }
                     return;
                 default:
                     var errors = TryExtractErrorsFromResponse(content);
