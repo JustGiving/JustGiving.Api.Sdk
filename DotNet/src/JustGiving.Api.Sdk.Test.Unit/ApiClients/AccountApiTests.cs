@@ -32,6 +32,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             api.Create(request);
 
             Assert.That(httpClient.LastRequest.Uri.ToString(), Is.StringContaining(string.Format("{0}{1}/v{2}/account", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
         }
 
 
@@ -57,6 +58,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             api.ListAllPages(email);
 
             Assert.That(httpClient.LastRequest.Uri.ToString(), Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/pages", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("GET"));
         }
 
         private static AccountApi CreateAccountApiClient<T>(MockHttpClient<T> httpClient) where T: class, new()
