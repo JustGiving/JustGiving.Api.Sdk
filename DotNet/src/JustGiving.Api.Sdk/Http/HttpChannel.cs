@@ -24,7 +24,7 @@ namespace JustGiving.Api.Sdk.Http
 
             if (!string.IsNullOrEmpty(_clientConfiguration.Username))
             {
-                var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(_clientConfiguration.Username + ":" + _clientConfiguration.incorrectPassword));
+                var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(_clientConfiguration.Username + ":" + _clientConfiguration.Password));
                 _httpClient.AddHeader("Authorization", "Basic " + credentials);
             }
         }

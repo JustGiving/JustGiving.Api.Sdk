@@ -12,7 +12,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [Test]
         public void Register_WhenSuppliedEmailIsUnused_AccountIsCreatedAndEmailAddressReturned()
         {
-            var client = new JustGivingClient(new ClientConfiguration("http://api.local.justgiving.com/", "000", 1) { Username = "apitests@justgiving.com", incorrectPassword = "incorrectPassword" });
+            var client = new JustGivingClient(new ClientConfiguration("http://api.local.justgiving.com/", "000", 1) { Username = "apitests@justgiving.com", Password = "incorrectPassword" });
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
@@ -25,7 +25,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [Test]
         public void Register_WhenSuppliedWithEmailThatIsAlreadyRegistered_ReturnsAnError()
         {
-            var client = new JustGivingClient(new ClientConfiguration("http://api.local.justgiving.com/", "000", 1) { Username = "apitests@justgiving.com", incorrectPassword = "incorrectPassword" });
+            var client = new JustGivingClient(new ClientConfiguration("http://api.local.justgiving.com/", "000", 1) { Username = "apitests@justgiving.com", Password = "incorrectPassword" });
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
