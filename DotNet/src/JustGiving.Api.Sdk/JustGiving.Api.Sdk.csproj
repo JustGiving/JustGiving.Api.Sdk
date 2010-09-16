@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D16BFF7-1384-4797-87E8-AE03D173BBA0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JustGiving.Api.Sdk</RootNamespace>
+    <AssemblyName>JustGiving.Api.Sdk</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Http">
+      <HintPath>..\ExternalLibs\WCF REST Starter Kit Preview 2\Assemblies\Microsoft.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Http.Extensions">
+      <HintPath>..\ExternalLibs\WCF REST Starter Kit Preview 2\Assemblies\Microsoft.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiClients\IAccountApi.cs" />
+    <Compile Include="ApiClients\IDonationApi.cs" />
+    <Compile Include="ApiClients\IPageApi.cs" />
+    <Compile Include="ApiClients\ISearchApi.cs" />
+    <Compile Include="ApiClients\PageApi.cs" />
+    <Compile Include="ApiClients\SearchApi.cs" />
+    <Compile Include="Http\ErrorResponse.cs" />
+    <Compile Include="Http\Errors.cs" />
+    <Compile Include="JustGivingClient.cs" />
+    <Compile Include="ApiClients\AccountApi.cs" />
+    <Compile Include="ApiClients\DonationApi.cs" />
+    <Compile Include="ApiClients\ApiClientBase.cs" />
+    <Compile Include="ClientConfiguration.cs" />
+    <Compile Include="Http\HttpChannel.cs" />
+    <Compile Include="Http\HttpClientWrapper.cs" />
+    <Compile Include="Http\IHttpClient.cs" />
+    <Compile Include="Http\ErrorResponseException.cs" />
+    <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
+    <Compile Include="Model\ActivityType.cs" />
+    <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\Account\CreateAccountRequest.cs" />
+    <Compile Include="Model\Donation\DonationStatus.cs" />
+    <Compile Include="Model\CreditCard.cs" />
+    <Compile Include="Model\Page\Donation.cs" />
+    <Compile Include="Model\Page\FundraisingPage.cs" />
+    <Compile Include="Model\Page\FundraisingPageBranding.cs" />
+    <Compile Include="Model\Page\FundraisingPageCharity.cs" />
+    <Compile Include="Model\Page\FundraisingPageDonation.cs" />
+    <Compile Include="Model\Page\FundraisingPageDonations.cs" />
+    <Compile Include="Model\Page\FundraisingPageMedia.cs" />
+    <Compile Include="Model\Page\FundraisingPageSummarys.cs" />
+    <Compile Include="Model\Page\FundraisingPageSummary.cs" />
+    <Compile Include="Model\Page\FundraisingPageVideo.cs" />
+    <Compile Include="Model\Page\RegisterPageRequest.cs" />
+    <Compile Include="Model\Page\PageRegistrationConfirmation.cs" />
+    <Compile Include="Model\Page\FundraisingPageImage.cs" />
+    <Compile Include="Model\Page\StoryUpdateRequest.cs" />
+    <Compile Include="Model\Page\StoryUpdateResponse.cs" />
+    <Compile Include="Model\Pagination.cs" />
+    <Compile Include="Model\RestResponseNavigationElement.cs" />
+    <Compile Include="Model\RestResponseNextElement.cs" />
+    <Compile Include="Model\RestResponsePrevElement.cs" />
+    <Compile Include="Model\Search\CharitySearchResult.cs" />
+    <Compile Include="Model\Search\CharitySearchResults.cs" />
+    <Compile Include="Model\Search\RestResponseSugguestedQueryElement.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
