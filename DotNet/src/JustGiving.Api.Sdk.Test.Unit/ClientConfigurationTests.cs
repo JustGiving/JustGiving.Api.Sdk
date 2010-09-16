@@ -12,8 +12,7 @@ namespace GG.Api.Sdk.Test.Unit
     {
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("  ")]
-        public void Ctor_WhenDomainRootIsNullEmptyOrWhitespace_ThrowsArgumentNullException(string root)
+        public void Ctor_WhenDomainRootIsNullOrEmpty_ThrowsArgumentNullException(string root)
         {
             var exception = Assert.Throws<ArgumentNullException>(() => new ClientConfiguration(root, "000", 1));
 
@@ -23,8 +22,7 @@ namespace GG.Api.Sdk.Test.Unit
 
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("  ")]
-        public void Ctor_WhenApiKeyIsNullEmptyOrWhitespace_ThrowsArgumentNullException(string apiKey)
+        public void Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(string apiKey)
         {
             var exception = Assert.Throws<ArgumentNullException>(() => new ClientConfiguration("http://api.local.justgiving.com/", apiKey, 1));
 
@@ -34,7 +32,7 @@ namespace GG.Api.Sdk.Test.Unit
 
         [TestCase(-1)]
         [TestCase(0)]
-        public void Ctor_WhenApiKeyIsNullEmptyOrWhitespace_ThrowsArgumentNullException(int apiVersion)
+        public void Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(int apiVersion)
         {
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() => new ClientConfiguration("http://api.local.justgiving.com/", "000", apiVersion));
 
