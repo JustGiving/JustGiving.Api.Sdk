@@ -83,12 +83,12 @@ namespace JustGiving.Api.Sdk.Http
                     var errorsDespiteSuccess = TryExtractErrorsFromResponse(content);
                     if (errorsDespiteSuccess != null)
                     {
-                        throw new ErrorResponseException(response, content, errorsDespiteSuccess);
+                        throw ErrorResponseExceptionFactory.CreateException(response, content, errorsDespiteSuccess);
                     }
                     return;
                 default:
                     var errors = TryExtractErrorsFromResponse(content);
-                    throw new ErrorResponseException(response, content, errors);
+                    throw ErrorResponseExceptionFactory.CreateException(response, content, errors);
             }
         }
 
@@ -106,7 +106,10 @@ namespace JustGiving.Api.Sdk.Http
 
         private Uri BuildUrl(string locationFormat)
         {
-            return new Uri(string.Format(locationFormat, _clientConfiguration.ApiKey, _clientConfiguration.ApiVersion));
+            var location = string.Format(locationFormat, _clientConfiguration.ApiKey, _clientConfiguration.ApiVersion);
+            location += !location.Contains("?") ? "?" : "&" + "debug=true";
+
+            return new Uri(location);
         }
 
         private static HttpContent BuildPayload<TPayloadType>(TPayloadType objectToSerialise)
@@ -133,10 +136,24 @@ namespace JustGiving.Api.Sdk.Http
 
         private static TResponseType DeserializeContentFromXml<TResponseType>(string content)
         {
-            var reader = new DataContractSerializer(typeof(TResponseType));
-            var byteArray = Encoding.ASCII.GetBytes(content);
-            var stream = new MemoryStream(byteArray);
-            return (TResponseType)reader.ReadObject(stream);
+            if(string.IsNullOrEmpty(content))
+            {
+                throw new ApiClientException("An attempt was made to deserialize a response which was empty.");
+            }
+
+            try
+            {
+                var reader = new DataContractSerializer(typeof (TResponseType));
+                var byteArray = Encoding.ASCII.GetBytes(content);
+                var stream = new MemoryStream(byteArray);
+                return (TResponseType) reader.ReadObject(stream);
+            }
+            catch(Exception ex)
+            {
+                var exception = new ApiClientException("An error occured while deserializing the incoming response", ex);
+                ex.Data.Add("RawContent", content);
+                throw exception;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Http;
 
 namespace JustGiving.Api.Sdk.Http
@@ -8,7 +9,8 @@ namespace JustGiving.Api.Sdk.Http
         public Errors Errors { get; set; }
         public HttpResponseMessage Response { get; private set; }
 
-        public ErrorResponseException(HttpResponseMessage response, string message, Errors errors):base(message)
+        public ErrorResponseException(HttpResponseMessage response, Errors errors, string message)
+            : base(message)
         {
             Errors = errors;
             Response = response;
