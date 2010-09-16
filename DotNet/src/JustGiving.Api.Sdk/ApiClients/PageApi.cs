@@ -68,7 +68,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 case HttpStatusCode.NotFound:
                     return false;
                 default:
-                    throw new ApiClientException("Unexpected status code returned. Returned: " + response.StatusCode, response);
+                    throw ErrorResponseExceptionFactory.CreateException(response, response.Content.ReadAsString(), null);
             }
         }
 
@@ -82,7 +82,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 case HttpStatusCode.OK:
                     return;
                 default:
-                    throw new ApiClientException("Unexpected status code returned. Returned: " + response.StatusCode, response);
+                    throw ErrorResponseExceptionFactory.CreateException(response, response.Content.ReadAsString(), null);
             }
         }
     }

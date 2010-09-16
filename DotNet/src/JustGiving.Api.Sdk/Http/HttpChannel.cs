@@ -9,9 +9,11 @@ namespace JustGiving.Api.Sdk.Http
 {
     public class HttpChannel
     {
+        public bool EnableDebug { get; set; }
+
         private readonly ClientConfiguration _clientConfiguration;
         private readonly IHttpClient _httpClient;
-
+        
         public HttpChannel(ClientConfiguration clientConfiguration, IHttpClient httpClient)
         {
             if(httpClient == null)
@@ -64,11 +66,21 @@ namespace JustGiving.Api.Sdk.Http
             }
 
             var response = _httpClient.Send(request);
+            string responseContent = ValidateResponse(response);
+            return DeserializeContentFromXml<TResponseType>(responseContent);
+        }
 
+        private static string ValidateResponse(HttpResponseMessage response)
+        {
             var responseContent = response.Content.ReadAsString();
             ThrowExceptionForExceptionalStatusCodes(response, responseContent);
             
-            return DeserializeContentFromXml<TResponseType>(responseContent);
+            if (string.IsNullOrEmpty(responseContent))
+            {
+                throw new ApiClientException("An attempt was made to deserialize an empty response.", response);
+            }
+
+            return responseContent;
         }
 
         private static void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)
@@ -107,7 +119,10 @@ namespace JustGiving.Api.Sdk.Http
         private Uri BuildUrl(string locationFormat)
         {
             var location = string.Format(locationFormat, _clientConfiguration.ApiKey, _clientConfiguration.ApiVersion);
-            location += !location.Contains("?") ? "?" : "&" + "debug=true";
+            if (EnableDebug)
+            {
+                location += !location.Contains("?") ? "?" : "&" + "debug=true";
+            }
 
             return new Uri(location);
         }
@@ -136,11 +151,6 @@ namespace JustGiving.Api.Sdk.Http
 
         private static TResponseType DeserializeContentFromXml<TResponseType>(string content)
         {
-            if(string.IsNullOrEmpty(content))
-            {
-                throw new ApiClientException("An attempt was made to deserialize a response which was empty.");
-            }
-
             try
             {
                 var reader = new DataContractSerializer(typeof (TResponseType));
