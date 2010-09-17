@@ -1,4 +1,6 @@
-﻿namespace GG.Api.Sdk.Test.Unit
+﻿using JustGiving.Api.Sdk;
+
+namespace GG.Api.Sdk.Test.Unit
 {
     public static class TestContext
     {
@@ -8,5 +10,18 @@
         public static string TestValidPassword = "password";
         public static string TestInvalidPassword = "badPassword";
         public static int ApiVersion = 1;
+
+        public static ClientConfiguration Configuration
+        {
+            get
+            {
+                var configuration = new ClientConfiguration(ApiLocation, ApiKey, ApiVersion)
+                                        {
+                                            Username = TestUsername,
+                                            Password = TestValidPassword
+                                        };
+                return configuration;
+            }
+        }
     }
 }

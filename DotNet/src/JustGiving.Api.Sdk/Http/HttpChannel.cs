@@ -63,7 +63,12 @@ namespace JustGiving.Api.Sdk.Http
 
         public TResponseType PerformApiRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request) where TRequestType : class
         {
-            // TODO: Add Validation of Params (method == HTTP Verb)
+            if(method.NotAccepted())
+            {
+                throw new ArgumentException(
+                    "Invalid Http Method - Currently Supported Methods are GET, POST, PUT and HEAD", "method");
+            }
+
             var url = BuildUrl(locationFormat);
             HttpRequestMessage httpRequestMessage;
             if (request != null)
@@ -182,6 +187,15 @@ namespace JustGiving.Api.Sdk.Http
                 ex.Data.Add("RawContent", content);
                 throw exception;
             }
+        }
+    }
+
+    static class Extensions
+    {
+        public static bool NotAccepted(this string method)
+        {
+            var lc = method.ToLower();
+            return !(lc == "get" || lc == "post" || lc == "put" || lc == "head");
         }
     }
 }
