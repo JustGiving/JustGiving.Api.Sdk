@@ -73,7 +73,8 @@ namespace JustGiving.Api.Sdk.Http
             }
             else
             {
-                httpRequestMessage = new HttpRequestMessage(method, url);
+                var content = HttpContent.Create(string.Empty, "application/xml");
+                httpRequestMessage = new HttpRequestMessage(method, url, content);
             }
 
             var response = _httpClient.Send(httpRequestMessage);
