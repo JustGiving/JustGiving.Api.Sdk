@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\AccountApiTests.cs" />
+    <Compile Include="ApiClients\ApiClient.cs" />
     <Compile Include="ApiClients\DonationApiTests.cs" />
+    <Compile Include="ApiClients\SearchApiTests.cs" />
     <Compile Include="MockHttpClient.cs" />
     <Compile Include="JustGivingClientTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />

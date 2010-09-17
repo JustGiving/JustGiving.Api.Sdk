@@ -26,12 +26,12 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         public void Create_WhenProvidedWithRequest_CallsExpectedUrl()
         {
             var httpClient = new MockHttpClient<AccountRegistrationConfirmation>(HttpStatusCode.OK);
-            var api = CreateAccountApiClient(httpClient);
+            var api = ApiClient.Create<AccountApi, AccountRegistrationConfirmation>(httpClient);
             var request = new CreateAccountRequest();
 
             api.Create(request);
 
-            Assert.That(httpClient.LastRequest.Uri.ToString(), Is.StringContaining(string.Format("{0}{1}/v{2}/account", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
         }
 
@@ -52,20 +52,13 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         public void ListAllPages_WhenProvidedWithEmail_CallsExpectedUrl()
         {
             var httpClient = new MockHttpClient<FundraisingPageSummarys>(HttpStatusCode.OK);
-            var api = CreateAccountApiClient(httpClient);
+            var api = ApiClient.Create<AccountApi, FundraisingPageSummarys>(httpClient);
             const string email = "some@email.com";
 
             api.ListAllPages(email);
 
-            Assert.That(httpClient.LastRequest.Uri.ToString(), Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/pages", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/pages", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("GET"));
-        }
-
-        private static AccountApi CreateAccountApiClient<T>(MockHttpClient<T> httpClient) where T: class, new()
-        {
-            var config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion);
-            var parent = new JustGivingClient(config, httpClient);
-            return new AccountApi(parent);
         }
     }
 }
