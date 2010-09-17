@@ -11,6 +11,7 @@ namespace GG.Api.Sdk.Test.Unit
     public class MockHttpClient<TResponseType> : IHttpClient where TResponseType : class, new()
     {
         private readonly HttpStatusCode _resultcode;
+        public Dictionary<string, string> Headers;
 
         public MockHttpClient(HttpStatusCode resultcode)
         {
@@ -32,8 +33,6 @@ namespace GG.Api.Sdk.Test.Unit
                 return LastRequest.Uri.AbsoluteUri;
             }
         }
-
-        public Dictionary<string, string> Headers { get; private set; }
 
         public void Dispose()
         {

@@ -9,17 +9,14 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         public static TApiClient Create <TApiClient, TResponse>(MockHttpClient<TResponse> httpClient) where TApiClient : ApiClientBase
             where TResponse : class, new()
         {
-            return
-                Create<TApiClient, TResponse>(
-                    new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion),
-                    httpClient);
+            var config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion);
+            return Create<TApiClient, TResponse>(config, httpClient);
         }
 
-        public static TApiClient Create<TApiClient, TResponse>(ClientConfiguration config, MockHttpClient<TResponse> httpClient)
-            where TApiClient : ApiClientBase
+        public static TApiClient Create <TApiClient, TResponse>(ClientConfiguration configuration, MockHttpClient<TResponse> httpClient) where TApiClient : ApiClientBase
             where TResponse : class, new()
         {
-            var parent = new JustGivingClient(config, httpClient);
+            var parent = new JustGivingClient(configuration, httpClient);
             var rtn = Activator.CreateInstance(typeof(TApiClient), parent) as TApiClient;
             return rtn;
         }

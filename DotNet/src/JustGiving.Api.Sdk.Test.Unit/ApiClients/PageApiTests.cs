@@ -1,3 +1,4 @@
+﻿using System;
 using System.Net;
 using System.Security.Authentication;
 using JustGiving.Api.Sdk;
@@ -11,32 +12,18 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
     public class PageApiTests
     {
         [Test]
-        public void ListAllPages_ConfigUserNameEmpty_ThrowsException()
+        public void Create_WhenProvidedWithRequest_CallsExpectedUrl()
         {
-            var config = TestConfiguration(string.Empty, "pass");
+            var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
 
-            var client = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
-            var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, client);
-            
-            var ex = Assert.Throws<AuthenticationException>(() => api.ListAll());
-            Assert.That(ex.Message, Is.StringContaining(
-                "Authentication required to list pages.  Please set a valid configuration object."));
+            var response = api.Create(new RegisterPageRequest());
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/fundraising/pages" , TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
         }
-
-        [Test]
-        public void ListAllPages_ConfigPasswordEmpty_ThrowsException()
-        {
-            var config = TestConfiguration("test", string.Empty);
-
-            var client = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
-            var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, client);
-
-            var ex = Assert.Throws<AuthenticationException>(() => api.ListAll());
-            Assert.That(ex.Message, Is.StringContaining(
-                "Authentication required to list pages.  Please set a valid configuration object."));
-        }
-
-        [Test]
+		
+		[Test]
         public void ListAllPages_ValidUserNameAndPassword_CallsExpectedUrl()
         {
             var client = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
@@ -49,25 +36,69 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             var url = client.LastRequestedUrl;
             Assert.AreEqual(expected, url);
         }
+		
 
         [Test]
-        public void ListAllPages_ValidUserNameAndPassword_PerformsHttpGet()
+        public void Create_WhenProvidedWithNullRequest_ThrowsArgumentNullException()
         {
-            var client = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
-            var config = new ClientConfiguration("test") { Username = "user", Password = "pass" };
-            var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, client);
-            api.ListAll();
+            var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
 
-            Assert.That(client.LastRequest.Method, Is.StringMatching("GET"));
+            var exception = Assert.Throws<ArgumentNullException>(() => api.Create(null));
+
+            Assert.That(exception.ParamName, Is.StringContaining("request"));
+            Assert.That(exception.Message, Is.StringContaining("Request cannot be null."));
         }
 
-        private static ClientConfiguration TestConfiguration(string user, string pass)
+        [TestCase("")]
+        [TestCase(null)]
+        public void IsPageShortNameRegistered_WhenProvidedWithNullOrEmptyPageShortName_ThrowsArgumentNullException(string pageShortName)
         {
-            return new ClientConfiguration("TEST")
-            {
-                Username = user,
-                Password = pass
-            };
+            var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
+
+            var exception = Assert.Throws<ArgumentNullException>(() => api.IsPageShortNameRegistered(pageShortName));
+
+            Assert.That(exception.ParamName, Is.StringContaining("pageShortName"));
+            Assert.That(exception.Message, Is.StringContaining("pageShortName cannot be null."));
         }
+
+        [Test]
+        public void IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortName_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
+            const string pageShortName = "someName";
+
+            api.IsPageShortNameRegistered(pageShortName);
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/fundraising/pages/{3}", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, pageShortName)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("HEAD"));
+        }
+
+        [Test]
+        public void ListAll_WhenUsernameAuthenticationIsNull_ThrowsException()
+        {
+            var httpClient = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
+            var config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion) { Password = "somePassword" };
+            var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, httpClient);
+
+            var exception = Assert.Throws<AuthenticationException>(() => api.ListAll());
+
+            Assert.That(exception.Message, Is.StringContaining("Authentication required to list pages.  Please set a valid configuration object."));
+        }
+
+        [Test]
+        public void ListAll_WhenPasswordAuthenticationIsNull_ThrowsException()
+        {
+            var httpClient = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
+            var config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion) { Username = "someUsername" };
+            var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, httpClient);
+
+            var exception = Assert.Throws<AuthenticationException>(() => api.ListAll());
+
+            Assert.That(exception.Message, Is.StringContaining("Authentication required to list pages.  Please set a valid configuration object."));
+        }
+
     }
 }

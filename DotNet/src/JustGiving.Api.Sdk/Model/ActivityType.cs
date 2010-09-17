@@ -5,9 +5,11 @@ using System.Text;
 
 namespace JustGiving.Api.Sdk.Model
 {
+    [Serializable]
     public enum ActivityType
     {
-        RunningAndMarathons = 1,
+        NotSet = 0,
+        Running_Marathons = 1,
         Treks = 2,
         Walks = 3,
         Cycling = 4,
@@ -19,7 +21,7 @@ namespace JustGiving.Api.Sdk.Model
         InMemory = 10,
         Anniversaries = 11,
         Triathlons = 12,
-        ParachutingAndSkydives = 13,
+        Parachuting_Skydives = 13,
         OtherSportingEvents = 14,
         NewYearsResolutions = 15,
         Christmas = 16,
