@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
@@ -14,6 +15,7 @@ namespace GG.Api.Sdk.Test.Unit
         public MockHttpClient(HttpStatusCode resultcode)
         {
             _resultcode = resultcode;
+            Headers = new Dictionary<string, string>();
         }
 
         public HttpRequestMessage LastRequest { get; set; }
@@ -30,6 +32,8 @@ namespace GG.Api.Sdk.Test.Unit
                 return LastRequest.Uri.AbsoluteUri;
             }
         }
+
+        public Dictionary<string, string> Headers { get; private set; }
 
         public void Dispose()
         {
@@ -53,7 +57,7 @@ namespace GG.Api.Sdk.Test.Unit
 
         public void AddHeader(string key, string value)
         {
-            throw new NotImplementedException();
+            Headers.Add(key, value);
         }
 
         public void Put(string url, string contentType, HttpContent body)

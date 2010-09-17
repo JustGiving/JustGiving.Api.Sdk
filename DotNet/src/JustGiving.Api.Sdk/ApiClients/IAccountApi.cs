@@ -6,6 +6,6 @@ namespace JustGiving.Api.Sdk.ApiClients
     public interface IAccountApi
     {
         string Create(CreateAccountRequest request);
-        FundraisingPageSummarys ListAllPages(string email);
+        FundraisingPageSummaries ListAllPages(string email);
     }
 }

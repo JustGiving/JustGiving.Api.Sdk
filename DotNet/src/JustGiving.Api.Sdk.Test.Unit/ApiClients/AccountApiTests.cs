@@ -51,8 +51,8 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         [Test]
         public void ListAllPages_WhenProvidedWithEmail_CallsExpectedUrl()
         {
-            var httpClient = new MockHttpClient<FundraisingPageSummarys>(HttpStatusCode.OK);
-            var api = ApiClient.Create<AccountApi, FundraisingPageSummarys>(httpClient);
+            var httpClient = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, FundraisingPageSummaries>(httpClient);
             const string email = "some@email.com";
 
             api.ListAllPages(email);

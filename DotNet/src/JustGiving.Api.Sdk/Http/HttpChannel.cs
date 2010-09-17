@@ -34,7 +34,7 @@ namespace JustGiving.Api.Sdk.Http
 
         private void SetAuthenticationHeaders()
         {
-            if (!string.IsNullOrEmpty(_clientConfiguration.Username))
+            if (!string.IsNullOrEmpty(_clientConfiguration.Username) && !string.IsNullOrEmpty(_clientConfiguration.Password))
             {
                 var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(_clientConfiguration.Username + ":" + _clientConfiguration.Password));
                 _httpClient.AddHeader("Authorization", "Basic " + credentials);

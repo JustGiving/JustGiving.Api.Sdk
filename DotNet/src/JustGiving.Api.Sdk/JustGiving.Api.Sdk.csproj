@@ -77,7 +77,7 @@
     <Compile Include="Model\Page\FundraisingPageDonation.cs" />
     <Compile Include="Model\Page\FundraisingPageDonations.cs" />
     <Compile Include="Model\Page\FundraisingPageMedia.cs" />
-    <Compile Include="Model\Page\FundraisingPageSummarys.cs" />
+    <Compile Include="Model\Page\FundraisingPageSummaries.cs" />
     <Compile Include="Model\Page\FundraisingPageSummary.cs" />
     <Compile Include="Model\Page\FundraisingPageVideo.cs" />
     <Compile Include="Model\Page\RegisterPageRequest.cs" />

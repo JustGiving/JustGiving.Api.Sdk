@@ -23,7 +23,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             return response.Email;
         }
 
-        public FundraisingPageSummarys ListAllPages(string email)
+        public FundraisingPageSummaries ListAllPages(string email)
         {
             if (string.IsNullOrEmpty(email))
             {
@@ -31,7 +31,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
 
             var locationFormat = Parent.Configuration.RootDomain + "{0}/v{1}/account/" + email + "/pages";
-            return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummarys>("GET", locationFormat);
+            return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummaries>("GET", locationFormat);
         }
     }
 }

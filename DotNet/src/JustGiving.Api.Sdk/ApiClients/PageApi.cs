@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Security.Authentication;
 using System.Web;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Page;
@@ -13,15 +14,16 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
         }
 
-        public FundraisingPageSummarys ListAll()
+        public FundraisingPageSummaries ListAll()
         {
-            if(string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Username))
+            if(string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Password))
             {
-                throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
+                throw new AuthenticationException(
+                    "Authentication required to list pages.  Please set a valid configuration object.");
             }
-
+            // TODO (RC): Replace the "0" and "1" params with actual values ("apiVersion" and "apiKey", respectively).
             var locationFormat = Parent.Configuration.RootDomain + "{0}/v{1}/fundraising/pages";
-            return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummarys>("GET", locationFormat);
+            return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummaries>("GET", locationFormat);
         }
 
         public FundraisingPage RetrievePage(string pageShortName)

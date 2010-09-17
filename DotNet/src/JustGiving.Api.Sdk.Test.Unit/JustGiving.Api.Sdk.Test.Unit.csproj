@@ -58,7 +58,9 @@
     <Compile Include="ApiClients\AccountApiTests.cs" />
     <Compile Include="ApiClients\ApiClient.cs" />
     <Compile Include="ApiClients\DonationApiTests.cs" />
+    <Compile Include="ApiClients\PageApiTests.cs" />
     <Compile Include="ApiClients\SearchApiTests.cs" />
+    <Compile Include="Http\HttpChannelTests.cs" />
     <Compile Include="MockHttpClient.cs" />
     <Compile Include="JustGivingClientTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
@@ -71,9 +73,7 @@
       <Name>JustGiving.Api.Sdk</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Http\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="lib\Microsoft.Http.dll" />
     <Content Include="lib\nunit.framework.dll" />
