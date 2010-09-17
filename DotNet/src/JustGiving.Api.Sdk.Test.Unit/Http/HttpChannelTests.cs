@@ -118,8 +118,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
 
             var header = client.Headers["Authorization"];
 
-            // TODO: Move the Credentials to an Object (Encapsulate the Base64 Encoding).
-            var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes("user:pass"));
+            var credentials = new HttpBasicAuthCredentials("user", "pass").ToString();
 
             Assert.That(header, Is.StringContaining("Basic " + credentials));
         }

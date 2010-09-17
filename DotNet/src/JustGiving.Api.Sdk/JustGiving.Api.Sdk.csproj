@@ -55,6 +55,7 @@
     <Compile Include="Http\ErrorResponse.cs" />
     <Compile Include="Http\ErrorResponseExceptionFactory.cs" />
     <Compile Include="Http\Errors.cs" />
+    <Compile Include="Http\HttpBasicAuthCredentials.cs" />
     <Compile Include="JustGivingClient.cs" />
     <Compile Include="ApiClients\AccountApi.cs" />
     <Compile Include="ApiClients\DonationApi.cs" />
