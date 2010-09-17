@@ -28,23 +28,7 @@ namespace JustGiving.Api.Sdk.Model.Page
         /// Other Celebration - 8
         /// In Memory - 10
         /// </summary>
-        [DataMember(Name = "activityTypeId")]
-        public string ActivityTypeId
-        {
-            get
-            {
-                return ActivityType != null ? ((int) ActivityType).ToString() : string.Empty;
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    var valueAsInt = Int32.Parse(value);
-                    ActivityType = (ActivityType)valueAsInt;
-                }
-            }
-        }
-
+        [DataMember(Name = "activityType")]
         public ActivityType? ActivityType { get; set; }
 
         [DataMember(Name = "targetAmount")]
