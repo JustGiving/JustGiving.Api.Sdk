@@ -18,6 +18,19 @@ namespace GG.Api.Sdk.Test.Unit
 
         public HttpRequestMessage LastRequest { get; set; }
 
+        public string LastRequestedUrl
+        {
+            get
+            {
+                if (LastRequest == null)
+                    throw new NullReferenceException(
+                        "Unable to Retrieve Last Called URL - Nothing has been Requested!");
+
+                // NOTE: We Use AbsoluteUri here since ToString Removes *some* URL Encoding.
+                return LastRequest.Uri.AbsoluteUri;
+            }
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();
