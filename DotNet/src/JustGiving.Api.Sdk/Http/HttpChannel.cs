@@ -63,6 +63,7 @@ namespace JustGiving.Api.Sdk.Http
 
         public TResponseType PerformApiRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request) where TRequestType : class
         {
+            // TODO: Add Validation of Params (method == HTTP Verb)
             var url = BuildUrl(locationFormat);
             HttpRequestMessage httpRequestMessage;
             if (request != null)
@@ -103,7 +104,7 @@ namespace JustGiving.Api.Sdk.Http
                 case HttpStatusCode.Continue:
                 case HttpStatusCode.Found:
                     var errorsDespiteSuccess = TryExtractErrorsFromResponse(content);
-                    if (errorsDespiteSuccess != null)
+                    if (errorsDespiteSuccess != null && errorsDespiteSuccess.Count > 0)
                     {
                         throw ErrorResponseExceptionFactory.CreateException(response, content, errorsDespiteSuccess);
                     }
@@ -128,7 +129,14 @@ namespace JustGiving.Api.Sdk.Http
 
         private Uri BuildUrl(string locationFormat)
         {
-            var location = string.Format(locationFormat, _clientConfiguration.ApiKey, _clientConfiguration.ApiVersion);
+            if (!locationFormat.Contains("{apiKey}") || !locationFormat.Contains("{apiVersion}"))
+                throw new ArgumentException(
+                    "'locationFormat must contain '{apiKey}' and '{apiVersion}' placeholders (case sensitive).", "locationFormat");
+
+            var location =  locationFormat
+                .Replace("{apiKey}", _clientConfiguration.ApiKey)
+                .Replace("{apiVersion}", _clientConfiguration.ApiVersion.ToString());
+            
             if (EnableDebug)
             {
                 location += !location.Contains("?") ? "?" : "&" + "debug=true";

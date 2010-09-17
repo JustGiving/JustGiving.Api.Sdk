@@ -24,7 +24,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             if (string.IsNullOrEmpty(searchTerms))
                 return new CharitySearchResults();
 
-            var locationFormat = Parent.Configuration.RootDomain + "{0}/v{1}/charity/search";
+            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/search";
             locationFormat += "?q=" + HttpUtility.UrlEncode(searchTerms);
             locationFormat += "&page=" + pageNumber.GetValueOrDefault(1);
             locationFormat += "&pageSize=" + pageSize.GetValueOrDefault(50);

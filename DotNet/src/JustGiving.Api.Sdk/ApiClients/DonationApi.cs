@@ -11,7 +11,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public DonationStatus RetrieveStatus(int donationId)
         {
-            var locationFormat = Parent.Configuration.RootDomain + "{0}/v{1}/donation/" + donationId + "/status";
+            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/donation/" + donationId + "/status";
             return Parent.HttpChannel.PerformApiRequest<DonationStatus>("GET", locationFormat);
         }
     }
