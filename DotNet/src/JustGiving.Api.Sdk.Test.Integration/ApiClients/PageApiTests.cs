@@ -128,8 +128,22 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
             var pageClient = new PageApi(client);
+            
+            // Create Page
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = "api-test-" + Guid.NewGuid(),
+                PageTitle = "Page Created For Update Story Integration Test",
+                EventName = "Story Update Testing",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
 
-            pageClient.UploadImage("api-test-128c6f46-0356-4c06-8988-be7fd6cd2eba", "my image", File.ReadAllBytes("jpg.jpg"), "image/jpeg");
+            var registrationResponse = pageClient.Create(pageCreationRequest);
+
+            pageClient.UploadImage(pageCreationRequest.PageShortName, "my image", File.ReadAllBytes("jpg.jpg"), "image/jpeg");
         }
 
         [Test]

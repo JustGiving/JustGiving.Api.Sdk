@@ -37,6 +37,7 @@ namespace JustGiving.Api.Sdk.Http
             if (!string.IsNullOrEmpty(_clientConfiguration.Username) && !string.IsNullOrEmpty(_clientConfiguration.Password))
             {
                 var credentials = new HttpBasicAuthCredentials(_clientConfiguration.Username, _clientConfiguration.Password);
+                _httpClient.AddHeader("Authorize", "Basic " + credentials);
                 _httpClient.AddHeader("Authorization", "Basic " + credentials);
             }
         }
@@ -78,7 +79,7 @@ namespace JustGiving.Api.Sdk.Http
             }
             else
             {
-                var content = HttpContent.Create(string.Empty, "application/xml");
+                var content = HttpContent.Create(new byte[]{}, "application/xml");
                 httpRequestMessage = new HttpRequestMessage(method, url, content);
             }
 
