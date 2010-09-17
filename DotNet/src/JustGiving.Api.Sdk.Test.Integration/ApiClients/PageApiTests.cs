@@ -29,6 +29,27 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
+        }  
+        
+        [Test]
+        public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_CreatesANewPage()
+        {
+            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var pageClient = new PageApi(client);
+
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = "api-test-" + Guid.NewGuid(),
+                PageTitle = "api test",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            var registrationResponse = pageClient.Create(pageCreationRequest);
         }
 
         [Test]
