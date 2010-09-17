@@ -1,0 +1,7 @@
+# VS Bits
+obj
+bin
+*.suo
+
+# ReSharper
+_ReSharper.*
