@@ -44,10 +44,15 @@ namespace JustGiving.Api.Sdk.ApiClients
             return Parent.HttpChannel.PerformApiRequest<FundraisingPageDonations>("GET", locationFormat);
         }
 
-        public PageRegistrationConfirmation Create(RegisterPageRequest pageRegistrationRequest)
+        public PageRegistrationConfirmation Create(RegisterPageRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request", "Request cannot be null.");
+            }
+
             var locationFormat = Parent.Configuration.RootDomain + "{0}/v{1}/fundraising/pages";
-            return Parent.HttpChannel.PerformApiRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, pageRegistrationRequest);
+            return Parent.HttpChannel.PerformApiRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, request);
         }
 
         public void UpdateStory(string pageShortName, string storyUpdate)
