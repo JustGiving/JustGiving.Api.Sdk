@@ -61,6 +61,7 @@
     <Compile Include="ApiClients\DonationApiTests.cs" />
     <Compile Include="ApiClients\PageApiTests.cs" />
     <Compile Include="ApiClients\SearchApiTests.cs" />
+    <Compile Include="Http\HttpBasicAuthCredentialsTests.cs" />
     <Compile Include="Http\HttpChannelTests.cs" />
     <Compile Include="MockHttpClient.cs" />
     <Compile Include="JustGivingClientTests.cs" />
