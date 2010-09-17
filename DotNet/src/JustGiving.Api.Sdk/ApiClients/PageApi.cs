@@ -15,7 +15,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public FundraisingPageSummarys ListAll()
         {
-            if(string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Username))
+            if(string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Password))
             {
                 throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
             }
@@ -63,6 +63,11 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public bool IsPageShortNameRegistered(string pageShortName)
         {
+            if(string.IsNullOrEmpty(pageShortName))
+            {
+                throw new ArgumentNullException("pageShortName", "pageShortName cannot be null.");
+            }
+
             var locationFormat = Parent.Configuration.RootDomain + "{0}/v{1}/fundraising/pages/" + pageShortName;
             var response = Parent.HttpChannel.PerformRawRequest("HEAD", locationFormat);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
@@ -10,10 +11,12 @@ namespace GG.Api.Sdk.Test.Unit
     public class MockHttpClient<TResponseType> : IHttpClient where TResponseType : class, new()
     {
         private readonly HttpStatusCode _resultcode;
+        public static Dictionary<string, string> Headers;
 
         public MockHttpClient(HttpStatusCode resultcode)
         {
             _resultcode = resultcode;
+            Headers = new Dictionary<string, string>();
         }
 
         public HttpRequestMessage LastRequest { get; set; }
@@ -53,7 +56,7 @@ namespace GG.Api.Sdk.Test.Unit
 
         public void AddHeader(string key, string value)
         {
-            throw new NotImplementedException();
+            Headers.Add(key, value);
         }
 
         public void Put(string url, string contentType, HttpContent body)
