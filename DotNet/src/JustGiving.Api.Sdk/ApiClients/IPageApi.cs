@@ -5,7 +5,7 @@ namespace JustGiving.Api.Sdk.ApiClients
     public interface IPageApi
     {
         FundraisingPageSummaries ListAll();
-        FundraisingPage RetrievePage(string pageShortName);
+        FundraisingPage Retrieve(string pageShortName);
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName);
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName, int? pageSize, int? pageNumber);
         PageRegistrationConfirmation Create(RegisterPageRequest request);

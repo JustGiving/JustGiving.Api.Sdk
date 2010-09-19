@@ -12,7 +12,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
             var charityClient = new CharityApi(client);
 
-            var item = charityClient.RetrieveCharity(2050);
+            var item = charityClient.Retrieve(2050);
         }
     }
 }

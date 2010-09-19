@@ -12,7 +12,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
         }
 
-        public Charity RetrieveCharity(int charityId)
+        public Charity Retrieve(int charityId)
         {
             var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/" + charityId;
             return Parent.HttpChannel.PerformApiRequest<Charity>("GET", locationFormat);

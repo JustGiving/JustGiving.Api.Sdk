@@ -67,7 +67,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
             var pageClient = new PageApi(client);
 
-            var pageData = pageClient.RetrievePage("rasha25");
+            var pageData = pageClient.Retrieve("rasha25");
         }
 
         [Test]

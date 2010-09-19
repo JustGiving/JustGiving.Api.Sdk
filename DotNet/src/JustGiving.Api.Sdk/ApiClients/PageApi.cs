@@ -26,7 +26,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummaries>("GET", locationFormat);
         }
 
-        public FundraisingPage RetrievePage(string pageShortName)
+        public FundraisingPage Retrieve(string pageShortName)
         {
             var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName;
             return Parent.HttpChannel.PerformApiRequest<FundraisingPage>("GET", locationFormat);
