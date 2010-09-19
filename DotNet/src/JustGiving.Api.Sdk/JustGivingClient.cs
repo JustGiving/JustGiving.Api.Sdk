@@ -12,6 +12,8 @@ namespace JustGiving.Api.Sdk
         public ISearchApi Search { get; set; }
         public ICharityApi Charity { get; set; }
 
+        private readonly IHttpClient _httpClient;
+
         internal ClientConfiguration Configuration { get; private set; }
         internal HttpChannel HttpChannel { get; private set; }
 
@@ -37,6 +39,8 @@ namespace JustGiving.Api.Sdk
                 throw new ArgumentNullException("httpClient", "httpClient must not be null to access the api.");
             }
 
+            _httpClient = httpClient;
+
             Account = accountApi;
             Donation = donationApi;
             Page = pageApi;
@@ -45,7 +49,7 @@ namespace JustGiving.Api.Sdk
 
             Configuration = clientConfiguration;
 
-            InitApis(httpClient, clientConfiguration);
+            InitApis(_httpClient, clientConfiguration);
         }
 
         private void InitApis(IHttpClient httpClient, ClientConfiguration clientConfiguration)
@@ -76,6 +80,12 @@ namespace JustGiving.Api.Sdk
             {
                 Charity = new CharityApi(this);
             }
+        }
+
+        public void UpdateConfiguration(ClientConfiguration configuration)
+        {
+            Configuration = configuration;
+            InitApis(_httpClient, configuration);
         }
     }
 }
