@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiClients\CharityApi.cs" />
     <Compile Include="ApiClients\IAccountApi.cs" />
+    <Compile Include="ApiClients\ICharityApi.cs" />
     <Compile Include="ApiClients\IDonationApi.cs" />
     <Compile Include="ApiClients\IPageApi.cs" />
     <Compile Include="ApiClients\ISearchApi.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Model\ActivityType.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />
+    <Compile Include="Model\Charity\Charity.cs" />
     <Compile Include="Model\Donation\DonationStatus.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\Page\Donation.cs" />

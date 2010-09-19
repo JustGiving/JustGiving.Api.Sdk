@@ -10,39 +10,47 @@ namespace JustGiving.Api.Sdk
         public IDonationApi Donation { get; set; }
         public IPageApi Page { get; set; }
         public ISearchApi Search { get; set; }
+        public ICharityApi Charity { get; set; }
 
         internal ClientConfiguration Configuration { get; private set; }
         internal HttpChannel HttpChannel { get; private set; }
 
         public JustGivingClient(string apiKey)
-            : this(new ClientConfiguration(apiKey), new HttpClientWrapper(), null, null, null, null)
+            : this(new ClientConfiguration(apiKey), new HttpClientWrapper(), null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration)
-            : this(clientConfiguration, new HttpClientWrapper(), null, null, null, null)
+            : this(clientConfiguration, new HttpClientWrapper(), null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-            : this(clientConfiguration, httpClient, null, null, null, null)
+            : this(clientConfiguration, httpClient, null, null, null, null, null)
         {
         }
 
-        public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient, IAccountApi accountApi, IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi)
+        public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient, IAccountApi accountApi, IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi, ICharityApi charityApi)
         {
             if(httpClient == null)
             {
                 throw new ArgumentNullException("httpClient", "httpClient must not be null to access the api.");
             }
 
-            Configuration = clientConfiguration;
-            HttpChannel = new HttpChannel(clientConfiguration, httpClient);
-
             Account = accountApi;
             Donation = donationApi;
             Page = pageApi;
             Search = searchApi;
+            Charity = charityApi;
+
+            Configuration = clientConfiguration;
+
+            InitApis(httpClient, clientConfiguration);
+        }
+
+        private void InitApis(IHttpClient httpClient, ClientConfiguration clientConfiguration)
+        {
+            HttpChannel = new HttpChannel(clientConfiguration, httpClient);
 
             if (Account == null)
             {
@@ -62,6 +70,11 @@ namespace JustGiving.Api.Sdk
             if (Search == null)
             {
                 Search = new SearchApi(this);
+            }
+
+            if(Charity == null)
+            {
+                Charity = new CharityApi(this);
             }
         }
     }
