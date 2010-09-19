@@ -16,5 +16,8 @@ namespace JustGiving.Api.Sdk.Model.Search
 
         [DataMember(Name = "description")]
         public string Description { get; set; }
+
+        [DataMember(Name = "logoFileName")]
+        public string LogoFileName { get; set; }
     }
 }

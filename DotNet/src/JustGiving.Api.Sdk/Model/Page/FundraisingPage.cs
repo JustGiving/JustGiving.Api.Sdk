@@ -11,6 +11,10 @@ namespace JustGiving.Api.Sdk.Model.Page
     [DataContract(Name = "fundraisingPage", Namespace = "")]
     public class FundraisingPage
     {
+        [DataMember(Name = "pageId", EmitDefaultValue = false)]
+        public string PageId { get; set; }
+        [DataMember(Name = "activityId", EmitDefaultValue = false)]
+        public string ActivityId { get; set; }
         [DataMember(Name = "eventName", EmitDefaultValue = false)]
         public string EventName { get; set; }
         [DataMember(Name = "currencySymbol", EmitDefaultValue = false)]
