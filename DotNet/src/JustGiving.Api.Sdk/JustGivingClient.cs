@@ -11,6 +11,7 @@ namespace JustGiving.Api.Sdk
         public IPageApi Page { get; set; }
         public ISearchApi Search { get; set; }
         public ICharityApi Charity { get; set; }
+        public IEventApi Event { get; set; }
 
         private readonly IHttpClient _httpClient;
 
@@ -18,21 +19,21 @@ namespace JustGiving.Api.Sdk
         internal HttpChannel HttpChannel { get; private set; }
 
         public JustGivingClient(string apiKey)
-            : this(new ClientConfiguration(apiKey), new HttpClientWrapper(), null, null, null, null, null)
+            : this(new ClientConfiguration(apiKey), new HttpClientWrapper(), null, null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration)
-            : this(clientConfiguration, new HttpClientWrapper(), null, null, null, null, null)
+            : this(clientConfiguration, new HttpClientWrapper(), null, null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-            : this(clientConfiguration, httpClient, null, null, null, null, null)
+            : this(clientConfiguration, httpClient, null, null, null, null, null, null)
         {
         }
 
-        public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient, IAccountApi accountApi, IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi, ICharityApi charityApi)
+        public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient, IAccountApi accountApi, IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi, ICharityApi charityApi, IEventApi eventApi)
         {
             if(httpClient == null)
             {
@@ -79,6 +80,11 @@ namespace JustGiving.Api.Sdk
             if(Charity == null)
             {
                 Charity = new CharityApi(this);
+            }
+
+            if(Event == null)
+            {
+                Event = new EventApi(this);
             }
         }
 

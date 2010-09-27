@@ -15,7 +15,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
             var searchClient = new SearchApi(client);
-
+            
             var items = searchClient.CharitySearch("demo");
         }
     }

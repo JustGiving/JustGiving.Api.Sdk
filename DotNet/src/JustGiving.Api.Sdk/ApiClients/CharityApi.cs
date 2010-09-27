@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using JustGiving.Api.Sdk.Model.Charity;
+﻿using JustGiving.Api.Sdk.Model.Charity;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
