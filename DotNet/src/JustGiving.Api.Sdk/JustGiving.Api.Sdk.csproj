@@ -78,6 +78,7 @@
     <Compile Include="Model\Donation\DonationStatus.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\Event\Event.cs" />
+    <Compile Include="Model\Event\GetPagesForEventResponse.cs" />
     <Compile Include="Model\Page\Donation.cs" />
     <Compile Include="Model\Page\FundraisingPage.cs" />
     <Compile Include="Model\Page\FundraisingPageBranding.cs" />

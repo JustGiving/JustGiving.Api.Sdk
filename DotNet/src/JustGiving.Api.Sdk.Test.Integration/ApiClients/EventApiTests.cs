@@ -14,5 +14,23 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             var item = eventApi.Retrieve(479546);
         }
+
+        [Test]
+        public void RetrievePages_IssuedWithKnownId_ReturnsPages()
+        {
+            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
+            var eventApi = new EventApi(client);
+
+            var pages = eventApi.RetrievePages(479546);
+        }
+
+        [Test]
+        public void RetrievePages_IssuedWithKnownIdAndPage2_ReturnsPages()
+        {
+            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
+            var eventApi = new EventApi(client);
+
+            var pages = eventApi.RetrievePages(479546, 20, 2);
+        }
     }
 }
