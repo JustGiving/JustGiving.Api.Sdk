@@ -2,7 +2,9 @@
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Web;
 using Microsoft.Http;
 
 namespace JustGiving.Api.Sdk.Http
@@ -13,7 +15,8 @@ namespace JustGiving.Api.Sdk.Http
 
         private readonly ClientConfiguration _clientConfiguration;
         private readonly IHttpClient _httpClient;
-        
+        private readonly MultiformatPayloadBuilder _payloadBuilder;
+
         public HttpChannel(ClientConfiguration clientConfiguration, IHttpClient httpClient)
         {
             if (clientConfiguration == null)
@@ -28,6 +31,7 @@ namespace JustGiving.Api.Sdk.Http
 
             _clientConfiguration = clientConfiguration;
             _httpClient = httpClient;
+            _payloadBuilder = new MultiformatPayloadBuilder(_clientConfiguration);
 
             SetAuthenticationHeaders();
         }
@@ -66,29 +70,34 @@ namespace JustGiving.Api.Sdk.Http
         {
             if(method.NotAccepted())
             {
-                throw new ArgumentException(
-                    "Invalid Http Method - Currently Supported Methods are GET, POST, PUT and HEAD", "method");
+                throw new ArgumentException("Invalid Http Method - Currently Supported Methods are GET, POST, PUT and HEAD", "method");
             }
 
             var url = BuildUrl(locationFormat);
-            HttpRequestMessage httpRequestMessage;
-            if (request != null)
-            {
-                var payload = BuildPayload(request);
-                httpRequestMessage = new HttpRequestMessage(method, url, payload);
-            }
-            else
-            {
-                var content = HttpContent.Create(new byte[]{}, "application/xml");
-                httpRequestMessage = new HttpRequestMessage(method, url, content);
-            }
+
+            var payload = _payloadBuilder.BuildPayload(request);
+            var httpRequestMessage = new HttpRequestMessage(method, url, payload);
+            SetContentType(httpRequestMessage);
 
             var response = _httpClient.Send(httpRequestMessage);
-            string responseContent = ValidateResponse(response);
-            return DeserializeContentFromXml<TResponseType>(responseContent);
+            var responseContent = ValidateResponse(response);
+
+            return _payloadBuilder.UnpackResponse<TResponseType>(responseContent);
         }
 
-        private static string ValidateResponse(HttpResponseMessage response)
+        private void SetContentType(HttpRequestMessage httpRequestMessage)
+        {
+            if (_clientConfiguration.WireDataFormat == WireDataFormat.Xml)
+            {
+                httpRequestMessage.Headers.ContentType = _payloadBuilder.XmlContentType;
+            }
+            else if (_clientConfiguration.WireDataFormat == WireDataFormat.Json)
+            {
+                httpRequestMessage.Headers.ContentType = _payloadBuilder.JsonContentType;
+            }
+        }
+
+        private string ValidateResponse(HttpResponseMessage response)
         {
             var responseContent = response.Content.ReadAsString();
             ThrowExceptionForExceptionalStatusCodes(response, responseContent);
@@ -101,7 +110,7 @@ namespace JustGiving.Api.Sdk.Http
             return responseContent;
         }
 
-        private static void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)
+        private void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)
         {
             switch (response.StatusCode)
             {
@@ -116,17 +125,20 @@ namespace JustGiving.Api.Sdk.Http
                         throw ErrorResponseExceptionFactory.CreateException(response, content, errorsDespiteSuccess);
                     }
                     return;
+
+                case HttpStatusCode.NotFound:
+                    throw new HttpException(404, "Resource not found");
                 default:
                     var errors = TryExtractErrorsFromResponse(content);
                     throw ErrorResponseExceptionFactory.CreateException(response, content, errors);
             }
         }
 
-        private static Errors TryExtractErrorsFromResponse(string rawResponse)
+        private Errors TryExtractErrorsFromResponse(string rawResponse)
         {
             try
             {
-                return DeserializeContentFromXml<Errors>(rawResponse);
+                return _payloadBuilder.UnpackResponse<Errors>(rawResponse);
             }
             catch
             {
@@ -137,8 +149,9 @@ namespace JustGiving.Api.Sdk.Http
         private Uri BuildUrl(string locationFormat)
         {
             if (!locationFormat.Contains("{apiKey}") || !locationFormat.Contains("{apiVersion}"))
-                throw new ArgumentException(
-                    "'locationFormat must contain '{apiKey}' and '{apiVersion}' placeholders (case sensitive).", "locationFormat");
+            {
+                throw new ArgumentException("'locationFormat must contain '{apiKey}' and '{apiVersion}' placeholders (case sensitive).", "locationFormat");
+            }
 
             var location =  locationFormat
                 .Replace("{apiKey}", _clientConfiguration.ApiKey)
@@ -152,44 +165,7 @@ namespace JustGiving.Api.Sdk.Http
             return new Uri(location);
         }
 
-        private static HttpContent BuildPayload<TPayloadType>(TPayloadType objectToSerialise)
-        {
-            var payloadContent = SerializeContentToXml(objectToSerialise);
-            var payload = HttpContent.Create(payloadContent, "application/xml");
-            return payload;
-        }
 
-        private static string SerializeContentToXml<TPayloadType>(TPayloadType objectToSerialise)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                var dataContractSerializer = new DataContractSerializer(objectToSerialise.GetType());
-                dataContractSerializer.WriteObject(memoryStream, objectToSerialise);
-                memoryStream.Flush();
-                memoryStream.Position = 0;
-                using (var reader = new StreamReader(memoryStream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-        }
-
-        private static TResponseType DeserializeContentFromXml<TResponseType>(string content)
-        {
-            try
-            {
-                var reader = new DataContractSerializer(typeof (TResponseType));
-                var byteArray = Encoding.ASCII.GetBytes(content);
-                var stream = new MemoryStream(byteArray);
-                return (TResponseType) reader.ReadObject(stream);
-            }
-            catch(Exception ex)
-            {
-                var exception = new ApiClientException("An error occured while deserializing the incoming response", ex);
-                ex.Data.Add("RawContent", content);
-                throw exception;
-            }
-        }
     }
 
     static class Extensions

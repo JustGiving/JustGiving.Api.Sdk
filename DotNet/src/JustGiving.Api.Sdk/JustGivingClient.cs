@@ -47,6 +47,7 @@ namespace JustGiving.Api.Sdk
             Page = pageApi;
             Search = searchApi;
             Charity = charityApi;
+            Event = eventApi;
 
             Configuration = clientConfiguration;
 

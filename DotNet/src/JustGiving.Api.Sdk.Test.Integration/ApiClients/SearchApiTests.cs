@@ -13,10 +13,10 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [Test]
         public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent()
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
+            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { WireDataFormat = WireDataFormat.Json, });
             var searchClient = new SearchApi(client);
             
-            var items = searchClient.CharitySearch("demo");
+            var items = searchClient.CharitySearch("cancer");
         }
     }
 }

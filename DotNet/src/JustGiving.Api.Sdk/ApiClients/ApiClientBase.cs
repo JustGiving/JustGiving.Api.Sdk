@@ -4,7 +4,7 @@
     {        
         protected readonly JustGivingClient Parent;
 
-        public ApiClientBase(JustGivingClient parent)
+        protected ApiClientBase(JustGivingClient parent)
         {
             Parent = parent;
         }
