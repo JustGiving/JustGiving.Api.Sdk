@@ -94,7 +94,9 @@ namespace JustGiving.Api.Sdk.ApiClients
                 case HttpStatusCode.OK:
                     return;
                 default:
-                    throw ErrorResponseExceptionFactory.CreateException(response, response.Content.ReadAsString(), null);
+                    var rawResponse = response.Content.ReadAsString();
+                    var potentialErrors = Parent.HttpChannel.TryExtractErrorsFromResponse(rawResponse);
+                    throw ErrorResponseExceptionFactory.CreateException(response, rawResponse, potentialErrors);
             }
         }
     }

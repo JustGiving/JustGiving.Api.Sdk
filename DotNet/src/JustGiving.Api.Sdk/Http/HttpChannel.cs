@@ -134,7 +134,7 @@ namespace JustGiving.Api.Sdk.Http
             }
         }
 
-        private Errors TryExtractErrorsFromResponse(string rawResponse)
+        public Errors TryExtractErrorsFromResponse(string rawResponse)
         {
             try
             {

@@ -3,6 +3,11 @@ using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
+    /// <summary>
+    /// Apologies for the fragility of these tests.
+    /// Relies on data in the JG dev database. Bad tests, though allow us to
+    /// execute pre-release testing
+    /// </summary>
     [TestFixture]
     public class EventApiTests : ApiClientTestsBase
     {
@@ -13,7 +18,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientNoCredentials(format);
             var eventApi = new EventApi(client);
 
-            var item = eventApi.Retrieve(479546);
+            var item = eventApi.Retrieve(479546); // VLM 2011 on local dev
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -23,7 +28,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientNoCredentials(format);
             var eventApi = new EventApi(client);
 
-            var pages = eventApi.RetrievePages(479546);
+            var pages = eventApi.RetrievePages(479546); // VLM 2011 on local dev
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -33,7 +38,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientNoCredentials(format);
             var eventApi = new EventApi(client);
 
-            var pages = eventApi.RetrievePages(479546, 20, 2);
+            var pages = eventApi.RetrievePages(479546, 20, 2); // VLM 2011 on local dev
         }
     }
 }

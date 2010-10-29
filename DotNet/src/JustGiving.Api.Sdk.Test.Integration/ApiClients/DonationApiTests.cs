@@ -3,6 +3,10 @@ using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
+    /// <summary>
+    /// These tests aren't very good. Because we don't offer a full donation api, we can't populate donations for testing purposes
+    /// Sorry!
+    /// </summary>
     [TestFixture]
     public class DonationApiTests : ApiClientTestsBase
     {
@@ -14,6 +18,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var donationClient = new DonationApi(client);
 
             var status = donationClient.Retrieve(21303723);
+
+            Assert.IsNotNull(status);
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -24,6 +30,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var donationClient = new DonationApi(client);
 
             var status = donationClient.RetrieveStatus(21305000);
+
+            Assert.IsNotNull(status);
         }
     }
 }
