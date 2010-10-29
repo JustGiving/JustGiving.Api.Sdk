@@ -4,15 +4,19 @@ using NUnit.Framework;
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class CharityApiTests
+    public class CharityApiTests : ApiClientTestsBase
     {
-        [Test]
-        public void RetrieveCharity_IssuedWithKnownId_ReturnsCharity()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveCharity_IssuedWithKnownId_ReturnsCharity(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
+            var client = CreateClientNoCredentials(format);
             var charityClient = new CharityApi(client);
 
             var item = charityClient.Retrieve(2050);
+
+            Assert.IsNotNull(item);
+            Assert.That(item.Name, Is.StringContaining("The Demo Charity"));
         }
     }
 }

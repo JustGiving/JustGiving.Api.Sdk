@@ -4,21 +4,23 @@ using NUnit.Framework;
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class DonationApiTests
+    public class DonationApiTests : ApiClientTestsBase
     {
-        [Test]
-        public void GetDonation_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void GetDonation_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var donationClient = new DonationApi(client);
 
             var status = donationClient.Retrieve(21303723);
         }
 
-        [Test]
-        public void GetDonationStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void GetDonationStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var donationClient = new DonationApi(client);
 
             var status = donationClient.RetrieveStatus(21305000);

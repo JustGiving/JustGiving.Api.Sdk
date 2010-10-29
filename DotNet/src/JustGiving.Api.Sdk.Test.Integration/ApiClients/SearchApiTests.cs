@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using JustGiving.Api.Sdk.ApiClients;
+﻿using JustGiving.Api.Sdk.ApiClients;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class SearchApiTests
+    public class SearchApiTests : ApiClientTestsBase
     {
-        [Test]
-        public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { WireDataFormat = WireDataFormat.Json, });
+            var client = CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client);
             
             var items = searchClient.CharitySearch("cancer");

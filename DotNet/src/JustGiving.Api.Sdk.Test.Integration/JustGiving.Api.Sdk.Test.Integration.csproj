@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\AccountApiTests.cs" />
+    <Compile Include="ApiClients\ApiClientTestsBase.cs" />
     <Compile Include="ApiClients\CharityApiTests.cs" />
     <Compile Include="ApiClients\EventApiTests.cs" />
     <Compile Include="ApiClients\DonationApiTests.cs" />
@@ -58,6 +59,10 @@
     <Folder Include="Http\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JustGiving.Api.Sdk.Test.Unit\JustGiving.Api.Sdk.Test.Unit.csproj">
+      <Project>{06A85854-52E4-4B21-ABDE-69E0D0A3E68B}</Project>
+      <Name>JustGiving.Api.Sdk.Test.Unit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JustGiving.Api.Sdk\JustGiving.Api.Sdk.csproj">
       <Project>{6D16BFF7-1384-4797-87E8-AE03D173BBA0}</Project>
       <Name>JustGiving.Api.Sdk</Name>

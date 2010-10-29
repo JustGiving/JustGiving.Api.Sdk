@@ -7,12 +7,13 @@ using NUnit.Framework;
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class AccountApiTests
+    public class AccountApiTests : ApiClientTestsBase
     {
-        [Test]
-        public void Register_WhenSuppliedEmailIsUnused_AccountIsCreatedAndEmailAddressReturned()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenSuppliedEmailIsUnused_AccountIsCreatedAndEmailAddressReturned(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var client = CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
@@ -22,10 +23,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.AreEqual(email, registeredUsersEmail);
         }
 
-        [Test]
-        public void Register_WhenSuppliedWithEmailThatIsAlreadyRegistered_ReturnsAnError()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenSuppliedWithEmailThatIsAlreadyRegistered_ReturnsAnError(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var client = CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
@@ -37,10 +39,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Errors[0].Description, Is.StringContaining("email address in use"));
         }
 
-        [Test]
-        public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var client = CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
 
             var pages = accountClient.ListAllPages(TestContext.TestUsername);

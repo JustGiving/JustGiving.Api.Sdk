@@ -9,12 +9,13 @@ using NUnit.Framework;
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class PageApiTests
+    public class PageApiTests : ApiClientTestsBase
     {
-        [Test]
-        public void Register_WhenProvidedWithValidAuthenticationAndDetails_CreatesANewPage()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenProvidedWithValidAuthenticationAndDetails_CreatesANewPage(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
 
             var pageCreationRequest = new RegisterPageRequest
@@ -29,12 +30,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
-        }  
-        
-        [Test]
-        public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_CreatesANewPage()
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_CreatesANewPage(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
 
             var pageCreationRequest = new RegisterPageRequest
@@ -52,46 +54,51 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var registrationResponse = pageClient.Create(pageCreationRequest);
         }
 
-        [Test]
-        public void ListPages_WhenProvidedCredentials_ReturnsPages()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void ListPages_WhenProvidedCredentials_ReturnsPages(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
 
             var pageData = pageClient.ListAll();
         }
 
-        [Test]
-        public void RetrievePage_WhenProvidedWithAKnownPage_ReturnsPublicPageView()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrievePage_WhenProvidedWithAKnownPage_ReturnsPublicPageView(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
             var pageData = pageClient.Retrieve("rasha25");
         }
 
-        [Test]
-        public void RetrieveDonationsForPage_WhenProvidedWithAKnownPageAndRequesterIsThePageOwner_ReturnsDonations()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveDonationsForPage_WhenProvidedWithAKnownPageAndRequesterIsThePageOwner_ReturnsDonations(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
 
             var pageData = pageClient.RetrieveDonationsForPage("rasha25");
         }
 
-        [Test]
-        public void RetrieveDonationsForPage_WhenProvidedWithAKnownPageAndRequesterIsAnon_ReturnsDonations()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveDonationsForPage_WhenProvidedWithAKnownPageAndRequesterIsAnon_ReturnsDonations(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1));
+            var client = CreateClientNoCredentials(format);
             var pageClient = new PageApi(client);
 
             var pageData = pageClient.RetrieveDonationsForPage("rasha25");
         }
 
-        [Test]
-        public void IsPageShortNameRegistered_WhenSuppliedKnownExitingPage_ReturnsTrue()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void IsPageShortNameRegistered_WhenSuppliedKnownExitingPage_ReturnsTrue(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
             var exists = pageClient.IsPageShortNameRegistered("rasha25");
@@ -99,10 +106,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsTrue(exists);
         }
 
-        [Test]
-        public void UpdatePageStory_WhenProvidedCredentialsAndValidPage_PostsUpdate()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void UpdatePageStory_WhenProvidedCredentialsAndValidPage_PostsUpdate(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
 
             // Create Page
@@ -123,10 +131,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             pageClient.UpdateStory(pageCreationRequest.PageShortName, DateTime.Now + ": Unit Test Update");
         }
 
-        [Test]
-        public void UploadImage_WhenProvidedCredentialsAndValidPageAndImage_UploadsImage()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void UploadImage_WhenProvidedCredentialsAndValidPageAndImage_UploadsImage(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestValidPassword });
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
             
             // Create Page
@@ -146,10 +155,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             pageClient.UploadImage(pageCreationRequest.PageShortName, "my image", File.ReadAllBytes("jpg.jpg"), "image/jpeg");
         }
 
-        [Test]
-        public void UploadImage_WhenProvidedInvaildCredentialsAndValidPageAndImage_ThrowsException()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void UploadImage_WhenProvidedInvaildCredentialsAndValidPageAndImage_ThrowsException(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = "badincorrectPassword" });
+            var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
             var exception = Assert.Throws<ErrorResponseException>(() => pageClient.UploadImage("rasha25", "my image", File.ReadAllBytes("jpg.jpg"), "image/jpeg"));
@@ -157,10 +167,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         }
 
-        [Test]
-        public void IsPageShortNameRegistered_WhenSuppliedPageNameUnlikelyToExist_ReturnsFalse()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void IsPageShortNameRegistered_WhenSuppliedPageNameUnlikelyToExist_ReturnsFalse(WireDataFormat format)
         {
-            var client = new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1) { Username = TestContext.TestUsername, Password = TestContext.TestInvalidPassword });
+            var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
             var exists = pageClient.IsPageShortNameRegistered(Guid.NewGuid().ToString());
