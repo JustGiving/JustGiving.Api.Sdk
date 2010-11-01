@@ -6,7 +6,6 @@
 <h1>JustGiving API PHP SDK - Reference Implementation</h1>
 This is a reference PHP implementation for the JustGiving API.<br/>
 Requires PHP 5.1 or above, php_curl and json support.<br/>
-
 <hr/>
 
 <h2>A quick example - Retrieving page data</h2>
@@ -25,5 +24,42 @@ echo "eventName - " . $page->eventName;</br>
 <li><a href="Tests/DonationApiTests.php">Run DonationApiTests</a></li>
 <li><a href="Tests/SearchApiTests.php">Run SearchApiTests</a></li>
 <li><a href="Tests/EventApiTests.php">Run EventApiTests</a></li>
+</ul>
+
+<hr/>
+
+<h2>More usage examples</h2>
+<ul>
+<li>$request = new CreateAccountRequest();<br/>
+	$request->email = "test@test.com";<br/>
+	$client->Account->Create($request);</li>
+<li>$client->Account->ListAllPages("apiunittests@justgiving.com");</li>
+<li>$client->Charity->Retrieve(2050);</li>
+<li>$client->Donation->Retrieve(21303723);</li>
+<li>$client->Donation->RetrieveStatus(21303723);</li>
+<li>$client->Event->Retrieve(479546);</li>
+<li>$client->Event->RetrievePages(479546);</li>
+<li>$client->Page->Retrieve("rasha25");</li>
+<li>$client->Page->ListAll();</li>
+<li>$request = new RegisterPageRequest();<br/>
+	$request->reference = "12345";<br/>
+	$request->pageShortName = "api-test-" . uniqid();<br/>
+	$request->activityType = "OtherCelebration";<br/>
+	$request->pageTitle = "api test";<br/>
+	$request->eventName = "The Other Occasion of ApTest and APITest";<br/>
+	$request->charityId = 2050;<br/>
+	$request->targetAmount = 20;<br/>
+	$request->eventDate = "/Date(1235764800000)/";<br/>
+	$request->justGivingOptIn = true;<br/>
+	$request->charityOptIn = true;<br/>
+	$request->charityFunded = false;<br/>
+	$client->Page->Create($request);</li>
+<li>$client->Page->IsShortNameRegistered("rasha25");</li>
+<li>$client->Page->UpdateStory("rasha25", "This is a story update!");</li>
+<li>$caption = "Image Caption";<br/>
+	$filename = "jpg.jpg";<br/>
+	$imageContentType =  "image/jpeg";<br/>
+	$success = $client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);</li>
+<li>$client->Search->CharitySearch('the demo charity');</li>
 </ul>
 </body>
