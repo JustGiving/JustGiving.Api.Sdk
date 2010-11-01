@@ -28,4 +28,3 @@ class ClientBase
 		echo $string . "<br/>";
 	}	
 }
-?>

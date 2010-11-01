@@ -1,5 +1,4 @@
 <?php
-
 class RegisterPageRequest
 {
 	public $reference;
@@ -17,5 +16,3 @@ class RegisterPageRequest
 	public $charityFunded;
 	public $causeId;
 }
-
-?>

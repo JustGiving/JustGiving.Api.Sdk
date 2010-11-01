@@ -104,4 +104,3 @@ class PageApi extends ClientBase
 		}
 	}
 }
-?>
