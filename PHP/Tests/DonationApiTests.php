@@ -1,15 +1,17 @@
 <?php
 include_once '../ApiClients/Model/CreateAccountRequest.php';
-class CharityApiTests
+class DonationApiTests
 {
-	function Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity($client)
+	function Retrieve_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation($client)
 	{
 		echo "<hr />";
-		echo "<b>Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity</b><br/><br/>";
+		echo "<b>Retrieve_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation</b><br/><br/>";
 		
-		$response = $client->Charity->Retrieve(2050);
+		$response = $client->Donation->Retrieve(21303723);
 		
-		WriteLine("Charity Name: " . $response->name);
+		WriteLine("Donation amount: " . $response->amount);
+		WriteLine("Donation date: " . $response->donationDate);
+		WriteLine("Donation Donor: " . $response->donorDisplayName);
 	}
 }
 
@@ -33,5 +35,5 @@ function WriteLine($string)
 
 echo "<h1>Executing Test Cases</h1>";
 
-$tests = new CharityApiTests();
-$tests->Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity($client);
+$tests = new DonationApiTests();
+$tests->Retrieve_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation($client);
