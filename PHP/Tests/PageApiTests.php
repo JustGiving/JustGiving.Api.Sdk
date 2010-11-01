@@ -183,11 +183,11 @@ function WriteLine($string)
 
 echo "<h1>Executing Test Cases</h1>";
 
-$pageTests = new PageApiTests();
-$pageTests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
-$pageTests->ListAll_WithValidCredentials_ReturnsListOfUserPages($client);
-$pageTests->Create_ValidCredentials_CreatesNewPage($client);
-$pageTests->IsShortNameRegistered_KnownPage_ReturnsTrue($client);
-$pageTests->IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client);
-$pageTests->UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client);
-$pageTests->UploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption($client);
+$tests = new PageApiTests();
+$tests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
+$tests->ListAll_WithValidCredentials_ReturnsListOfUserPages($client);
+$tests->Create_ValidCredentials_CreatesNewPage($client);
+$tests->IsShortNameRegistered_KnownPage_ReturnsTrue($client);
+$tests->IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client);
+$tests->UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client);
+$tests->UploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption($client);
