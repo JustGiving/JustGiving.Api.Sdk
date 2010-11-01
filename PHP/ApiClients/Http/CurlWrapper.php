@@ -12,8 +12,8 @@ class CurlWrapper
 	public function Get($url, $base64Credentials = "")
 	{
 		$ch = curl_init();
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);		
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);		
 
 		$this->SetCredentials($ch, $base64Credentials);
 		
@@ -29,11 +29,11 @@ class CurlWrapper
 		rewind($fh);
 	
 		$ch = curl_init();
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch,CURLOPT_PUT, true);
-		curl_setopt($ch,CURLOPT_INFILE, $fh);
-		curl_setopt($ch,CURLOPT_INFILESIZE, strlen($payload));
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_PUT, true);
+		curl_setopt($ch, CURLOPT_INFILE, $fh);
+		curl_setopt($ch, CURLOPT_INFILESIZE, strlen($payload));
 		
 		$this->SetCredentials($ch, $base64Credentials);
 		
@@ -42,15 +42,31 @@ class CurlWrapper
 		return $buffer;
 	}
 	
+	public function Head($url, $base64Credentials = "")
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		
+		$this->SetCredentials($ch, $base64Credentials);
+		
+		$buffer = curl_exec($ch);
+		$info = curl_getinfo($ch);		
+		curl_close($ch);
+		
+		return $info;
+	}
+	
 	private function SetCredentials($ch, $base64Credentials = "")
 	{		
 		if($base64Credentials != null && $base64Credentials != "")
 		{			
-			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials ));
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials ));
 		}
 		else
 		{
-			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
 		}
 	}
 }

@@ -56,6 +56,25 @@ class PageApiTests
 		
 		WriteLine("Created page url - " . $page->next->uri);	
 	}
+	
+	function IsShortNameRegistered($client)
+	{		
+		echo "<hr />";
+		echo "<b>IsShortNameRegistered</b><br/><br/>";
+		
+		$pageShortName = "rasha25";
+			
+		$booleanResponse = $client->Page->IsShortNameRegistered($pageShortName);
+		
+		if($booleanResponse)
+		{
+			WriteLine($pageShortName . " is registered");	
+		}
+		else
+		{
+			WriteLine($pageShortName . " is NOT registered");
+		}
+	}
 }
 
 

@@ -15,6 +15,33 @@ class PageApi extends ClientBase
 		$this->curlWrapper	= new CurlWrapper();
 	}
 	
+	public function Create($pageCreationRequest)
+	{		
+		$verb = "PUT";
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($pageCreationRequest);		
+		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+		return json_decode($json); 
+	}
+	
+	public function IsShortNameRegistered($pageShortName)
+	{		
+		$verb = "HEAD";
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName;
+		$url = $this->BuildUrl($locationFormat);		
+		$httpInfo = $this->curlWrapper->Head($url, $this->BuildAuthenticationValue());		
+				
+		if($httpInfo['http_code'] == 200)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	public function ListAll()
 	{		
 		$verb = "GET";
@@ -31,7 +58,7 @@ class PageApi extends ClientBase
 		$url = $this->BuildUrl($locationFormat);
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json);
-	}
+	}	
 	
 	public function RetrieveDonationsForPage($pageShortName, $pageSize=50, $pageNumber=1)
 	{	
@@ -42,14 +69,12 @@ class PageApi extends ClientBase
 		return json_decode($json);
 	}
 	
-	public function Create($pageCreationRequest)
-	{		
-		$verb = "PUT";
-		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages";
-		$url = $this->BuildUrl($locationFormat);
-		$payload = json_encode($pageCreationRequest);		
-		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
-		return json_decode($json); 
+	public function UpdateStory($pageShortName, $storyUpdate)
+	{
+	}
+	
+	public function UploadImage($pageShortName, $caption, $imageBytes, $imageContentType)
+	{
 	}
 }
 ?>

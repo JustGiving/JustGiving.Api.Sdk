@@ -15,7 +15,7 @@ $client->debug = true;
 function WriteLine($string)
 {
 	echo $string . "<br/>";
-}	
+}
 
 echo "<h1>Executing Test Cases</h1>";
 
@@ -24,5 +24,6 @@ $pageTests = new PageApiTests();
 $pageTests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
 $pageTests->ListAll($client);
 $pageTests->Create($client);
+$pageTests->IsShortNameRegistered($client);
 
 ?>
