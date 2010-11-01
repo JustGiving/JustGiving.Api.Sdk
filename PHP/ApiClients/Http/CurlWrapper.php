@@ -18,6 +18,7 @@ class CurlWrapper
 		$this->SetCredentials($ch, $base64Credentials);
 		
 		$buffer = curl_exec($ch);
+		$info = curl_getinfo($ch);
 		curl_close($ch);
 		return $buffer;
 	}	
@@ -38,6 +39,7 @@ class CurlWrapper
 		$this->SetCredentials($ch, $base64Credentials);
 		
 		$buffer = curl_exec($ch);
+		$info = curl_getinfo($ch);
 		curl_close($ch);
 		return $buffer;
 	}
