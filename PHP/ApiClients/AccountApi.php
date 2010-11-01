@@ -23,6 +23,10 @@ class AccountApi extends ClientBase
 	}
 	
 	public function ListAllPages($email)
-	{
+	{		
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/" . $email . "/pages";
+		$url = $this->BuildUrl($locationFormat);		
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json); 
 	}
 }

@@ -26,6 +26,18 @@ class AccountApiTests
 		
 		WriteLine("Created accounts email/login: " . $response->email);
 	}
+	
+	function ListAllPages_WhenSuppliedWithAValidAccount_RetrievesPages($client)
+	{
+		echo "<hr />";
+		echo "<b>ListAll_WhenSuppliedWithAValidAccount_RetrievesPages</b><br/><br/>";
+		
+		$response = $client->Account->ListAllPages("apiunittests@justgiving.com");
+		
+		foreach ($response as $page) {
+		   echo 'Page:' . $page->pageShortName . ' status: ' . $page->pageStatus ."<br/>". PHP_EOL;
+		}	
+	}
 }
 
 ///############### RUN TESTS	
@@ -51,3 +63,4 @@ echo "<h1>Executing Test Cases</h1>";
 
 $pageTests = new AccountApiTests();
 $pageTests->Create_WhenSuppliedWithValidNewAccountDetails_CreatesAccount($client);
+$pageTests->ListAllPages_WhenSuppliedWithAValidAccount_RetrievesPages($client);
