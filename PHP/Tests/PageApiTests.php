@@ -22,10 +22,10 @@ class PageApiTests
 		WriteLine("Story - " . strip_tags($json->story));
 	}
 	
-	function ListAll($client)
+	function ListAll_WithValidCredentials_ReturnsListOfUserPages($client)
 	{		
 		echo "<hr />";
-		echo "<b>ListAll</b><br/><br/>";
+		echo "<b>ListAll_WithValidCredentials_ReturnsListOfUserPages</b><br/><br/>";
 		
 		$pages = $client->Page->ListAll();		
 		
@@ -34,10 +34,10 @@ class PageApiTests
 		}		
 	}
 	
-	function Create($client)
+	function Create_ValidCredentials_CreatesNewPage($client)
 	{		
 		echo "<hr />";
-		echo "<b>Create</b><br/><br/>";
+		echo "<b>Create_ValidCredentials_CreatesNewPage</b><br/><br/>";
 		
 		$dto = new RegisterPageRequest();
 		$dto->reference = "12345";
@@ -57,10 +57,10 @@ class PageApiTests
 		WriteLine("Created page url - " . $page->next->uri);	
 	}
 	
-	function IsShortNameRegistered($client)
+	function IsShortNameRegistered_KnownPage_ReturnsTrue($client)
 	{		
 		echo "<hr />";
-		echo "<b>IsShortNameRegistered</b><br/><br/>";
+		echo "<b>IsShortNameRegistered_KnownPage_ReturnsTrue</b><br/><br/>";
 		
 		$pageShortName = "rasha25";
 			
@@ -73,6 +73,57 @@ class PageApiTests
 		else
 		{
 			WriteLine($pageShortName . " is NOT registered");
+		}
+	}	
+	
+	function IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client)
+	{		
+		echo "<hr />";
+		echo "<b>IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse</b><br/><br/>";
+					
+		$pageShortName = uniqid();
+		$booleanResponse = $client->Page->IsShortNameRegistered($pageShortName);
+		
+		if($booleanResponse)
+		{
+			WriteLine($pageShortName . " is registered");	
+		}
+		else
+		{
+			WriteLine($pageShortName . " is NOT registered");
+		}
+	}	
+	
+	function UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client)
+	{		
+		echo "<hr />";
+		echo "<b>UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory</b><br/><br/>";
+		
+		$dto = new RegisterPageRequest();
+		$dto->reference = "12345";
+		$dto->pageShortName = "api-test-" . uniqid();
+		$dto->activityType = "OtherCelebration";
+		$dto->pageTitle = "api test";
+		$dto->eventName = "The Other Occasion of ApTest and APITest";
+		$dto->charityId = 2050;
+		$dto->targetAmount = 20;
+		$dto->eventDate = "/Date(1235764800000)/";
+		$dto->justGivingOptIn = true;
+		$dto->charityOptIn = true;
+		$dto->charityFunded = false;			
+		$page = $client->Page->Create($dto);	
+		
+		// Act
+		$update = "Updated this story with update - " . uniqid();
+		$booleanResponse = $client->Page->UpdateStory($dto->pageShortName, $update);
+		
+		if($booleanResponse)
+		{
+			WriteLine("Story updated for " . $dto->pageShortName . " with '" . $update . "'");	
+		}
+		else
+		{
+			WriteLine("Story update failed for " . $dto->pageShortName);
 		}
 	}
 }

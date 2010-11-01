@@ -22,8 +22,10 @@ echo "<h1>Executing Test Cases</h1>";
 include_once 'Tests/PageApiTests.php';
 $pageTests = new PageApiTests();
 $pageTests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
-$pageTests->ListAll($client);
-$pageTests->Create($client);
-$pageTests->IsShortNameRegistered($client);
+$pageTests->ListAll_WithValidCredentials_ReturnsListOfUserPages($client);
+$pageTests->Create_ValidCredentials_CreatesNewPage($client);
+$pageTests->IsShortNameRegistered_KnownPage_ReturnsTrue($client);
+$pageTests->IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client);
+$pageTests->UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client);
 
 ?>
