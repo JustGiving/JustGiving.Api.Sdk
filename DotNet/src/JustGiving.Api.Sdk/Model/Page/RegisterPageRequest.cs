@@ -51,5 +51,8 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "charityFunded")]
         public bool IsCharityFunded { get; set; }
+
+        [DataMember(Name = "causeId")]
+        public int? CauseId { get; set; }
     }
 }

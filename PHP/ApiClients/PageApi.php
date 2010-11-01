@@ -1,10 +1,10 @@
 <?php
 
-include_once 'JustGivingPageApiClient.php';
 include_once 'ClientBase.php';
-include_once 'CurlWrapper.php';
+include_once 'Http/CurlWrapper.php';
+include_once 'Model/RegisterPageRequest.php';
 
-class JustGivingPageApiClient extends ClientBase
+class PageApi extends ClientBase
 {		
 	public $Parent;
 	public $curlWrapper;
@@ -20,7 +20,8 @@ class JustGivingPageApiClient extends ClientBase
 		$verb = "GET";
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages";
 		$url = $this->BuildUrl($locationFormat);
-		return $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
 	}
 	
 	public function Retrieve($pageShortName)
@@ -28,7 +29,8 @@ class JustGivingPageApiClient extends ClientBase
 		$verb = "GET";
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName;
 		$url = $this->BuildUrl($locationFormat);
-		return $this->curlWrapper->Get($url);
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
 	}
 	
 	public function RetrieveDonationsForPage($pageShortName, $pageSize=50, $pageNumber=1)
@@ -36,8 +38,18 @@ class JustGivingPageApiClient extends ClientBase
 		$verb = "GET";
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/donations"."?PageSize=".$pageSize."&PageNum=".$pageNumber;
 		$url = $this->BuildUrl($locationFormat);
-		return $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
 	}
-
+	
+	public function Create($pageCreationRequest)
+	{		
+		$verb = "PUT";
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($pageCreationRequest);		
+		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+		return json_decode($json); 
+	}
 }
 ?>

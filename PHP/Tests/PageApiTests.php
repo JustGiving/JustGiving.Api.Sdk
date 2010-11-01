@@ -2,37 +2,59 @@
 
 class PageApiTests
 {
-	function Test_Page_Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client)
+	function Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client)
 	{
 		echo "<hr />";
-		echo "<b>Test_Page_Retrieve_WhenSuppliedWithValidPage_ReturnsPageData</b><br/><br/>";
+		echo "<b>Retrieve_WhenSuppliedWithValidPage_ReturnsPageData</b><br/><br/>";
 		
-		$rasha25 = $client->Page->Retrieve("rasha25");
+		$json = $client->Page->Retrieve("rasha25");
 		
-		$xml = new SimpleXMLElement($rasha25);
-		WriteLine("pageId - " . $xml->pageId);
-		WriteLine("activityId - " . $xml->activityId);
-		WriteLine("eventName - " . $xml->eventName);
-		WriteLine("pageShortName - " . $xml->pageShortName);
-		WriteLine("status - " . $xml->status);
-		WriteLine("owner - " . $xml->owner);
-		WriteLine("branding->buttonColour - " . $xml->branding->buttonColour);
-		WriteLine("branding->buttonTextColour - " . $xml->branding->buttonTextColour);
-		WriteLine("branding->headerTextColour - " . $xml->branding->headerTextColour);		
-		WriteLine("Story - " . strip_tags($xml->story));
+		WriteLine("pageId - " . $json->pageId);
+		WriteLine("activityId - " . $json->activityId);
+		WriteLine("eventName - " . $json->eventName);
+		WriteLine("pageShortName - " . $json->pageShortName);
+		WriteLine("status - " . $json->status);
+		WriteLine("owner - " . $json->owner);
+		WriteLine("event date - " . $json->eventDate);
+		WriteLine("branding->buttonColour - " . $json->branding->buttonColour);
+		WriteLine("branding->buttonTextColour - " . $json->branding->buttonTextColour);
+		WriteLine("branding->headerTextColour - " . $json->branding->headerTextColour);		
+		WriteLine("Story - " . strip_tags($json->story));
 	}
 	
-	function Test_Page_ListAll($client)
+	function ListAll($client)
 	{		
 		echo "<hr />";
-		echo "<b>Test_Page_Retrieve_WhenSuppliedWithValidPage_ReturnsPageData</b><br/><br/>";
+		echo "<b>ListAll</b><br/><br/>";
 		
-		$pages = $client->Page->ListAll();
+		$pages = $client->Page->ListAll();		
 		
-		$xml = new SimpleXMLElement($pages);
-		foreach ($xml->fundraisingPage as $page) {
+		foreach ($pages as $page) {
 		   echo 'Page:' . $page->pageShortName . ' status: ' . $page->pageStatus ."<br/>". PHP_EOL;
 		}		
+	}
+	
+	function Create($client)
+	{		
+		echo "<hr />";
+		echo "<b>Create</b><br/><br/>";
+		
+		$dto = new RegisterPageRequest();
+		$dto->reference = "12345";
+		$dto->pageShortName = "api-test-" . uniqid();
+		$dto->activityType = "OtherCelebration";
+		$dto->pageTitle = "api test";
+		$dto->eventName = "The Other Occasion of ApTest and APITest";
+		$dto->charityId = 2050;
+		$dto->targetAmount = 20;
+		$dto->eventDate = "/Date(1235764800000)/";
+		$dto->justGivingOptIn = true;
+		$dto->charityOptIn = true;
+		$dto->charityFunded = false;
+			
+		$page = $client->Page->Create($dto);
+		
+		WriteLine("Created page url - " . $page->next->uri);	
 	}
 }
 

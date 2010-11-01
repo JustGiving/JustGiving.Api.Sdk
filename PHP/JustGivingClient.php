@@ -1,6 +1,6 @@
 <?php
 
-include_once 'JustGivingPageApiClient.php';
+include_once 'ApiClients/PageApi.php';
 
 class JustGivingClient
 {	
@@ -23,7 +23,7 @@ class JustGivingClient
 		$this->debug			= false;
 		
 		// Init API clients
-		$this->Page				= new JustGivingPageApiClient($this);
+		$this->Page				= new PageApi($this);
 	}
 }
 ?>

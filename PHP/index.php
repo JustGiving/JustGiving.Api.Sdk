@@ -21,7 +21,8 @@ echo "<h1>Executing Test Cases</h1>";
 
 include_once 'Tests/PageApiTests.php';
 $pageTests = new PageApiTests();
-$pageTests->Test_Page_Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
-$pageTests->Test_Page_ListAll($client);
+$pageTests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
+$pageTests->ListAll($client);
+$pageTests->Create($client);
 
 ?>
