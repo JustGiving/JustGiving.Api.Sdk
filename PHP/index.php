@@ -27,5 +27,6 @@ $pageTests->Create_ValidCredentials_CreatesNewPage($client);
 $pageTests->IsShortNameRegistered_KnownPage_ReturnsTrue($client);
 $pageTests->IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client);
 $pageTests->UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client);
+$pageTests->UploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption($client);
 
 ?>

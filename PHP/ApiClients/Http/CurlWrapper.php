@@ -58,7 +58,7 @@ class CurlWrapper
 		return $info;
 	}	
 	
-	public function Post($url, $base64Credentials = "", $payload)
+	public function Post($url, $base64Credentials = "", $payload, $contentType="application/json")
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -66,7 +66,7 @@ class CurlWrapper
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 		
-		$this->SetCredentials($ch, $base64Credentials);
+		$this->SetCredentials($ch, $base64Credentials, $contentType);
 		
 		$buffer = curl_exec($ch);
 		$info = curl_getinfo($ch);
@@ -74,15 +74,15 @@ class CurlWrapper
 		return $info;
 	}
 	
-	private function SetCredentials($ch, $base64Credentials = "")
+	private function SetCredentials($ch, $base64Credentials = "", $contentType="application/json")
 	{		
 		if($base64Credentials != null && $base64Credentials != "")
 		{			
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials ));
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$contentType, 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials ));
 		}
 		else
 		{
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$contentType));
 		}
 	}
 }

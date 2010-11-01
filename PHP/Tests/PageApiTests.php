@@ -126,6 +126,41 @@ class PageApiTests
 			WriteLine("Story update failed for " . $dto->pageShortName);
 		}
 	}
+	
+	function UploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption($client)
+	{		
+		echo "<hr />";
+		echo "<b>UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory</b><br/><br/>";
+		
+		$dto = new RegisterPageRequest();
+		$dto->reference = "12345";
+		$dto->pageShortName = "api-test-" . uniqid();
+		$dto->activityType = "OtherCelebration";
+		$dto->pageTitle = "api test";
+		$dto->eventName = "The Other Occasion of ApTest and APITest";
+		$dto->charityId = 2050;
+		$dto->targetAmount = 20;
+		$dto->eventDate = "/Date(1235764800000)/";
+		$dto->justGivingOptIn = true;
+		$dto->charityOptIn = true;
+		$dto->charityFunded = false;			
+		$page = $client->Page->Create($dto);	
+		
+		// Act
+		$caption = "PHP Image Caption - " . uniqid();
+		$filename = "Tests/jpg.jpg";
+		$imageContentType =  "image/jpeg";
+		$booleanResponse = $client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
+		
+		if($booleanResponse)
+		{
+			WriteLine("Image updated for " . $dto->pageShortName);	
+		}
+		else
+		{
+			WriteLine("Image update failed for " . $dto->pageShortName);
+		}
+	}
 }
 
 
