@@ -12,6 +12,20 @@ class DonationApiTests
 		WriteLine("Donation amount: " . $response->amount);
 		WriteLine("Donation date: " . $response->donationDate);
 		WriteLine("Donation Donor: " . $response->donorDisplayName);
+	}	
+	
+	function RetrieveStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus($client)
+	{
+		echo "<hr />";
+		echo "<b>RetrieveStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus</b><br/><br/>";
+		
+		$response = $client->Donation->RetrieveStatus(21303723);
+		
+		WriteLine("Donation ref: " . $response->ref);
+		WriteLine("Donation donationId: " . $response->donationId);
+		WriteLine("Donation donationRef: " . $response->donationRef);
+		WriteLine("Donation status: " . $response->status);
+		WriteLine("Donation amount: " . $response->amount);
 	}
 }
 
@@ -37,3 +51,4 @@ echo "<h1>Executing Test Cases</h1>";
 
 $tests = new DonationApiTests();
 $tests->Retrieve_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation($client);
+$tests->RetrieveStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus($client);
