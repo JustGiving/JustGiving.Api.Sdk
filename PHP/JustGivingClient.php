@@ -29,4 +29,3 @@ class JustGivingClient
 		$this->Account			= new AccountApi($this);
 	}
 }
-?>

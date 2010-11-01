@@ -9,6 +9,15 @@ Requires PHP 5.1 or above, php_curl and json support.<br/>
 
 <hr/>
 
+<h2>A quick example - Retrieving page data</h2>
+<p>
+$client = new JustGivingClient("http://api.local.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");</br>
+$page = $client->Page->Retrieve("rasha25");</br>
+echo "pageShortName - " . $page->pageShortName;</br>
+echo "eventName - " . $page->eventName;</br>
+</p>
+
+<hr />
 <ul>
 <li><a href="Tests/PageApiTests.php">Run PageApiTests</a></li>
 <li><a href="Tests/AccountApiTests.php">Run AccountApiTests</a></li>
