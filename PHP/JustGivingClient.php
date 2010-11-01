@@ -5,6 +5,7 @@ include_once 'ApiClients/AccountApi.php';
 include_once 'ApiClients/CharityApi.php';
 include_once 'ApiClients/DonationApi.php';
 include_once 'ApiClients/SearchApi.php';
+include_once 'ApiClients/EventApi.php';
 
 class JustGivingClient
 {	
@@ -19,6 +20,7 @@ class JustGivingClient
 	public $Charity;
 	public $Donation;
 	public $Search;
+	public $Event;
 
 	public function __construct($rootDomain, $apiKey, $apiVersion, $username="", $password="")
 	{
@@ -36,5 +38,6 @@ class JustGivingClient
 		$this->Charity			= new CharityApi($this);
 		$this->Donation			= new DonationApi($this);
 		$this->Search			= new SearchApi($this);
+		$this->Event			= new EventApi($this);
 	}
 }
