@@ -148,7 +148,7 @@ class PageApiTests
 		
 		// Act
 		$caption = "PHP Image Caption - " . uniqid();
-		$filename = "Tests/jpg.jpg";
+		$filename = "jpg.jpg";
 		$imageContentType =  "image/jpeg";
 		$booleanResponse = $client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
 		

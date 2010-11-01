@@ -1,6 +1,6 @@
 <?php
 
-include 'JustGivingClient.php';
+include '../JustGivingClient.php';
 
 // Test context
 $ApiLocation = "http://api.local.justgiving.com/";
@@ -19,7 +19,7 @@ function WriteLine($string)
 
 echo "<h1>Executing Test Cases</h1>";
 
-include_once 'Tests/PageApiTests.php';
+include_once 'PageApiTests.php';
 $pageTests = new PageApiTests();
 $pageTests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
 $pageTests->ListAll_WithValidCredentials_ReturnsListOfUserPages($client);
