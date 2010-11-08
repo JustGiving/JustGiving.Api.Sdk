@@ -102,6 +102,8 @@ namespace JustGiving.Api.Sdk.Http
                         throw ErrorResponseExceptionFactory.CreateException(response, content, errorsDespiteSuccess);
                     }
                     return;
+                case HttpStatusCode.NotFound:
+                    throw new ResourceNotFoundException();
                 default:
                     var errors = TryExtractErrorsFromResponse(content);
                     throw ErrorResponseExceptionFactory.CreateException(response, content, errors);

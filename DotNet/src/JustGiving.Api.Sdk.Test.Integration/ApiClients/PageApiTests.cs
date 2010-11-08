@@ -96,6 +96,18 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        public void RetrievePage_WhenProvidedWithABadPage_ThrowsResourceNotFoundException(WireDataFormat format)
+        {
+            var client = CreateClientNoCredentials(format);
+            var pageClient = new PageApi(client);
+
+            var exception = Assert.Throws<ResourceNotFoundException>(() => pageClient.Retrieve(Guid.NewGuid().ToString()));
+
+            Assert.IsInstanceOf<ResourceNotFoundException>(exception);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void RetrieveDonationsForPage_WhenProvidedWithAKnownPageAndRequesterIsAnon_ReturnsDonations(WireDataFormat format)
         {
             var client = CreateClientNoCredentials(format);

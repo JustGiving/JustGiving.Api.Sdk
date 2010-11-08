@@ -60,6 +60,7 @@
     <Compile Include="Http\DataPackets\HttpRequestMessage.cs" />
     <Compile Include="Http\DataPackets\HttpResponseMessage.cs" />
     <Compile Include="Http\DataPackets\Payload.cs" />
+    <Compile Include="Http\ResourceNotFoundException.cs" />
     <Compile Include="JustGivingClientBase.cs" />
     <Compile Include="Http\ApiClientException.cs" />
     <Compile Include="Http\ErrorResponse.cs" />

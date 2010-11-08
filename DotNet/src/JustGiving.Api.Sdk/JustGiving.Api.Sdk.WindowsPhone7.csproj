@@ -78,6 +78,7 @@
     <Compile Include="Http\HttpChannel.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\MultiformatPayloadBuilder.cs" />
+    <Compile Include="Http\ResourceNotFoundException.cs" />
     <Compile Include="JustGivingClientBase.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />
