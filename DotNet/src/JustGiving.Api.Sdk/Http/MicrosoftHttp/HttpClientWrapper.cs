@@ -15,50 +15,14 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
         {
             _httpClient = new HttpClient();
         }
-
-        public DataPackets.HttpResponseMessage Get(string uri)
-        {
-            var response = _httpClient.Get(uri);
-            return ToNativeResponseMessage(response);
-        }
-
-        public DataPackets.HttpResponseMessage Get(string uri, string contentType)
-        {
-            _httpClient.DefaultHeaders.ContentType = contentType;
-            var response = _httpClient.Get(uri);
-            return ToNativeResponseMessage(response);
-        }
-
-        public DataPackets.HttpResponseMessage Post(string url, string contentType, DataPackets.HttpContent body)
-        {
-            var response = _httpClient.Post(url, contentType, HttpContent.Create(body.Content, body.ContentType));
-            return ToNativeResponseMessage(response);
-        }
-
-        public DataPackets.HttpResponseMessage Delete(string url)
-        {
-            var response = _httpClient.Delete(url);
-            return ToNativeResponseMessage(response);
-        }
-
-        public void SendAsync(DataPackets.HttpRequestMessage httpRequestMessage)
-        {
-            _httpClient.SendAsync(ToMicrosoftHttpRequest(httpRequestMessage));
-        }
-
+        
         public DataPackets.HttpResponseMessage Send(DataPackets.HttpRequestMessage httpRequestMessage)
         {
             var request = ToMicrosoftHttpRequest(httpRequestMessage);
             var response = _httpClient.Send(request);
-            return ToNativeResponseMessage(response);
+            return ToNativeResponse(response);
         }
-
-        public void Put(string url, string contentType, DataPackets.HttpContent body)
-        {
-            var bodyContent = HttpContent.Create(body.Content, body.ContentType);
-            _httpClient.Put(url, contentType, bodyContent);
-        }
-
+       
         public void AddHeader(string key, string value)
         {
             _httpClient.DefaultHeaders.Add(key, value);
@@ -69,7 +33,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             var content = HttpContent.Create(postData, contentType);
             var request = new HttpRequestMessage(method, uri, content);
             var response = _httpClient.Send(request);
-            return ToNativeResponseMessage(response);
+            return ToNativeResponse(response);
         }
 
         public DataPackets.HttpResponseMessage Send(string method, Uri uri, Payload postData)
@@ -77,7 +41,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType))
                                          {Headers = {ContentType = postData.ContentType}};
             var response = _httpClient.Send(httpRequestMessage);
-            return ToNativeResponseMessage(response);
+            return ToNativeResponse(response);
         }
 
         public void Dispose()
@@ -101,7 +65,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
                                                              httpRequestMessage.Content.ContentType));
         }
 
-        private static DataPackets.HttpResponseMessage ToNativeResponseMessage(HttpResponseMessage response)
+        private static DataPackets.HttpResponseMessage ToNativeResponse(HttpResponseMessage response)
         {
             var responseFormat = new DataPackets.HttpResponseMessage
             {

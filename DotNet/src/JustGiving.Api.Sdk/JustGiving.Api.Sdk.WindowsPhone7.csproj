@@ -41,6 +41,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>..\ExternalLibs\RestSharp\cb3e368\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.WindowsPhone">
+      <HintPath>..\ExternalLibs\RestSharp\cb3e368\RestSharp.WindowsPhone.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Servicemodel" />
     <Reference Include="System.Servicemodel.Web" />
@@ -79,7 +85,9 @@
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\MultiformatPayloadBuilder.cs" />
     <Compile Include="Http\ResourceNotFoundException.cs" />
+    <Compile Include="Http\SilverlightPhone7\SilverlightHttpClient.cs" />
     <Compile Include="JustGivingClientBase.cs" />
+    <Compile Include="JustGivingMobileClient.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />
     <Compile Include="Model\ActivityType.cs" />
