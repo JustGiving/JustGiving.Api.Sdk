@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using JustGiving.Api.Sdk.Model.Search;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class SearchApi : ApiClientBase, ISearchApi
     {
-        public SearchApi(JustGivingClient parent)
+        public SearchApi(JustGivingClientBase parent)
             : base(parent)
         {
         }
@@ -25,7 +21,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 return new CharitySearchResults();
 
             var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/search";
-            locationFormat += "?q=" + HttpUtility.UrlEncode(searchTerms);
+            locationFormat += "?q=" + Uri.EscapeDataString(searchTerms);
             locationFormat += "&page=" + pageNumber.GetValueOrDefault(1);
             locationFormat += "&pageSize=" + pageSize.GetValueOrDefault(50);
 
@@ -43,7 +39,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 return new CharitySearchResults();
 
             var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event/search";
-            locationFormat += "?q=" + HttpUtility.UrlEncode(searchTerms);
+            locationFormat += "?q=" + Uri.EscapeDataString(searchTerms);
             locationFormat += "&page=" + pageNumber.GetValueOrDefault(1);
             locationFormat += "&pageSize=" + pageSize.GetValueOrDefault(50);
 

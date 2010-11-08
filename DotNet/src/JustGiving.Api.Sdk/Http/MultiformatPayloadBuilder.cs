@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using Microsoft.Http;
+using JustGiving.Api.Sdk.Http.DataPackets;
 
 namespace JustGiving.Api.Sdk.Http
 {
@@ -20,7 +20,7 @@ namespace JustGiving.Api.Sdk.Http
             JsonContentType = "application/json";
         }
 
-        public HttpContent BuildPayload<TPayloadType>(TPayloadType objectToSerialise) where TPayloadType : class
+        public Payload BuildPayload<TPayloadType>(TPayloadType objectToSerialise) where TPayloadType : class
         {
             string contentType;
             string payload;
@@ -29,7 +29,7 @@ namespace JustGiving.Api.Sdk.Http
             {
                 if(objectToSerialise == null)
                 {
-                    return HttpContent.Create(new byte[] { }, XmlContentType);
+                    return new Payload { Content = string.Empty, ContentType = XmlContentType };
                 }
 
                 payload = SerializeContentToXml(objectToSerialise);
@@ -39,14 +39,14 @@ namespace JustGiving.Api.Sdk.Http
             {
                 if (objectToSerialise == null)
                 {
-                    return HttpContent.Create(new byte[] { }, JsonContentType);
+                    return new Payload {Content = string.Empty, ContentType = JsonContentType};
                 }
 
                 payload = SerializeContentToJson(objectToSerialise);
                 contentType = JsonContentType;
             }
 
-            return HttpContent.Create(payload, contentType);
+            return new Payload {Content = payload, ContentType = contentType};
         }
 
         public T UnpackResponse<T>(string responseContent)
@@ -100,7 +100,7 @@ namespace JustGiving.Api.Sdk.Http
             try
             {
                 var reader = new DataContractSerializer(typeof(TResponseType));
-                var byteArray = Encoding.ASCII.GetBytes(content);
+                var byteArray = Encoding.UTF8.GetBytes(content);
                 var stream = new MemoryStream(byteArray);
                 return (TResponseType)reader.ReadObject(stream);
             }
@@ -117,7 +117,7 @@ namespace JustGiving.Api.Sdk.Http
             try
             {
                 var reader = new DataContractJsonSerializer(typeof(TResponseType));
-                var byteArray = Encoding.ASCII.GetBytes(content);
+                var byteArray = Encoding.UTF8.GetBytes(content);
                 var stream = new MemoryStream(byteArray);
                 return (TResponseType)reader.ReadObject(stream);
             }

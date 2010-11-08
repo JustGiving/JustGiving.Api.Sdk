@@ -1,6 +1,7 @@
 ﻿using System;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
+using JustGiving.Api.Sdk.Http.MicrosoftHttp;
 using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Account;
 using JustGiving.Api.Sdk.Model.Page;

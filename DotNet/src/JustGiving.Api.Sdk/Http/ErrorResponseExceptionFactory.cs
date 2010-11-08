@@ -1,11 +1,10 @@
 ﻿using System.Text;
-using Microsoft.Http;
 
 namespace JustGiving.Api.Sdk.Http
 {
     public static class ErrorResponseExceptionFactory
     {
-        public static ErrorResponseException CreateException(HttpResponseMessage response, string responseContent, Errors errors)
+        public static ErrorResponseException CreateException(DataPackets.HttpResponseMessage response, string responseContent, Errors errors)
         {
             var errorMessageBuilder = new StringBuilder();
 

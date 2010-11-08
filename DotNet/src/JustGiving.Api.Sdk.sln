@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Integration", "JustGiving.Api.Sdk.Test.Integration\JustGiving.Api.Sdk.Test.Integration.csproj", "{B5507C4E-42C7-41B0-B255-2EBCDAD58818}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.WindowsPhone7", "JustGiving.Api.Sdk\JustGiving.Api.Sdk.WindowsPhone7.csproj", "{4978E921-10F7-4610-AAD2-B9E951B67590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{B5507C4E-42C7-41B0-B255-2EBCDAD58818}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5507C4E-42C7-41B0-B255-2EBCDAD58818}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5507C4E-42C7-41B0-B255-2EBCDAD58818}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

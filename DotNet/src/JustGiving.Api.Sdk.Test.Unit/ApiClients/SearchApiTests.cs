@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Web;
 using JustGiving.Api.Sdk;
@@ -39,7 +40,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         public void CharitySearch_SearchTermsSpecified_UrlEncodesSearchTerm()
         {
             const string SEARCH = "test/value and &something";
-            var expected = HttpUtility.UrlEncode(SEARCH);
+            var expected = Uri.EscapeDataString(SEARCH);
             _api.CharitySearch(SEARCH);
             var actual = _client.LastRequestedUrl;
 

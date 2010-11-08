@@ -1,18 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Web;
-using Microsoft.Http;
 
 namespace JustGiving.Api.Sdk.Http
 {
     public class HttpChannel
     {
-        public bool EnableDebug { get; set; }
-
         private readonly ClientConfiguration _clientConfiguration;
         private readonly IHttpClient _httpClient;
         private readonly MultiformatPayloadBuilder _payloadBuilder;
@@ -46,19 +38,17 @@ namespace JustGiving.Api.Sdk.Http
             }
         }
 
-        public HttpResponseMessage PerformRawRequest(string method, string locationFormat)
+        public DataPackets.HttpResponseMessage PerformRawRequest(string method, string locationFormat)
         {
             var url = BuildUrl(locationFormat);
-            var request = new HttpRequestMessage(method, url);
+            var request = new DataPackets.HttpRequestMessage(method, url);
             return _httpClient.Send(request);
         }
 
-        public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType, byte[] postData)
+        public DataPackets.HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType, byte[] postData)
         {
             var url = BuildUrl(locationFormat);
-            var content = HttpContent.Create(postData, contentType);
-            var request = new HttpRequestMessage(method, url, content);
-            return _httpClient.Send(request);
+            return _httpClient.Send(method, url, postData, contentType);
         }
 
         public TResponseType PerformApiRequest<TResponseType>(string method, string locationFormat)
@@ -76,28 +66,15 @@ namespace JustGiving.Api.Sdk.Http
             var url = BuildUrl(locationFormat);
 
             var payload = _payloadBuilder.BuildPayload(request);
-            var httpRequestMessage = new HttpRequestMessage(method, url, payload);
-            SetContentType(httpRequestMessage);
-
-            var response = _httpClient.Send(httpRequestMessage);
+            var response = _httpClient.Send(method, url, payload);
             var responseContent = ValidateResponse(response);
 
             return _payloadBuilder.UnpackResponse<TResponseType>(responseContent);
         }
 
-        private void SetContentType(HttpRequestMessage httpRequestMessage)
-        {
-            if (_clientConfiguration.WireDataFormat == WireDataFormat.Xml)
-            {
-                httpRequestMessage.Headers.ContentType = _payloadBuilder.XmlContentType;
-            }
-            else if (_clientConfiguration.WireDataFormat == WireDataFormat.Json)
-            {
-                httpRequestMessage.Headers.ContentType = _payloadBuilder.JsonContentType;
-            }
-        }
 
-        private string ValidateResponse(HttpResponseMessage response)
+
+        private string ValidateResponse(DataPackets.HttpResponseMessage response)
         {
             var responseContent = response.Content.ReadAsString();
             ThrowExceptionForExceptionalStatusCodes(response, responseContent);
@@ -110,7 +87,7 @@ namespace JustGiving.Api.Sdk.Http
             return responseContent;
         }
 
-        private void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)
+        private void ThrowExceptionForExceptionalStatusCodes(DataPackets.HttpResponseMessage response, string content)
         {
             switch (response.StatusCode)
             {
@@ -125,9 +102,6 @@ namespace JustGiving.Api.Sdk.Http
                         throw ErrorResponseExceptionFactory.CreateException(response, content, errorsDespiteSuccess);
                     }
                     return;
-
-                case HttpStatusCode.NotFound:
-                    throw new HttpException(404, "Resource not found");
                 default:
                     var errors = TryExtractErrorsFromResponse(content);
                     throw ErrorResponseExceptionFactory.CreateException(response, content, errors);
@@ -156,11 +130,6 @@ namespace JustGiving.Api.Sdk.Http
             var location =  locationFormat
                 .Replace("{apiKey}", _clientConfiguration.ApiKey)
                 .Replace("{apiVersion}", _clientConfiguration.ApiVersion.ToString());
-            
-            if (EnableDebug)
-            {
-                location += !location.Contains("?") ? "?" : "&" + "debug=true";
-            }
 
             return new Uri(location);
         }

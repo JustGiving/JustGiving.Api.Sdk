@@ -4,7 +4,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public class DonationApi : ApiClientBase, IDonationApi
     {
-        public DonationApi(JustGivingClient parent)
+        public DonationApi(JustGivingClientBase parent)
             : base(parent)
         {
         }

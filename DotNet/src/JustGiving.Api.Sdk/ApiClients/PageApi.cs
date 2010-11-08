@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Security.Authentication;
-using System.Web;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Page;
 
@@ -9,7 +7,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public class PageApi : ApiClientBase, IPageApi
     {
-        public PageApi(JustGivingClient parent)
+        public PageApi(JustGivingClientBase parent)
             : base(parent)
         {
         }
@@ -18,7 +16,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
             if(string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Password))
             {
-                throw new AuthenticationException(
+                throw new Exception(
                     "Authentication required to list pages.  Please set a valid configuration object.");
             }
 
@@ -86,7 +84,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
         {
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images" + "?caption=" + HttpUtility.UrlEncode(caption);
+            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images" + "?caption=" + Uri.EscapeDataString(caption);
             var response = Parent.HttpChannel.PerformRawRequest("POST", locationFormat, imageContentType, imageBytes); 
             
             switch (response.StatusCode)

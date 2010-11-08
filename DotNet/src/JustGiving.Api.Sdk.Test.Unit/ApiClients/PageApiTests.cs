@@ -83,7 +83,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             var config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion) { Password = "somePassword" };
             var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, httpClient);
 
-            var exception = Assert.Throws<AuthenticationException>(() => api.ListAll());
+            var exception = Assert.Throws<Exception>(() => api.ListAll());
 
             Assert.That(exception.Message, Is.StringContaining("Authentication required to list pages.  Please set a valid configuration object."));
         }
@@ -95,7 +95,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             var config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion) { Username = "someUsername" };
             var api = ApiClient.Create<PageApi, FundraisingPageSummaries>(config, httpClient);
 
-            var exception = Assert.Throws<AuthenticationException>(() => api.ListAll());
+            var exception = Assert.Throws<Exception>(() => api.ListAll());
 
             Assert.That(exception.Message, Is.StringContaining("Authentication required to list pages.  Please set a valid configuration object."));
         }

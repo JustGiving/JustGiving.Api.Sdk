@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
-using Microsoft.Http;
+using JustGiving.Api.Sdk.Http.DataPackets;
 
 namespace GG.Api.Sdk.Test.Unit
 {
@@ -39,31 +39,6 @@ namespace GG.Api.Sdk.Test.Unit
             throw new NotImplementedException();
         }
 
-        public HttpResponseMessage Get(string uri)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpResponseMessage Get(string uri, string contentType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpResponseMessage Delete(string url)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddHeader(string key, string value)
-        {
-            Headers.Add(key, value);
-        }
-
-        public void Put(string url, string contentType, HttpContent body)
-        {
-            throw new NotImplementedException();
-        }
-
         public HttpResponseMessage Send(HttpRequestMessage httpRequestMessage)
         {
             LastRequest = httpRequestMessage;
@@ -74,7 +49,47 @@ namespace GG.Api.Sdk.Test.Unit
             return response;
         }
 
+        public void Put(string url, string contentType, HttpContent body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddHeader(string key, string value)
+        {
+            Headers[key] = value;
+        }
+
+        public HttpResponseMessage Send(string method, Uri uri, byte[] postData, string contentType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponseMessage Send(string method, Uri uri, Payload postData)
+        {
+            LastRequest = new HttpRequestMessage(method, uri){Content = new HttpContent{Content = postData.Content, ContentType = postData.ContentType}};
+            var response = new HttpResponseMessage();
+            var content = new TResponseType();
+            response.Content = BuildPayload(content);
+            response.StatusCode = _resultcode;
+            return response;
+        }
+
+        public HttpResponseMessage Delete(string url)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SendAsync(HttpRequestMessage httpRequestMessage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponseMessage Get(string uri)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponseMessage Get(string uri, string contentType)
         {
             throw new NotImplementedException();
         }
@@ -88,8 +103,9 @@ namespace GG.Api.Sdk.Test.Unit
         private static HttpContent BuildPayload<TPayloadType>(TPayloadType objectToSerialise)
         {
             var payloadContent = SerializeContentToXml(objectToSerialise);
-            var payload = HttpContent.Create(payloadContent, "application/xml");
-            return payload;
+            //var payload = HttpContent.Create(payloadContent, "application/xml");
+            var pp = new HttpContent {Content = payloadContent, ContentType = "appication/xml"};
+            return pp;
         }
 
         private static string SerializeContentToXml<TPayloadType>(TPayloadType objectToSerialise)

@@ -1,5 +1,4 @@
 ﻿using System;
-using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Account;
 using JustGiving.Api.Sdk.Model.Page;
 
@@ -7,7 +6,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public class AccountApi : ApiClientBase, IAccountApi
     {
-        public AccountApi(JustGivingClient parent):base(parent)
+        public AccountApi(JustGivingClientBase parent):base(parent)
         {
         }
 

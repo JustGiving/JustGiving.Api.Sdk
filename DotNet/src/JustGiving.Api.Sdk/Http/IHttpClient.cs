@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Http;
-using Microsoft.Http.Headers;
+using JustGiving.Api.Sdk.Http.DataPackets;
 
 namespace JustGiving.Api.Sdk.Http
 {
@@ -15,5 +13,7 @@ namespace JustGiving.Api.Sdk.Http
         HttpResponseMessage Send(HttpRequestMessage httpRequestMessage);
         void Put(string url, string contentType, HttpContent body);
         void AddHeader(string key, string value);
+        HttpResponseMessage Send(string method, Uri uri, byte[] postData, string contentType);
+        HttpResponseMessage Send(string method, Uri uri, Payload postData);
     }
 }

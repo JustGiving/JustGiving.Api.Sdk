@@ -1,10 +1,10 @@
 ﻿namespace JustGiving.Api.Sdk.ApiClients
 {
     public abstract class ApiClientBase
-    {        
-        protected readonly JustGivingClient Parent;
+    {
+        protected readonly JustGivingClientBase Parent;
 
-        protected ApiClientBase(JustGivingClient parent)
+        protected ApiClientBase(JustGivingClientBase parent)
         {
             Parent = parent;
         }

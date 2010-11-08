@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.Http;
 
 namespace JustGiving.Api.Sdk.Http
 {
     public class ApiClientException : Exception
     {
         public Errors Errors { get; set; }
-        public HttpResponseMessage Response { get; private set; }
+        public DataPackets.HttpResponseMessage Response { get; private set; }
         
         public ApiClientException(string message, Exception innerException)
             : base(message, innerException)
@@ -17,12 +16,12 @@ namespace JustGiving.Api.Sdk.Http
         {
         }
 
-        public ApiClientException(string message, HttpResponseMessage response)
+        public ApiClientException(string message, DataPackets.HttpResponseMessage response)
             : this(message, response, null)
         {
         }
 
-        public ApiClientException(string message, HttpResponseMessage response, Errors errors)
+        public ApiClientException(string message, DataPackets.HttpResponseMessage response, Errors errors)
             : base(message)
         {
             Errors = errors;

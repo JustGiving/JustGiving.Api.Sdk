@@ -1,11 +1,10 @@
 ﻿using JustGiving.Api.Sdk.Model.Event;
-using JustGiving.Api.Sdk.Model.Page;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class EventApi: ApiClientBase, IEventApi
     {
-        public EventApi(JustGivingClient parent)
+        public EventApi(JustGivingClientBase parent)
             : base(parent)
         {
         }

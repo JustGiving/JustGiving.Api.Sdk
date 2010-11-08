@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Http;
 
 namespace JustGiving.Api.Sdk.Http
 {
     public class ErrorResponseException: Exception
     {
         public Errors Errors { get; set; }
-        public HttpResponseMessage Response { get; private set; }
+        public DataPackets.HttpResponseMessage Response { get; private set; }
 
-        public ErrorResponseException(HttpResponseMessage response, Errors errors, string message)
+        public ErrorResponseException(DataPackets.HttpResponseMessage response, Errors errors, string message)
             : base(message)
         {
             Errors = errors;

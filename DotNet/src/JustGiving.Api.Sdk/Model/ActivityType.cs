@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace JustGiving.Api.Sdk.Model
 {
-    [Serializable]
     public enum ActivityType
     {
         NotSet = 0,
