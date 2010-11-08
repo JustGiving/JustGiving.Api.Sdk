@@ -85,13 +85,28 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void RetrievePage_WhenProvidedWithAKnownPage_ReturnsPublicPageView(WireDataFormat format)
         {
-            var client = CreateClientNoCredentials(format);
+            var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
 
-            var pageData = pageClient.Retrieve("rasha25");
+            // Create Page
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = pageShortName,
+                PageTitle = "Page Created For Update Story Integration Test",
+                EventName = "Story Update Testing",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+            pageClient.Create(pageCreationRequest);
+
+            // Act
+            var pageData = pageClient.Retrieve(pageShortName);
 
             Assert.NotNull(pageData);
-            Assert.That(pageData.PageCreatorName.ToLower(), Is.StringContaining("rasha"));
+            Assert.That(pageData.PageCreatorName, Is.StringContaining("Test Test"));
         }
 
         [TestCase(WireDataFormat.Json)]
