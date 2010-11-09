@@ -11,7 +11,7 @@ namespace JustGiving.Api.Sdk
         public string RootDomain { get; set; }
         public WireDataFormat WireDataFormat { get; set; }
 
-        public ClientConfiguration(string apiKey): this("http://api.justgiving.com/", apiKey, 1)
+        public ClientConfiguration(string apiKey): this("https://api.justgiving.com/", apiKey, 1)
         {
         }
         public ClientConfiguration(string rootDomain, string apiKey, int apiVersion)
