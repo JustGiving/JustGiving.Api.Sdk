@@ -2,7 +2,7 @@
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
-    public interface ICharityApi
+    public interface ICharityApi: ICharityApiAsync
     {
         Charity Retrieve(int charityId);
     }

@@ -10,27 +10,53 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
         }
 
-        public string Create(CreateAccountRequest request)
+        public string CreateLocationFormat(CreateAccountRequest request)
         {
             if(request == null)
             {
                 throw new ArgumentNullException("request", "Request cannot be null.");
             }
 
-            string locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account";
-            var response = Parent.HttpChannel.PerformApiRequest<CreateAccountRequest, AccountRegistrationConfirmation>("PUT", locationFormat, request);
-            return response.Email;
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account";
         }
 
-        public FundraisingPageSummaries ListAllPages(string email)
+        public string Create(CreateAccountRequest request)
+        {
+            var locationFormat = CreateLocationFormat(request);
+            return Parent.HttpChannel.PerformApiRequest<CreateAccountRequest, AccountRegistrationConfirmation>("PUT", locationFormat, request).Email;
+        }
+
+        public void CreateAsync(CreateAccountRequest request, Action<string> callback)
+        {
+            string locationFormat = CreateLocationFormat(request);
+            Parent.HttpChannel.PerformApiRequestAsync<CreateAccountRequest, AccountRegistrationConfirmation>("PUT", locationFormat, request, response=>CreateAsyncEnd(response, callback));
+        }
+
+        private static void CreateAsyncEnd(AccountRegistrationConfirmation response, Action<string> clientCallback)
+        {
+            clientCallback(response.Email);
+        }
+
+        public string ListAllPagesLocationFormat(string email)
         {
             if (string.IsNullOrEmpty(email))
             {
                 throw new ArgumentNullException("email", "Email cannot be null or empty.");
             }
 
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/pages";
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/pages";
+        }
+
+        public FundraisingPageSummaries ListAllPages(string email)
+        {
+            var locationFormat = ListAllPagesLocationFormat(email);
             return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummaries>("GET", locationFormat);
+        }
+
+        public void ListAllPagesAsync(string email, Action<FundraisingPageSummaries> callback)
+        {
+            var locationFormat = ListAllPagesLocationFormat(email);
+            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
         }
     }
 }

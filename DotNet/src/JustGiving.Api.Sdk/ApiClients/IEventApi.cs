@@ -2,7 +2,7 @@
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
-    public interface IEventApi
+    public interface IEventApi: IEventApiAsync
     {
         Event Retrieve(int eventId);
         GetPagesForEventResponse RetrievePages(int eventId);

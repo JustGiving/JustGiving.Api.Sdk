@@ -48,12 +48,18 @@
   <ItemGroup>
     <Compile Include="ApiClients\CharityApi.cs" />
     <Compile Include="ApiClients\EventApi.cs" />
+    <Compile Include="ApiClients\IAccountApiAsync.cs" />
+    <Compile Include="ApiClients\ICharityApiAsync.cs" />
+    <Compile Include="ApiClients\IDonationApiAsync.cs" />
     <Compile Include="ApiClients\IEventApi.cs" />
     <Compile Include="ApiClients\IAccountApi.cs" />
     <Compile Include="ApiClients\ICharityApi.cs" />
     <Compile Include="ApiClients\IDonationApi.cs" />
+    <Compile Include="ApiClients\IEventApiAsync.cs" />
     <Compile Include="ApiClients\IPageApi.cs" />
+    <Compile Include="ApiClients\IPageApiAsync.cs" />
     <Compile Include="ApiClients\ISearchApi.cs" />
+    <Compile Include="ApiClients\ISearchApiAsync.cs" />
     <Compile Include="ApiClients\PageApi.cs" />
     <Compile Include="ApiClients\SearchApi.cs" />
     <Compile Include="Http\DataPackets\HttpContent.cs" />

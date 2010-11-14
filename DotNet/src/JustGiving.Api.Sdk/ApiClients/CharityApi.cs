@@ -1,4 +1,5 @@
-﻿using JustGiving.Api.Sdk.Model.Charity;
+﻿using System;
+using JustGiving.Api.Sdk.Model.Charity;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
@@ -9,10 +10,21 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
         }
 
+        public string RetrieveLocationFormat(int charityId)
+        {
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/" + charityId;
+        }
+
         public Charity Retrieve(int charityId)
         {
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/" + charityId;
+            var locationFormat = RetrieveLocationFormat(charityId);
             return Parent.HttpChannel.PerformApiRequest<Charity>("GET", locationFormat);
+        }
+
+        public void RetrieveAsync(int charityId, Action<Charity> callback)
+        {
+            var locationFormat = RetrieveLocationFormat(charityId);
+            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
         }
     }
 }
