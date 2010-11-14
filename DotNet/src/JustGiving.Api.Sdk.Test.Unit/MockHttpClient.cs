@@ -64,7 +64,7 @@ namespace GG.Api.Sdk.Test.Unit
             throw new NotImplementedException();
         }
 
-        public HttpResponseMessage Send(string method, Uri uri, Payload postData)
+        public HttpResponseMessage Send(string method, Uri uri, HttpContent postData)
         {
             LastRequest = new HttpRequestMessage(method, uri){Content = new HttpContent{Content = postData.Content, ContentType = postData.ContentType}};
             var response = new HttpResponseMessage();
@@ -121,6 +121,21 @@ namespace GG.Api.Sdk.Test.Unit
                     return reader.ReadToEnd();
                 }
             }
+        }
+
+        public void SendAsync(HttpRequestMessage httpRequestMessage, Action<HttpResponseMessage> httpClientCallback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendAsync(string method, Uri uri, byte[] postData, string contentType, Action<HttpResponseMessage> httpClientCallback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendAsync(string method, Uri uri, HttpContent postData, Action<HttpResponseMessage> httpClientCallback)
+        {
+            throw new NotImplementedException();
         }
     }
 }

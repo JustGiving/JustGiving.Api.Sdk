@@ -9,5 +9,15 @@
         {
             return Content;
         }
+
+        public HttpContent()
+        {
+        }
+
+        public HttpContent(string content, string contentType)
+        {
+            Content = content;
+            ContentType = contentType;
+        }
     }
 }

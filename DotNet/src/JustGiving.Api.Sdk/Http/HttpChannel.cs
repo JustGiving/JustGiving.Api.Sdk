@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using JustGiving.Api.Sdk.Http.DataPackets;
 
 namespace JustGiving.Api.Sdk.Http
 {
@@ -38,22 +39,40 @@ namespace JustGiving.Api.Sdk.Http
             }
         }
 
-        public DataPackets.HttpResponseMessage PerformRawRequest(string method, string locationFormat)
+        public HttpResponseMessage PerformRawRequest(string method, string locationFormat)
         {
             var url = BuildUrl(locationFormat);
-            var request = new DataPackets.HttpRequestMessage(method, url);
+            var request = new HttpRequestMessage(method, url);
             return _httpClient.Send(request);
         }
 
-        public DataPackets.HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType, byte[] postData)
+        public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType, byte[] postData)
         {
             var url = BuildUrl(locationFormat);
             return _httpClient.Send(method, url, postData, contentType);
         }
 
+        public void PerformRawRequestAsync(string method, string locationFormat, Action<HttpResponseMessage> httpClientCallback)
+        {
+            var url = BuildUrl(locationFormat);
+            var request = new HttpRequestMessage(method, url);
+            _httpClient.SendAsync(request, httpClientCallback);
+        }
+
+        public void PerformRawRequestAsync(string method, string locationFormat, string contentType, byte[] postData, Action<HttpResponseMessage> httpClientCallback)
+        {
+            var url = BuildUrl(locationFormat);
+            _httpClient.SendAsync(method, url, postData, contentType, httpClientCallback);
+        }
+
         public TResponseType PerformApiRequest<TResponseType>(string method, string locationFormat)
         {
             return PerformApiRequest<object, TResponseType>(method, locationFormat, null);
+        }
+
+        public void PerformApiRequestAsync<TResponseType>(string method, string locationFormat, Action<TResponseType> apiCallback)
+        {
+            PerformApiRequestAsync<object, TResponseType>(method, locationFormat, null, apiCallback);
         }
 
         public TResponseType PerformApiRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request) where TRequestType : class
@@ -64,17 +83,35 @@ namespace JustGiving.Api.Sdk.Http
             }
 
             var url = BuildUrl(locationFormat);
-
             var payload = _payloadBuilder.BuildPayload(request);
             var response = _httpClient.Send(method, url, payload);
-            var responseContent = ValidateResponse(response);
+            return ProcessResponse<TResponseType>(response);
+        }
 
+        public void PerformApiRequestAsync<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request, Action<TResponseType> apiCallback) where TRequestType : class
+        {
+            if(method.NotAccepted())
+            {
+                throw new ArgumentException("Invalid Http Method - Currently Supported Methods are GET, POST, PUT and HEAD", "method");
+            }
+
+            var url = BuildUrl(locationFormat);
+            var payload = _payloadBuilder.BuildPayload(request);
+            _httpClient.SendAsync(method, url, payload, responseMessage => PerformApiRequestAsyncEnd(responseMessage, apiCallback));
+        }
+
+        private TResponseType ProcessResponse<TResponseType>(HttpResponseMessage response)
+        {
+            var responseContent = ValidateResponse(response);
             return _payloadBuilder.UnpackResponse<TResponseType>(responseContent);
         }
 
+        public void PerformApiRequestAsyncEnd<TResponseType>(HttpResponseMessage response, Action<TResponseType> callback)
+        {
+            callback(ProcessResponse<TResponseType>(response));
+        }
 
-
-        private string ValidateResponse(DataPackets.HttpResponseMessage response)
+        private string ValidateResponse(HttpResponseMessage response)
         {
             var responseContent = response.Content.ReadAsString();
             ThrowExceptionForExceptionalStatusCodes(response, responseContent);
@@ -87,7 +124,7 @@ namespace JustGiving.Api.Sdk.Http
             return responseContent;
         }
 
-        private void ThrowExceptionForExceptionalStatusCodes(DataPackets.HttpResponseMessage response, string content)
+        private void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)
         {
             switch (response.StatusCode)
             {

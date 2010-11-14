@@ -14,20 +14,46 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public FundraisingPageSummaries ListAll()
         {
-            if(string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Password))
-            {
-                throw new Exception(
-                    "Authentication required to list pages.  Please set a valid configuration object.");
-            }
-
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages";
+            string locationFormat = GetListAllLocationFormat();
             return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummaries>("GET", locationFormat);
+        }
+
+        public void ListAllAsync(Action<FundraisingPageSummaries> callback)
+        {
+            string locationFormat = GetListAllLocationFormat();
+            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
         }
 
         public FundraisingPage Retrieve(string pageShortName)
         {
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName;
+            var locationFormat = GetRetrieveLocationFormat(pageShortName);
             return Parent.HttpChannel.PerformApiRequest<FundraisingPage>("GET", locationFormat);
+        }
+
+        public void RetrieveAsync(string pageShortName, Action<FundraisingPage> callback)
+        {
+            var locationFormat = GetRetrieveLocationFormat(pageShortName);
+            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+        }
+
+        public void RetrieveDonationsForPageAsync(string pageShortName, Action<FundraisingPageDonations> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RetrieveDonationsForPageAsync(string pageShortName, int? pageSize, int? pageNumber, Action<FundraisingPageDonations> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateAsync(RegisterPageRequest request, Action<PageRegistrationConfirmation> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IsPageShortNameRegisteredAsync(string pageShortName, Action<bool> callback)
+        {
+            throw new NotImplementedException();
         }
 
         public FundraisingPageDonations RetrieveDonationsForPage(string pageShortName)
@@ -96,6 +122,23 @@ namespace JustGiving.Api.Sdk.ApiClients
                     var potentialErrors = Parent.HttpChannel.TryExtractErrorsFromResponse(rawResponse);
                     throw ErrorResponseExceptionFactory.CreateException(response, rawResponse, potentialErrors);
             }
+        }
+
+
+
+        private string GetListAllLocationFormat()
+        {
+            if (string.IsNullOrEmpty(Parent.Configuration.Username) || string.IsNullOrEmpty(Parent.Configuration.Password))
+            {
+                throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
+            }
+
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages";
+        }
+
+        private string GetRetrieveLocationFormat(string pageShortName)
+        {
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName;
         }
     }
 }

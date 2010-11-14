@@ -36,7 +36,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             return ToNativeResponse(response);
         }
 
-        public DataPackets.HttpResponseMessage Send(string method, Uri uri, Payload postData)
+        public DataPackets.HttpResponseMessage Send(string method, Uri uri, DataPackets.HttpContent postData)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType))
                                          {Headers = {ContentType = postData.ContentType}};
@@ -80,6 +80,21 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
                 Uri = response.Uri
             };
             return responseFormat;
+        }
+
+        public void SendAsync(DataPackets.HttpRequestMessage httpRequestMessage, Action<DataPackets.HttpResponseMessage> httpClientCallback)
+        {
+            throw new NotImplementedException("Not currently supported on the desktop");
+        }
+
+        public void SendAsync(string method, Uri uri, byte[] postData, string contentType, Action<DataPackets.HttpResponseMessage> httpClientCallback)
+        {
+            throw new NotImplementedException("Not currently supported on the desktop");
+        }
+
+        public void SendAsync(string method, Uri uri, DataPackets.HttpContent postData, Action<DataPackets.HttpResponseMessage> httpClientCallback)
+        {
+            throw new NotImplementedException("Not currently supported on the desktop");
         }
     }
 }

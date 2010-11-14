@@ -75,7 +75,6 @@
     <Compile Include="Http\DataPackets\HttpContent.cs" />
     <Compile Include="Http\DataPackets\HttpRequestMessage.cs" />
     <Compile Include="Http\DataPackets\HttpResponseMessage.cs" />
-    <Compile Include="Http\DataPackets\Payload.cs" />
     <Compile Include="Http\ErrorResponse.cs" />
     <Compile Include="Http\ErrorResponseException.cs" />
     <Compile Include="Http\ErrorResponseExceptionFactory.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Http\HttpBasicAuthCredentials.cs" />
     <Compile Include="Http\HttpChannel.cs" />
     <Compile Include="Http\IHttpClient.cs" />
+    <Compile Include="Http\IHttpClientAsync.cs" />
     <Compile Include="Http\MultiformatPayloadBuilder.cs" />
     <Compile Include="Http\ResourceNotFoundException.cs" />
     <Compile Include="Http\SilverlightPhone7\SilverlightHttpClient.cs" />

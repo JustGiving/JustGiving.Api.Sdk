@@ -20,7 +20,7 @@ namespace JustGiving.Api.Sdk.Http
             JsonContentType = "application/json";
         }
 
-        public Payload BuildPayload<TPayloadType>(TPayloadType objectToSerialise) where TPayloadType : class
+        public HttpContent BuildPayload<TPayloadType>(TPayloadType objectToSerialise) where TPayloadType : class
         {
             string contentType;
             string payload;
@@ -29,7 +29,7 @@ namespace JustGiving.Api.Sdk.Http
             {
                 if(objectToSerialise == null)
                 {
-                    return new Payload { Content = string.Empty, ContentType = XmlContentType };
+                    return new HttpContent { Content = string.Empty, ContentType = XmlContentType };
                 }
 
                 payload = SerializeContentToXml(objectToSerialise);
@@ -39,14 +39,14 @@ namespace JustGiving.Api.Sdk.Http
             {
                 if (objectToSerialise == null)
                 {
-                    return new Payload {Content = string.Empty, ContentType = JsonContentType};
+                    return new HttpContent { Content = string.Empty, ContentType = JsonContentType };
                 }
 
                 payload = SerializeContentToJson(objectToSerialise);
                 contentType = JsonContentType;
             }
 
-            return new Payload {Content = payload, ContentType = contentType};
+            return new HttpContent { Content = payload, ContentType = contentType };
         }
 
         public T UnpackResponse<T>(string responseContent)
