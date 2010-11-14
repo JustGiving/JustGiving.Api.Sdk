@@ -113,7 +113,7 @@ namespace JustGiving.Api.Sdk.Http
 
         private string ValidateResponse(HttpResponseMessage response)
         {
-            var responseContent = response.Content.ReadAsString();
+            var responseContent = response.Content.Content;
             ThrowExceptionForExceptionalStatusCodes(response, responseContent);
             
             if (string.IsNullOrEmpty(responseContent))
@@ -136,14 +136,14 @@ namespace JustGiving.Api.Sdk.Http
                     var errorsDespiteSuccess = TryExtractErrorsFromResponse(content);
                     if (errorsDespiteSuccess != null && errorsDespiteSuccess.Count > 0)
                     {
-                        throw ErrorResponseExceptionFactory.CreateException(response, content, errorsDespiteSuccess);
+                        throw ErrorResponseExceptionFactory.CreateException(response, errorsDespiteSuccess);
                     }
                     return;
                 case HttpStatusCode.NotFound:
                     throw new ResourceNotFoundException();
                 default:
                     var errors = TryExtractErrorsFromResponse(content);
-                    throw ErrorResponseExceptionFactory.CreateException(response, content, errors);
+                    throw ErrorResponseExceptionFactory.CreateException(response, errors);
             }
         }
 

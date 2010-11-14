@@ -5,11 +5,6 @@
         public string ContentType { get; set; }
         public string Content { get; set; }
 
-        public string ReadAsString()
-        {
-            return Content;
-        }
-
         public HttpContent()
         {
         }

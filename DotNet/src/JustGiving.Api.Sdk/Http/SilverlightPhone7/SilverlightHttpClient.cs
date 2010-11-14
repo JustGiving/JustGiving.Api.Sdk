@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
-using RestSharp;
 
 namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
 {
@@ -29,7 +28,6 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
         public void SendAsync(HttpRequestMessage httpRequestMessage, Action<HttpResponseMessage> httpClientCallback)
         {
             SendAsync(httpRequestMessage.Method, httpRequestMessage.Uri, new HttpContent(httpRequestMessage.Content.Content, httpRequestMessage.Content.ContentType), httpClientCallback);
-            throw new NotImplementedException();
         }
 
         public void SendAsync(string method, Uri uri, byte[] postData, string contentType, Action<HttpResponseMessage> httpClientCallback)
@@ -37,41 +35,83 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
             throw new NotImplementedException();
         }
 
-        public void SendAsync(string method, Uri uri, HttpContent postData, Action<HttpResponseMessage> httpClientCallback)
+        private class SlAsync
         {
-            var client = new RestClient(uri.Scheme + "://" + uri.Host);
-            var request = new RestRequest(uri.AbsolutePath) {RootElement = "Success"};
-            foreach(var header in _headers)
-            {
-                request.AddHeader(header.Key, header.Value);
-            }
-            client.ExecuteAsync(request, callback => SendAsyncEnd(httpClientCallback, callback, method));
+            public HttpWebRequest WebRequest { get; set; }
+            public HttpContent PostData { get; set; }
+            public Action<HttpResponseMessage> HttpClientCallback { get; set; }
         }
 
-        public void SendAsyncEnd(Action<HttpResponseMessage> httpClientCallback, RestResponse response, string method)
+        public void SendAsync(string method, Uri uri, HttpContent postData, Action<HttpResponseMessage> httpClientCallback)
         {
-            var restResponse = ToNativeResponse(response, method);
+            var httpRequest = WebRequest.CreateHttp(uri);
+            httpRequest.Method = method;
+
+            foreach(var header in _headers)
+            {
+                httpRequest.Headers[header.Key] = header.Value;
+            }
+
+            var rawRequestData = new SlAsync { PostData = postData, HttpClientCallback = httpClientCallback, WebRequest = httpRequest };
+
+            if (method == "PUT" || method == "POST")
+            {
+                httpRequest.BeginGetRequestStream(WriteStream, rawRequestData);
+            }
+            else
+            {
+                httpRequest.BeginGetResponse(ReadCallback, rawRequestData);
+            }
+        }
+
+        private void WriteStream(IAsyncResult asynchronousResult)
+        {
+            var slRequest = (SlAsync)asynchronousResult.AsyncState;
+            var request = slRequest.WebRequest;
+            request.ContentType = slRequest.PostData.ContentType;
+            var requestStream = request.EndGetRequestStream(asynchronousResult);
+            var writer = new StreamWriter(requestStream);
+            writer.Write(slRequest.PostData.Content);
+            writer.Close();
+            requestStream.Close();
+            request.BeginGetResponse(ReadCallback, slRequest);
+            
+        }
+
+        private void ReadCallback(IAsyncResult asynchronousResult)
+        {
+            var request = (SlAsync)asynchronousResult.AsyncState;
+            var response = (HttpWebResponse)request.WebRequest.EndGetResponse(asynchronousResult);
+            SendAsyncEnd(request.HttpClientCallback, response);
+        }
+
+        public void SendAsyncEnd(Action<HttpResponseMessage> httpClientCallback, HttpWebResponse response)
+        {
+            var restResponse = ToNativeResponse(response);
             httpClientCallback(restResponse);
         }
 
-        private static HttpResponseMessage ToNativeResponse(RestResponse response, string httpMethod)
+        private static HttpResponseMessage ToNativeResponse(HttpWebResponse response)
         {
-            var native = new HttpResponseMessage
-                             {
-                                 Content =
-                                 {
-                                     Content = response.Content,
-                                     ContentType = response.ContentType
-                                 },
-                                 Method = httpMethod,
-                                 StatusCode = response.StatusCode,
-                                 Uri = response.ResponseUri
-                             };
-            return native;
+            string content;
+            using (var streamReader = new StreamReader(response.GetResponseStream()))
+            {
+                content = streamReader.ReadToEnd();
+            }
+
+            var responseFormat = new HttpResponseMessage
+            {
+                Content =
+                {
+                    Content = content,
+                    ContentType = response.ContentType
+                },
+                Method = response.Method,
+                StatusCode = response.StatusCode,
+                Uri = response.ResponseUri
+            };
+            return responseFormat;
         }
-
-
-
 
         public HttpResponseMessage Send(HttpRequestMessage httpRequestMessage)
         {

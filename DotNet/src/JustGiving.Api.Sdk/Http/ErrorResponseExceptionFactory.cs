@@ -4,7 +4,7 @@ namespace JustGiving.Api.Sdk.Http
 {
     public static class ErrorResponseExceptionFactory
     {
-        public static ErrorResponseException CreateException(DataPackets.HttpResponseMessage response, string responseContent, Errors errors)
+        public static ErrorResponseException CreateException(DataPackets.HttpResponseMessage response, Errors errors)
         {
             var errorMessageBuilder = new StringBuilder();
 
@@ -21,9 +21,9 @@ namespace JustGiving.Api.Sdk.Http
                 }
             }
 
-            if (!string.IsNullOrEmpty(responseContent))
+            if (response != null && !string.IsNullOrEmpty(response.Content.Content))
             {
-                errorMessageBuilder.AppendLine(responseContent);
+                errorMessageBuilder.AppendLine(response.Content.Content);
             }
 
             return new ErrorResponseException(response, errors, errorMessageBuilder.ToString());
