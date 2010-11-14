@@ -8,11 +8,6 @@ namespace JustGiving.Api.Sdk.Http
         {
             var errorMessageBuilder = new StringBuilder();
 
-            if (response != null)
-            {
-                errorMessageBuilder.AppendLine(response.ToString());
-            }
-
             if (errors != null)
             {
                 foreach (var error in errors)
