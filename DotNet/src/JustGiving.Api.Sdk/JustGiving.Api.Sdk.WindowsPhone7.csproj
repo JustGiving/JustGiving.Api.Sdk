@@ -41,9 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\ExternalLibs\RestSharp\cb3e368\Newtonsoft.Json.Silverlight.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Servicemodel" />
     <Reference Include="System.Servicemodel.Web" />
@@ -66,6 +63,7 @@
     <Compile Include="ApiClients\IDonationApi.cs" />
     <Compile Include="ApiClients\IDonationApiAsync.cs" />
     <Compile Include="ApiClients\IEventApi.cs" />
+    <Compile Include="ApiClients\IEventApiAsync.cs" />
     <Compile Include="ApiClients\IPageApi.cs" />
     <Compile Include="ApiClients\IPageApiAsync.cs" />
     <Compile Include="ApiClients\ISearchApi.cs" />
