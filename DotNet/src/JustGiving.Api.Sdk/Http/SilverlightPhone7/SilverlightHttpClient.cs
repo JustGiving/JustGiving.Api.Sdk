@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Windows;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 
@@ -88,7 +89,7 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
         public void SendAsyncEnd(Action<HttpResponseMessage> httpClientCallback, HttpWebResponse response)
         {
             var restResponse = ToNativeResponse(response);
-            httpClientCallback(restResponse);
+            Deployment.Current.Dispatcher.BeginInvoke(() => httpClientCallback(restResponse));
         }
 
         private static HttpResponseMessage ToNativeResponse(HttpWebResponse response)
