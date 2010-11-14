@@ -26,15 +26,6 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
         {
         }
 
-        private class SlAsync
-        {
-            public HttpWebRequest WebRequest { get; set; }
-            public HttpContent PostData { get; set; }
-            public byte[] RawPostData { get; set; }
-            public string RawPostDataContentType { get; set; }
-            public Action<HttpResponseMessage> HttpClientCallback { get; set; }
-        }
-
         public void SendAsync(HttpRequestMessage httpRequestMessage, Action<HttpResponseMessage> httpClientCallback)
         {
             SendAsync(httpRequestMessage.Method, httpRequestMessage.Uri, new HttpContent(httpRequestMessage.Content.Content, httpRequestMessage.Content.ContentType), httpClientCallback);
@@ -43,14 +34,14 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
         public void SendAsync(string method, Uri uri, byte[] postData, string contentType, Action<HttpResponseMessage> httpClientCallback)
         {
             var httpRequest = ConfigureWebRequest(uri, method);
-            var rawRequestData = new SlAsync { RawPostData = postData, RawPostDataContentType = contentType ,HttpClientCallback = httpClientCallback, WebRequest = httpRequest };
+            var rawRequestData = new AsyncRequest { RawPostData = postData, RawPostDataContentType = contentType ,HttpClientCallback = httpClientCallback, WebRequest = httpRequest };
             BeginRequest(method, httpRequest, rawRequestData);
         }
 
         public void SendAsync(string method, Uri uri, HttpContent postData, Action<HttpResponseMessage> httpClientCallback)
         {
             var httpRequest = ConfigureWebRequest(uri, method);
-            var rawRequestData = new SlAsync { PostData = postData, HttpClientCallback = httpClientCallback, WebRequest = httpRequest };
+            var rawRequestData = new AsyncRequest { PostData = postData, HttpClientCallback = httpClientCallback, WebRequest = httpRequest };
             BeginRequest(method, httpRequest, rawRequestData);
         }
 
@@ -70,7 +61,7 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
             }
         }
 
-        private void BeginRequest(string method, HttpWebRequest httpRequest, SlAsync rawRequestData)
+        private void BeginRequest(string method, HttpWebRequest httpRequest, AsyncRequest rawRequestData)
         {
             if (method == "PUT" || method == "POST")
             {
@@ -84,7 +75,7 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
 
         private void WriteStream(IAsyncResult asynchronousResult)
         {
-            var slRequest = (SlAsync)asynchronousResult.AsyncState;
+            var slRequest = (AsyncRequest)asynchronousResult.AsyncState;
             var request = slRequest.WebRequest;
             
             var requestStream = request.EndGetRequestStream(asynchronousResult);
@@ -109,7 +100,7 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
 
         private void ReadCallback(IAsyncResult asynchronousResult)
         {
-            var request = (SlAsync)asynchronousResult.AsyncState;
+            var request = (AsyncRequest)asynchronousResult.AsyncState;
 
             try
             {

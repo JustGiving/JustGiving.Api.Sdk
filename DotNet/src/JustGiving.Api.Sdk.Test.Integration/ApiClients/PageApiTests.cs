@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;

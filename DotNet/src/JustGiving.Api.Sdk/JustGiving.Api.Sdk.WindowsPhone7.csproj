@@ -85,6 +85,7 @@
     <Compile Include="Http\IHttpClientAsync.cs" />
     <Compile Include="Http\MultiformatPayloadBuilder.cs" />
     <Compile Include="Http\ResourceNotFoundException.cs" />
+    <Compile Include="Http\AsyncRequest.cs" />
     <Compile Include="Http\SilverlightPhone7\SilverlightHttpClient.cs" />
     <Compile Include="JustGivingClientBase.cs" />
     <Compile Include="JustGivingMobileClient.cs" />

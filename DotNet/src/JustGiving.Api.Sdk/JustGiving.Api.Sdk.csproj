@@ -62,6 +62,7 @@
     <Compile Include="ApiClients\ISearchApiAsync.cs" />
     <Compile Include="ApiClients\PageApi.cs" />
     <Compile Include="ApiClients\SearchApi.cs" />
+    <Compile Include="Http\AsyncRequest.cs" />
     <Compile Include="Http\DataPackets\HttpContent.cs" />
     <Compile Include="Http\DataPackets\HttpRequestMessage.cs" />
     <Compile Include="Http\DataPackets\HttpResponseMessage.cs" />

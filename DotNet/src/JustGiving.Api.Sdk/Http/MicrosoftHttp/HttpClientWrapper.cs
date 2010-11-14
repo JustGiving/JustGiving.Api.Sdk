@@ -1,5 +1,4 @@
 ﻿using System;
-using JustGiving.Api.Sdk.Http.DataPackets;
 using Microsoft.Http;
 using HttpContent = Microsoft.Http.HttpContent;
 using HttpRequestMessage = Microsoft.Http.HttpRequestMessage;
@@ -84,17 +83,31 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         public void SendAsync(DataPackets.HttpRequestMessage httpRequestMessage, Action<DataPackets.HttpResponseMessage> httpClientCallback)
         {
-            throw new NotImplementedException("Not currently supported on the desktop");
+            var request = ToMicrosoftHttpRequest(httpRequestMessage);
+            var rawRequestData = new AsyncRequest { HttpClientCallback = httpClientCallback };
+            _httpClient.BeginSend(request, SendAsyncEnd, rawRequestData);
         }
 
         public void SendAsync(string method, Uri uri, byte[] postData, string contentType, Action<DataPackets.HttpResponseMessage> httpClientCallback)
         {
-            throw new NotImplementedException("Not currently supported on the desktop");
+            var content = HttpContent.Create(postData, contentType);
+            var request = new HttpRequestMessage(method, uri, content);
+            var rawRequestData = new AsyncRequest { RawPostData = postData, RawPostDataContentType = contentType, HttpClientCallback = httpClientCallback };
+            _httpClient.BeginSend(request, SendAsyncEnd, rawRequestData);
         }
 
         public void SendAsync(string method, Uri uri, DataPackets.HttpContent postData, Action<DataPackets.HttpResponseMessage> httpClientCallback)
         {
-            throw new NotImplementedException("Not currently supported on the desktop");
+            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType)) { Headers = { ContentType = postData.ContentType } };
+            var rawRequestData = new AsyncRequest { PostData = postData, HttpClientCallback = httpClientCallback };
+            _httpClient.BeginSend(httpRequestMessage, SendAsyncEnd, rawRequestData);
+        }
+
+        private void SendAsyncEnd(IAsyncResult response)
+        {
+            var state = (AsyncRequest)response.AsyncState;
+            var responseMessage = _httpClient.EndSend(response);
+            state.HttpClientCallback(ToNativeResponse(responseMessage));
         }
     }
 }
