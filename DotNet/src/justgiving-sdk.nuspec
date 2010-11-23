@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>justgiving-sdk</id>
+		<version>1.1</version>
+		<authors>JustGiving</authors>
+		<description>The JustGiving SDK is a collection of wrapping classes for the RESTful API available to access JustGiving.com. For more information, see http://www.justgiving.com/developer and http://apimanagement.justgiving.com</description>
+		<language>en-US</language>
+	</metadata>
+	<files>
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.dll" target="lib\Net35" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.pdb" target="lib\Net35" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.dll" target="lib\Silverlight" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.pdb" target="lib\Silverlight" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.dll" target="lib" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.pdb" target="lib" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.dll" target="lib" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.pdb" target="lib" /> 
+	</files>  
+</package>
