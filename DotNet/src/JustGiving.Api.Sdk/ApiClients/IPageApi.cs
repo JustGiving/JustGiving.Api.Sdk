@@ -10,7 +10,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName, int? pageSize, int? pageNumber);
         PageRegistrationConfirmation Create(RegisterPageRequest request);
         void UpdateStory(string pageShortName, string storyUpdate);
-        bool IsPageShortNameRegistered(string pageShortName);
+        bool IsPageShortNameRegistered(string pageShortName, string domain);
         void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType);
     }
 }

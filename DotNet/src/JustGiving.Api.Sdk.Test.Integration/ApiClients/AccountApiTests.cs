@@ -49,6 +49,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pages = accountClient.ListAllPages(TestContext.TestUsername);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client);
+
+            var exists = accountClient.IsEmailRegistered("rasha@justgiving.com");
+
+            Assert.IsTrue(exists);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client);
+
+            var exists = accountClient.IsEmailRegistered(Guid.NewGuid().ToString() + "@justgiving.com"); 
+
+            Assert.IsFalse(exists);
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest

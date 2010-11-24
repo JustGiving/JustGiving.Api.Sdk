@@ -57,24 +57,40 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
             var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
 
-            var exception = Assert.Throws<ArgumentNullException>(() => api.IsPageShortNameRegistered(pageShortName));
+            var exception = Assert.Throws<ArgumentNullException>(() => api.IsPageShortNameRegistered(pageShortName, null));
 
             Assert.That(exception.ParamName, Is.StringContaining("pageShortName"));
             Assert.That(exception.Message, Is.StringContaining("pageShortName cannot be null."));
         }
 
-        [Test]
-        public void IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortName_CallsExpectedUrl()
+        [TestCase("")]
+        [TestCase(null)]
+        public void IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortName_CallsExpectedUrl(string domain)
         {
             var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
             var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
             const string pageShortName = "someName";
 
-            api.IsPageShortNameRegistered(pageShortName);
+            api.IsPageShortNameRegistered(pageShortName, domain);
 
             Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/fundraising/pages/{3}", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, pageShortName)));
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("HEAD"));
         }
+
+        [Test]
+        public void IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortNameAndDomain_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<PageRegistrationConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<PageApi, PageRegistrationConfirmation>(httpClient);
+            const string pageShortName = "someName";
+            const string domain = "somedomain.com";
+
+            api.IsPageShortNameRegistered(pageShortName, domain);
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/fundraising/pages/{3}?domain={4}", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, pageShortName, domain)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("HEAD"));
+        }
+
 
         [Test]
         public void ListAll_WhenUsernameAuthenticationIsNull_ThrowsException()

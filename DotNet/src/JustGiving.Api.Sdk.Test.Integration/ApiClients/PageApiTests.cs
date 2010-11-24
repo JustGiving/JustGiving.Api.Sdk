@@ -60,6 +60,58 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(registrationResponse.Next.Uri, Is.StringContaining(pageShortName));
         }
 
+        [Explicit("Environment specific")]
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "api test",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5),
+                Domain = "rflpreview.justgiving.com"
+            };
+
+            var registrationResponse = pageClient.Create(pageCreationRequest);
+
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining("rflpreview.justgiving.com"));
+        }
+
+        [Explicit("Environment specific")]
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RegisterWhenProvidedWithADomainThatDoesNotExistCreatesANewPageOnWwwDotJustGivingDotCom(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "api test",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5),
+                Domain = "Incorrect.com"
+            };
+
+            var registrationResponse = pageClient.Create(pageCreationRequest);
+
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining("www.local.justgiving.com"));
+        }
+
         /// <summary>
         /// This test assumes that the Valid Credentials in the test context has more than 1 page
         /// Which it will do if you run these integration tests at least once.
@@ -136,12 +188,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void IsPageShortNameRegistered_WhenSuppliedKnownExitingPage_ReturnsTrue(WireDataFormat format)
+        public void IsPageShortNameRegistered_WhenSuppliedKnownExistingPage_ReturnsTrue(WireDataFormat format)
         {
             var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
-            var exists = pageClient.IsPageShortNameRegistered("rasha25");
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", null);
 
             Assert.IsTrue(exists);
         }
@@ -236,9 +288,34 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
-            var exists = pageClient.IsPageShortNameRegistered(Guid.NewGuid().ToString());
+            var exists = pageClient.IsPageShortNameRegistered(Guid.NewGuid().ToString(), null);
 
             Assert.IsFalse(exists);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void IsPageShortNameRegistered_WhenSuppliedPageNameUnlikelyToExistOnNonDefaultDomain_ReturnsFalse(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var pageClient = new PageApi(client);
+
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", "rflpreview.justgiving.com");
+
+            Assert.IsFalse(exists);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void IsPageShortNameRegistered_WhenSuppliedUnknownDomainShouldUseDefaultDomain_ReturnsTrue(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var pageClient = new PageApi(client);
+            const string unknownDomain = "unknownDomain.justgiving.com";
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", unknownDomain);
+
+            Assert.IsTrue(exists);
+        }
+       
     }
 }

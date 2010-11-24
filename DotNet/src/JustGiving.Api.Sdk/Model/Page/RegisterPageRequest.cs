@@ -54,5 +54,8 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "causeId")]
         public int? CauseId { get; set; }
+
+        [DataMember(Name = "domain")]
+        public string Domain { get; set; }
     }
 }

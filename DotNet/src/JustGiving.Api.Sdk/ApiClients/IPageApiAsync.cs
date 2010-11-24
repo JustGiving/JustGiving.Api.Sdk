@@ -11,7 +11,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         void RetrieveDonationsForPageAsync(string pageShortName, int? pageSize, int? pageNumber, Action<FundraisingPageDonations> callback);
         void CreateAsync(RegisterPageRequest request, Action<PageRegistrationConfirmation> callback);
         void UpdateStoryAsync(string pageShortName, string storyUpdate);
-        void IsPageShortNameRegisteredAsync(string pageShortName, Action<bool> callback);
+        void IsPageShortNameRegisteredAsync(string pageShortName, string domain, Action<bool> callback);
         void UploadImageAsync(string pageShortName, string caption, byte[] imageBytes, string imageContentType);
     }
 }

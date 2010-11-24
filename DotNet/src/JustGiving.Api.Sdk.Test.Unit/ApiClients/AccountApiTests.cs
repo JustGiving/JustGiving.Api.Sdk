@@ -60,5 +60,31 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/pages", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("GET"));
         }
+
+        [TestCase("")]
+        [TestCase(null)]
+        public void IsEmailRegistered_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(string email)
+        {
+            var api = new AccountApi(new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+
+            var exception = Assert.Throws<ArgumentNullException>(() => api.IsEmailRegistered(email));
+
+            Assert.That(exception.ParamName, Is.StringContaining("email"));
+            Assert.That(exception.Message, Is.StringContaining("Email cannot be null or empty."));
+        }
+
+        [Test]
+        public void IsEmailRegistered_WhenProvidedWithEmail_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<FundraisingPageSummaries>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, FundraisingPageSummaries>(httpClient);
+            const string email = "some@email.com";
+
+            api.IsEmailRegistered(email);
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("HEAD"));
+        }
+
     }
 }

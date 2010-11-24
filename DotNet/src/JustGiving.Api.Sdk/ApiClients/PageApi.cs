@@ -121,26 +121,27 @@ namespace JustGiving.Api.Sdk.ApiClients
             Parent.HttpChannel.PerformApiRequestAsync<StoryUpdateRequest, StoryUpdateResponse>("POST", locationFormat, new StoryUpdateRequest { StorySupplement = storyUpdate }, response=>{});
         }
 
-        public string IsPageShortNameRegisteredLocationFormat(string pageShortName)
+        public string IsPageShortNameRegisteredLocationFormat(string pageShortName, string domain)
         {
             if (string.IsNullOrEmpty(pageShortName))
-            {
                 throw new ArgumentNullException("pageShortName", "pageShortName cannot be null.");
-            }
 
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName;
+            if (!string.IsNullOrEmpty(domain))
+                domain = string.Format("?domain={0}",domain);
+
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + domain;
         }
 
-        public bool IsPageShortNameRegistered(string pageShortName)
+        public bool IsPageShortNameRegistered(string pageShortName, string domain)
         {
-            var locationFormat = IsPageShortNameRegisteredLocationFormat(pageShortName);
+            var locationFormat = IsPageShortNameRegisteredLocationFormat(pageShortName, domain);
             var response = Parent.HttpChannel.PerformRawRequest("HEAD", locationFormat);
             return ProcessIsPageShortNameRegisteredResponse(response);
         }
 
-        public void IsPageShortNameRegisteredAsync(string pageShortName, Action<bool> callback)
+        public void IsPageShortNameRegisteredAsync(string pageShortName, string domain, Action<bool> callback)
         {
-            var locationFormat = IsPageShortNameRegisteredLocationFormat(pageShortName);
+            var locationFormat = IsPageShortNameRegisteredLocationFormat(pageShortName, domain);
             Parent.HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response=>IsPageShortNameRegisteredAsyncEnd(response, callback));
         }
 
