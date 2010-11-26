@@ -300,7 +300,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
-            var exists = pageClient.IsPageShortNameRegistered("rasha25", "rflpreview.justgiving.com");
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", "rfl.staging.justgiving.com");
 
             Assert.IsFalse(exists);
         }

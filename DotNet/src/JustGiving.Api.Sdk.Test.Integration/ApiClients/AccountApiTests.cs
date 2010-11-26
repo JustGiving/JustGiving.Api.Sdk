@@ -73,6 +73,21 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsFalse(exists);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenSuppliedPasswordFormatInvalid_ReturnsAnError(WireDataFormat format)
+        {
+            var client = CreateClientNoCredentials(format);
+            var accountClient = new AccountApi(client);
+            var email = Guid.NewGuid() + "@tempuri.org";
+            var request = CreateInvalidPasswordFormatAccountRequest(email);
+            
+            var exception = Assert.Throws<ErrorResponseException>(() => accountClient.Create(request));
+
+            Assert.AreEqual(1, exception.Errors.Count);
+            Assert.That(exception.Errors[0].Description, Is.StringContaining("value provided is not valid for password"));
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest
@@ -93,6 +108,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 },
                 AcceptTermsAndConditions = true
             };
+        }
+
+        public static CreateAccountRequest CreateInvalidPasswordFormatAccountRequest(string email)
+        {
+            var request = CreateValidRegisterAccountRequest(email);
+            request.Password = TestContext.TestInvalidPasswordFormat;
+            return request;
         }
     }
 }

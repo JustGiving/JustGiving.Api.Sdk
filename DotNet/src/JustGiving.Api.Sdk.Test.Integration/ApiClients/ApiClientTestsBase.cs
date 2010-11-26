@@ -27,5 +27,6 @@
                                                 WireDataFormat = wireDataFormat
                                             });
         }
+
     }
 }

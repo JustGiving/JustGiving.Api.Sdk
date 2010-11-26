@@ -17,7 +17,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientValidCredentials(format);
             var donationClient = new DonationApi(client);
 
-            var status = donationClient.Retrieve(21303723);
+            var status = donationClient.Retrieve(20905200);
 
             Assert.IsNotNull(status);
         }
@@ -29,7 +29,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientValidCredentials(format);
             var donationClient = new DonationApi(client);
 
-            var status = donationClient.RetrieveStatus(21305000);
+            var status = donationClient.RetrieveStatus(20905200);
 
             Assert.IsNotNull(status);
         }
