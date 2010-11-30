@@ -77,10 +77,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenSuppliedPasswordFormatInvalid_ReturnsAnError(WireDataFormat format)
         {
+            const string invalidPassowordValue = "abc"; //Password to short
             var client = CreateClientNoCredentials(format);
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
-            var request = CreateInvalidPasswordFormatAccountRequest(email);
+            var request = CreateValidRegisterAccountRequest(email);
+            request.Password = invalidPassowordValue;
             
             var exception = Assert.Throws<ErrorResponseException>(() => accountClient.Create(request));
 
@@ -108,13 +110,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 },
                 AcceptTermsAndConditions = true
             };
-        }
-
-        public static CreateAccountRequest CreateInvalidPasswordFormatAccountRequest(string email)
-        {
-            var request = CreateValidRegisterAccountRequest(email);
-            request.Password = TestContext.TestInvalidPasswordFormat;
-            return request;
         }
     }
 }

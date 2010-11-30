@@ -139,11 +139,15 @@ namespace JustGiving.Api.Sdk.ApiClients
             return ProcessIsPageShortNameRegisteredResponse(response);
         }
 
+        public bool IsPageShortNameRegistered(string pageShortName) { return IsPageShortNameRegistered(pageShortName, null); }
+
         public void IsPageShortNameRegisteredAsync(string pageShortName, string domain, Action<bool> callback)
         {
             var locationFormat = IsPageShortNameRegisteredLocationFormat(pageShortName, domain);
             Parent.HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response=>IsPageShortNameRegisteredAsyncEnd(response, callback));
         }
+
+        public void IsPageShortNameRegisteredAsync(string pageShortName, Action<bool> callback) { IsPageShortNameRegisteredAsync(pageShortName, null, callback); }
 
         private static void IsPageShortNameRegisteredAsyncEnd(HttpResponseMessage response, Action<bool> clientCallback)
         {

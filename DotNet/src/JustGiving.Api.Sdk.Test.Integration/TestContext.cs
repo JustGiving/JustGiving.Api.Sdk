@@ -7,6 +7,5 @@
         public static string TestUsername = "apiunittests@justgiving.com";
         public static string TestValidPassword = "password";
         public static string TestInvalidPassword = "badPassword";
-        public static string TestInvalidPasswordFormat = "b";
     }
 }

@@ -60,7 +60,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(registrationResponse.Next.Uri, Is.StringContaining(pageShortName));
         }
 
-        [Explicit("Environment specific")]
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
@@ -68,6 +67,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
+            const string domain = "v3.staging.justgiving.com";
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
@@ -78,15 +78,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 EventId = 1,
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5),
-                Domain = "rflpreview.justgiving.com"
+                Domain = domain
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
 
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining("rflpreview.justgiving.com"));
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
         }
 
-        [Explicit("Environment specific")]
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void RegisterWhenProvidedWithADomainThatDoesNotExistCreatesANewPageOnWwwDotJustGivingDotCom(WireDataFormat format)
@@ -94,6 +93,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
+            const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
+            const string domain = "v3.staging.justgiving.com";
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
@@ -104,12 +105,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 EventId = 1,
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5),
-                Domain = "Incorrect.com"
+                Domain = domainThatDoesNotExistOnJustGiving
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
 
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining("www.local.justgiving.com"));
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
         }
 
         /// <summary>
@@ -193,7 +194,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
-            var exists = pageClient.IsPageShortNameRegistered("rasha25", null);
+            var exists = pageClient.IsPageShortNameRegistered("rasha25");
 
             Assert.IsTrue(exists);
         }
@@ -288,7 +289,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
 
-            var exists = pageClient.IsPageShortNameRegistered(Guid.NewGuid().ToString(), null);
+            var exists = pageClient.IsPageShortNameRegistered(Guid.NewGuid().ToString());
 
             Assert.IsFalse(exists);
         }
