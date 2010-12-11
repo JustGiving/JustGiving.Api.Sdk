@@ -67,7 +67,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
-            const string domain = "v3.staging.justgiving.com";
+            const string domain = "rfl.staging.justgiving.com";
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
@@ -88,7 +88,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void RegisterWhenProvidedWithADomainThatDoesNotExistCreatesANewPageOnWwwDotJustGivingDotCom(WireDataFormat format)
+        public void RegisterWhenProvidedWithADomainThatDoesNotExist_ThrowsException(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
@@ -108,9 +108,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 Domain = domainThatDoesNotExistOnJustGiving
             };
 
-            var registrationResponse = pageClient.Create(pageCreationRequest);
+            var exception = Assert.Throws<ErrorResponseException>(() => pageClient.Create(pageCreationRequest));
 
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
+            Assert.That(exception.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageData = pageClient.Retrieve(pageShortName);
 
             Assert.NotNull(pageData);
-            Assert.That(pageData.PageCreatorName, Is.StringContaining("Test Test"));
+            Assert.That(pageData.PageCreatorName, Is.StringContaining("ApiUnitTest ApiUnitTest"));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -308,14 +308,16 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void IsPageShortNameRegistered_WhenSuppliedUnknownDomainShouldUseDefaultDomain_ReturnsTrue(WireDataFormat format)
+        public void IsPageShortNameRegistered_WhenSuppliedUnknownDomain_ThrowsException(WireDataFormat format)
         {
             var client = CreateClientInvalidCredentials(format);
             var pageClient = new PageApi(client);
             const string unknownDomain = "unknownDomain.justgiving.com";
-            var exists = pageClient.IsPageShortNameRegistered("rasha25", unknownDomain);
 
-            Assert.IsTrue(exists);
+            var exception = Assert.Throws<ErrorResponseException>(() => pageClient.IsPageShortNameRegistered("rasha25", unknownDomain));
+
+            Assert.That(exception.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
         }
        
     }

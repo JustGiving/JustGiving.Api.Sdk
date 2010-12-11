@@ -36,7 +36,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var exception = Assert.Throws<ErrorResponseException>(() => accountClient.Create(request));
 
             Assert.AreEqual(1, exception.Errors.Count);
-            Assert.That(exception.Errors[0].Description, Is.StringContaining("email address in use"));
+            Assert.That(exception.Errors[0].Description, Is.StringContaining("email address is already in use"));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -56,7 +56,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
 
-            var exists = accountClient.IsEmailRegistered("rasha@justgiving.com");
+            var exists = accountClient.IsEmailRegistered("alwyndev@justgiving.com");
 
             Assert.IsTrue(exists);
         }
