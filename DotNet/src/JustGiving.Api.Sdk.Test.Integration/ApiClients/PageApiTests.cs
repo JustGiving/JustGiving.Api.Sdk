@@ -160,7 +160,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageData = pageClient.Retrieve(pageShortName);
 
             Assert.NotNull(pageData);
-            Assert.That(pageData.PageCreatorName, Is.StringContaining("ApiUnitTest ApiUnitTest"));
+            Assert.That(pageData.PageCreatorName, Is.StringContaining("Test Test"));
         }
 
         [TestCase(WireDataFormat.Json)]
