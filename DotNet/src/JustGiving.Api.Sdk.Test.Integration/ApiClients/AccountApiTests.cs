@@ -56,7 +56,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
 
-            var exists = accountClient.IsEmailRegistered("alwyndev@justgiving.com");
+            var exists = accountClient.IsEmailRegistered(TestContext.TestUsername);
 
             Assert.IsTrue(exists);
         }
