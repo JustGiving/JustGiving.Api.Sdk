@@ -102,5 +102,20 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        public PasswordReminderConfirmation RequestPasswordReminder(string email)
+        {
+            return RequestPasswordReminder(email, null);
+        }
+
+        public PasswordReminderConfirmation RequestPasswordReminder(string email, string domain)
+        {
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException("email", "Email cannot be null or empty.");
+
+            string locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/requestpasswordreminder";
+            locationFormat = locationFormat + (domain != null ? "?domain="+domain : "");
+            return Parent.HttpChannel.PerformApiRequest<object, PasswordReminderConfirmation>("PUT", locationFormat, "");
+            
+        }
     }
 }

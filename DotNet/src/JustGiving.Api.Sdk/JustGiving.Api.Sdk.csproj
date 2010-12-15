@@ -85,6 +85,7 @@
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\ErrorResponseException.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
+    <Compile Include="Model\Account\PasswordReminderConfirmation.cs" />
     <Compile Include="Model\ActivityType.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />

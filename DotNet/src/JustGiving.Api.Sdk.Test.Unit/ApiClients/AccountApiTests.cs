@@ -86,5 +86,45 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("HEAD"));
         }
 
+
+        [TestCase("")]
+        [TestCase(null)]
+        public void RequestPasswordReminder_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(string email)
+        {
+            var api = new AccountApi(new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+            
+            var exception = Assert.Throws<ArgumentNullException>(() => api.RequestPasswordReminder(email));
+
+            Assert.That(exception.ParamName, Is.StringContaining("email"));
+            Assert.That(exception.Message, Is.StringContaining("Email cannot be null or empty."));
+        }
+
+        [Test]
+        public void RequestPasswordReminder_WhenProvidedWithEmail_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<PasswordReminderConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, PasswordReminderConfirmation>(httpClient);
+            const string email = "some@email.com";
+
+            api.RequestPasswordReminder(email);
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/requestpasswordreminder", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
+        }
+
+        [Test]
+        public void RequestPasswordReminder_WhenProvidedWithEmailAndDomain_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<PasswordReminderConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, PasswordReminderConfirmation>(httpClient);
+            const string email = "some@email.com";
+            const string domain = "www.tempori.org";
+            
+            api.RequestPasswordReminder(email, domain);
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/requestpasswordreminder?domain={4}", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email, domain)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
+        }
+
     }
 }

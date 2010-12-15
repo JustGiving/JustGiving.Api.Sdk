@@ -67,18 +67,21 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientValidCredentials(format);
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
-            const string domain = "rfl.staging.justgiving.com";
+            const string domain = "v3.staging.justgiving.com";
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
+                Attribution =  null,
+                CauseId = 192653,
+                CharityId = 2050,
                 PageShortName = pageShortName,
                 PageTitle = "api test",
-                EventName = "The Other Occasion of ApTest and APITest",
-                CharityId = 2050,
-                EventId = 1,
-                TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5),
+                EventDate = null,
+                EventName = null,
+                EventId = 111,
+                TargetAmount = null,
                 Domain = domain
+                
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);

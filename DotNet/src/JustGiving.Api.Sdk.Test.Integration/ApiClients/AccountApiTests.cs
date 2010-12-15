@@ -90,6 +90,46 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Errors[0].Description, Is.StringContaining("value provided is not valid for password"));
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RequestPassWordReminder_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client);
+            
+            var response = accountClient.RequestPasswordReminder(TestContext.TestUsername); 
+
+            Assert.IsTrue(response.Success);
+
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RequestPassWordReminder_WhenSuppliedKnownEmailAndDomain_ReturnsTrue(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client);
+
+            var response = accountClient.RequestPasswordReminder(TestContext.TestUsername, "rfl.staging.justgiving.com");
+
+            Assert.IsTrue(response.Success);
+
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RequestPassWordReminder_WhenSuppliedKnownEmail_ThrowsException(WireDataFormat format)
+        {
+            var client = CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client);
+            string unKnownEmail = Guid.NewGuid().ToString() + "tempuri.org";
+
+             var exception = Assert.Throws<ErrorResponseException>(() => accountClient.RequestPasswordReminder(unKnownEmail));
+
+             Assert.AreEqual(1, exception.Errors.Count);
+             Assert.That(exception.Errors[0].Description, Is.StringContaining("account with that email address could not be found"));
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest
