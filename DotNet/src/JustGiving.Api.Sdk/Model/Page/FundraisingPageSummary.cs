@@ -28,6 +28,8 @@ namespace JustGiving.Api.Sdk.Model.Page
         public decimal GiftAidPlusSupplement { get; set; }
         [DataMember(Name = "pageImages")]
         public List<string> PageImages { get; set; }
+        [DataMember(Name = "eventName")]
+        public string EventName { get; set; }
 
         public FundraisingPageSummary()
         {
