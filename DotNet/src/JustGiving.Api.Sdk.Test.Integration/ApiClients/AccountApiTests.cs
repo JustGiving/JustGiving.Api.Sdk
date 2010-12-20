@@ -97,37 +97,17 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
             
-            var response = accountClient.RequestPasswordReminder(TestContext.TestUsername); 
-
-            Assert.IsTrue(response.Success);
-
+            accountClient.RequestPasswordReminder(TestContext.TestUsername); 
         }
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void RequestPassWordReminder_WhenSuppliedKnownEmailAndDomain_ReturnsTrue(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = CreateClientInvalidCredentials(format, "rfl.staging.justgiving.com");
             var accountClient = new AccountApi(client);
 
-            var response = accountClient.RequestPasswordReminder(TestContext.TestUsername, "rfl.staging.justgiving.com");
-
-            Assert.IsTrue(response.Success);
-
-        }
-
-        [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
-        public void RequestPassWordReminder_WhenSuppliedKnownEmail_ThrowsException(WireDataFormat format)
-        {
-            var client = CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
-            string unKnownEmail = Guid.NewGuid().ToString() + "tempuri.org";
-
-             var exception = Assert.Throws<ErrorResponseException>(() => accountClient.RequestPasswordReminder(unKnownEmail));
-
-             Assert.AreEqual(1, exception.Errors.Count);
-             Assert.That(exception.Errors[0].Description, Is.StringContaining("account with that email address could not be found"));
+            accountClient.RequestPasswordReminder(TestContext.TestUsername);
         }
 
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)

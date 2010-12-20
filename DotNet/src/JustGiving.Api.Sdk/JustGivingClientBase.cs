@@ -15,7 +15,7 @@ namespace JustGiving.Api.Sdk
 
         private readonly IHttpClient _httpClient;
 
-        internal ClientConfiguration Configuration { get; private set; }
+        protected internal ClientConfiguration Configuration { get; private set; }
         internal HttpChannel HttpChannel { get; private set; }
 
         protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient)

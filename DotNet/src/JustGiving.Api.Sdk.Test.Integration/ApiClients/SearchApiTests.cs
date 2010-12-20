@@ -12,7 +12,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client);
-            
+
             var items = searchClient.CharitySearch("cancer");
         }
     }

@@ -170,7 +170,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string UploadImageLocationFormat(string pageShortName, string caption)
         {
-            return ConfigureDebugging(Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images" + "?caption=" + Uri.EscapeDataString(caption));
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images" + "?caption=" + Uri.EscapeDataString(caption);
         }
 
         public void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType)

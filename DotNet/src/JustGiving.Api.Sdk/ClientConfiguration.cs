@@ -10,6 +10,9 @@ namespace JustGiving.Api.Sdk
         public string Password { get; set; }
         public string RootDomain { get; set; }
         public WireDataFormat WireDataFormat { get; set; }
+        public string PremiumDomain { get; set; }
+
+        public bool Debug { get; set; }
 
         public ClientConfiguration(string apiKey): this("https://api.justgiving.com/", apiKey, 1)
         {

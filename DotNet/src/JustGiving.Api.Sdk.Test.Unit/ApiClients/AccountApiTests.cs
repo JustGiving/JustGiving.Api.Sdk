@@ -102,28 +102,29 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         [Test]
         public void RequestPasswordReminder_WhenProvidedWithEmail_CallsExpectedUrl()
         {
-            var httpClient = new MockHttpClient<PasswordReminderConfirmation>(HttpStatusCode.OK);
-            var api = ApiClient.Create<AccountApi, PasswordReminderConfirmation>(httpClient);
+            var httpClient = new MockHttpClient<object>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, object>(httpClient);
             const string email = "some@email.com";
 
             api.RequestPasswordReminder(email);
 
             Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/requestpasswordreminder", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email)));
-            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("GET"));
         }
 
         [Test]
         public void RequestPasswordReminder_WhenProvidedWithEmailAndDomain_CallsExpectedUrl()
         {
-            var httpClient = new MockHttpClient<PasswordReminderConfirmation>(HttpStatusCode.OK);
-            var api = ApiClient.Create<AccountApi, PasswordReminderConfirmation>(httpClient);
             const string email = "some@email.com";
             const string domain = "www.tempori.org";
             
-            api.RequestPasswordReminder(email, domain);
+            var httpClient = new MockHttpClient<object>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, object>(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion){PremiumDomain = domain}, httpClient);
+            
+            api.RequestPasswordReminder(email);
 
             Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/{3}/requestpasswordreminder?domain={4}", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion, email, domain)));
-            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("GET"));
         }
 
     }

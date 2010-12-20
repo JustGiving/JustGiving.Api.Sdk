@@ -170,10 +170,36 @@ namespace JustGiving.Api.Sdk.Http
                 .Replace("{apiKey}", _clientConfiguration.ApiKey)
                 .Replace("{apiVersion}", _clientConfiguration.ApiVersion.ToString());
 
+            if (!string.IsNullOrEmpty(_clientConfiguration.PremiumDomain))
+            {
+                location = AddQueryStringSeperators(location);
+                location += "domain=" + _clientConfiguration.PremiumDomain;
+            }
+
+            if (_clientConfiguration.Debug)
+            {
+                location = AddQueryStringSeperators(location);
+                location += "debug=true";
+            }
+
             return new Uri(location);
         }
 
-
+        private static string AddQueryStringSeperators(string location)
+        {
+            if(location.Contains("?"))
+            {
+                if (!location.EndsWith("&"))
+                {
+                    location += "&";
+                }
+            }
+            else
+            {
+                location += "?";
+            }
+            return location;
+        }
     }
 
     static class Extensions

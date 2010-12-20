@@ -102,20 +102,35 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
-        public PasswordReminderConfirmation RequestPasswordReminder(string email)
+        public string RequestPasswordReminderLocationFormat(string email)
         {
-            return RequestPasswordReminder(email, null);
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/requestpasswordreminder";
         }
 
-        public PasswordReminderConfirmation RequestPasswordReminder(string email, string domain)
+        public void RequestPasswordReminder(string email)
         {
-            if (string.IsNullOrEmpty(email))
-                throw new ArgumentNullException("email", "Email cannot be null or empty.");
+            if (string.IsNullOrEmpty(email)) { throw new ArgumentNullException("email", "Email cannot be null or empty."); }
 
-            string locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/requestpasswordreminder";
-            locationFormat = locationFormat + (domain != null ? "?domain="+domain : "");
-            return Parent.HttpChannel.PerformApiRequest<object, PasswordReminderConfirmation>("PUT", locationFormat, "");
-            
+            var locationFormat = RequestPasswordReminderLocationFormat(email);
+            var response = Parent.HttpChannel.PerformRawRequest("GET", locationFormat);
+            ProcessRequestPasswordReminder(response);
+        }
+
+        public void RequestPasswordReminderAsync(string email)
+        {
+            var locationFormat = RequestPasswordReminderLocationFormat(email);
+            Parent.HttpChannel.PerformRawRequestAsync("GET", locationFormat, ProcessRequestPasswordReminder);
+        }
+
+        private static void ProcessRequestPasswordReminder(HttpResponseMessage response)
+        {
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    return;
+                default:
+                    throw ErrorResponseExceptionFactory.CreateException(response, null);
+            }
         }
     }
 }

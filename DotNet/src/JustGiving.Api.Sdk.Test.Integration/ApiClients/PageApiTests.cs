@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Threading;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;
@@ -64,10 +63,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
-            var client = CreateClientValidCredentials(format);
+            const string domain = "v3.staging.justgiving.com";
+
+            var client = CreateClientValidCredentials(format, domain);
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
-            const string domain = "v3.staging.justgiving.com";
+            
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
@@ -79,9 +80,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 EventDate = null,
                 EventName = null,
                 EventId = 111,
-                TargetAmount = null,
-                Domain = domain
-                
+                TargetAmount = null
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
@@ -93,11 +92,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void RegisterWhenProvidedWithADomainThatDoesNotExist_ThrowsException(WireDataFormat format)
         {
-            var client = CreateClientValidCredentials(format);
+            const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
+
+            var client = CreateClientValidCredentials(format, domainThatDoesNotExistOnJustGiving);
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
-            const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
-            const string domain = "v3.staging.justgiving.com";
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
@@ -107,8 +106,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 CharityId = 2050,
                 EventId = 1,
                 TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5),
-                Domain = domainThatDoesNotExistOnJustGiving
+                EventDate = DateTime.Now.AddDays(5)
             };
 
             var exception = Assert.Throws<ErrorResponseException>(() => pageClient.Create(pageCreationRequest));
@@ -184,7 +182,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = CreateClientNoCredentials(format);
             var pageClient = new PageApi(client);
-
+            
             var pageData = pageClient.RetrieveDonationsForPage("rasha25");
 
             Assert.That(pageData.Donations.Count, Is.GreaterThan(0));
