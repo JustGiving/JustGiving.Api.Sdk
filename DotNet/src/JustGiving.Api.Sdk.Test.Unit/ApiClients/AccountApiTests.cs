@@ -119,7 +119,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             const string domain = "www.tempori.org";
             
             var httpClient = new MockHttpClient<object>(HttpStatusCode.OK);
-            var api = ApiClient.Create<AccountApi, object>(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion){PremiumDomain = domain}, httpClient);
+            var api = ApiClient.Create<AccountApi, object>(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion){WhiteLabelDomain = domain}, httpClient);
             
             api.RequestPasswordReminder(email);
 

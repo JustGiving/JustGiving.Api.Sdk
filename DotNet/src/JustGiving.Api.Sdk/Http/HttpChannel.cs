@@ -170,16 +170,10 @@ namespace JustGiving.Api.Sdk.Http
                 .Replace("{apiKey}", _clientConfiguration.ApiKey)
                 .Replace("{apiVersion}", _clientConfiguration.ApiVersion.ToString());
 
-            if (!string.IsNullOrEmpty(_clientConfiguration.PremiumDomain))
+            if (!string.IsNullOrEmpty(_clientConfiguration.WhiteLabelDomain))
             {
                 location = AddQueryStringSeperators(location);
-                location += "domain=" + _clientConfiguration.PremiumDomain;
-            }
-
-            if (_clientConfiguration.Debug)
-            {
-                location = AddQueryStringSeperators(location);
-                location += "debug=true";
+                location += "domain=" + _clientConfiguration.WhiteLabelDomain;
             }
 
             return new Uri(location);

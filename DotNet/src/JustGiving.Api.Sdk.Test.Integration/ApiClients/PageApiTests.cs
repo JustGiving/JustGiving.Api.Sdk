@@ -46,7 +46,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             {
                 ActivityType = null,
                 PageShortName = pageShortName,
-                PageTitle = "api test",
+                PageTitle = "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
                 EventId = 1,
@@ -63,23 +63,25 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
-            const string domain = "v3.staging.justgiving.com";
+            const string domain = "rfl.dev.justgiving.com";
 
-            var client = CreateClientValidCredentials(format, domain);
+            var client = CreateClientValidCredentials(format);
+            client.SetWhiteLabelDomain(domain);
+
             var pageClient = new PageApi(client);
+            
             var pageShortName = "api-test-" + Guid.NewGuid();
             
             var pageCreationRequest = new RegisterPageRequest
             {
                 ActivityType = null,
                 Attribution =  null,
-                CauseId = 192653,
                 CharityId = 2050,
                 PageShortName = pageShortName,
-                PageTitle = "api test",
+                PageTitle = "Page created on domain " + domain + " by an integration test",
                 EventDate = null,
                 EventName = null,
-                EventId = 111,
+                EventId = 1,
                 TargetAmount = null
             };
 
@@ -94,7 +96,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
 
-            var client = CreateClientValidCredentials(format, domainThatDoesNotExistOnJustGiving);
+            var client = CreateClientValidCredentials(format);
+            client.SetWhiteLabelDomain(domainThatDoesNotExistOnJustGiving);
+
             var pageClient = new PageApi(client);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest

@@ -104,7 +104,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void RequestPassWordReminder_WhenSuppliedKnownEmailAndDomain_ReturnsTrue(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format, "rfl.staging.justgiving.com");
+            var client = CreateClientInvalidCredentials(format);
+            client.SetWhiteLabelDomain("rfl.staging.justgiving.com");
             var accountClient = new AccountApi(client);
 
             accountClient.RequestPasswordReminder(TestContext.TestUsername);

@@ -1,4 +1,5 @@
-﻿using JustGiving.Api.Sdk.ApiClients;
+﻿using System;
+using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.MicrosoftHttp;
 

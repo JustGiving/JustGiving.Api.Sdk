@@ -13,6 +13,8 @@ namespace JustGiving.Api.Sdk
         public ICharityApi Charity { get; set; }
         public IEventApi Event { get; set; }
 
+        public string WhiteLabelDomain { get; private set; }
+
         private readonly IHttpClient _httpClient;
 
         protected internal ClientConfiguration Configuration { get; private set; }
@@ -42,6 +44,12 @@ namespace JustGiving.Api.Sdk
             Configuration = clientConfiguration;
 
             InitApis(_httpClient, clientConfiguration);
+        }
+
+        public void SetWhiteLabelDomain(string domain)
+        {
+            WhiteLabelDomain = domain;
+            Configuration.WhiteLabelDomain = domain;
         }
 
         private void InitApis(IHttpClient httpClient, ClientConfiguration clientConfiguration)

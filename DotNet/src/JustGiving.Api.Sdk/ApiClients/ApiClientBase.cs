@@ -3,7 +3,7 @@
     public abstract class ApiClientBase
     {
         protected readonly JustGivingClientBase Parent;
-
+        
         protected ApiClientBase(JustGivingClientBase parent)
         {
             Parent = parent;

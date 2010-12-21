@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Security.Authentication;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Model.Page;

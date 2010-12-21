@@ -30,6 +30,8 @@ namespace JustGiving.Api.Sdk.Model.Page
         public List<string> PageImages { get; set; }
         [DataMember(Name = "eventName")]
         public string EventName { get; set; }
+        [DataMember(Name = "domain")]
+        public string Domain { get; set; }
 
         public FundraisingPageSummary()
         {
