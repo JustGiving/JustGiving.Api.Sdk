@@ -63,7 +63,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
-            const string domain = "rfl.dev.justgiving.com";
+            const string domain = "rfl.staging.justgiving.com";
 
             var client = CreateClientValidCredentials(format);
             client.SetWhiteLabelDomain(domain);
