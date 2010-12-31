@@ -60,6 +60,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(registrationResponse.Next.Uri, Is.StringContaining(pageShortName));
         }
 
+        [TestCase(WireDataFormat.Json), Ignore("this will not pass until the changes are pushed to staging")]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_TheResponseContainsThePageId(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "api test",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            var registrationResponse = pageClient.Create(pageCreationRequest);
+
+            Assert.That(registrationResponse.PageId != 0);
+        }
+
         /// <summary>
         /// This test assumes that the Valid Credentials in the test context has more than 1 page
         /// Which it will do if you run these integration tests at least once.

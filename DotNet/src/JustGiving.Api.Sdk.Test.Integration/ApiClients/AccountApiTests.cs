@@ -36,7 +36,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var exception = Assert.Throws<ErrorResponseException>(() => accountClient.Create(request));
 
             Assert.AreEqual(1, exception.Errors.Count);
-            Assert.That(exception.Errors[0].Description, Is.StringContaining("email address in use"));
+            Assert.That(exception.Errors[0].Description, Is.StringContaining("email address is already in use"));
         }
 
         [TestCase(WireDataFormat.Json)]
