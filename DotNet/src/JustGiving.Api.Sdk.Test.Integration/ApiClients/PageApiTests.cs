@@ -60,7 +60,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(registrationResponse.Next.Uri, Is.StringContaining(pageShortName));
         }
 
-        [TestCase(WireDataFormat.Json), Ignore("this will not pass until the changes are pushed to staging")]
+        [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_TheResponseContainsThePageId(WireDataFormat format)
         {
