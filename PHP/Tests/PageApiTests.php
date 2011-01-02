@@ -210,6 +210,7 @@ $tests = new PageApiTests();
 $tests->Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client);
 $tests->ListAll_WithValidCredentials_ReturnsListOfUserPages($client);
 $tests->Create_ValidCredentials_CreatesNewPage($client);
+$tests->Create_ValidCredentials_PageIdReturnedInResponse($client);
 $tests->IsShortNameRegistered_KnownPage_ReturnsTrue($client);
 $tests->IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client);
 $tests->UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client);
