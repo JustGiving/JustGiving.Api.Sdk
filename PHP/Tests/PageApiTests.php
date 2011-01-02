@@ -56,6 +56,29 @@ class PageApiTests
 		WriteLine("Created page url - " . $page->next->uri);	
 	}
 	
+	function Create_ValidCredentials_PageIdReturnedInResponse($client)
+	{		
+		echo "<hr />";
+		echo "<b>Create_ValidCredentials_PageIdReturnedInResponse</b><br/><br/>";
+		
+		$dto = new RegisterPageRequest();
+		$dto->reference = "12345";
+		$dto->pageShortName = "api-test-" . uniqid();
+		$dto->activityType = "OtherCelebration";
+		$dto->pageTitle = "api test";
+		$dto->eventName = "The Other Occasion of ApTest and APITest";
+		$dto->charityId = 2050;
+		$dto->targetAmount = 20;
+		$dto->eventDate = "/Date(1235764800000)/";
+		$dto->justGivingOptIn = true;
+		$dto->charityOptIn = true;
+		$dto->charityFunded = false;
+			
+		$page = $client->Page->Create($dto);
+		
+		WriteLine("Created page id - " . $page->pageId);	
+	}
+	
 	function IsShortNameRegistered_KnownPage_ReturnsTrue($client)
 	{		
 		echo "<hr />";

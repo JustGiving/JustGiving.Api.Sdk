@@ -8,10 +8,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public class PageApi : ApiClientBase, IPageApi
     {
-        public PageApi(JustGivingClientBase parent)
-            : base(parent)
-        {
-        }
+        public PageApi(JustGivingClientBase parent) : base(parent) {}
         
         public string ListAllLocationFormat()
         {
