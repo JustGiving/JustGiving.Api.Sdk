@@ -23,5 +23,8 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "error")]
         public ErrorResponse Error { get; set; }
+
+        [DataMember(Name = "pageId")]
+        public int PageId { get; set; }
     }
 }

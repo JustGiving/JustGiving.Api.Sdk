@@ -118,6 +118,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_TheResponseContainsThePageId(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "api test",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            var registrationResponse = pageClient.Create(pageCreationRequest);
+
+            Assert.That(registrationResponse.PageId != 0);
+        }
+
         /// <summary>
         /// This test assumes that the Valid Credentials in the test context has more than 1 page
         /// Which it will do if you run these integration tests at least once.
@@ -203,6 +227,38 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             Assert.IsTrue(exists);
         }
+
+
+        //[TestCase(WireDataFormat.Json)]
+        //[TestCase(WireDataFormat.Xml)]
+        //public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
+        //{
+        //    const string domain = "rfl.staging.justgiving.com";
+
+        //    var client = CreateClientValidCredentials(format);
+        //    client.SetWhiteLabelDomain(domain);
+
+        //    var pageClient = new PageApi(client);
+
+        //    var pageShortName = "api-test-" + Guid.NewGuid();
+
+        //    var pageCreationRequest = new RegisterPageRequest
+        //    {
+        //        ActivityType = null,
+        //        Attribution = null,
+        //        CharityId = 2050,
+        //        PageShortName = pageShortName,
+        //        PageTitle = "Page created on domain " + domain + " by an integration test",
+        //        EventDate = null,
+        //        EventName = null,
+        //        EventId = 1,
+        //        TargetAmount = null
+        //    };
+
+        //    var registrationResponse = pageClient.Create(pageCreationRequest);
+
+        //    Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
+        //}
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
