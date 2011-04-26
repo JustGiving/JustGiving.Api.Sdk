@@ -1,4 +1,5 @@
 ﻿using System;
+using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Charity;
 
 namespace JustGiving.Api.Sdk.ApiClients
@@ -15,6 +16,11 @@ namespace JustGiving.Api.Sdk.ApiClients
             return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/" + charityId;
         }
 
+        public string RetrieveAuthenticationLocationFormat()
+        {
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/authenticate";
+        }
+
         public Charity Retrieve(int charityId)
         {
             var locationFormat = RetrieveLocationFormat(charityId);
@@ -25,6 +31,12 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
             var locationFormat = RetrieveLocationFormat(charityId);
             Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+        }
+
+        public CharityAuthenticationResult Authenticate(AuthenticateCharityUserRequest request)
+        {
+            var locationFormat = RetrieveAuthenticationLocationFormat();
+            return Parent.HttpChannel.PerformApiRequest<AuthenticateCharityUserRequest, CharityAuthenticationResult>("POST", locationFormat, request);
         }
     }
 }

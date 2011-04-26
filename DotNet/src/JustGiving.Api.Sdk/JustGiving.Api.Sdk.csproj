@@ -88,7 +88,9 @@
     <Compile Include="Model\ActivityType.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />
+    <Compile Include="Model\Charity\AuthenticateCharityUserRequest.cs" />
     <Compile Include="Model\Charity\Charity.cs" />
+    <Compile Include="Model\Charity\CharityAuthenticationResult.cs" />
     <Compile Include="Model\Donation\Donation.cs" />
     <Compile Include="Model\Donation\DonationStatus.cs" />
     <Compile Include="Model\CreditCard.cs" />
