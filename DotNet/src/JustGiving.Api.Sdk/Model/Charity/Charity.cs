@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace JustGiving.Api.Sdk.Model.Charity
 {
@@ -28,5 +29,11 @@ namespace JustGiving.Api.Sdk.Model.Charity
 
         [DataMember(Name = "pageShortName")]
         public string PageShortName { get; set; }
+
+        [DataMember(Name = "smsCode")]
+        public string SmsCode { get; set; }
+
+        [DataMember(Name="mobileAppeals")]
+        public IEnumerable<MobileAppeal> MobileAppeals { get; set; }
     }
 }
