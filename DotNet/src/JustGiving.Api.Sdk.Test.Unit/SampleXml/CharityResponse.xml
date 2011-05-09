@@ -1,0 +1,49 @@
+﻿<charity xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Making the changes for testing re fix</description>
+    <id>2050</id>
+    <logoUrl>60e86241-2fb5-403b-9eba-2f413eecb6fc.png</logoUrl>
+    <name>The Demo Charity</name>
+    <pageShortName>jgdemo</pageShortName>
+    <profilePageUrl>http://www.justgiving.com/jgdemo</profilePageUrl>
+    <registrationNumber>123456</registrationNumber>
+    <websiteUrl>http://www.democharity.co.uk</websiteUrl>
+    <smsCode i:nil="true" />
+    <mobileAppeals>
+        <mobileAppeal>
+            <name>Lee demo campaign</name>
+            <smsCode>BIBW04</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>SRINI</name>
+            <smsCode>SRIN24</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>test case 3</name>
+            <smsCode>TEST00</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>JustGiving internal Demo</name>
+            <smsCode>JTGD00</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>test</name>
+            <smsCode>CRUK07</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>second cycle of testing</name>
+            <smsCode>VFTA02</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>fff</name>
+            <smsCode>BOMB35</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>CRUK hold</name>
+            <smsCode>CRUK02</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>test for the same name</name>
+            <smsCode>BIBW03</smsCode>
+        </mobileAppeal>
+    </mobileAppeals>
+</charity>
