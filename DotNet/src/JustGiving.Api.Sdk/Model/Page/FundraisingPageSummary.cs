@@ -32,6 +32,10 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string EventName { get; set; }
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
+        [DataMember(Name = "charityId", Order = 13)]
+        public string CharityId { get; set; }
+        [DataMember(Name = "smsCode", Order = 14)]
+        public string SmsCode { get; set; }
 
         public FundraisingPageSummary()
         {
