@@ -380,6 +380,107 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         }
-       
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AddFundraisingPageImage_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+
+            // Create Page
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = pageShortName,
+                PageTitle = "Page Created For Update Story Integration Test",
+                EventName = "Story Update Testing",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+            var pageConfirmation = pageClient.Create(pageCreationRequest);
+
+            var addImageRequest = new AddFundraisingPageImageRequest() {Url = "", Caption = "", PageShortName=pageCreationRequest.PageShortName};
+            var response = Assert.Throws<ErrorResponseException>(()=>pageClient.AddImage(addImageRequest));
+            Assert.That(response.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+
+            // Create Page
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = pageShortName,
+                PageTitle = "Page Created For Update Story Integration Test",
+                EventName = "Story Update Testing",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+            var pageConfirmation = pageClient.Create(pageCreationRequest);
+
+            var addVideoRequest = new AddFundraisingPageVideoRequest() { Url = "", Caption = "", PageShortName = pageCreationRequest.PageShortName };
+            var response = Assert.Throws<ErrorResponseException>(() => pageClient.AddVideo(addVideoRequest));
+            Assert.That(response.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+
+            // Create Page
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = pageShortName,
+                PageTitle = "Page Created For Update Story Integration Test",
+                EventName = "Story Update Testing",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+            var pageConfirmation = pageClient.Create(pageCreationRequest);
+
+            var addImageRequest = new AddFundraisingPageImageRequest() { Url = "http://placehold.it/350x150", Caption = "test image", PageShortName = pageCreationRequest.PageShortName };
+            var response = pageClient.AddImage(addImageRequest);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+
+            // Create Page
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = pageShortName,
+                PageTitle = "Page Created For Update Story Integration Test",
+                EventName = "Story Update Testing",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+            var pageConfirmation = pageClient.Create(pageCreationRequest);
+
+            var addVideoRequest = new AddFundraisingPageVideoRequest() { Url = "http://www.youtube.com/watch?v=MSxjbF18BBM", Caption = "neckbrace", PageShortName = pageCreationRequest.PageShortName };
+            var response = pageClient.AddVideo(addVideoRequest);
+        }
     }
 }
