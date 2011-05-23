@@ -21,6 +21,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         }
 
         [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void AuthenticateCharityUser_ValidUser_ReturnsIsValidAndCharityId(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);
@@ -33,6 +34,17 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             };
             var response = charityClient.Authenticate(authenticateCharityUserRequest);
             Assert.That(response.IsValid, Is.True);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveEvents_ReturnsEventsDto(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var charityClient = new CharityApi(client);
+            var response = charityClient.RetrieveEvents(2357);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.CharityId, Is.Not.EqualTo(0));
         }
     }
 }
