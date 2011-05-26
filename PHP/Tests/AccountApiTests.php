@@ -38,21 +38,50 @@ class AccountApiTests
 		   echo 'Page:' . $page->pageShortName . ' status: ' . $page->pageStatus ."<br/>". PHP_EOL;
 		}	
 	}
+	
+	function IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse($client)
+	{
+		echo "<hr />";
+		echo "<b>IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse</b><br/><br/>";
+		
+        $booleanResponse = $client->Account->IsEmailRegistered(uniqid() + "@justgiving.com");
+				
+		if($booleanResponse)
+		{
+			WriteLine("Email address listed as registered - TEST FAILED");	
+		}
+		else
+		{
+			WriteLine("Email address listed as available - TEST PASSED");
+		}
+	}
+	
+	function IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue($client, $knownEmail)
+	{
+		echo "<hr />";
+		echo "<b>IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue</b><br/><br/>";
+		
+        $booleanResponse = $client->Account->IsEmailRegistered($knownEmail);
+				
+		if($booleanResponse)
+		{
+			WriteLine("Email address listed as registered - TEST PASSED");	
+		}
+		else
+		{
+			WriteLine("Email address listed as available - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
 
 include_once '../JustGivingClient.php';
+include_once 'TestContext.php';
 
-// Test context
-$ApiLocation = "http://api.local.justgiving.com/";
-$ApiKey = "decbf1d2";
-$TestUsername = "apiunittests@justgiving.com";
-$TestValidPassword = "password";
-$TestInvalidPassword = "badPassword";
-
-$client = new JustGivingClient($ApiLocation, $ApiKey, 1, $TestUsername, $TestValidPassword);
-$client->debug = true;
+$testContext = new TestContext();
+$client = new JustGivingClient($testContext->ApiLocation, $testContext->ApiKey, $testContext->ApiVersion, $testContext->TestUsername, $testContext->TestValidPassword);
+$client->debug = $testContext->Debug;
 
 function WriteLine($string)
 {
@@ -64,3 +93,5 @@ echo "<h1>Executing Test Cases</h1>";
 $pageTests = new AccountApiTests();
 $pageTests->Create_WhenSuppliedWithValidNewAccountDetails_CreatesAccount($client);
 $pageTests->ListAllPages_WhenSuppliedWithAValidAccount_RetrievesPages($client);
+$pageTests->IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse($client);
+$pageTests->IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue($client, $testContext->TestUsername);

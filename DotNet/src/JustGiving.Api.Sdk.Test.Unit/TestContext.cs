@@ -4,7 +4,7 @@ namespace GG.Api.Sdk.Test.Unit
 {
     public static class TestContext
     {
-        public static string ApiLocation = "http://api.local.justgiving.com/";
+        public static string ApiLocation = "https://api.staging.justgiving.com/";
         public static string ApiKey = "NOKEY";
         public static string TestUsername = "apitests@justgiving.com";
         public static string TestValidPassword = "password";

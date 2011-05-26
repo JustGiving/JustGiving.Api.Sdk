@@ -32,15 +32,11 @@ class DonationApiTests
 ///############### RUN TESTS	
 
 include_once '../JustGivingClient.php';
+include_once 'TestContext.php';
 
-// Test context
-$ApiLocation = "http://api.local.justgiving.com/";
-$ApiKey = "decbf1d2";
-$TestUsername = "apiunittests@justgiving.com";
-$TestValidPassword = "password";
-
-$client = new JustGivingClient($ApiLocation, $ApiKey, 1, $TestUsername, $TestValidPassword);
-$client->debug = true;
+$testContext = new TestContext();
+$client = new JustGivingClient($testContext->ApiLocation, $testContext->ApiKey, $testContext->ApiVersion, $testContext->TestUsername, $testContext->TestValidPassword);
+$client->debug = $testContext->Debug;
 
 function WriteLine($string)
 {
