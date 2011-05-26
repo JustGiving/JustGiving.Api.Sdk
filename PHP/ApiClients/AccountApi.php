@@ -29,4 +29,32 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json); 
 	}
+	
+	public function IsEmailRegistered($email)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/" . $email;
+		$url = $this->BuildUrl($locationFormat);		
+		$httpInfo = $this->curlWrapper->Head($url, $this->BuildAuthenticationValue());		
+		
+		if($httpInfo['http_code'] == 200)
+		{
+			return true;
+		}
+		else if($httpInfo['http_code'] == 404)
+		{
+			return false;
+		}
+		else		
+		{
+			throw new Exception('IsEmailRegistered returned a status code it wasn\'t expecting. Returned ' . $httpInfo['http_code']);
+		}
+	}
+	
+	public function RequestPasswordReminder($email)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/" . $email . "/requestpasswordreminder";
+		$url = $this->BuildUrl($locationFormat);		
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json); 		
+	}
 }
