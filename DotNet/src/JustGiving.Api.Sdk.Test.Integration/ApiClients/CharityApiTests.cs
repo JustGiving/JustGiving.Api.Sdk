@@ -38,6 +38,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+		[Ignore("Not yet live")]
         public void RetrieveEvents_ReturnsEventsDto(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);

@@ -383,6 +383,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+		[Ignore("Not yet live")]
         public void AddFundraisingPageImage_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);
@@ -409,6 +410,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+		[Ignore("Not yet live")]
         public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);
@@ -435,6 +437,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+		[Ignore("Not yet live")]
         public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);
@@ -460,6 +463,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+		[Ignore("Not yet live")]
         public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
             var client = CreateClientValidCredentials(format);
