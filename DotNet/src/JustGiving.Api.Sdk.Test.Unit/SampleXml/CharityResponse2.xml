@@ -1,0 +1,21 @@
+﻿<charity xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Making the changes for testing re fix</description>
+    <id>2050</id>
+    <logoUrl>60e86241-2fb5-403b-9eba-2f413eecb6fc.png</logoUrl>
+    <name>sample</name>
+    <pageShortName i:nil="true" />
+    <profilePageUrl i:nil="true" />
+    <registrationNumber i:nil="true" />
+    <smsCode i:nil="true" />
+    <websiteUrl i:nil="true" />
+    <mobileAppeals>
+        <mobileAppeal>
+            <name>test1</name>
+            <smsCode>12345</smsCode>
+        </mobileAppeal>
+        <mobileAppeal>
+            <name>test2</name>
+            <smsCode>12345</smsCode>
+        </mobileAppeal>
+    </mobileAppeals>
+</charity>

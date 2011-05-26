@@ -177,12 +177,76 @@ namespace JustGiving.Api.Sdk.ApiClients
             ProcessUploadImageResponse(response);
         }
 
+        public AddFundraisingPageImageConfirmation AddImage(AddFundraisingPageImageRequest request)
+        {
+            var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
+            return
+                Parent.HttpChannel.PerformApiRequest
+                    <AddFundraisingPageImageRequest, AddFundraisingPageImageConfirmation>("PUT", locationFormat, request);
+        }
+
+        public AddFundraisingPageVideoConfirmation AddVideo(AddFundraisingPageVideoRequest request)
+        {
+            var locationFormat = FundraisingPageVideosLocationFormat(request.PageShortName);
+            return
+                Parent.HttpChannel.PerformApiRequest
+                    <AddFundraisingPageVideoRequest, AddFundraisingPageVideoConfirmation>("PUT", locationFormat, request);
+        }
+
+        public FundraisingPageImages GetImages(GetFundraisingPageImagesRequest request)
+        {
+            var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
+            return Parent.HttpChannel.PerformApiRequest<GetFundraisingPageImagesRequest, FundraisingPageImages>("GET", locationFormat, request);
+        }
+
+        public FundraisingPageVideos GetVideos(GetFundraisingPageVideosRequest request)
+        {
+            var locationFormat = FundraisingPageVideosLocationFormat(request.PageShortName);
+            return Parent.HttpChannel.PerformApiRequest<GetFundraisingPageVideosRequest, FundraisingPageVideos>("GET", locationFormat, request);
+        }
+
+
+        private string FundraisingPageImagesLocationFormat(string pageShortName)
+        {
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images";
+        }
+        private string FundraisingPageVideosLocationFormat(string pageShortName)
+        {
+            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/videos";
+        }
+
+
         public void UploadImageAsync(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
         {
             throw new InvalidOperationException("UploadImageAsync not yet complete in SDK.");
 
             var locationFormat = UploadImageLocationFormat(pageShortName, caption);
             Parent.HttpChannel.PerformRawRequestAsync("POST", locationFormat, imageContentType, imageBytes, UploadImageAsyncEnd);
+        }
+
+        public void AddImageAsync(AddFundraisingPageImageRequest request, Action<AddFundraisingPageImageConfirmation> callback)
+        {
+            var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
+            Parent.HttpChannel.PerformApiRequestAsync
+                <AddFundraisingPageImageRequest, AddFundraisingPageImageConfirmation>("PUT", locationFormat, request, callback);
+        }
+
+        public void AddVideoAsync(AddFundraisingPageVideoRequest request, Action<AddFundraisingPageVideoConfirmation> callback)
+        {
+            var locationFormat = FundraisingPageVideosLocationFormat(request.PageShortName);
+            Parent.HttpChannel.PerformApiRequestAsync("PUT", locationFormat, request, callback);
+        }
+
+        public void GetImagesAsync(GetFundraisingPageImagesRequest request, Action<FundraisingPageImages> callback)
+        {
+            var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
+            Parent.HttpChannel.PerformApiRequestAsync("GET",locationFormat,request,callback);
+        }
+
+        public void GetVideosAsync(GetFundraisingPageVideosRequest request, Action<FundraisingPageVideos> callback)
+        {
+            var locationFormat = FundraisingPageVideosLocationFormat(request.PageShortName);
+            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, request, callback);
         }
 
         private void UploadImageAsyncEnd(HttpResponseMessage response)
