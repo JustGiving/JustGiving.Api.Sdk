@@ -10,7 +10,7 @@ Requires PHP 5.1 or above, php_curl and json support.<br/>
 
 <h2>A quick example - Retrieving page data</h2>
 <p>
-$client = new JustGivingClient("http://api.local.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");</br>
+$client = new JustGivingClient("https://api.staging.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");</br>
 $page = $client->Page->Retrieve("rasha25");</br>
 echo "pageShortName - " . $page->pageShortName;</br>
 echo "eventName - " . $page->eventName;</br>
