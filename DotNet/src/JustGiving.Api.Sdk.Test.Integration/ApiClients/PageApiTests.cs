@@ -190,6 +190,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             Assert.NotNull(pageData);
             Assert.That(pageData.PageCreatorName, Is.StringContaining("Test Test"));
+            Assert.AreEqual(pageData.PageShortName, pageCreationRequest.PageShortName);
+            Assert.AreEqual(pageData.PageTitle, pageCreationRequest.PageTitle);
+            Assert.AreEqual(pageData.EventName, pageCreationRequest.EventName);
+            Assert.AreEqual(pageData.TargetAmount, pageCreationRequest.TargetAmount);
+            Assert.IsNotNullOrEmpty(pageData.SmsCode);
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -227,38 +232,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             Assert.IsTrue(exists);
         }
-
-
-        //[TestCase(WireDataFormat.Json)]
-        //[TestCase(WireDataFormat.Xml)]
-        //public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
-        //{
-        //    const string domain = "rfl.staging.justgiving.com";
-
-        //    var client = CreateClientValidCredentials(format);
-        //    client.SetWhiteLabelDomain(domain);
-
-        //    var pageClient = new PageApi(client);
-
-        //    var pageShortName = "api-test-" + Guid.NewGuid();
-
-        //    var pageCreationRequest = new RegisterPageRequest
-        //    {
-        //        ActivityType = null,
-        //        Attribution = null,
-        //        CharityId = 2050,
-        //        PageShortName = pageShortName,
-        //        PageTitle = "Page created on domain " + domain + " by an integration test",
-        //        EventDate = null,
-        //        EventName = null,
-        //        EventId = 1,
-        //        TargetAmount = null
-        //    };
-
-        //    var registrationResponse = pageClient.Create(pageCreationRequest);
-
-        //    Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
-        //}
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]

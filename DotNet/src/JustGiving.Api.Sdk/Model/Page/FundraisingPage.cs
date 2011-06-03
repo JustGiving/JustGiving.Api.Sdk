@@ -63,7 +63,7 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string Story { get; set; }
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
-        [DataMember(Name="smsCode", Order=26)]
+        [DataMember(Name = "smsCode", EmitDefaultValue = false)]
         public string SmsCode { get; set; }
     }
 }
