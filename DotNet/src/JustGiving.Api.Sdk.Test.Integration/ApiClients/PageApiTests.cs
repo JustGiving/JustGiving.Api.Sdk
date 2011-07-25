@@ -459,5 +459,49 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var addVideoRequest = new AddFundraisingPageVideoRequest() { Url = "http://www.youtube.com/watch?v=MSxjbF18BBM", Caption = "neckbrace", PageShortName = pageCreationRequest.PageShortName };
             var response = pageClient.AddVideo(addVideoRequest);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Cannot_Create_Page_For_Event_Using_Event_Reference_And_Id(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            var ex = Assert.Throws<ErrorResponseException>(() => pageClient.Create("foo", pageCreationRequest));
+            Assert.That(ex.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));           
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Can_Create_Page_For_Event_Using_Event_Reference(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            pageClient.Create("341_RFL2010", pageCreationRequest);
+        }
     }
 }

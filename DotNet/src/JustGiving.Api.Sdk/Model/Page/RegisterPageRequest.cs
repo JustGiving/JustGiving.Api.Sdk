@@ -15,6 +15,9 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "eventId")]
         public int? EventId { get; set; }
 
+        [DataMember(Name = "eventRef")]
+        public string EventRef { get; set; }
+
         [DataMember(Name = "pageShortName")]
         public string PageShortName { get; set; }
 

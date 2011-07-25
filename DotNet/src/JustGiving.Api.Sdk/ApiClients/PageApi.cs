@@ -95,10 +95,22 @@ namespace JustGiving.Api.Sdk.ApiClients
             return Parent.HttpChannel.PerformApiRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, request);
         }
 
+        public PageRegistrationByEventRefConfirmation Create(string eventRef, RegisterPageRequest request)
+        {
+            string locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
+            return Parent.HttpChannel.PerformApiRequest<RegisterPageRequest, PageRegistrationByEventRefConfirmation>("POST", locationFormat, request);
+        }
+
         public void CreateAsync(RegisterPageRequest request, Action<PageRegistrationConfirmation> callback)
         {
             var locationFormat = CreateLocationFormat(request);
             Parent.HttpChannel.PerformApiRequestAsync("PUT", locationFormat, request, callback);
+        }
+
+        public void CreateAsync(string eventRef, RegisterPageRequest request, Action<PageRegistrationByEventRefConfirmation> callback)
+        {
+            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
+            Parent.HttpChannel.PerformApiRequestAsync("POST", locationFormat, request, callback);
         }
 
         public string UpdateStoryLocationFormat(string pageShortName)

@@ -116,6 +116,7 @@
     <Compile Include="Model\Page\FundraisingPageVideos.cs" />
     <Compile Include="Model\Page\GetFundraisingPageImagesRequest.cs" />
     <Compile Include="Model\Page\GetFundraisingPageVideosRequest.cs" />
+    <Compile Include="Model\Page\PageRegistrationByEventRefConfirmation.cs" />
     <Compile Include="Model\Page\RegisterPageRequest.cs" />
     <Compile Include="Model\Page\PageRegistrationConfirmation.cs" />
     <Compile Include="Model\Page\FundraisingPageImage.cs" />
