@@ -503,5 +503,27 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             pageClient.Create("341_RFL2010", pageCreationRequest);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Can_Create_Page_With_Custom_Theme(WireDataFormat format)
+        {
+            var client = CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "Page with custom theme",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5),
+                Theme = new PageTheme{BackgroundColour = "#FFFFFF", ButtonColour="#000000", ButtonTextColour = "#FFFFFF", TitleColour="#0000FF"}         
+            };
+
+            pageClient.Create("341_RFL2010", pageCreationRequest);
+        }
     }
 }

@@ -57,5 +57,8 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "causeId")]
         public int? CauseId { get; set; }
+
+        [DataMember(Name = "theme")]
+        public PageTheme Theme { get; set; }
     }
 }
