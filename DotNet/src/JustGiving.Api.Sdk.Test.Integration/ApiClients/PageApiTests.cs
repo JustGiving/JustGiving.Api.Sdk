@@ -520,7 +520,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 CharityId = 2050,
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5),
-                Theme = new PageTheme{BackgroundColour = "#FFFFFF", ButtonColour="#000000", ButtonTextColour = "#FFFFFF", TitleColour="#0000FF"}         
+                Theme = new PageTheme{BackgroundColour = "#FFFF00", ButtonColour="#00AA00", ButtonTextColour = "#00FFFF", TitleColour="#FF00FF"}         
             };
 
             pageClient.Create("341_RFL2010", pageCreationRequest);
