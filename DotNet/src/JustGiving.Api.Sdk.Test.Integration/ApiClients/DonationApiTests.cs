@@ -8,13 +8,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
     /// Sorry!
     /// </summary>
     [TestFixture]
-    public class DonationApiTests : ApiClientTestsBase
+    public class DonationApiTests
     {
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void GetDonation_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation(WireDataFormat format)
         {
-            var client = CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientValidCredentials(format);
             var donationClient = new DonationApi(client);
 
             var status = donationClient.Retrieve(20905200);
@@ -26,7 +26,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void GetDonationStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus(WireDataFormat format)
         {
-            var client = CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientValidCredentials(format);
             var donationClient = new DonationApi(client);
 
             var status = donationClient.RetrieveStatus(20905200);
