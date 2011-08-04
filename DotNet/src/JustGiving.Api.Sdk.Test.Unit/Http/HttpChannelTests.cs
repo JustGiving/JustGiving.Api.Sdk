@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace GG.Api.Sdk.Test.Unit.Http
 {
     [TestFixture]
+    [Category("Fast")]
     public class HttpChannelTests
     {
         private static MockHttpClient<object> PerformGenericApiRequest(Action<HttpChannel> action)

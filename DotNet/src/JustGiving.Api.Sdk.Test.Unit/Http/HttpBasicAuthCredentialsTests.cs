@@ -5,6 +5,7 @@ using NUnit.Framework;
 namespace GG.Api.Sdk.Test.Unit.Http
 {
     [TestFixture]
+    [Category("Fast")]
     public class HttpBasicAuthCredentialsTests
     {
         [Test]

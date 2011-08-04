@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace GG.Api.Sdk.Test.Unit
 {
     [TestFixture]
+    [Category("Fast")]
     public class ClientConfigurationTests
     {
         [TestCase(null)]
