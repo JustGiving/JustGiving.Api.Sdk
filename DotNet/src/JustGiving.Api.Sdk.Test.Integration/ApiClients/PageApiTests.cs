@@ -92,6 +92,38 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenProvidedWithANonDefaultDomainForASpecificCauseId_CreatesANewPageOnThatDomain(WireDataFormat format)
+        {
+            const string domain = "rfl.staging.justgiving.com";
+
+            var client = TestContext.CreateClientValidCredentials(format);
+            client.SetWhiteLabelDomain(domain);
+
+            var pageClient = new PageApi(client);
+
+            var pageShortName = "api-test-" + Guid.NewGuid();
+
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = null,
+                Attribution = null,
+                CharityId = 2050,
+                CauseId=192653,
+                PageShortName = pageShortName,
+                PageTitle = "Page created on domain " + domain + " by an integration test",
+                EventDate = null,
+                EventName = null,
+                EventId = 1,
+                TargetAmount = null
+            };
+
+            var registrationResponse = pageClient.Create(pageCreationRequest);
+
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void RegisterWhenProvidedWithADomainThatDoesNotExist_ThrowsException(WireDataFormat format)
         {
             const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
