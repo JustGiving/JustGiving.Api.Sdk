@@ -7,13 +7,13 @@ using NUnit.Framework;
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class AccountApiTests : ApiClientTestsBase
+    public class AccountApiTests
     {
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenSuppliedEmailIsUnused_AccountIsCreatedAndEmailAddressReturned(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
@@ -27,7 +27,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenSuppliedWithEmailThatIsAlreadyRegistered_ReturnsAnError(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
@@ -43,17 +43,17 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
 
-            var pages = accountClient.ListAllPages(TestContext.TestUsername);
+            accountClient.ListAllPages(TestContext.TestUsername);
         }
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
 
             var exists = accountClient.IsEmailRegistered(TestContext.TestUsername);
@@ -65,7 +65,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
 
             var exists = accountClient.IsEmailRegistered(Guid.NewGuid().ToString() + "@justgiving.com"); 
@@ -78,7 +78,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenSuppliedPasswordFormatInvalid_ReturnsAnError(WireDataFormat format)
         {
             const string invalidPassowordValue = "abc"; //Password to short
-            var client = CreateClientNoCredentials(format);
+            var client = TestContext.CreateClientNoCredentials(format);
             var accountClient = new AccountApi(client);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
@@ -94,7 +94,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void RequestPassWordReminder_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client);
             
             accountClient.RequestPasswordReminder(TestContext.TestUsername); 
@@ -104,7 +104,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void RequestPassWordReminder_WhenSuppliedKnownEmailAndDomain_ReturnsTrue(WireDataFormat format)
         {
-            var client = CreateClientInvalidCredentials(format);
+            var client = TestContext.CreateClientInvalidCredentials(format);
             client.SetWhiteLabelDomain("rfl.staging.justgiving.com");
             var accountClient = new AccountApi(client);
 

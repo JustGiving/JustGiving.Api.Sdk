@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace GG.Api.Sdk.Test.Unit
 {
     [TestFixture]
+    [Category("Fast")]
     public class ModelTests
     {
         [TestCase("SampleXml\\CharityResponse.xml")]

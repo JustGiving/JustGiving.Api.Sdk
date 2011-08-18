@@ -5,13 +5,13 @@ using NUnit.Framework;
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 {
     [TestFixture]
-    public class CharityApiTests : ApiClientTestsBase
+    public class CharityApiTests
     {
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void RetrieveCharity_IssuedWithKnownId_ReturnsCharity(WireDataFormat format)
         {
-            var client = CreateClientNoCredentials(format);
+            var client = TestContext.CreateClientNoCredentials(format);
             var charityClient = new CharityApi(client);
 
             var item = charityClient.Retrieve(2050);
@@ -24,7 +24,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void AuthenticateCharityUser_ValidUser_ReturnsIsValidAndCharityId(WireDataFormat format)
         {
-            var client = CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientValidCredentials(format);
             var charityClient = new CharityApi(client);
             var authenticateCharityUserRequest = new AuthenticateCharityUserRequest()
             {
@@ -41,7 +41,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 		[Ignore("Not yet live")]
         public void RetrieveEvents_ReturnsEventsDto(WireDataFormat format)
         {
-            var client = CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientValidCredentials(format);
             var charityClient = new CharityApi(client);
             var response = charityClient.RetrieveEvents(2357);
             Assert.That(response, Is.Not.Null);

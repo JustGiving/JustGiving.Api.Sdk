@@ -6,6 +6,7 @@ using NUnit.Framework;
 namespace GG.Api.Sdk.Test.Unit.ApiClients
 {
     [TestFixture]
+    [Category("Fast")]
     public class DonationApiTests
     {
         [Test]

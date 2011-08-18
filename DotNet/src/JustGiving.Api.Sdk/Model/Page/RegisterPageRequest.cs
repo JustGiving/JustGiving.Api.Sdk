@@ -15,6 +15,9 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "eventId")]
         public int? EventId { get; set; }
 
+        [DataMember(Name = "eventRef")]
+        public string EventRef { get; set; }
+
         [DataMember(Name = "pageShortName")]
         public string PageShortName { get; set; }
 
@@ -54,5 +57,8 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "causeId")]
         public int? CauseId { get; set; }
+
+        [DataMember(Name = "theme")]
+        public PageTheme Theme { get; set; }
     }
 }
