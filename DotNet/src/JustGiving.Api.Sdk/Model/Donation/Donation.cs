@@ -29,6 +29,9 @@ namespace JustGiving.Api.Sdk.Model.Donation
         
         [DataMember(Name = "estimatedTaxReclaim", EmitDefaultValue = false, IsRequired = false)]
         public decimal? EstimatedTaxReclaim { get; set; }
+		
+        [DataMember(Name = "source", EmitDefaultValue = false, IsRequired = false)]
+        public string Source { get; set; }
 
         public Donation()
         {
