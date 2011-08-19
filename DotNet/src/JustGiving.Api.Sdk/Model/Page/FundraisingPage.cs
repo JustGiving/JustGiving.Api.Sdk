@@ -65,5 +65,7 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string Domain { get; set; }
         [DataMember(Name = "smsCode", EmitDefaultValue = false)]
         public string SmsCode { get; set; }
+        [DataMember(Name = "companyAppealId", EmitDefaultValue = false)]
+        public int? CompanyAppealId { get; set; }
     }
 }

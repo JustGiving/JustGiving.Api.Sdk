@@ -92,38 +92,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void Register_WhenProvidedWithANonDefaultDomainForASpecificCauseId_CreatesANewPageOnThatDomain(WireDataFormat format)
-        {
-            const string domain = "rfl.staging.justgiving.com";
-
-            var client = TestContext.CreateClientValidCredentials(format);
-            client.SetWhiteLabelDomain(domain);
-
-            var pageClient = new PageApi(client);
-
-            var pageShortName = "api-test-" + Guid.NewGuid();
-
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = null,
-                Attribution = null,
-                CharityId = 2050,
-                CauseId=192653,
-                PageShortName = pageShortName,
-                PageTitle = "Page created on domain " + domain + " by an integration test",
-                EventDate = null,
-                EventName = null,
-                EventId = 1,
-                TargetAmount = null
-            };
-
-            var registrationResponse = pageClient.Create(pageCreationRequest);
-
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
-        }
-
-        [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
         public void RegisterWhenProvidedWithADomainThatDoesNotExist_ThrowsException(WireDataFormat format)
         {
             const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
@@ -173,6 +141,32 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             Assert.That(registrationResponse.PageId != 0);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithCompanyAppealId_CanRetrieveCompanyId(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            const int companyAppealId = 200002;
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                CompanyAppealId = companyAppealId,
+                ActivityType = null,
+                PageShortName = pageShortName,
+                PageTitle = "api test",
+                EventName = "The Other Occasion of ApTest and APITest",
+                CharityId = 2050,
+                EventId = 1,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            pageClient.Create(pageCreationRequest);
+            Assert.That(pageClient.Retrieve(pageShortName).CompanyAppealId, Is.EqualTo(companyAppealId));
+        }
+
 
         /// <summary>
         /// This test assumes that the Valid Credentials in the test context has more than 1 page
