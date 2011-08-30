@@ -167,6 +167,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(pageClient.Retrieve(pageShortName).CompanyAppealId, Is.EqualTo(companyAppealId));
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithInMemName_CanRetrieveNameFromAttribution(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client);
+            var pageShortName = "api-test-" + Guid.NewGuid();
+            const string inMemName = "Matheu";
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.InMemory,
+                Attribution = inMemName,
+                PageShortName = pageShortName,
+                PageTitle = "api test InMem Name",
+                EventName = "The InMem ApiTest",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5)
+            };
+
+            pageClient.Create(pageCreationRequest);
+            FundraisingPage page = pageClient.Retrieve(pageShortName);
+            Assert.That(page.Attribution, Is.EqualTo(inMemName));
+        }
 
         /// <summary>
         /// This test assumes that the Valid Credentials in the test context has more than 1 page
