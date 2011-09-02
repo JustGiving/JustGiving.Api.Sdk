@@ -69,5 +69,7 @@ namespace JustGiving.Api.Sdk.Model.Page
         public int? CompanyAppealId { get; set; }
         [DataMember(Name = "attribution", EmitDefaultValue = false)]
         public string Attribution { get; set; }
+        [DataMember(Name="customCodes", EmitDefaultValue = false)]
+        public PageCustomCodes CustomCodes { get; set; }
     }
 }

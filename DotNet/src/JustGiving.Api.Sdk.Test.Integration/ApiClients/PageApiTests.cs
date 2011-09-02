@@ -231,7 +231,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 EventName = "Story Update Testing",
                 CharityId = 2050,
                 TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5)
+                EventDate = DateTime.Now.AddDays(5),
+                CustomCodes = new PageCustomCodes() { CustomCode1="code1", CustomCode2="code2", CustomCode3="code3", CustomCode4="code4", CustomCode5="code5", CustomCode6 = "code6"}
             };
             pageClient.Create(pageCreationRequest);
 
@@ -244,6 +245,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.AreEqual(pageData.PageTitle, pageCreationRequest.PageTitle);
             Assert.AreEqual(pageData.EventName, pageCreationRequest.EventName);
             Assert.AreEqual(pageData.TargetAmount, pageCreationRequest.TargetAmount);
+            Assert.That(pageData.CustomCodes, Is.Not.Null);
+            Assert.That(pageData.CustomCodes.CustomCode1, Is.StringMatching("code1"));
+            Assert.That(pageData.CustomCodes.CustomCode2, Is.StringMatching("code2"));
+            Assert.That(pageData.CustomCodes.CustomCode3, Is.StringMatching("code3"));
+            Assert.That(pageData.CustomCodes.CustomCode4, Is.StringMatching("code4"));
+            Assert.That(pageData.CustomCodes.CustomCode5, Is.StringMatching("code5"));
+            Assert.That(pageData.CustomCodes.CustomCode6, Is.StringMatching("code6"));
             Assert.IsNotNullOrEmpty(pageData.SmsCode);
         }
 

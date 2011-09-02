@@ -63,5 +63,9 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "theme")]
         public PageTheme Theme { get; set; }
+
+        [DataMember(Name = "customCodes")]
+        public PageCustomCodes CustomCodes { get; set; }
+
     }
 }
