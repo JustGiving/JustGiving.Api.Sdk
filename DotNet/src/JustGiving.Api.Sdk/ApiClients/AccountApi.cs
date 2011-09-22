@@ -8,36 +8,24 @@ using JustGiving.Api.Sdk.Model.Page;
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class AccountApi : ApiClientBase, IAccountApi
-    {
+	{
+		public override string ResourceBase
+		{
+			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account"; }
+		}
+
         public AccountApi(JustGivingClientBase parent):base(parent)
         {
         }
 
-        public string CreateLocationFormat(CreateAccountRequest request)
-        {
-            if(request == null)
-            {
-                throw new ArgumentNullException("request", "Request cannot be null.");
-            }
-
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account";
-        }
-
         public string Create(CreateAccountRequest request)
         {
-            var locationFormat = CreateLocationFormat(request);
-            return Parent.HttpChannel.PerformApiRequest<CreateAccountRequest, AccountRegistrationConfirmation>("PUT", locationFormat, request).Email;
+        	return Put<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request).Email;
         }
 
         public void CreateAsync(CreateAccountRequest request, Action<string> callback)
-        {
-            string locationFormat = CreateLocationFormat(request);
-            Parent.HttpChannel.PerformApiRequestAsync<CreateAccountRequest, AccountRegistrationConfirmation>("PUT", locationFormat, request, response=>CreateAsyncEnd(response, callback));
-        }
-
-        private static void CreateAsyncEnd(AccountRegistrationConfirmation response, Action<string> clientCallback)
-        {
-            clientCallback(response.Email);
+		{
+			PutAsync<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request, response => callback(response.Email));
         }
 
         public string ListAllPagesLocationFormat(string email)
@@ -47,19 +35,19 @@ namespace JustGiving.Api.Sdk.ApiClients
                 throw new ArgumentNullException("email", "Email cannot be null or empty.");
             }
 
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/pages";
+			return ResourceBase + "/" + email + "/pages";
         }
 
         public FundraisingPageSummaries ListAllPages(string email)
         {
             var locationFormat = ListAllPagesLocationFormat(email);
-            return Parent.HttpChannel.PerformApiRequest<FundraisingPageSummaries>("GET", locationFormat);
+        	return Get<FundraisingPageSummaries>(locationFormat);
         }
 
         public void ListAllPagesAsync(string email, Action<FundraisingPageSummaries> callback)
         {
             var locationFormat = ListAllPagesLocationFormat(email);
-            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+			GetAsync(locationFormat, callback);
         }
 
         public string IsEmailRegisteredLocationFormat(string email)
@@ -67,7 +55,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             if (string.IsNullOrEmpty(email))
                 throw new ArgumentNullException("email", "Email cannot be null or empty.");
             
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email;
+            return ResourceBase + "/" + email;
         }
 
         public bool IsEmailRegistered(string email)
@@ -104,7 +92,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RequestPasswordReminderLocationFormat(string email)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account/" + email + "/requestpasswordreminder";
+			return ResourceBase + "/" + email + "/requestpasswordreminder";
         }
 
         public void RequestPasswordReminder(string email)

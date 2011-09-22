@@ -4,7 +4,12 @@ using JustGiving.Api.Sdk.Model.Donation;
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class DonationApi : ApiClientBase, IDonationApi
-    {
+	{
+		public override string ResourceBase
+		{
+			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/donation"; }
+		}
+
         public DonationApi(JustGivingClientBase parent)
             : base(parent)
         {
@@ -12,7 +17,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         private string RetrieveLocationFormat(int donationId)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/donation/" + donationId;
+			return ResourceBase + "/" + donationId;
         }
 
         public Donation Retrieve(int donationId)
@@ -29,7 +34,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         private string RetrieveStatusLocationFormat(int donationId)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/donation/" + donationId + "/status";
+			return RetrieveLocationFormat(donationId) + "/status";
         }
 
         public DonationStatus RetrieveStatus(int donationId)

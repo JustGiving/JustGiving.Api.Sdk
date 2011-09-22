@@ -4,7 +4,12 @@ using JustGiving.Api.Sdk.Model.Event;
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class EventApi: ApiClientBase, IEventApi
-    {
+	{
+		public override string ResourceBase
+		{
+			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event"; }
+		}
+
         public EventApi(JustGivingClientBase parent)
             : base(parent)
         {
@@ -12,24 +17,24 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RetrieveLocationFormat(int eventId)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event/" + eventId;
+			return ResourceBase + "/" + eventId;
         }
 
         public Event Retrieve(int eventId)
         {
             var locationFormat = RetrieveLocationFormat(eventId);
-            return Parent.HttpChannel.PerformApiRequest<Event>("GET", locationFormat);
+        	return Get<Event>(locationFormat);
         }
 
         public void RetrieveAsync(int eventId, Action<Event> callback)
         {
             var locationFormat = RetrieveLocationFormat(eventId);
-            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+            GetAsync(locationFormat, callback);
         }
 
         public string RetrievePagesLocationFormat(int eventId, int? pageSize, int? pageNumber)
         {
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event/" + eventId + "/pages";
+			var locationFormat = ResourceBase + "/" + eventId + "/pages";
             locationFormat += "?PageSize=" + pageSize.GetValueOrDefault(50);
             locationFormat += "&PageNum=" + pageNumber.GetValueOrDefault(1);
             return locationFormat;
@@ -38,13 +43,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public GetPagesForEventResponse RetrievePages(int eventId, int? pageSize, int? pageNumber)
         {
             var locationFormat = RetrievePagesLocationFormat(eventId, pageSize, pageNumber);
-            return Parent.HttpChannel.PerformApiRequest<GetPagesForEventResponse>("GET", locationFormat);
+			return Get<GetPagesForEventResponse>(locationFormat);
         }
 
         public void RetrievePagesAsync(int eventId, int? pageSize, int? pageNumber, Action<GetPagesForEventResponse> callback)
         {
             var locationFormat = RetrievePagesLocationFormat(eventId, pageSize, pageNumber);
-            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+			GetAsync(locationFormat, callback);
         }
 
         public GetPagesForEventResponse RetrievePages(int eventId)

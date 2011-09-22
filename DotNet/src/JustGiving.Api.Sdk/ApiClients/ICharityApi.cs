@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         Charity Retrieve(int charityId);
         CharityEvents RetrieveEvents(int charityId);
         CharityEvents RetrieveEvents(int charityId, int pageNumber, int pageSize);
+    	CharityAuthenticationResult Authenticate(AuthenticateCharityUserRequest request);
     }
 }

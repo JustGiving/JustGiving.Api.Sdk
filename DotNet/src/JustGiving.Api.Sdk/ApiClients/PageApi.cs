@@ -7,8 +7,15 @@ using JustGiving.Api.Sdk.Model.Page;
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class PageApi : ApiClientBase, IPageApi
-    {
-        public PageApi(JustGivingClientBase parent) : base(parent) {}
+	{
+		public override string ResourceBase
+		{
+			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising"; }
+		}
+
+        public PageApi(JustGivingClientBase parent) : base(parent)
+        {
+        }
         
         public string ListAllLocationFormat()
         {
@@ -17,7 +24,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
             }
 
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages";
+            return ResourceBase + "/pages";
         }
 
         public FundraisingPageSummaries ListAll()
@@ -34,7 +41,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RetrieveLocationFormat(string pageShortName)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName;
+            return ResourceBase +  "/pages/" + pageShortName;
         }
 
         public FundraisingPage Retrieve(string pageShortName)
@@ -51,7 +58,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RetrieveDonationsForPageLocationFormat(string pageShortName, int? pageSize, int? pageNumber)
         {
-            var locationFormat = Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/donations";
+            var locationFormat = ResourceBase +  "/pages/" + pageShortName + "/donations";
             locationFormat += "?PageSize=" + pageSize.GetValueOrDefault(50);
             locationFormat += "&PageNum=" + pageNumber.GetValueOrDefault(1);
             return locationFormat;
@@ -86,7 +93,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 throw new ArgumentNullException("request", "Request cannot be null.");
             }
 
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages";
+            return ResourceBase + "/pages";
         }
 
         public PageRegistrationConfirmation Create(RegisterPageRequest request)
@@ -115,7 +122,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string UpdateStoryLocationFormat(string pageShortName)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName;
+            return ResourceBase +  "/pages/" + pageShortName;
         }
 
         public void UpdateStory(string pageShortName, string storyUpdate)
@@ -138,7 +145,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             if (!string.IsNullOrEmpty(domain))
                 domain = string.Format("?domain={0}",domain);
 
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + domain;
+            return ResourceBase + "/pages/" + pageShortName + domain;
         }
 
         public bool IsPageShortNameRegistered(string pageShortName, string domain)
@@ -179,7 +186,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string UploadImageLocationFormat(string pageShortName, string caption)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images" + "?caption=" + Uri.EscapeDataString(caption);
+            return ResourceBase + "/pages/" + pageShortName + "/images" + "?caption=" + Uri.EscapeDataString(caption);
         }
 
         public void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
@@ -217,16 +224,14 @@ namespace JustGiving.Api.Sdk.ApiClients
             return Parent.HttpChannel.PerformApiRequest<GetFundraisingPageVideosRequest, FundraisingPageVideos>("GET", locationFormat, request);
         }
 
-
         private string FundraisingPageImagesLocationFormat(string pageShortName)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/images";
+            return ResourceBase + "/pages/" + pageShortName + "/images";
         }
         private string FundraisingPageVideosLocationFormat(string pageShortName)
         {
-            return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/fundraising/pages/" + pageShortName + "/videos";
+			return ResourceBase + "/pages/" + pageShortName + "/videos";
         }
-
 
         public void UploadImageAsync(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
         {
@@ -239,8 +244,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void AddImageAsync(AddFundraisingPageImageRequest request, Action<AddFundraisingPageImageConfirmation> callback)
         {
             var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
-            Parent.HttpChannel.PerformApiRequestAsync
-                <AddFundraisingPageImageRequest, AddFundraisingPageImageConfirmation>("PUT", locationFormat, request, callback);
+            Parent.HttpChannel.PerformApiRequestAsync("PUT", locationFormat, request, callback);
         }
 
         public void AddVideoAsync(AddFundraisingPageVideoRequest request, Action<AddFundraisingPageVideoConfirmation> callback)

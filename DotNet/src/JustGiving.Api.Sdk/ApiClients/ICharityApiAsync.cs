@@ -8,5 +8,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         void RetrieveAsync(int charityId, Action<Charity> callback);
         void RetrieveEventsAsync(int charityId, Action<CharityEvents> callback);
         void RetrieveEventsAsync(int charityId, int pageNumber, int pageSize, Action<CharityEvents> callback);
+		void AuthenticateAsync(AuthenticateCharityUserRequest request, Action<CharityAuthenticationResult> callback);
     }
 }
