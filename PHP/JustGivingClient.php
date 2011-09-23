@@ -21,6 +21,7 @@ class JustGivingClient
 	public $Donation;
 	public $Search;
 	public $Event;
+	public $Team;
 
 	public function __construct($rootDomain, $apiKey, $apiVersion, $username="", $password="")
 	{
@@ -39,5 +40,6 @@ class JustGivingClient
 		$this->Donation			= new DonationApi($this);
 		$this->Search			= new SearchApi($this);
 		$this->Event			= new EventApi($this);
+		$this->Team			    = new TeamApi($this);
 	}
 }

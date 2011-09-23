@@ -49,7 +49,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 		{
 			var locationFormat = RetrieveLocationFormat(teamShortName);
 			var response = HttpChannel.PerformRawRequest("HEAD", locationFormat);
-			return ProcessIsPageShortNameRegisteredResponse(response);
+			return InspectResponseStatusCode(response);
 		}
 
 		public void TeamExistsAsync(string teamShortName, Action<bool> callback)
@@ -57,12 +57,12 @@ namespace JustGiving.Api.Sdk.ApiClients
 			var locationFormat = RetrieveLocationFormat(teamShortName);
 			HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response =>
 			{
-				var pageIsRegistered = ProcessIsPageShortNameRegisteredResponse(response);
+				var pageIsRegistered = InspectResponseStatusCode(response);
 				callback(pageIsRegistered);
 			});
 		}
 
-		private static bool ProcessIsPageShortNameRegisteredResponse(HttpResponseMessage response)
+		private static bool InspectResponseStatusCode(HttpResponseMessage response)
 		{
 			switch (response.StatusCode)
 			{

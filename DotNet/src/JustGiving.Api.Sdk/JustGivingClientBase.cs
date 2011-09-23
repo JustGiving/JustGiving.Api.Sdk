@@ -12,6 +12,7 @@ namespace JustGiving.Api.Sdk
         public ISearchApi Search { get; set; }
         public ICharityApi Charity { get; set; }
         public IEventApi Event { get; set; }
+        public ITeamApi Team { get; set; }
 
         public string WhiteLabelDomain { get; private set; }
     	public IHttpClient HttpClient { get; private set; }
@@ -20,11 +21,19 @@ namespace JustGiving.Api.Sdk
         public HttpChannel HttpChannel { get; private set; }
 
         protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-            : this(clientConfiguration, httpClient, null, null, null, null, null, null)
+            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null)
         {
         }
 
-        protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient, IAccountApi accountApi, IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi, ICharityApi charityApi, IEventApi eventApi)
+        protected JustGivingClientBase(ClientConfiguration clientConfiguration, 
+										IHttpClient httpClient, 
+										IAccountApi accountApi, 
+										IDonationApi donationApi, 
+										IPageApi pageApi, 
+										ISearchApi searchApi, 
+										ICharityApi charityApi, 
+										IEventApi eventApi,
+										ITeamApi teamApi)
         {
             if(httpClient == null)
             {
@@ -39,6 +48,7 @@ namespace JustGiving.Api.Sdk
             Search = searchApi;
             Charity = charityApi;
             Event = eventApi;
+            Team = teamApi;
 
             Configuration = clientConfiguration;
 
@@ -55,35 +65,13 @@ namespace JustGiving.Api.Sdk
         {
             HttpChannel = new HttpChannel(clientConfiguration, httpClient);
 
-            if (Account == null)
-            {
-				Account = new AccountApi(HttpChannel);
-            }
-
-            if (Donation == null)
-            {
-				Donation = new DonationApi(HttpChannel);
-            }
-
-            if (Page == null)
-            {
-				Page = new PageApi(HttpChannel);
-            }
-
-            if (Search == null)
-            {
-				Search = new SearchApi(HttpChannel);
-            }
-
-            if(Charity == null)
-            {
-				Charity = new CharityApi(HttpChannel);
-            }
-
-            if(Event == null)
-            {
-				Event = new EventApi(HttpChannel);
-            }
+        	Account = Account ?? new AccountApi(HttpChannel);
+			Donation = Donation ?? new DonationApi(HttpChannel);
+			Page = Page ?? new PageApi(HttpChannel);
+			Search = Search ?? new SearchApi(HttpChannel);
+			Charity = Charity ?? new CharityApi(HttpChannel);
+			Event = Event ?? new EventApi(HttpChannel);
+			Team = Team ?? new TeamApi(HttpChannel);
         }
 
         public void UpdateConfiguration(ClientConfiguration configuration)
