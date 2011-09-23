@@ -2,6 +2,8 @@
 using System.Net;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.ApiClients;
+using JustGiving.Api.Sdk.Http;
+using JustGiving.Api.Sdk.Http.MicrosoftHttp;
 using JustGiving.Api.Sdk.Model.Account;
 using JustGiving.Api.Sdk.Model.Page;
 using NUnit.Framework;
@@ -12,15 +14,25 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
     [Category("Fast")]
     public class AccountApiTests
     {
+    	private ClientConfiguration _config;
+    	private HttpChannel _httpChannel;
+    	private AccountApi _api;
+
+    	[SetUp]
+		public void SetUp()
+		{
+			_config = new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion);
+			_httpChannel = new HttpChannel(_config, new HttpClientWrapper());
+			_api = new AccountApi(_httpChannel);
+		}
+
         [Test]
         public void Create_WhenProvidedWithNullRequest_ThrowsArgumentNullException()
         {
-            var api = new AccountApi(new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
-            
-            var exception = Assert.Throws<ArgumentNullException>(() => api.Create(null));
+			var exception = Assert.Throws<ArgumentNullException>(() => _api.Create(null));
 
             Assert.That(exception.ParamName, Is.StringContaining("request"));
-            Assert.That(exception.Message, Is.StringContaining("Request cannot be null."));
+            Assert.That(exception.Message, Is.StringContaining("Request cannot be null"));
         }
 
         [Test]
@@ -41,9 +53,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         [TestCase(null)]
         public void ListAllPages_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(string email)
         {
-            var api = new AccountApi(new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
-            
-            var exception = Assert.Throws<ArgumentNullException>(() => api.ListAllPages(email));
+			var exception = Assert.Throws<ArgumentNullException>(() => _api.ListAllPages(email));
 
             Assert.That(exception.ParamName, Is.StringContaining("email"));
             Assert.That(exception.Message, Is.StringContaining("Email cannot be null or empty."));
@@ -66,9 +76,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         [TestCase(null)]
         public void IsEmailRegistered_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(string email)
         {
-            var api = new AccountApi(new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
-
-            var exception = Assert.Throws<ArgumentNullException>(() => api.IsEmailRegistered(email));
+			var exception = Assert.Throws<ArgumentNullException>(() => _api.IsEmailRegistered(email));
 
             Assert.That(exception.ParamName, Is.StringContaining("email"));
             Assert.That(exception.Message, Is.StringContaining("Email cannot be null or empty."));
@@ -92,9 +100,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         [TestCase(null)]
         public void RequestPasswordReminder_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(string email)
         {
-            var api = new AccountApi(new JustGivingClient(new ClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
-            
-            var exception = Assert.Throws<ArgumentNullException>(() => api.RequestPasswordReminder(email));
+			var exception = Assert.Throws<ArgumentNullException>(() => _api.RequestPasswordReminder(email));
 
             Assert.That(exception.ParamName, Is.StringContaining("email"));
             Assert.That(exception.Message, Is.StringContaining("Email cannot be null or empty."));

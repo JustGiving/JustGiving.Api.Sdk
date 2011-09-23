@@ -17,7 +17,7 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             where TResponse : class, new()
         {
             var parent = new JustGivingClient(configuration, httpClient);
-            var rtn = Activator.CreateInstance(typeof(TApiClient), parent) as TApiClient;
+            var rtn = Activator.CreateInstance(typeof(TApiClient), parent.HttpChannel) as TApiClient;
             return rtn;
         }
     }

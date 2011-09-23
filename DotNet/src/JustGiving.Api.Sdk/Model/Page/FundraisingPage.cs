@@ -71,5 +71,10 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string Attribution { get; set; }
         [DataMember(Name="customCodes", EmitDefaultValue = false)]
         public PageCustomCodes CustomCodes { get; set; }
+
+    	public FundraisingPage()
+    	{
+    		CustomCodes = new PageCustomCodes();
+    	}
     }
 }

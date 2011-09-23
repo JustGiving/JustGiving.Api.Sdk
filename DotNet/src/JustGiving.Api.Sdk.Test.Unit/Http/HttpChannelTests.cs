@@ -32,7 +32,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         public void PerformApiRequest_LocationFormatDoesNotContainApiKeyPlaceholder_ThrowsArgumentException()
         {
             var ex = Assert.Throws<ArgumentException>(
-                () => PerformGenericApiRequest(c => c.PerformApiRequest<object>("GET", "http://test.com/{apiVersion}")));
+                () => PerformGenericApiRequest(c => c.PerformRequest<object>("GET", "http://test.com/{apiVersion}")));
 
             Assert.That(ex.ParamName, Is.StringMatching("locationFormat"));
             Assert.That(ex.Message, Is.StringContaining("'locationFormat must contain '{apiKey}' and '{apiVersion}' placeholders (case sensitive)."));
@@ -42,7 +42,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         public void PerformApiRequest_LocationFormatDoesNotContainApiVersionPlaceholder_ThrowsArgumentException()
         {
             var ex = Assert.Throws<ArgumentException>(
-                () => PerformGenericApiRequest(c => c.PerformApiRequest<object>("GET", "http://test.com/{apiKey}")));
+                () => PerformGenericApiRequest(c => c.PerformRequest<object>("GET", "http://test.com/{apiKey}")));
 
             Assert.That(ex.ParamName, Is.StringMatching("locationFormat"));
             Assert.That(ex.Message, Is.StringContaining("'locationFormat must contain '{apiKey}' and '{apiVersion}' placeholders (case sensitive)."));
@@ -56,7 +56,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
                     {
                         config.ApiKey = "test-key";
                         config.ApiVersion = 42;
-                        channel.PerformApiRequest<object>("GET", "http://test.com/{apiKey}/vers-{apiVersion}");
+                        channel.PerformRequest<object>("GET", "http://test.com/{apiKey}/vers-{apiVersion}");
                     });
 
             Assert.That(client.LastRequestedUrl, Is.StringMatching(
@@ -67,7 +67,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         public void PerformApiRequest_MethodPOST_SendsRequest()
         {
             var client = PerformGenericApiRequest(
-                c => c.PerformApiRequest<object>("POST", "http://test.com/{apiKey}/vers-{apiVersion}"));
+                c => c.PerformRequest<object>("POST", "http://test.com/{apiKey}/vers-{apiVersion}"));
 
             Assert.NotNull(client.LastRequest);
         }
@@ -76,7 +76,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         public void PerformApiRequest_MethodGET_SendsRequest()
         {
             var client = PerformGenericApiRequest(
-                c => c.PerformApiRequest<object>("GET", "http://test.com/{apiKey}/vers-{apiVersion}"));
+                c => c.PerformRequest<object>("GET", "http://test.com/{apiKey}/vers-{apiVersion}"));
 
             Assert.NotNull(client.LastRequest);
         }
@@ -85,7 +85,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         public void PerformApiRequest_MethodHEAD_SendsRequest()
         {
             var client = PerformGenericApiRequest(
-                c => c.PerformApiRequest<object>("HEAD", "http://test.com/{apiKey}/vers-{apiVersion}"));
+                c => c.PerformRequest<object>("HEAD", "http://test.com/{apiKey}/vers-{apiVersion}"));
 
             Assert.NotNull(client.LastRequest);
         }
@@ -94,7 +94,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         public void PerformApiRequest_MethodPUT_SendsRequest()
         {
             var client = PerformGenericApiRequest(
-                c => c.PerformApiRequest<object>("PUT", "http://test.com/{apiKey}/vers-{apiVersion}"));
+                c => c.PerformRequest<object>("PUT", "http://test.com/{apiKey}/vers-{apiVersion}"));
 
             Assert.NotNull(client.LastRequest);
         }
@@ -104,7 +104,7 @@ namespace GG.Api.Sdk.Test.Unit.Http
         {
             var ex = Assert.Throws<ArgumentException>(
                 () => PerformGenericApiRequest(
-                    c => c.PerformApiRequest<object>("NotUsedVerb", "http://test.com/{apiKey}/vers-{apiVersion}")));
+                    c => c.PerformRequest<object>("NotUsedVerb", "http://test.com/{apiKey}/vers-{apiVersion}")));
 
             Assert.That(ex.ParamName, Is.StringMatching("method"));
             Assert.That(ex.Message, Is.StringContaining("Invalid Http Method - Currently Supported Methods are GET, POST, PUT and HEAD"));

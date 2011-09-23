@@ -15,7 +15,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void GetDonation_WhenSuppliedWithKnownExistingDonationId_ReturnsDonation(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-            var donationClient = new DonationApi(client);
+			var donationClient = new DonationApi(client.HttpChannel);
 
             var status = donationClient.Retrieve(20905200);
 
@@ -27,7 +27,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void GetDonationStatus_WhenSuppliedWithKnownExistingDonationId_ReturnsDonationStatus(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-            var donationClient = new DonationApi(client);
+			var donationClient = new DonationApi(client.HttpChannel);
 
             var status = donationClient.RetrieveStatus(20905200);
 

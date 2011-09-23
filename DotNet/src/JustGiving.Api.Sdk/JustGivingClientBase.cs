@@ -14,11 +14,10 @@ namespace JustGiving.Api.Sdk
         public IEventApi Event { get; set; }
 
         public string WhiteLabelDomain { get; private set; }
-
-        private readonly IHttpClient _httpClient;
+    	public IHttpClient HttpClient { get; private set; }
 
         protected internal ClientConfiguration Configuration { get; private set; }
-        internal HttpChannel HttpChannel { get; private set; }
+        public HttpChannel HttpChannel { get; private set; }
 
         protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient)
             : this(clientConfiguration, httpClient, null, null, null, null, null, null)
@@ -32,7 +31,7 @@ namespace JustGiving.Api.Sdk
                 throw new ArgumentNullException("httpClient", "httpClient must not be null to access the api.");
             }
 
-            _httpClient = httpClient;
+            HttpClient = httpClient;
 
             Account = accountApi;
             Donation = donationApi;
@@ -43,7 +42,7 @@ namespace JustGiving.Api.Sdk
 
             Configuration = clientConfiguration;
 
-            InitApis(_httpClient, clientConfiguration);
+            InitApis(HttpClient, clientConfiguration);
         }
 
         public void SetWhiteLabelDomain(string domain)
@@ -58,39 +57,39 @@ namespace JustGiving.Api.Sdk
 
             if (Account == null)
             {
-                Account = new AccountApi(this);
+				Account = new AccountApi(HttpChannel);
             }
 
             if (Donation == null)
             {
-                Donation = new DonationApi(this);
+				Donation = new DonationApi(HttpChannel);
             }
 
             if (Page == null)
             {
-                Page = new PageApi(this);
+				Page = new PageApi(HttpChannel);
             }
 
             if (Search == null)
             {
-                Search = new SearchApi(this);
+				Search = new SearchApi(HttpChannel);
             }
 
             if(Charity == null)
             {
-                Charity = new CharityApi(this);
+				Charity = new CharityApi(HttpChannel);
             }
 
             if(Event == null)
             {
-                Event = new EventApi(this);
+				Event = new EventApi(HttpChannel);
             }
         }
 
         public void UpdateConfiguration(ClientConfiguration configuration)
         {
             Configuration = configuration;
-            InitApis(_httpClient, configuration);
+            InitApis(HttpClient, configuration);
         }
     }
 }

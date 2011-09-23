@@ -11,7 +11,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
             var client = TestContext.CreateClientNoCredentials(format);
-            var searchClient = new SearchApi(client);
+            var searchClient = new SearchApi(client.HttpChannel);
 
             var items = searchClient.CharitySearch("cancer");
         }

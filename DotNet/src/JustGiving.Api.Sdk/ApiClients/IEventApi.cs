@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         Event Retrieve(int eventId);
         GetPagesForEventResponse RetrievePages(int eventId);
         GetPagesForEventResponse RetrievePages(int eventId, int? pageSize, int? pageNumber);
+    	EventRegistrationResponse Create(Event @event);
     }
 }

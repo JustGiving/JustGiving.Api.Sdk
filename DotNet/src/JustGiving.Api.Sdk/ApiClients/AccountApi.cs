@@ -11,21 +11,21 @@ namespace JustGiving.Api.Sdk.ApiClients
 	{
 		public override string ResourceBase
 		{
-			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/account"; }
+			get { return "{apiKey}/v{apiVersion}/account"; }
 		}
 
-        public AccountApi(JustGivingClientBase parent):base(parent)
+        public AccountApi(HttpChannel channel):base(channel)
         {
         }
 
         public string Create(CreateAccountRequest request)
         {
-        	return Put<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request).Email;
+        	return HttpChannel.Put<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request).Email;
         }
 
         public void CreateAsync(CreateAccountRequest request, Action<string> callback)
 		{
-			PutAsync<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request, response => callback(response.Email));
+			HttpChannel.PutAsync<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request, response => callback(response.Email));
         }
 
         public string ListAllPagesLocationFormat(string email)
@@ -41,13 +41,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public FundraisingPageSummaries ListAllPages(string email)
         {
             var locationFormat = ListAllPagesLocationFormat(email);
-        	return Get<FundraisingPageSummaries>(locationFormat);
+			return HttpChannel.Get<FundraisingPageSummaries>(locationFormat);
         }
 
         public void ListAllPagesAsync(string email, Action<FundraisingPageSummaries> callback)
         {
             var locationFormat = ListAllPagesLocationFormat(email);
-			GetAsync(locationFormat, callback);
+			HttpChannel.GetAsync(locationFormat, callback);
         }
 
         public string IsEmailRegisteredLocationFormat(string email)
@@ -61,14 +61,14 @@ namespace JustGiving.Api.Sdk.ApiClients
         public bool IsEmailRegistered(string email)
         {
             var locationFormat = IsEmailRegisteredLocationFormat(email);
-            var response = Parent.HttpChannel.PerformRawRequest("HEAD", locationFormat);
+            var response = HttpChannel.PerformRawRequest("HEAD", locationFormat);
             return ProcessIsEmailRegisteredResponse(response);
         }
 
         public void IsEmailRegisteredAsync(string email, Action<bool> callback)
         {
             var locationFormat = IsEmailRegisteredLocationFormat(email);
-            Parent.HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response => IsEmailRegisteredAsyncEnd(response, callback));
+            HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response => IsEmailRegisteredAsyncEnd(response, callback));
         }
 
         private static void IsEmailRegisteredAsyncEnd(HttpResponseMessage response, Action<bool> clientCallback)
@@ -100,14 +100,14 @@ namespace JustGiving.Api.Sdk.ApiClients
             if (string.IsNullOrEmpty(email)) { throw new ArgumentNullException("email", "Email cannot be null or empty."); }
 
             var locationFormat = RequestPasswordReminderLocationFormat(email);
-            var response = Parent.HttpChannel.PerformRawRequest("GET", locationFormat);
+            var response = HttpChannel.PerformRawRequest("GET", locationFormat);
             ProcessRequestPasswordReminder(response);
         }
 
         public void RequestPasswordReminderAsync(string email)
         {
             var locationFormat = RequestPasswordReminderLocationFormat(email);
-            Parent.HttpChannel.PerformRawRequestAsync("GET", locationFormat, ProcessRequestPasswordReminder);
+            HttpChannel.PerformRawRequestAsync("GET", locationFormat, ProcessRequestPasswordReminder);
         }
 
         private static void ProcessRequestPasswordReminder(HttpResponseMessage response)

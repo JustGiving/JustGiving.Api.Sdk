@@ -1,4 +1,5 @@
 ﻿using System;
+using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Donation;
 
 namespace JustGiving.Api.Sdk.ApiClients
@@ -7,11 +8,11 @@ namespace JustGiving.Api.Sdk.ApiClients
 	{
 		public override string ResourceBase
 		{
-			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/donation"; }
+			get { return "{apiKey}/v{apiVersion}/donation"; }
 		}
 
-        public DonationApi(JustGivingClientBase parent)
-            : base(parent)
+        public DonationApi(HttpChannel channel)
+            : base(channel)
         {
         }
 
@@ -23,13 +24,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public Donation Retrieve(int donationId)
         {
             var locationFormat = RetrieveLocationFormat(donationId);
-            return Parent.HttpChannel.PerformApiRequest<Donation>("GET", locationFormat);
+            return HttpChannel.PerformRequest<Donation>("GET", locationFormat);
         }
 
         public void RetrieveAsync(int donationId, Action<Donation> callback)
         {
             var locationFormat = RetrieveLocationFormat(donationId);
-            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+            HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
         }
 
         private string RetrieveStatusLocationFormat(int donationId)
@@ -40,13 +41,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public DonationStatus RetrieveStatus(int donationId)
         {
             var locationFormat = RetrieveStatusLocationFormat(donationId);
-            return Parent.HttpChannel.PerformApiRequest<DonationStatus>("GET", locationFormat);
+            return HttpChannel.PerformRequest<DonationStatus>("GET", locationFormat);
         }
 
         public void RetrieveStatusAsync(int donationId, Action<DonationStatus> callback)
         {
             var locationFormat = RetrieveStatusLocationFormat(donationId);
-            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+            HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
         }
     }
 }

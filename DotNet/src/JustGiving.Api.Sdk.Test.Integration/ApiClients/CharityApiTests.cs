@@ -12,7 +12,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RetrieveCharity_IssuedWithKnownId_ReturnsCharity(WireDataFormat format)
         {
             var client = TestContext.CreateClientNoCredentials(format);
-            var charityClient = new CharityApi(client);
+			var charityClient = new CharityApi(client.HttpChannel);
 
             var item = charityClient.Retrieve(2050);
 
@@ -25,7 +25,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void AuthenticateCharityUser_ValidUser_ReturnsIsValidAndCharityId(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-            var charityClient = new CharityApi(client);
+			var charityClient = new CharityApi(client.HttpChannel);
             var authenticateCharityUserRequest = new AuthenticateCharityUserRequest()
             {
                 Username = TestContext.CharityTestUserName,
@@ -42,7 +42,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RetrieveEvents_ReturnsEventsDto(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-            var charityClient = new CharityApi(client);
+			var charityClient = new CharityApi(client.HttpChannel);
             var response = charityClient.RetrieveEvents(2357);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.CharityId, Is.Not.EqualTo(0));

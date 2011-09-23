@@ -1,4 +1,5 @@
 ﻿using System;
+using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Event;
 
 namespace JustGiving.Api.Sdk.ApiClients
@@ -7,11 +8,11 @@ namespace JustGiving.Api.Sdk.ApiClients
 	{
 		public override string ResourceBase
 		{
-			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/event"; }
+			get { return "{apiKey}/v{apiVersion}/event"; }
 		}
 
-        public EventApi(JustGivingClientBase parent)
-            : base(parent)
+        public EventApi(HttpChannel channel)
+            : base(channel)
         {
         }
 
@@ -23,13 +24,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public Event Retrieve(int eventId)
         {
             var locationFormat = RetrieveLocationFormat(eventId);
-        	return Get<Event>(locationFormat);
+        	return HttpChannel.Get<Event>(locationFormat);
         }
 
         public void RetrieveAsync(int eventId, Action<Event> callback)
         {
             var locationFormat = RetrieveLocationFormat(eventId);
-            GetAsync(locationFormat, callback);
+			HttpChannel.GetAsync(locationFormat, callback);
         }
 
         public string RetrievePagesLocationFormat(int eventId, int? pageSize, int? pageNumber)
@@ -43,13 +44,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public GetPagesForEventResponse RetrievePages(int eventId, int? pageSize, int? pageNumber)
         {
             var locationFormat = RetrievePagesLocationFormat(eventId, pageSize, pageNumber);
-			return Get<GetPagesForEventResponse>(locationFormat);
+			return HttpChannel.Get<GetPagesForEventResponse>(locationFormat);
         }
 
         public void RetrievePagesAsync(int eventId, int? pageSize, int? pageNumber, Action<GetPagesForEventResponse> callback)
         {
             var locationFormat = RetrievePagesLocationFormat(eventId, pageSize, pageNumber);
-			GetAsync(locationFormat, callback);
+			HttpChannel.GetAsync(locationFormat, callback);
         }
 
         public GetPagesForEventResponse RetrievePages(int eventId)
@@ -61,5 +62,16 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
             RetrievePagesAsync(eventId, 50, 1, callback);
         }
+
+		public EventRegistrationResponse Create(Event @event)
+		{
+			return HttpChannel.Post<Event, EventRegistrationResponse>(ResourceBase, @event);
+		}
+
+		public void Create(Event @event, Action<Event> callback)
+		{
+			HttpChannel.PostAsync(ResourceBase, @event, callback);
+		}
+
     }
 }

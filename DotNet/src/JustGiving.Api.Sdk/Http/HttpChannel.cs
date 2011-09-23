@@ -6,7 +6,7 @@ namespace JustGiving.Api.Sdk.Http
 {
     public class HttpChannel
     {
-        private readonly ClientConfiguration _clientConfiguration;
+    	public ClientConfiguration ClientConfiguration { get; private set; }
         private readonly IHttpClient _httpClient;
         private readonly MultiformatPayloadBuilder _payloadBuilder;
 
@@ -22,22 +22,62 @@ namespace JustGiving.Api.Sdk.Http
                 throw new ArgumentNullException("httpClient", "httpClient must not be null to access the api.");
             }
 
-            _clientConfiguration = clientConfiguration;
+            ClientConfiguration = clientConfiguration;
             _httpClient = httpClient;
-            _payloadBuilder = new MultiformatPayloadBuilder(_clientConfiguration);
+            _payloadBuilder = new MultiformatPayloadBuilder(ClientConfiguration);
 
             SetAuthenticationHeaders();
         }
 
         private void SetAuthenticationHeaders()
         {
-            if (!string.IsNullOrEmpty(_clientConfiguration.Username) && !string.IsNullOrEmpty(_clientConfiguration.Password))
+            if (!string.IsNullOrEmpty(ClientConfiguration.Username) && !string.IsNullOrEmpty(ClientConfiguration.Password))
             {
-                var credentials = new HttpBasicAuthCredentials(_clientConfiguration.Username, _clientConfiguration.Password);
+                var credentials = new HttpBasicAuthCredentials(ClientConfiguration.Username, ClientConfiguration.Password);
                 _httpClient.AddHeader("Authorize", "Basic " + credentials);
                 _httpClient.AddHeader("Authorization", "Basic " + credentials);
             }
         }
+
+		protected internal T Get<T>(string location)
+		{
+			return PerformRequest<T>("GET", location);
+		}
+
+		protected internal void GetAsync<T>(string location, Action<T> callback)
+		{
+			PerformRequestAsync("GET", location, callback);
+		}
+
+		protected internal TResponseType Put<TRequestType, TResponseType>(string location, TRequestType request) where TRequestType : class
+		{
+			if (request == null)
+			{
+				throw new ArgumentNullException("request", "Request cannot be null");
+			}
+
+			return PerformRequest<TRequestType, TResponseType>("PUT", location, request);
+		}
+
+		protected internal void PostAsync<TRequestType, TResponseType>(string location, TRequestType request, Action<TResponseType> callback) where TRequestType : class
+		{
+			PerformRequestAsync("POST", location, request, callback);
+		}
+
+		protected internal TResponseType Post<TRequestType, TResponseType>(string location, TRequestType request) where TRequestType : class
+		{
+			if (request == null)
+			{
+				throw new ArgumentNullException("request", "Request cannot be null");
+			}
+
+			return PerformRequest<TRequestType, TResponseType>("POST", location, request);
+		}
+
+		protected internal void PutAsync<TRequestType, TResponseType>(string location, TRequestType request, Action<TResponseType> callback) where TRequestType : class
+		{
+			PerformRequestAsync("PUT", location, request, callback);
+		}
 
         public HttpResponseMessage PerformRawRequest(string method, string locationFormat)
         {
@@ -65,17 +105,17 @@ namespace JustGiving.Api.Sdk.Http
             _httpClient.SendAsync(method, url, postData, contentType, httpClientCallback);
         }
 
-        public TResponseType PerformApiRequest<TResponseType>(string method, string locationFormat)
+        public TResponseType PerformRequest<TResponseType>(string method, string locationFormat)
         {
-            return PerformApiRequest<object, TResponseType>(method, locationFormat, null);
+            return PerformRequest<object, TResponseType>(method, locationFormat, null);
         }
 
-        public void PerformApiRequestAsync<TResponseType>(string method, string locationFormat, Action<TResponseType> apiCallback)
+        public void PerformRequestAsync<TResponseType>(string method, string locationFormat, Action<TResponseType> apiCallback)
         {
-            PerformApiRequestAsync<object, TResponseType>(method, locationFormat, null, apiCallback);
+            PerformRequestAsync<object, TResponseType>(method, locationFormat, null, apiCallback);
         }
 
-        public TResponseType PerformApiRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request) where TRequestType : class
+        public TResponseType PerformRequest<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request) where TRequestType : class
         {
             if(method.NotAccepted())
             {
@@ -88,7 +128,7 @@ namespace JustGiving.Api.Sdk.Http
             return ProcessResponse<TResponseType>(response);
         }
 
-        public void PerformApiRequestAsync<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request, Action<TResponseType> apiCallback) where TRequestType : class
+        public void PerformRequestAsync<TRequestType, TResponseType>(string method, string locationFormat, TRequestType request, Action<TResponseType> apiCallback) where TRequestType : class
         {
             if(method.NotAccepted())
             {
@@ -167,16 +207,16 @@ namespace JustGiving.Api.Sdk.Http
             }
 
             var location =  locationFormat
-                .Replace("{apiKey}", _clientConfiguration.ApiKey)
-                .Replace("{apiVersion}", _clientConfiguration.ApiVersion.ToString());
+                .Replace("{apiKey}", ClientConfiguration.ApiKey)
+                .Replace("{apiVersion}", ClientConfiguration.ApiVersion.ToString());
 
-            if (!string.IsNullOrEmpty(_clientConfiguration.WhiteLabelDomain))
+            if (!string.IsNullOrEmpty(ClientConfiguration.WhiteLabelDomain))
             {
                 location = AddQueryStringSeperators(location);
-                location += "domain=" + _clientConfiguration.WhiteLabelDomain;
+                location += "domain=" + ClientConfiguration.WhiteLabelDomain;
             }
 
-            return new Uri(location);
+			return new Uri(ClientConfiguration.RootDomain + location);
         }
 
         private static string AddQueryStringSeperators(string location)

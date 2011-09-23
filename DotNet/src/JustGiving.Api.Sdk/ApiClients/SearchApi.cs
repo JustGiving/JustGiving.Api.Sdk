@@ -1,4 +1,5 @@
 ﻿using System;
+using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Search;
 
 namespace JustGiving.Api.Sdk.ApiClients
@@ -7,11 +8,11 @@ namespace JustGiving.Api.Sdk.ApiClients
 	{
 		public override string ResourceBase
 		{
-			get { return Parent.Configuration.RootDomain + "{apiKey}/v{apiVersion}/charity/search"; }
+			get { return "{apiKey}/v{apiVersion}/charity/search"; }
 		}
 
-        public SearchApi(JustGivingClientBase parent)
-            : base(parent)
+        public SearchApi(HttpChannel channel)
+            : base(channel)
         {
         }
 
@@ -35,7 +36,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 return new CharitySearchResults();
 
             string locationFormat = CharitySearchLocationFormat(searchTerms, pageNumber, pageSize);
-            return Parent.HttpChannel.PerformApiRequest<CharitySearchResults>("GET", locationFormat);
+            return HttpChannel.PerformRequest<CharitySearchResults>("GET", locationFormat);
         }
 
         public void CharitySearchAsync(string searchTerms, Action<CharitySearchResults> callback)
@@ -49,7 +50,7 @@ namespace JustGiving.Api.Sdk.ApiClients
                 callback(new CharitySearchResults());
 
             var locationFormat = CharitySearchLocationFormat(searchTerms, pageNumber, pageSize);
-            Parent.HttpChannel.PerformApiRequestAsync("GET", locationFormat, callback);
+            HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
         }
 
         public object EventSearch(string searchTerms)
@@ -67,7 +68,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             locationFormat += "&page=" + pageNumber.GetValueOrDefault(1);
             locationFormat += "&pageSize=" + pageSize.GetValueOrDefault(50);
 
-            return Parent.HttpChannel.PerformApiRequest<CharitySearchResults>("GET", locationFormat);
+            return HttpChannel.PerformRequest<CharitySearchResults>("GET", locationFormat);
         }
     }
 }

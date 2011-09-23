@@ -14,7 +14,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenSuppliedEmailIsUnused_AccountIsCreatedAndEmailAddressReturned(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
 
@@ -28,7 +28,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenSuppliedWithEmailThatIsAlreadyRegistered_ReturnsAnError(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
             accountClient.Create(request);
@@ -44,7 +44,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
 
             accountClient.ListAllPages(TestContext.TestUsername);
         }
@@ -54,7 +54,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
 
             var exists = accountClient.IsEmailRegistered(TestContext.TestUsername);
 
@@ -66,7 +66,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
 
             var exists = accountClient.IsEmailRegistered(Guid.NewGuid().ToString() + "@justgiving.com"); 
 
@@ -79,7 +79,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             const string invalidPassowordValue = "abc"; //Password to short
             var client = TestContext.CreateClientNoCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
             request.Password = invalidPassowordValue;
@@ -95,7 +95,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RequestPassWordReminder_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
             
             accountClient.RequestPasswordReminder(TestContext.TestUsername); 
         }
@@ -106,7 +106,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
             client.SetWhiteLabelDomain("rfl.staging.justgiving.com");
-            var accountClient = new AccountApi(client);
+			var accountClient = new AccountApi(client.HttpChannel);
 
             accountClient.RequestPasswordReminder(TestContext.TestUsername);
         }

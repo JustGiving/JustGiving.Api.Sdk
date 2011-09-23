@@ -68,8 +68,12 @@
     <Compile Include="ApiClients\IPageApiAsync.cs" />
     <Compile Include="ApiClients\ISearchApi.cs" />
     <Compile Include="ApiClients\ISearchApiAsync.cs" />
+    <Compile Include="ApiClients\ITeamApi.cs" />
+    <Compile Include="ApiClients\ITeamApiAsync.cs" />
     <Compile Include="ApiClients\PageApi.cs" />
     <Compile Include="ApiClients\SearchApi.cs" />
+    <Compile Include="ApiClients\TeamApi.cs" />
+    <Compile Include="ApiClients\TeamCreatedResponse.cs" />
     <Compile Include="ClientConfiguration.cs" />
     <Compile Include="Http\ApiClientException.cs" />
     <Compile Include="Http\DataPackets\HttpContent.cs" />
@@ -102,6 +106,8 @@
     <Compile Include="Model\Donation\Donation.cs" />
     <Compile Include="Model\Donation\DonationStatus.cs" />
     <Compile Include="Model\Event\Event.cs" />
+    <Compile Include="Model\Event\EventRegistrationResponse.cs" />
+    <Compile Include="Model\Event\EventType.cs" />
     <Compile Include="Model\Event\GetPagesForEventResponse.cs" />
     <Compile Include="Model\Page\AddFundraisingPageImageConfirmation.cs" />
     <Compile Include="Model\Page\AddFundraisingPageImageRequest.cs" />
@@ -136,6 +142,9 @@
     <Compile Include="Model\Search\CharitySearchResult.cs" />
     <Compile Include="Model\Search\CharitySearchResults.cs" />
     <Compile Include="Model\Search\RestResponseSugguestedQueryElement.cs" />
+    <Compile Include="Model\Team\Team.cs" />
+    <Compile Include="Model\Team\TeamTargetType.cs" />
+    <Compile Include="Model\Team\TeamType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WireDataFormat.cs" />
   </ItemGroup>

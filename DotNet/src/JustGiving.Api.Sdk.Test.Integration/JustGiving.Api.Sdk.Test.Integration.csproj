@@ -41,13 +41,13 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\AccountApiTests.cs" />
     <Compile Include="ApiClients\CharityApiTests.cs" />
+    <Compile Include="ApiClients\TeamApiTests.cs" />
     <Compile Include="ApiClients\EventApiTests.cs" />
     <Compile Include="ApiClients\DonationApiTests.cs" />
     <Compile Include="ApiClients\PageApiTests.cs" />
