@@ -2,7 +2,7 @@
 <package>
 	<metadata> 
 		<id>justgiving-sdk</id> 
-		<version>1.5.0</version> 
+		<version>1.5.1</version> 
 		<authors>JustGiving</authors> 
 		<owners>David Whitney</owners>
 		<description>A client for the JustGiving API available at https://api.justgiving.com</description> 
@@ -14,11 +14,11 @@
 	<files>
 	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.dll" target="lib\Net35\" /> 
 	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.pdb" target="lib\Net35\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.dll" target="lib\Net35\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.pdb" target="lib\Net35\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.dll" target="lib\Net35\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.pdb" target="lib\Net35\" /> 
 	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.dll" target="lib\Silverlight\" /> 
 	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.pdb" target="lib\Silverlight\" /> 
-	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.dll" target="lib\" /> 
-	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.pdb" target="lib\" /> 
-	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.dll" target="lib\" /> 
-	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.pdb" target="lib\" /> 
 	</files>  
 </package>

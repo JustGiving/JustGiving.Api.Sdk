@@ -1,6 +1,34 @@
 JustGiving API SDK
 ===================
 
+.NET Quickstart
+================
+
+If you want the C# SDK, you can install it from NuGet.
+Gallery link: http://nuget.org/List/Packages/justgiving-sdk
+Comes with Silverlight support.
+
+PM> Install-Package justgiving-sdk
+
+Then:
+
+      var client = new JustGiving.Api.Sdk.JustGivingClient("APIKEY");
+      var page = client.Page.Retrieve("pageShortName");
+      
+
+PHP Quickstart
+==============
+
+Download the latest package from downloads (or git pull master).
+Reference JustGivingClient.php
+
+$client = new JustGivingClient("https://api.staging.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");
+$page = $client->Page->Retrieve("pageShortName");
+
+
+Urls to visit
+==============
+
 SDKs to help developers code against the JustGiving APIs.
 
 Some places to visit:
