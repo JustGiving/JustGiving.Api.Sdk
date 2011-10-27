@@ -6,6 +6,7 @@ include_once 'ApiClients/CharityApi.php';
 include_once 'ApiClients/DonationApi.php';
 include_once 'ApiClients/SearchApi.php';
 include_once 'ApiClients/EventApi.php';
+include_once 'ApiClients/TeamApi.php';
 
 class JustGivingClient
 {	
