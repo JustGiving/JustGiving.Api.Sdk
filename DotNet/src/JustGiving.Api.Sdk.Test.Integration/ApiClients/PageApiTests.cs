@@ -290,6 +290,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        public void RetrieveImagesForPage_WhenProvidedWithAKnownPageAndRequesterIsAnon_ReturnsImages(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientNoCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+
+            var pageData = pageClient.GetImages(new GetFundraisingPageImagesRequest() { PageShortName = "rasha25" });
+
+            Assert.That(pageData.Count, Is.GreaterThan(0));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveVideosForPage_WhenProvidedWithAKnownPageAndRequesterIsAnon_ReturnsVideos(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientNoCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+
+            var pageData = pageClient.GetVideos(new GetFundraisingPageVideosRequest() { PageShortName = "rasha25" });
+
+            Assert.That(pageData.Count, Is.GreaterThan(0));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void IsPageShortNameRegistered_WhenSuppliedKnownExistingPage_ReturnsTrue(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);

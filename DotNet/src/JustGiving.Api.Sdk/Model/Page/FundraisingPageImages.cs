@@ -1,6 +1,10 @@
-﻿namespace JustGiving.Api.Sdk.Model.Page
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+
+namespace JustGiving.Api.Sdk.Model.Page
 {
-    public class FundraisingPageImages
+    [CollectionDataContract(Name="images", ItemName = "image", Namespace="")]
+    public class FundraisingPageImages : List<FundraisingPageImage>
     {
     }
 }
