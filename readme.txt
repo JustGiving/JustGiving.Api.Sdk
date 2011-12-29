@@ -22,7 +22,7 @@ PHP Quickstart
 Download the latest package from downloads (or git pull master).
 Reference JustGivingClient.php
 
-$client = new JustGivingClient("https://api.staging.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");
+$client = new JustGivingClient("https://api-staging.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");
 $page = $client->Page->Retrieve("pageShortName");
 
 
