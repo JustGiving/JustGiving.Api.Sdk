@@ -221,13 +221,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public FundraisingPageImages GetImages(GetFundraisingPageImagesRequest request)
         {
             var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
-            return HttpChannel.PerformRequest<GetFundraisingPageImagesRequest, FundraisingPageImages>("GET", locationFormat, request);
+            return HttpChannel.PerformRequest<FundraisingPageImages>("GET", locationFormat);
         }
 
         public FundraisingPageVideos GetVideos(GetFundraisingPageVideosRequest request)
         {
             var locationFormat = FundraisingPageVideosLocationFormat(request.PageShortName);
-            return HttpChannel.PerformRequest<GetFundraisingPageVideosRequest, FundraisingPageVideos>("GET", locationFormat, request);
+            return HttpChannel.PerformRequest<FundraisingPageVideos>("GET", locationFormat);
         }
 
         private string FundraisingPageImagesLocationFormat(string pageShortName)
