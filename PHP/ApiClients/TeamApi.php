@@ -13,7 +13,7 @@ class TeamApi extends ClientBase
 		$this->curlWrapper	= new CurlWrapper();
 	}
 
-    public function Create(Team $team)
+    public function Create($team)
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/" + $team->teamShortName;
 		$url = $this->BuildUrl($locationFormat);

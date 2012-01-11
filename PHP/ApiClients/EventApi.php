@@ -13,7 +13,7 @@ class EventApi extends ClientBase
 		$this->curlWrapper	= new CurlWrapper();
 	}
 
-    public function Create(Event $event)
+    public function Create($event)
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/event";
 		$url = $this->BuildUrl($locationFormat);
