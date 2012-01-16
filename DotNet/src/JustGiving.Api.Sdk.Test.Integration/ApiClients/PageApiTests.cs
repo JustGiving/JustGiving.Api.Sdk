@@ -5,6 +5,7 @@ using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Page;
+using JustGiving.Api.Sdk.Model.Remember;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
@@ -623,6 +624,49 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             pageClient.Create(pageCreationRequest);
 
             return pageShortName;
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithRememberedPersonId_CanRetrievePageWithRememberedPersonData(WireDataFormat format)
+        {
+            var guid = Guid.NewGuid();
+            var client = TestContext.CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageShortName = "api-test-" + guid;
+
+            var firstName = "FirstName";
+            var lastName = string.Format("Last-{0}", guid);
+
+            string inMemNameAttribution = String.Format("{0} {1}{2}", firstName, lastName, guid).Trim();
+
+            var rememberedPersonReference = new RememberedPersonReference
+                                       {
+                                           Relationship = "Other",
+                                           RememberedPerson = new RememberedPerson
+                                                                  {
+                                                                      Id = 132,
+                                                                  },
+                                       };
+
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.InMemory,
+                Attribution = inMemNameAttribution,
+                PageShortName = pageShortName,
+                PageTitle = "api test InMem Name",
+                EventName = "The InMem ApiTest",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5),
+                RememberedPersonReference = rememberedPersonReference,
+            };
+
+            pageClient.Create(pageCreationRequest);
+            FundraisingPage page = pageClient.Retrieve(pageShortName);
+
+            Assert.NotNull(page.RememberedPersonSummary.Name);
+            Assert.That(page.RememberedPersonSummary.Uri, Is.StringContaining(string.Format("/remember/{0}", rememberedPersonReference.RememberedPerson.Id)));
         }
     }
 }
