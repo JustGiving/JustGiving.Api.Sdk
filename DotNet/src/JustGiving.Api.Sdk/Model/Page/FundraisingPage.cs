@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using JustGiving.Api.Sdk.Model.Remember;
 
 namespace JustGiving.Api.Sdk.Model.Page
 {
@@ -71,6 +72,8 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string Attribution { get; set; }
         [DataMember(Name="customCodes", EmitDefaultValue = false)]
         public PageCustomCodes CustomCodes { get; set; }
+        [DataMember(Name = "rememberedPersonSummary", EmitDefaultValue = false)]
+        public RememberedPersonSummary RememberedPersonSummary { get; set; }
 
     	public FundraisingPage()
     	{

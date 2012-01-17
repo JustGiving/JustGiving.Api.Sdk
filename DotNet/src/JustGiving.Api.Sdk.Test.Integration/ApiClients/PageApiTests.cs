@@ -255,13 +255,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.AreEqual(pageData.PageTitle, pageCreationRequest.PageTitle);
             Assert.AreEqual(pageData.EventName, pageCreationRequest.EventName);
             Assert.AreEqual(pageData.TargetAmount, pageCreationRequest.TargetAmount);
-            Assert.That(pageData.CustomCodes, Is.Not.Null);
-            Assert.That(pageData.CustomCodes.CustomCode1, Is.StringMatching("code1"));
-            Assert.That(pageData.CustomCodes.CustomCode2, Is.StringMatching("code2"));
-            Assert.That(pageData.CustomCodes.CustomCode3, Is.StringMatching("code3"));
-            Assert.That(pageData.CustomCodes.CustomCode4, Is.StringMatching("code4"));
-            Assert.That(pageData.CustomCodes.CustomCode5, Is.StringMatching("code5"));
-            Assert.That(pageData.CustomCodes.CustomCode6, Is.StringMatching("code6"));
             Assert.IsNotNullOrEmpty(pageData.SmsCode);
         }
 
@@ -635,7 +628,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + guid;
 
-            var firstName = "FirstName";
+            var firstName = "FirstName-api-test";
             var lastName = string.Format("Last-{0}", guid);
 
             string inMemNameAttribution = String.Format("{0} {1}{2}", firstName, lastName, guid).Trim();
@@ -666,7 +659,55 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             FundraisingPage page = pageClient.Retrieve(pageShortName);
 
             Assert.NotNull(page.RememberedPersonSummary.Name);
-            Assert.That(page.RememberedPersonSummary.Uri, Is.StringContaining(string.Format("/remember/{0}", rememberedPersonReference.RememberedPerson.Id)));
+            Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithNewRememberedPersonDetails_CanRetrievePageWithRememberedPersonData(WireDataFormat format)
+        {
+            var guid = Guid.NewGuid();
+            var client = TestContext.CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageShortName = "api-test-" + guid;
+
+            var firstName = "FirstName-api-test";
+            var lastName = string.Format("Last-{0}", guid);
+
+            string inMemNameAttribution = String.Format("{0} {1}{2}", firstName, lastName, guid).Trim();
+
+            var rememberedPersonReference = new RememberedPersonReference
+            {
+                Relationship = "Other",
+                RememberedPerson = new RememberedPerson
+                                       {
+                                           FirstName = firstName,
+                                           LastName = lastName,
+                                           Gender = 1,
+                                           Town = String.Format("town-{0}", guid),
+                                           DateOfBirth = DateTime.Now.AddYears(-50),
+                                           DateOfDeath = DateTime.Now.AddDays(-1),
+                                       }
+            };
+
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.InMemory,
+                Attribution = inMemNameAttribution,
+                PageShortName = pageShortName,
+                PageTitle = "api test InMem Name",
+                EventName = "The InMem ApiTest",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5),
+                RememberedPersonReference = rememberedPersonReference,
+            };
+
+            pageClient.Create(pageCreationRequest);
+            FundraisingPage page = pageClient.Retrieve(pageShortName);
+
+            Assert.NotNull(page.RememberedPersonSummary.Name);
+            Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
         }
     }
 }

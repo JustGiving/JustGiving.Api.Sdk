@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using JustGiving.Api.Sdk.Model.Remember;
 
 namespace JustGiving.Api.Sdk.Model.Page
 {
@@ -61,11 +62,21 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "companyAppealId")]
         public int? CompanyAppealId { get; set; }
 
-        [DataMember(Name = "theme")]
-        public PageTheme Theme { get; set; }
+        //expiryDate is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+
+        //pageStory is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
 
         [DataMember(Name = "customCodes")]
         public PageCustomCodes CustomCodes { get; set; }
 
+        [DataMember(Name = "theme")]
+        public PageTheme Theme { get; set; }
+
+        //images is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+
+        //videos is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+
+        [DataMember(Name = "rememberedPersonReference")]
+        public RememberedPersonReference RememberedPersonReference { get; set; }
     }
 }

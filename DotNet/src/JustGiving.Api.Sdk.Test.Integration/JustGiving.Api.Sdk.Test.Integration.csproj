@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ApiClients\AccountApiTests.cs" />
     <Compile Include="ApiClients\CharityApiTests.cs" />
+    <Compile Include="ApiClients\InMemoryApiTests.cs" />
     <Compile Include="ApiClients\TeamApiTests.cs" />
     <Compile Include="ApiClients\EventApiTests.cs" />
     <Compile Include="ApiClients\DonationApiTests.cs" />
