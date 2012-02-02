@@ -2,7 +2,7 @@
 <package>
 	<metadata> 
 		<id>justgiving-sdk</id> 
-		<version>1.5.2</version> 
+		<version>1.5.3</version> 
 		<authors>JustGiving</authors> 
 		<owners>David Whitney</owners>
 		<description>A client for the JustGiving API available at https://api.justgiving.com</description> 
