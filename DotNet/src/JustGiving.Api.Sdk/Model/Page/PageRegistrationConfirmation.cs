@@ -26,5 +26,8 @@ namespace JustGiving.Api.Sdk.Model.Page
 
         [DataMember(Name = "pageId")]
         public int PageId { get; set; }
+
+        [DataMember(Name = "signOnUrl")]
+        public string SignOnUrl { get; set; }
     }
 }
