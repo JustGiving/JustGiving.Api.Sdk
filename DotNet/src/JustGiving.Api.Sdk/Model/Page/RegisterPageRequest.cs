@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Model.Remember;
 
@@ -62,9 +63,11 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "companyAppealId")]
         public int? CompanyAppealId { get; set; }
 
-        //expiryDate is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+        [DataMember(Name = "expiryDate")]
+        public DateTime? ExpiryDate { get; set; }
 
-        //pageStory is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+        [DataMember(Name = "pageStory")]
+        public string PageStory { get; set; }
 
         [DataMember(Name = "customCodes")]
         public PageCustomCodes CustomCodes { get; set; }
@@ -72,11 +75,39 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "theme")]
         public PageTheme Theme { get; set; }
 
-        //images is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+        [DataMember(Name = "images")]
+        public IList<ImageInfo> Images { get; set; }
 
-        //videos is in GG.Api.Services.Dto.Fundraising.PageRegistration but is not here
+        [DataMember(Name = "videos")]
+        public IList<VideoInfo> Videos { get; set; }
 
         [DataMember(Name = "rememberedPersonReference")]
         public RememberedPersonReference RememberedPersonReference { get; set; }
+    }
+
+    [DataContract(Name = "image", Namespace = "")]
+    public class ImageInfo
+    {
+        [DataMember(Name = "caption")]
+        public string Caption { get; set; }
+
+        [DataMember(Name = "url", IsRequired = true)]
+        public string Url { get; set; }
+
+        [DataMember(Name = "isDefault")]
+        public bool IsDefault { get; set; }
+    }
+
+    [DataContract(Name = "video", Namespace = "")]
+    public class VideoInfo
+    {
+        [DataMember(Name = "caption")]
+        public string Caption { get; set; }
+
+        [DataMember(Name = "url", IsRequired = true)]
+        public string Url { get; set; }
+
+        [DataMember(Name = "isDefault")]
+        public bool IsDefault { get; set; }
     }
 }
