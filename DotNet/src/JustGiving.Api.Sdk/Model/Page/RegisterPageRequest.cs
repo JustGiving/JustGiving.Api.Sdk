@@ -75,10 +75,10 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "theme")]
         public PageTheme Theme { get; set; }
 
-        [DataMember(Name = "images")]
+        [DataMember(Name = "images", EmitDefaultValue = false)]
         public IList<ImageInfo> Images { get; set; }
 
-        [DataMember(Name = "videos")]
+        [DataMember(Name = "videos", EmitDefaultValue = false)]
         public IList<VideoInfo> Videos { get; set; }
 
         [DataMember(Name = "rememberedPersonReference")]
