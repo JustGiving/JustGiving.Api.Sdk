@@ -57,6 +57,14 @@ class PageApi extends ClientBase
 		return json_decode($json);
 	}	
 	
+	public function SuggestPageShortNames($preferredName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/suggest?preferredName=" . urlencode ($preferredName);
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
+	}	
+	
 	public function RetrieveDonationsForPage($pageShortName, $pageSize=50, $pageNumber=1)
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/donations"."?PageSize=".$pageSize."&PageNum=".$pageNumber;
