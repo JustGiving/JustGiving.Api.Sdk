@@ -1,4 +1,5 @@
-﻿using JustGiving.Api.Sdk.Model.Page;
+﻿using System.Collections.Generic;
+using JustGiving.Api.Sdk.Model.Page;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
@@ -9,7 +10,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName);
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName, int? pageSize, int? pageNumber);
         PageRegistrationConfirmation Create(RegisterPageRequest request);
-        PageRegistrationByEventRefConfirmation Create(string eventRef, RegisterPageRequest request);
+        SuggestedNames SuggestPageShortNames(string preferedName);
         void UpdateStory(string pageShortName, string storyUpdate);
         bool IsPageShortNameRegistered(string pageShortName, string domain);
         void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType);

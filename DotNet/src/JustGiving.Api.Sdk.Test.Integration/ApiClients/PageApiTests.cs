@@ -193,6 +193,19 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.Attribution, Is.EqualTo(inMemName));
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void SuggestPageShortNames_SuppliedDesiredName_ReturnsSuggestions(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientValidCredentials(format);
+			var pageClient = new PageApi(client.HttpChannel);
+            const string desiredName = "david";
+
+            var suggestion = pageClient.SuggestPageShortNames(desiredName);
+
+            Assert.That(suggestion.Names.Length, Is.GreaterThan(0));
+        }
+
         /// <summary>
         /// This test assumes that the Valid Credentials in the test context has more than 1 page
         /// Which it will do if you run these integration tests at least once.

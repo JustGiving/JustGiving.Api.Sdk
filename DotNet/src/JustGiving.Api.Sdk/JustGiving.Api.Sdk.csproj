@@ -133,6 +133,7 @@
     <Compile Include="Model\Page\FundraisingPageImage.cs" />
     <Compile Include="Model\Page\StoryUpdateRequest.cs" />
     <Compile Include="Model\Page\StoryUpdateResponse.cs" />
+    <Compile Include="Model\Page\SuggestedNames.cs" />
     <Compile Include="Model\Pagination.cs" />
     <Compile Include="Model\Remember\RememberedPersonReference.cs" />
     <Compile Include="Model\RestResponseNavigationElement.cs" />

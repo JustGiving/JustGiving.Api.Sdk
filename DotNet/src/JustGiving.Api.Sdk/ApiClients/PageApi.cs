@@ -98,10 +98,10 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public PageRegistrationConfirmation Create(RegisterPageRequest request)
         {
-            string locationFormat = CreateLocationFormat(request);
+            var locationFormat = CreateLocationFormat(request);
             return HttpChannel.PerformRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, request);
         }
-
+        
         public PageRegistrationByEventRefConfirmation Create(string eventRef, RegisterPageRequest request)
         {
 			string locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
@@ -118,6 +118,23 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
 			var locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
             HttpChannel.PerformRequestAsync("POST", locationFormat, request, callback);
+        }
+
+        public SuggestedNames SuggestPageShortNames(string preferedName)
+        {
+            var locationFormat = SuggestPageShortNameLocationFormat(preferedName);
+            return HttpChannel.PerformRequest<SuggestedNames>("GET", locationFormat);
+        }
+
+        public void SuggestPageShortNamesAsync(string preferedName, Action<SuggestedNames> callback)
+        {
+            var locationFormat = SuggestPageShortNameLocationFormat(preferedName);
+            HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
+        }
+
+        private static string SuggestPageShortNameLocationFormat(string preferedName)
+        {
+            return "{apiKey}/v{apiVersion}/fundraising/pages/suggest?preferredName=" + Uri.EscapeDataString(preferedName);
         }
 
         public string UpdateStoryLocationFormat(string pageShortName)
