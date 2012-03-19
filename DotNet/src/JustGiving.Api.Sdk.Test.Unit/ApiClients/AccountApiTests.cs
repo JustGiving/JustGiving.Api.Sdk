@@ -48,6 +48,19 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
         }
 
+        [Test]
+        public void CreateAsync_WhenProvidedWithRequest_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<AccountRegistrationConfirmation>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, AccountRegistrationConfirmation>(httpClient);
+            var request = new CreateAccountRequest();
+
+            api.CreateAsync(request, response => {});
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("PUT"));
+        }
+
 
         [TestCase("")]
         [TestCase(null)]

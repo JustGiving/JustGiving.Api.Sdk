@@ -68,13 +68,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void IsEmailRegisteredAsync(string email, Action<bool> callback)
         {
             var locationFormat = IsEmailRegisteredLocationFormat(email);
-            HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response => IsEmailRegisteredAsyncEnd(response, callback));
-        }
-
-        private static void IsEmailRegisteredAsyncEnd(HttpResponseMessage response, Action<bool> clientCallback)
-        {
-            var isEmailRegistered = ProcessIsEmailRegisteredResponse(response);
-            clientCallback(isEmailRegistered);
+            HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response => callback(ProcessIsEmailRegisteredResponse(response)));
         }
 
         private static bool ProcessIsEmailRegisteredResponse(HttpResponseMessage response)
@@ -112,13 +106,12 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         private static void ProcessRequestPasswordReminder(HttpResponseMessage response)
         {
-            switch (response.StatusCode)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                case HttpStatusCode.OK:
-                    return;
-                default:
-                    throw ErrorResponseExceptionFactory.CreateException(response, null);
+                return;
             }
+            
+            throw ErrorResponseExceptionFactory.CreateException(response, null);
         }
-    }
+	}
 }

@@ -135,7 +135,14 @@ namespace GG.Api.Sdk.Test.Unit
 
         public void SendAsync(string method, Uri uri, HttpContent postData, Action<HttpResponseMessage> httpClientCallback)
         {
-            throw new NotImplementedException();
+            LastRequest = new HttpRequestMessage(method, uri) { Content = new HttpContent { Content = postData.Content, ContentType = postData.ContentType } };
+            
+            var response = new HttpResponseMessage();
+            var content = new TResponseType();
+            response.Content = BuildPayload(content);
+            response.StatusCode = _resultcode;
+            
+            httpClientCallback(response);
         }
     }
 }

@@ -137,31 +137,20 @@ namespace JustGiving.Api.Sdk.Http
 
             var url = BuildUrl(locationFormat);
             var payload = _payloadBuilder.BuildPayload(request);
-            _httpClient.SendAsync(method, url, payload, responseMessage => PerformApiRequestAsyncEnd(responseMessage, apiCallback));
+            _httpClient.SendAsync(method, url, payload, responseMessage => apiCallback(ProcessResponse<TResponseType>(responseMessage)));
         }
 
         private TResponseType ProcessResponse<TResponseType>(HttpResponseMessage response)
         {
-            var responseContent = ValidateResponse(response);
-            return _payloadBuilder.UnpackResponse<TResponseType>(responseContent);
-        }
-
-        public void PerformApiRequestAsyncEnd<TResponseType>(HttpResponseMessage response, Action<TResponseType> callback)
-        {
-            callback(ProcessResponse<TResponseType>(response));
-        }
-
-        private string ValidateResponse(HttpResponseMessage response)
-        {
-            var responseContent = response.Content.Content;
-            ThrowExceptionForExceptionalStatusCodes(response, responseContent);
+            var innerContent = response.Content.Content;
+            ThrowExceptionForExceptionalStatusCodes(response, innerContent);
             
-            if (string.IsNullOrEmpty(responseContent))
+            if (string.IsNullOrEmpty(innerContent))
             {
                 throw new ApiClientException("An attempt was made to deserialize an empty response.", response);
             }
 
-            return responseContent;
+            return _payloadBuilder.UnpackResponse<TResponseType>(innerContent);
         }
 
         private void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)

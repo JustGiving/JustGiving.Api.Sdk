@@ -2,6 +2,7 @@
 obj
 bin
 *.suo
+logs
 
 # ReSharper
 _ReSharper.*
