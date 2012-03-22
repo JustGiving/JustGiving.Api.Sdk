@@ -1,13 +1,14 @@
 <?php 
- 
+
     echo "pre_init<br/>";
   
-    $ch = curl_init("http://www.google.com");
+    $ch = curl_init("https://api-sandbox.justgiving.com/docs");
   
 echo "post_init<br/>";
 
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 echo "post_setopt<br/>";
 echo "pre_exec<br/>";

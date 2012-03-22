@@ -147,5 +147,19 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("GET"));
         }
 
+        [Test]
+        public void AreCredentialsValid_WhenProvidedWithEmailAndPassword_CallsExpectedUrl()
+        {
+            var httpClient = new MockHttpClient<object>(HttpStatusCode.OK);
+            var api = ApiClient.Create<AccountApi, object>(httpClient);
+            const string email = "some@email.com";
+            const string password = "password";
+
+            api.AreCredentialsValid(email, password);
+
+            Assert.That(httpClient.LastRequestedUrl, Is.StringContaining(string.Format("{0}{1}/v{2}/account/validate", TestContext.ApiLocation, TestContext.ApiKey, TestContext.ApiVersion)));
+            Assert.That(httpClient.LastRequest.Method, Is.StringContaining("POST"));
+        }
+
     }
 }
