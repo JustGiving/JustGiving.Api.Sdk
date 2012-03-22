@@ -4,7 +4,7 @@ using JustGiving.Api.Sdk.Http;
 
 namespace JustGiving.Api.Sdk
 {
-    public abstract class JustGivingClientBase
+    public abstract class JustGivingClientBase : IJustGivingClient
     {
         public IAccountApi Account { get; set; }
         public IDonationApi Donation { get; set; }
@@ -61,7 +61,7 @@ namespace JustGiving.Api.Sdk
             Configuration.WhiteLabelDomain = domain;
         }
 
-        private void InitApis(IHttpClient httpClient, ClientConfiguration clientConfiguration)
+        public void InitApis(IHttpClient httpClient, ClientConfiguration clientConfiguration)
         {
             HttpChannel = new HttpChannel(clientConfiguration, httpClient);
 

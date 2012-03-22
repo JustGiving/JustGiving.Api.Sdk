@@ -94,6 +94,7 @@
     <Compile Include="Http\ResourceNotFoundException.cs" />
     <Compile Include="Http\AsyncRequest.cs" />
     <Compile Include="Http\SilverlightPhone7\SilverlightHttpClient.cs" />
+    <Compile Include="IJustGivingClient.cs" />
     <Compile Include="JustGivingClientBase.cs" />
     <Compile Include="JustGivingMobileClient.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />

@@ -75,6 +75,7 @@
     <Compile Include="Http\DataPackets\HttpResponseMessage.cs" />
     <Compile Include="Http\IHttpClientAsync.cs" />
     <Compile Include="Http\ResourceNotFoundException.cs" />
+    <Compile Include="IJustGivingClient.cs" />
     <Compile Include="JustGivingClientBase.cs" />
     <Compile Include="Http\ApiClientException.cs" />
     <Compile Include="Http\ErrorResponse.cs" />
