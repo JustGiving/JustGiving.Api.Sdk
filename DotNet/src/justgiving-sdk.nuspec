@@ -2,7 +2,7 @@
 <package>
 	<metadata> 
 		<id>justgiving-sdk</id> 
-		<version>1.5.5</version> 
+		<version>1.5.6</version> 
 		<authors>JustGiving</authors> 
 		<owners>David Whitney</owners>
 		<description>A client for the JustGiving API available at https://api.justgiving.com</description> 
@@ -18,7 +18,9 @@
 	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.pdb" target="lib\Net35\" /> 
 	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.dll" target="lib\Net35\" /> 
 	  <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.pdb" target="lib\Net35\" /> 
-	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.dll" target="lib\Silverlight\" /> 
-	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.pdb" target="lib\Silverlight\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.dll" target="lib\sl4\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.pdb" target="lib\sl4\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.dll" target="lib\sl4-wp\" /> 
+	  <file src="JustGiving.Api.Sdk\bin\Release\JustGiving.Api.Sdk.WindowsPhone7.pdb" target="lib\sl4-wp\" /> 
 	</files>  
 </package>
