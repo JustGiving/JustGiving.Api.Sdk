@@ -98,6 +98,8 @@
     <Compile Include="JustGivingMobileClient.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />
+    <Compile Include="Model\Account\ValidateUser.cs" />
+    <Compile Include="Model\Account\ValidateUserCommandResponse.cs" />
     <Compile Include="Model\ActivityType.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Charity\AuthenticateCharityUserRequest.cs" />

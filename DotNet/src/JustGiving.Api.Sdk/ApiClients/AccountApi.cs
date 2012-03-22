@@ -113,5 +113,21 @@ namespace JustGiving.Api.Sdk.ApiClients
             
             throw ErrorResponseExceptionFactory.CreateException(response, null);
         }
+
+        public bool AreCredentialsValid(string email, string password)
+        {
+            var request = new ValidateUser {Email = email, Password = password};
+            var response = HttpChannel.PerformRequest<ValidateUser, ValidateUserCommandResponse>("POST", ResourceBase + "/validate", request);
+            return response.IsValid;
+        }
+
+        public void AreCredentialsValidAsync(string email, string password, Action<bool> callback)
+        {
+            var request = new ValidateUser { Email = email, Password = password };
+            HttpChannel.PerformRequestAsync<ValidateUser, ValidateUserCommandResponse>("POST",
+                                                                                       ResourceBase + "/validate",
+                                                                                       request,
+                                                                                       response => callback(response.IsValid));
+        }
 	}
 }

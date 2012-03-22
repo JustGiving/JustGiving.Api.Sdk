@@ -6,6 +6,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public interface IAccountApiAsync
     {
+        void AreCredentialsValidAsync(string email, string password, Action<bool> callback);
         void CreateAsync(CreateAccountRequest request, Action<string> callback);
         void ListAllPagesAsync(string email, Action<FundraisingPageSummaries> callback);
         void RequestPasswordReminderAsync(string email);
