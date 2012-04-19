@@ -41,6 +41,22 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        public void Register_WhenSuppliedValidAccountDetailsInUTF8_AccountIsCreatedAndEmailAddressReturned(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client.HttpChannel);
+            var email = Guid.NewGuid() + "@tempuri.org";
+            var request = CreateValidRegisterAccountRequest(email);
+            request.FirstName = "Jéan";
+            request.LastName = "würlitzer";
+
+            var registeredUsersEmail = accountClient.Create(request);
+            
+            Assert.AreEqual(email, registeredUsersEmail);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
