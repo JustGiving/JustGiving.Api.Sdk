@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Microsoft.Http;
 using HttpContent = Microsoft.Http.HttpContent;
 using HttpRequestMessage = Microsoft.Http.HttpRequestMessage;
@@ -37,7 +38,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         public DataPackets.HttpResponseMessage Send(string method, Uri uri, DataPackets.HttpContent postData)
         {
-            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType))
+            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, Encoding.UTF8, postData.ContentType))
                                          {Headers = {ContentType = postData.ContentType}};
             var response = _httpClient.Send(httpRequestMessage);
             return ToNativeResponse(response);
@@ -61,6 +62,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             
             return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri,
                                           HttpContent.Create(httpRequestMessage.Content.Content,
+                                                             Encoding.UTF8,
                                                              httpRequestMessage.Content.ContentType));
         }
 
@@ -98,7 +100,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         public void SendAsync(string method, Uri uri, DataPackets.HttpContent postData, Action<DataPackets.HttpResponseMessage> httpClientCallback)
         {
-            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType)) { Headers = { ContentType = postData.ContentType } };
+            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, Encoding.UTF8, postData.ContentType)) { Headers = { ContentType = postData.ContentType } };
             var rawRequestData = new AsyncRequest { PostData = postData, HttpClientCallback = httpClientCallback };
             _httpClient.BeginSend(httpRequestMessage, SendAsyncEnd, rawRequestData);
         }
