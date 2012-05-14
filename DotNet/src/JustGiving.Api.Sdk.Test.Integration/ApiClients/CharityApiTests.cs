@@ -18,6 +18,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             Assert.IsNotNull(item);
             Assert.That(item.Name, Is.StringContaining("The Demo Charity"));
+            Assert.That(item.SmsShortName, Is.StringMatching("Your Charity Campaign"));
         }
 
         [TestCase(WireDataFormat.Json)]

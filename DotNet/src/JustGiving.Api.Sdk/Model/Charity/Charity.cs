@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 namespace JustGiving.Api.Sdk.Model.Charity
 {
     [DataContract(Name = "charity", Namespace = "")]
-    [KnownType(typeof(IList<MobileAppeal>))]
     public class Charity
     {
         [DataMember(Name = "name")]
@@ -31,10 +30,10 @@ namespace JustGiving.Api.Sdk.Model.Charity
         [DataMember(Name = "pageShortName")]
         public string PageShortName { get; set; }
 
-        [DataMember(Name = "smsCode", Order=9)]
-        public string SmsCode { get; set; }
+        [DataMember(Name = "smsShortName", Order=9)]
+        public string SmsShortName { get; set; }
 
-        [DataMember(Name="mobileAppeals", Order=10)]
+        [DataMember(Name="mobileAppeals")]
         public IList<MobileAppeal> MobileAppeals { get; set; }
     }
 }
