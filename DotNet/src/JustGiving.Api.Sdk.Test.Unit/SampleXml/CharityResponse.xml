@@ -1,49 +1,38 @@
 ﻿<charity xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
-    <description>Making the changes for testing re fix</description>
-    <id>2050</id>
-    <logoUrl>60e86241-2fb5-403b-9eba-2f413eecb6fc.png</logoUrl>
-    <name>The Demo Charity</name>
-    <pageShortName>jgdemo</pageShortName>
-    <profilePageUrl>http://www.justgiving.com/jgdemo</profilePageUrl>
-    <registrationNumber>123456</registrationNumber>
-    <websiteUrl>http://www.democharity.co.uk</websiteUrl>
-    <smsCode i:nil="true" />
-    <mobileAppeals>
-        <mobileAppeal>
-            <name>Lee demo campaign</name>
-            <smsCode>BIBW04</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>SRINI</name>
-            <smsCode>SRIN24</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>test case 3</name>
-            <smsCode>TEST00</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>JustGiving internal Demo</name>
-            <smsCode>JTGD00</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>test</name>
-            <smsCode>CRUK07</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>second cycle of testing</name>
-            <smsCode>VFTA02</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>fff</name>
-            <smsCode>BOMB35</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>CRUK hold</name>
-            <smsCode>CRUK02</smsCode>
-        </mobileAppeal>
-        <mobileAppeal>
-            <name>test for the same name</name>
-            <smsCode>BIBW03</smsCode>
-        </mobileAppeal>
-    </mobileAppeals>
+  <caseStudyMessage i:nil="true" />
+  <caseStudyMessageHtml i:nil="true" />
+  <categories xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <dateAddedToJustGiving>2012-05-14T14:58:15.1658393+01:00</dateAddedToJustGiving>
+  <description>We save cute animals</description>
+  <donationDisplayAmounts>
+    <donationDisplayAmount>
+      <amount>1</amount>
+      <description>Description 1</description>
+      <name>Display Amount One</name>
+    </donationDisplayAmount>
+    <donationDisplayAmount>
+      <amount>2</amount>
+      <description>Description 2</description>
+      <name>Display Amount Two</name>
+    </donationDisplayAmount>
+  </donationDisplayAmounts>
+  <emailAddress>info@democharity.co.uk</emailAddress>
+  <id>2050</id>
+  <impactMessage i:nil="true" />
+  <impactMessageHtml i:nil="true" />
+  <keywords>TDC, Demo Charity</keywords>
+  <logoUrl>demo.jpg</logoUrl>
+  <mobileAppeals>
+    <mobileAppeal>
+      <name>wotsits</name>
+      <smsCode>WOTS14</smsCode>
+    </mobileAppeal>
+  </mobileAppeals>
+  <name>The Demo Charity</name>
+  <pageShortName>jgdemo</pageShortName>
+  <profilePageUrl>http://www.justgiving.com/jgdemo</profilePageUrl>
+  <registrationNumber>123456</registrationNumber>
+  <thankyouMessage>Thank you for making a donation through Justgiving.  Unfortunately, the charity you have chosen is for the purposes of testing and your donation will not be processed. There are over 5000 charities to choose from.  www.justgiving.com</thankyouMessage>
+  <websiteUrl>http://www.democharity.co.uk</websiteUrl>
+  <smsShortName>The Demo Charity</smsShortName>
 </charity>
