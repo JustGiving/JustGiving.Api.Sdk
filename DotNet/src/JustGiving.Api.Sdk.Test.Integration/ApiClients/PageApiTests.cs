@@ -263,12 +263,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageData = pageClient.Retrieve(pageShortName);
 
             Assert.NotNull(pageData);
-            Assert.That(pageData.PageCreatorName, Is.StringContaining("Test Test"));
+            Assert.That(pageData.PageCreatorName, Is.Not.Empty);
             Assert.AreEqual(pageData.PageShortName, pageCreationRequest.PageShortName);
             Assert.AreEqual(pageData.PageTitle, pageCreationRequest.PageTitle);
             Assert.AreEqual(pageData.EventName, pageCreationRequest.EventName);
             Assert.AreEqual(pageData.TargetAmount, pageCreationRequest.TargetAmount);
             Assert.IsNotNullOrEmpty(pageData.SmsCode);
+            Assert.That(pageData.TotalRaisedSms, Is.Not.Empty);
         }
 
         [TestCase(WireDataFormat.Json)]

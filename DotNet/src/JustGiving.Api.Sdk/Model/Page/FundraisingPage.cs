@@ -48,6 +48,8 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string OfflineDonations { get; set; }
         [DataMember(Name = "totalRaisedOnline", EmitDefaultValue = false)]
         public string TotalRaisedOnline { get; set; }
+        [DataMember(Name = "totalRaisedSms", EmitDefaultValue = false)]
+        public string TotalRaisedSms { get; set; }
         [DataMember(Name = "grandTotalRaisedExcludingGiftAid", EmitDefaultValue = false)]
         public string TotalRaised { get; set; }
         [DataMember(Name = "totalEstimatedGiftAid", EmitDefaultValue = false)]
