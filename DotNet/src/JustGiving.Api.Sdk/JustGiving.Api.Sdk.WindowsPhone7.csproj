@@ -149,7 +149,10 @@
     <Compile Include="Model\RestResponsePrevElement.cs" />
     <Compile Include="Model\Search\CharitySearchResult.cs" />
     <Compile Include="Model\Search\CharitySearchResults.cs" />
-    <Compile Include="Model\Search\RestResponseSugguestedQueryElement.cs" />
+    <Compile Include="Model\Search\EventSearchResult.cs" />
+    <Compile Include="Model\Search\EventSearchResults.cs" />
+    <Compile Include="Model\Search\InMemorySearchResult.cs" />
+    <Compile Include="Model\Search\InMemorySearchResults.cs" />
     <Compile Include="Model\Summaries\Summaries.cs" />
     <Compile Include="Model\Team\Team.cs" />
     <Compile Include="Model\Team\TeamTargetType.cs" />

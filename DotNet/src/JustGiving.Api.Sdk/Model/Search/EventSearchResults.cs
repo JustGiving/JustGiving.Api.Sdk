@@ -2,8 +2,8 @@
 
 namespace JustGiving.Api.Sdk.Model.Search
 {
-    [DataContract(Name = "charitySearch", Namespace = "")]
-    public class CharitySearchResults
+    [DataContract(Name = "eventSearch", Namespace = "")]
+    public class EventSearchResults
     {
         [DataMember(Name = "query")]
         public string Query { get; set; }
@@ -14,16 +14,13 @@ namespace JustGiving.Api.Sdk.Model.Search
         [DataMember(Name = "totalPages")]
         public int TotalPages { get; set; }
 
-        [DataMember(Name = "sugguestedQuery")]
-        public RestResponseNavigationElement SugguestedQuery { get; set; }
-
         [DataMember(Name = "prev")]
         public RestResponsePrevElement Prev { get; set; }
 
         [DataMember(Name = "next")]
         public RestResponseNextElement Next { get; set; }
 
-        [DataMember(Name = "charitySearchResults")]
-        public CharitySearchResult[] Results { get; set; }
+        [DataMember(Name = "events")]
+        public EventSearchResult[] Results { get; set; }
     }
 }
