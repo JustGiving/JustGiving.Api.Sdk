@@ -30,14 +30,6 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         }
 
         [Test]
-        public void CharitySearch_EmptySearchTerms_DoesNotCallApi()
-        {
-            _api.CharitySearch(string.Empty);
-
-            Assert.Null(_client.LastRequest);
-        }
-
-        [Test]
         public void CharitySearch_SearchTermsSpecified_UrlEncodesSearchTerm()
         {
             const string SEARCH = "test/value and &something";
@@ -58,12 +50,12 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         }
 
         [Test]
-        public void CharitySearch_NoPageSizeSpecified_DefaultsPageSizeTo50()
+        public void CharitySearch_NoPageSizeSpecified_DefaultsPageSizeTo20()
         {
             _api.CharitySearch("test");
             var url = _client.LastRequestedUrl;
 
-            Assert.That(url, Is.StringContaining("pageSize=50"));
+            Assert.That(url, Is.StringContaining("pageSize=20"));
         }
 
         [Test]

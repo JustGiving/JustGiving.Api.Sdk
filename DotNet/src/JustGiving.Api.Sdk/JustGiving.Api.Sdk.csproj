@@ -74,6 +74,7 @@
     <Compile Include="Http\DataPackets\HttpRequestMessage.cs" />
     <Compile Include="Http\DataPackets\HttpResponseMessage.cs" />
     <Compile Include="Http\IHttpClientAsync.cs" />
+    <Compile Include="Http\MicrosoftHttp\Zip.cs" />
     <Compile Include="Http\ResourceNotFoundException.cs" />
     <Compile Include="IJustGivingClient.cs" />
     <Compile Include="JustGivingClientBase.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Model\Team\TeamTargetType.cs" />
     <Compile Include="Model\Team\TeamType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextEncoding.cs" />
     <Compile Include="WireDataFormat.cs" />
   </ItemGroup>
   <ItemGroup />

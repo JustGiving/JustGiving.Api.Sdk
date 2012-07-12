@@ -86,6 +86,13 @@ namespace JustGiving.Api.Sdk.Http
             return _httpClient.Send(request);
         }
 
+        public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType)
+        {
+            var url = BuildUrl(locationFormat);
+            var content = new HttpContent(contentType);
+            return _httpClient.Send(method, url, content);
+        }
+
         public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType, byte[] postData)
         {
             var url = BuildUrl(locationFormat);
@@ -121,7 +128,7 @@ namespace JustGiving.Api.Sdk.Http
             {
                 throw new ArgumentException("Invalid Http Method - Currently Supported Methods are GET, POST, PUT and HEAD", "method");
             }
-
+             
             var url = BuildUrl(locationFormat);
             var payload = _payloadBuilder.BuildPayload(request);
             var response = _httpClient.Send(method, url, payload);
@@ -142,15 +149,21 @@ namespace JustGiving.Api.Sdk.Http
 
         private TResponseType ProcessResponse<TResponseType>(HttpResponseMessage response)
         {
-            var innerContent = response.Content.Content;
-            ThrowExceptionForExceptionalStatusCodes(response, innerContent);
-            
-            if (string.IsNullOrEmpty(innerContent))
+            var responseContent = ValidateResponse(response);
+            return _payloadBuilder.UnpackResponse<TResponseType>(responseContent);
+        }
+
+        private string ValidateResponse(HttpResponseMessage response)
+        {
+            var responseContent = response.Content;
+            ThrowExceptionForExceptionalStatusCodes(response, responseContent);
+
+            if (string.IsNullOrEmpty(responseContent))
             {
                 throw new ApiClientException("An attempt was made to deserialize an empty response.", response);
             }
 
-            return _payloadBuilder.UnpackResponse<TResponseType>(innerContent);
+            return responseContent;
         }
 
         private void ThrowExceptionForExceptionalStatusCodes(HttpResponseMessage response, string content)

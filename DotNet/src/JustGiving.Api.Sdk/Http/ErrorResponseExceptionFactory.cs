@@ -16,9 +16,12 @@ namespace JustGiving.Api.Sdk.Http
                 }
             }
 
-            if (response != null && !string.IsNullOrEmpty(response.Content.Content))
+            if (response != null && response.Content != null)
             {
-                errorMessageBuilder.AppendLine(response.Content.Content);
+                var line = string.Format("{0} {1}: {2}", (int) response.StatusCode, response.StatusCode,
+                                            response.Content);
+
+                errorMessageBuilder.AppendLine(line);
             }
 
             return new ErrorResponseException(response, errors, errorMessageBuilder.ToString());

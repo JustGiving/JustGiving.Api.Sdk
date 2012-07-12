@@ -40,10 +40,5 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var items = searchClient.InMemorySearch(null, "James", null, null);
             Assert.IsTrue(items.Results.Any());
         }
-
     }
-
-
-
-
 }

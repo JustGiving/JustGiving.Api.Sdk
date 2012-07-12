@@ -290,15 +290,12 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         private void ProcessUploadImageResponse(HttpResponseMessage response)
         {
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    return;
-                default:
-                    var rawResponse = response.Content.Content;
-                    var potentialErrors = HttpChannel.TryExtractErrorsFromResponse(rawResponse);
-                    throw ErrorResponseExceptionFactory.CreateException(response, potentialErrors);
-            }
+            if (response.StatusCode == HttpStatusCode.OK)
+                return; 
+   
+            var potentialErrors = HttpChannel.TryExtractErrorsFromResponse(response.Content);
+            throw ErrorResponseExceptionFactory.CreateException(response, potentialErrors);
         }
     }
 }
+
