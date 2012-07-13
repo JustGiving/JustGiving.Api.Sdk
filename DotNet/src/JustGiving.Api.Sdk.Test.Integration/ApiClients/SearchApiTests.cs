@@ -37,6 +37,17 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
             
+            var items = searchClient.InMemorySearch(null, "James", "Morrison", null);
+            Assert.IsTrue(items.Results.Any());
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void InMemorySearch_KeywordWithOnlyFirstName_ReturnsError_NotingLastNameIsMandatory(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientNoCredentials(format);
+            var searchClient = new SearchApi(client.HttpChannel);
+
             var items = searchClient.InMemorySearch(null, "James", null, null);
             Assert.IsTrue(items.Results.Any());
         }

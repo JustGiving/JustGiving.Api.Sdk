@@ -11,7 +11,8 @@ namespace JustGiving.Api.Sdk.Test.Integration
         public static string TestUsername = "apiunittests@justgiving.com";
         public static string TestValidPassword = "password";
         public static string TestInvalidPassword = "badPassword";
-
+        public static string CharityTestUserPassword = "zcnfh377";
+        public static string CharityTestUserPin = "2050";
         public static string CharityTestUserName
         {
             get
@@ -21,10 +22,9 @@ namespace JustGiving.Api.Sdk.Test.Integration
             }
         }
 
-        public static string CharityTestUserPassword = "zcnfh377";
-        public static string CharityTestUserPin = "2050";
+        public static string RflUserName { get { return TestConfigurationsHelper.GetProperty(x => x.RflUsernName) ?? "rfltester@justgiving.com"; } }
 
-        //hsusa.vowoar@gqnuxwuwgc.chg	zcnfh377
+
 
         public static JustGivingClient CreateClientNoCredentials(WireDataFormat wireDataFormat)
         {
@@ -49,6 +49,17 @@ namespace JustGiving.Api.Sdk.Test.Integration
             var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
             {
                 Username = TestUsername,
+                Password = TestValidPassword,
+                WireDataFormat = wireDataFormat
+            };
+            return new JustGivingClient(cfg);
+        }
+
+        public static JustGivingClient CreateClientValidRflCredentials(WireDataFormat wireDataFormat)
+        {
+            var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
+            {
+                Username = RflUserName,
                 Password = TestValidPassword,
                 WireDataFormat = wireDataFormat
             };

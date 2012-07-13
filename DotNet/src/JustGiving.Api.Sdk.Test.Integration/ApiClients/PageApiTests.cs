@@ -51,7 +51,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -65,9 +65,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
-            const string domain = "rfl.staging.justgiving.com";
+            var domain = TestConfigurationsHelper.GetProperty(x => x.RflDomain);
 
-            var client = TestContext.CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientValidRflCredentials(format);
             client.SetWhiteLabelDomain(domain);
 
 			var pageClient = new PageApi(client.HttpChannel);
@@ -134,7 +134,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "api test",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -160,7 +160,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "api test",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -650,7 +650,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                                            Relationship = "Other",
                                            RememberedPerson = new RememberedPerson
                                                                   {
-                                                                      Id = 132,
+                                                                      Id = 80,
+                                                                      Gender = Gender.Male.ToString()
                                                                   },
                                        };
 
@@ -695,7 +696,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                                        {
                                            FirstName = firstName,
                                            LastName = lastName,
-                                           Gender = 1,
+                                           Gender = Gender.Male.ToString(),
                                            Town = String.Format("town-{0}", guid),
                                            DateOfBirth = DateTime.Now.AddYears(-50),
                                            DateOfDeath = DateTime.Now.AddDays(-1),
@@ -722,4 +723,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
         }
     }
+
+    
 }
