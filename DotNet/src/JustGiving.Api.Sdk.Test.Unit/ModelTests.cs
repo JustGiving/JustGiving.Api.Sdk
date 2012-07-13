@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using JustGiving.Api.Sdk.Model.Charity;
 using NUnit.Framework;
 
-namespace GG.Api.Sdk.Test.Unit
+namespace JustGiving.Api.Sdk.Test.Unit
 {
     [TestFixture]
     [Category("Fast")]

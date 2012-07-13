@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
-using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 
-namespace GG.Api.Sdk.Test.Unit
+namespace JustGiving.Api.Sdk.Test.Unit
 {
     public class MockHttpClient<TResponseType> : IHttpClient where TResponseType : class, new()
     {

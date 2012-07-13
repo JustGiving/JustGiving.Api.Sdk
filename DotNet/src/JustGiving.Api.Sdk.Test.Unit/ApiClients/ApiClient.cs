@@ -1,8 +1,8 @@
 ﻿using System;
-using JustGiving.Api.Sdk;
+using GG.Api.Sdk.Test.Unit;
 using JustGiving.Api.Sdk.ApiClients;
 
-namespace GG.Api.Sdk.Test.Unit.ApiClients
+namespace JustGiving.Api.Sdk.Test.Unit.ApiClients
 {
     public static class ApiClient
     {

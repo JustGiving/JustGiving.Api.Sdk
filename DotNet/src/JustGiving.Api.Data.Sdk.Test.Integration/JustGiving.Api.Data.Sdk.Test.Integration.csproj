@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\GetPaymentListWebFormatTests.cs" />
-    <Compile Include="ApiClients\PaymentsTests.cs" />
     <Compile Include="ApiClients\TestContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

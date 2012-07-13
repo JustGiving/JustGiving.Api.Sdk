@@ -3,6 +3,8 @@ using System.Net;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Model.Page;
+using JustGiving.Api.Sdk.Test.Unit;
+using JustGiving.Api.Sdk.Test.Unit.ApiClients;
 using NUnit.Framework;
 
 namespace GG.Api.Sdk.Test.Unit.ApiClients

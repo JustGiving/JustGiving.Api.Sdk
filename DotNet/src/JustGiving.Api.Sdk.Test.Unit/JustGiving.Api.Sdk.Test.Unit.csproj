@@ -8,8 +8,8 @@
     <ProjectGuid>{06A85854-52E4-4B21-ABDE-69E0D0A3E68B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GG.Api.Sdk.Test.Unit</RootNamespace>
-    <AssemblyName>GG.Api.Sdk.Test.Unit</AssemblyName>
+    <RootNamespace>JustGiving.Api.Sdk.Test.Unit</RootNamespace>
+    <AssemblyName>JustGiving.Api.Sdk.Test.Unit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
