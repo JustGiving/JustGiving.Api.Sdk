@@ -11,10 +11,17 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             get { return (string) this["rflDomain"]; }
             set { this["rflDomain"] = value; }  
         }
+
+        public string CharityUserUserName
+        {
+            get { return (string)this["charityUserUserName"]; }
+            set { this["charityUserUserName"] = value; }
+        }
     }
 
     public interface ITestConfigurations
     {
         string RflDomain { get; set;}
+        string CharityUserUserName { get; set; }
     }
 }
