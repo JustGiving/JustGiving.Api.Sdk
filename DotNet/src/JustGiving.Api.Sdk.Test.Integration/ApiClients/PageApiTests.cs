@@ -6,6 +6,7 @@ using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Page;
 using JustGiving.Api.Sdk.Model.Remember;
+using JustGiving.Api.Sdk.Test.Integration.Configuration;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
@@ -434,7 +435,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientInvalidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
 
-            var exists = pageClient.IsPageShortNameRegistered("rasha25", "rfl.staging.justgiving.com");
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", TestConfigurationsHelper.GetProperty(x => x.RflDomain));
 
             Assert.IsFalse(exists);
         }
@@ -455,7 +456,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
+		//[Ignore("Not yet live")]
         public void AddFundraisingPageImage_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
@@ -483,8 +484,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
+		public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
@@ -510,8 +510,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+		public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
@@ -536,8 +535,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+		public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);

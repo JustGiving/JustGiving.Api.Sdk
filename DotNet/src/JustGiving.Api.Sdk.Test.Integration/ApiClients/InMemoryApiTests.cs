@@ -12,7 +12,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var inMemoryClient = new InMemoryApi(client.HttpChannel);
-            int rememberPersonId = 21;
+            int rememberPersonId = 71;
 
             var response = inMemoryClient.Retrieve(rememberPersonId);
 
@@ -26,7 +26,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             var client = TestContext.CreateClientValidCredentials(format);
             var inMemoryClient = new InMemoryApi(client.HttpChannel);
-            int rememberPersonId = 21;
+            int rememberPersonId = 71;
 
             var retrieveCollectionData = inMemoryClient.RetrieveCollectionData(rememberPersonId);
 
