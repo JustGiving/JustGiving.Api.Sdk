@@ -5,14 +5,18 @@ namespace JustGiving.Api.Sdk.Test.Integration
 {
     public static class TestContext
     {
-        public static string ApiLocation = "http://api.local.justgiving.com/";
-        //public static string ApiLocation = "https://api-staging.justgiving.com/";
         public static string ApiKey = "8b347861";
         public static string TestUsername = "apiunittests@justgiving.com";
         public static string TestValidPassword = "password";
         public static string TestInvalidPassword = "badPassword";
         public static string CharityTestUserPassword = "zcnfh377";
         public static string CharityTestUserPin = "2050";
+
+        public static string ApiLocation
+        {
+            get { return TestConfigurationsHelper.GetProperty(x => x.ApiLocation); }
+        }
+
         public static string CharityTestUserName
         {
             get

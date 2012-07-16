@@ -1,9 +1,11 @@
 # VS Bits
 obj
 bin
+*/tests/**/*.dll
+*.dotCover
 *.suo
 logs
-
+DotNet/TestResult.xml
 # ReSharper
 _ReSharper.*
 *.user

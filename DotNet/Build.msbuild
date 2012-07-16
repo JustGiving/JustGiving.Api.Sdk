@@ -2,9 +2,9 @@
 <Project DefaultTargets="Compile" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
 <UsingTask TaskName="MSBuild.Community.Tasks.NUnit" AssemblyFile="$(DependencyPath)\msbuild\MSBuild.Community.Tasks.dll" />
 <PropertyGroup>
-    <TestPath>$(MSBuildProjectDirectory)/tests</TestPath>
+  <TestPath>$(MSBuildProjectDirectory)/tests</TestPath>
 	<DependencyPath>$(MSBuildProjectDirectory)/libs</DependencyPath>
-  </PropertyGroup>
+</PropertyGroup>
 
   <Target Name="Compile">
     <MSBuild Projects ="src/JustGiving.Api.Sdk-No-WP7.sln"></MSBuild>
@@ -36,17 +36,21 @@
     <NUnit Assemblies="@(Assemblies)" ToolPath="$(DependencyPath)\nunit\NUnit-2.5.10.11092\bin\net-2.0\" />
     <Message Text="Completed Unit Test Execution"></Message>
   </Target>
+
+  <Target Name="CreateTransforms">
+    <Message Text="Creating environment specific transformations"></Message>
+    <Exec Command=".\Utils\TransformVConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\staging\app.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
+  </Target>
   
-  
-  <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests;">
+  <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests;CreateTransforms">
 	<Message Text="Compile and run unit tests"></Message>
   </Target>
   
-  <Target Name="BIT" DependsOnTargets="Compile;ExecuteIntegrationTests;">
+  <Target Name="BIT" DependsOnTargets="Compile;ExecuteIntegrationTests;CreateTransforms">
 	<Message Text="Compile and run integration tests"></Message>
   </Target>
   
-  <Target Name="BALL" DependsOnTargets="Compile;ExecuteUnitTests;ExecuteIntegrationTests;">
+  <Target Name="BALL" DependsOnTargets="Compile;ExecuteUnitTests;ExecuteIntegrationTests;CreateTransforms">
 	<Message Text="Compile and run unit and integration tests"></Message>
   </Target>
 </Project>

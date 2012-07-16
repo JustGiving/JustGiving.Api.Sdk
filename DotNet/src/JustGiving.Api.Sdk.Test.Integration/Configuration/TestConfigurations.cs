@@ -32,6 +32,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             get { return (string) this["rflUsername"]; }
             set { this["rflUsername"] = value; }
         }
+
+        [ConfigurationProperty("apiLocation")]
+        public string ApiLocation
+        {
+            get { return (string)this["apiLocation"]; }
+            set { this["apiLocation"] = value; }
+        }
     }
 
     public class TestConfigurationsHelper
