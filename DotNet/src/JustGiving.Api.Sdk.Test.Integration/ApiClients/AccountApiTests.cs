@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Configuration;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Account;
+using JustGiving.Api.Sdk.Test.Integration.Configuration;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
@@ -104,8 +106,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void RequestPassWordReminder_WhenSuppliedKnownEmailAndDomain_ReturnsTrue(WireDataFormat format)
         {
+
+            var testConfigurations = (ITestConfigurations)ConfigurationManager.GetSection("testConfigurations"); 
+
             var client = TestContext.CreateClientInvalidCredentials(format);
-            client.SetWhiteLabelDomain("rfl.staging.justgiving.com");
+            client.SetWhiteLabelDomain(testConfigurations.RflDomain);
 			var accountClient = new AccountApi(client.HttpChannel);
 
             accountClient.RequestPasswordReminder(TestContext.TestUsername);

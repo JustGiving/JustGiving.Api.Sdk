@@ -1,9 +1,10 @@
 ﻿using System.Net;
+using GG.Api.Sdk.Test.Unit;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Model.Donation;
 using NUnit.Framework;
 
-namespace GG.Api.Sdk.Test.Unit.ApiClients
+namespace JustGiving.Api.Sdk.Test.Unit.ApiClients
 {
     [TestFixture]
     [Category("Fast")]

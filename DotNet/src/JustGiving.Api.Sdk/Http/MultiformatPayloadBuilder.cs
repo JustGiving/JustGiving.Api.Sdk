@@ -29,7 +29,7 @@ namespace JustGiving.Api.Sdk.Http
             {
                 if(objectToSerialise == null)
                 {
-                    return new HttpContent { Content = string.Empty, ContentType = XmlContentType };
+                    return new HttpContent { Content = new byte[0], ContentType = XmlContentType };
                 }
 
                 payload = SerializeContentToXml(objectToSerialise);
@@ -39,14 +39,14 @@ namespace JustGiving.Api.Sdk.Http
             {
                 if (objectToSerialise == null)
                 {
-                    return new HttpContent { Content = string.Empty, ContentType = JsonContentType };
+                    return new HttpContent { Content = new byte[0], ContentType = JsonContentType };
                 }
 
                 payload = SerializeContentToJson(objectToSerialise);
                 contentType = JsonContentType;
             }
 
-            return new HttpContent { Content = payload, ContentType = contentType };
+            return new HttpContent { Content = TextEncoding.Default.GetBytes(payload), ContentType = contentType };
         }
 
         public T UnpackResponse<T>(string responseContent)
@@ -100,7 +100,7 @@ namespace JustGiving.Api.Sdk.Http
             try
             {
                 var reader = new DataContractSerializer(typeof(TResponseType));
-                var byteArray = Encoding.UTF8.GetBytes(content);
+                var byteArray = TextEncoding.Default.GetBytes(content);
                 var stream = new MemoryStream(byteArray);
                 return (TResponseType)reader.ReadObject(stream);
             }
@@ -117,7 +117,7 @@ namespace JustGiving.Api.Sdk.Http
             try
             {
                 var reader = new DataContractJsonSerializer(typeof(TResponseType));
-                var byteArray = Encoding.UTF8.GetBytes(content);
+                var byteArray = TextEncoding.Default.GetBytes(content);
                 var stream = new MemoryStream(byteArray);
                 return (TResponseType)reader.ReadObject(stream);
             }

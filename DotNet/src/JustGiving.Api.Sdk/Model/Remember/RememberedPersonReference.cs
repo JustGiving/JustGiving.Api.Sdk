@@ -24,7 +24,14 @@ namespace JustGiving.Api.Sdk.Model.Remember
         [DataMember(Name = "collectionUri")]
         public string CollectionUri { get; set; }
     }
-        
+
+    public enum Gender
+    {
+        NotSet = 0,
+        Male = 1,
+        Female = 2,
+    }
+
     [DataContract(Name = "rememberedPerson", Namespace = "")]
     public class RememberedPerson
     {
@@ -38,7 +45,7 @@ namespace JustGiving.Api.Sdk.Model.Remember
         public string LastName { get; set; }
 
         [DataMember(Name = "gender")]
-        public int? Gender { get; set; }
+        public string Gender { get; set; }
 
         [DataMember(Name = "town")]
         public string Town { get; set; }

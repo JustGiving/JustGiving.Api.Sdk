@@ -6,6 +6,7 @@ using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Page;
 using JustGiving.Api.Sdk.Model.Remember;
+using JustGiving.Api.Sdk.Test.Integration.Configuration;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
@@ -50,7 +51,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -64,9 +65,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
-            const string domain = "rfl.staging.justgiving.com";
+            var domain = TestConfigurationsHelper.GetProperty(x => x.RflDomain);
 
-            var client = TestContext.CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientValidRflCredentials(format);
             client.SetWhiteLabelDomain(domain);
 
 			var pageClient = new PageApi(client.HttpChannel);
@@ -133,7 +134,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "api test",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -159,7 +160,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "api test",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -434,7 +435,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientInvalidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
 
-            var exists = pageClient.IsPageShortNameRegistered("rasha25", "rfl.staging.justgiving.com");
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", TestConfigurationsHelper.GetProperty(x => x.RflDomain));
 
             Assert.IsFalse(exists);
         }
@@ -455,7 +456,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
+		//[Ignore("Not yet live")]
         public void AddFundraisingPageImage_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
@@ -483,8 +484,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
+		public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
@@ -510,8 +510,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+		public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
@@ -536,8 +535,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+		public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
@@ -652,7 +650,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                                            Relationship = "Other",
                                            RememberedPerson = new RememberedPerson
                                                                   {
-                                                                      Id = 132,
+                                                                      Id = 80,
+                                                                      Gender = Gender.Male.ToString()
                                                                   },
                                        };
 
@@ -697,7 +696,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                                        {
                                            FirstName = firstName,
                                            LastName = lastName,
-                                           Gender = 1,
+                                           Gender = Gender.Male.ToString(),
                                            Town = String.Format("town-{0}", guid),
                                            DateOfBirth = DateTime.Now.AddYears(-50),
                                            DateOfDeath = DateTime.Now.AddDays(-1),
@@ -724,4 +723,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
         }
     }
+
+    
 }

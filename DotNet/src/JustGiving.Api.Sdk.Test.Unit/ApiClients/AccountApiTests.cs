@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
-using JustGiving.Api.Sdk;
+using GG.Api.Sdk.Test.Unit;
+using GG.Api.Sdk.Test.Unit.ApiClients;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.MicrosoftHttp;
@@ -8,7 +9,7 @@ using JustGiving.Api.Sdk.Model.Account;
 using JustGiving.Api.Sdk.Model.Page;
 using NUnit.Framework;
 
-namespace GG.Api.Sdk.Test.Unit.ApiClients
+namespace JustGiving.Api.Sdk.Test.Unit.ApiClients
 {
     [TestFixture]
     [Category("Fast")]

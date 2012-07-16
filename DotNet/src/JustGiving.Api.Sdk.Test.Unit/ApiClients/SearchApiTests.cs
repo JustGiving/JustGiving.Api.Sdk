@@ -1,12 +1,11 @@
 using System;
 using System.Net;
-using System.Web;
-using JustGiving.Api.Sdk;
+using GG.Api.Sdk.Test.Unit;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Model.Search;
 using NUnit.Framework;
 
-namespace GG.Api.Sdk.Test.Unit.ApiClients
+namespace JustGiving.Api.Sdk.Test.Unit.ApiClients
 {
     [TestFixture]
     [Category("Fast")]
@@ -30,14 +29,6 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         }
 
         [Test]
-        public void CharitySearch_EmptySearchTerms_DoesNotCallApi()
-        {
-            _api.CharitySearch(string.Empty);
-
-            Assert.Null(_client.LastRequest);
-        }
-
-        [Test]
         public void CharitySearch_SearchTermsSpecified_UrlEncodesSearchTerm()
         {
             const string SEARCH = "test/value and &something";
@@ -58,12 +49,12 @@ namespace GG.Api.Sdk.Test.Unit.ApiClients
         }
 
         [Test]
-        public void CharitySearch_NoPageSizeSpecified_DefaultsPageSizeTo50()
+        public void CharitySearch_NoPageSizeSpecified_DefaultsPageSizeTo20()
         {
             _api.CharitySearch("test");
             var url = _client.LastRequestedUrl;
 
-            Assert.That(url, Is.StringContaining("pageSize=50"));
+            Assert.That(url, Is.StringContaining("pageSize=20"));
         }
 
         [Test]

@@ -27,7 +27,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         	var team = new Team
         	             	{
         	             		Name = "My Awesome event",
-								Target = 1000,
+								Target = 1000.00m,
 								Story = "My kick ass story",
 								TargetType = TeamTargetType.Fixed.ToString(),
 								TeamShortName = "my-great-team" + Guid.NewGuid(),
@@ -48,7 +48,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         	var team = new Team
         	             	{
         	             		Name = "My Awesome event",
-								Target = 1000,
+								Target = 1000.0m,
 								Story = "My kick ass story",
 								TargetType = TeamTargetType.Fixed.ToString(),
 								TeamShortName = Guid.NewGuid().ToString(),
@@ -82,7 +82,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 			var team1 = new Team
 			{
 				Name = "My Awesome event",
-				Target = 1000,
+				Target = 1000.00m,
 				Story = "My kick ass story",
 				TargetType = TeamTargetType.Fixed.ToString(),
 				TeamShortName = Guid.NewGuid().ToString(),

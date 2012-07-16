@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mime;
 using System.Text;
 using Microsoft.Http;
 using HttpContent = Microsoft.Http.HttpContent;
@@ -38,7 +39,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         public DataPackets.HttpResponseMessage Send(string method, Uri uri, DataPackets.HttpContent postData)
         {
-            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, Encoding.UTF8, postData.ContentType))
+            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType))
                                          {Headers = {ContentType = postData.ContentType}};
             var response = _httpClient.Send(httpRequestMessage);
             return ToNativeResponse(response);
@@ -54,15 +55,13 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         private static HttpRequestMessage ToMicrosoftHttpRequest(DataPackets.HttpRequestMessage httpRequestMessage)
         {
-            if (string.IsNullOrEmpty(httpRequestMessage.Content.Content))
+            if (httpRequestMessage.Content == null || httpRequestMessage.Content.Content.Length == 0)
             {
-
                 return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri);
             }
             
             return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri,
                                           HttpContent.Create(httpRequestMessage.Content.Content,
-                                                             Encoding.UTF8,
                                                              httpRequestMessage.Content.ContentType));
         }
 
@@ -72,8 +71,9 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             {
                 Content =
                 {
-                    Content = response.Content.ReadAsString(),
-                    ContentType = response.Content.ContentType
+                    Content = Zip.GetUnzippedContent(response),
+                    ContentType = response.Content.ContentType,
+                    Encoding = GetEncoding(response.Content.ContentType)
                 },
                 Method = response.Method,
                 Properties = response.Properties,
@@ -81,6 +81,29 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
                 Uri = response.Uri
             };
             return responseFormat;
+        }
+
+        private static Encoding GetEncoding(string contentTypeString)
+        {
+            if (string.IsNullOrEmpty(contentTypeString))
+            {
+                return TextEncoding.Default;
+            }
+
+            var contentType = new ContentType(contentTypeString);
+            if (string.IsNullOrEmpty(contentType.CharSet))
+            {
+                return TextEncoding.Default;
+            }
+            switch (contentType.CharSet.ToLower())
+            {
+                case "utf-16":
+                    return Encoding.Unicode;
+                case "utf-8":
+                    return Encoding.UTF8;
+                default:
+                    throw new NotSupportedException(string.Format("this charset {0} is not supported", contentType.CharSet));
+            }
         }
 
         public void SendAsync(DataPackets.HttpRequestMessage httpRequestMessage, Action<DataPackets.HttpResponseMessage> httpClientCallback)
@@ -100,7 +123,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         public void SendAsync(string method, Uri uri, DataPackets.HttpContent postData, Action<DataPackets.HttpResponseMessage> httpClientCallback)
         {
-            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, Encoding.UTF8, postData.ContentType)) { Headers = { ContentType = postData.ContentType } };
+            var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType)) { Headers = { ContentType = postData.ContentType } };
             var rawRequestData = new AsyncRequest { PostData = postData, HttpClientCallback = httpClientCallback };
             _httpClient.BeginSend(httpRequestMessage, SendAsyncEnd, rawRequestData);
         }

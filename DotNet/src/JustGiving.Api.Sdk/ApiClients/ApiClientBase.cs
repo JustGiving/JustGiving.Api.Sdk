@@ -1,5 +1,4 @@
-﻿using System;
-using JustGiving.Api.Sdk.Http;
+﻿using JustGiving.Api.Sdk.Http;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {

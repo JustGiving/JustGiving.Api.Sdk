@@ -8,11 +8,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
     {
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        [Ignore("In-memory route is not yet implemented")]
         public void GetRememberPerson_WhenProvidedWithValidPersonId_ReturnsRememberPersonDetails(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
 			var inMemoryClient = new InMemoryApi(client.HttpChannel);
-            int rememberPersonId = 21;
+            int rememberPersonId = 71;
 
             var response = inMemoryClient.Retrieve(rememberPersonId);
 
@@ -22,11 +23,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        [Ignore("In-memory collection page is not yet implemented")]
         public void GetRememberPersonCollectionData_WhenProvidedWithValidPersonId_ReturnsRememberPersonCollectionData(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
             var inMemoryClient = new InMemoryApi(client.HttpChannel);
-            int rememberPersonId = 21;
+            int rememberPersonId = 71;
 
             var retrieveCollectionData = inMemoryClient.RetrieveCollectionData(rememberPersonId);
 

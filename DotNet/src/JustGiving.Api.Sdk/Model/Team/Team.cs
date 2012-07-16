@@ -35,7 +35,7 @@ namespace JustGiving.Api.Sdk.Model.Team
 		/// Team target amount used when TargetType is fixed
 		/// </summary>
 		[DataMember(Name = "target")]
-		public int Target { get; set; }
+		public decimal Target { get; set; }
 
 		/// <summary>
 		/// teamShortName which translates to "/teams/{teamShortName}" on JustGiving.com

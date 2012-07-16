@@ -1,15 +1,30 @@
-﻿namespace JustGiving.Api.Sdk.Test.Integration
+﻿using System.Configuration;
+using JustGiving.Api.Sdk.Test.Integration.Configuration;
+
+namespace JustGiving.Api.Sdk.Test.Integration
 {
     public static class TestContext
     {
         public static string ApiLocation = "http://api.local.justgiving.com/";
+        //public static string ApiLocation = "https://api-staging.justgiving.com/";
         public static string ApiKey = "8b347861";
         public static string TestUsername = "apiunittests@justgiving.com";
         public static string TestValidPassword = "password";
         public static string TestInvalidPassword = "badPassword";
-        public static string CharityTestUserName = "ehaevaj.hbvef@ngazszqoqt.obx.xm";
-        public static string CharityTestUserPassword = "zqfed068";
-        public static string CharityTestUserPin = "7886";
+        public static string CharityTestUserPassword = "zcnfh377";
+        public static string CharityTestUserPin = "2050";
+        public static string CharityTestUserName
+        {
+            get
+            {
+                var configuration = (ITestConfigurations) ConfigurationManager.GetSection("testConfirguations");
+                return (configuration != null ? configuration.CharityUserUserName : "hsusa.vowoar@gqnuxwuwgc.chg");
+            }
+        }
+
+        public static string RflUserName { get { return TestConfigurationsHelper.GetProperty(x => x.RflUsernName) ?? "rfltester@justgiving.com"; } }
+
+
 
         public static JustGivingClient CreateClientNoCredentials(WireDataFormat wireDataFormat)
         {
@@ -34,6 +49,17 @@
             var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
             {
                 Username = TestUsername,
+                Password = TestValidPassword,
+                WireDataFormat = wireDataFormat
+            };
+            return new JustGivingClient(cfg);
+        }
+
+        public static JustGivingClient CreateClientValidRflCredentials(WireDataFormat wireDataFormat)
+        {
+            var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
+            {
+                Username = RflUserName,
                 Password = TestValidPassword,
                 WireDataFormat = wireDataFormat
             };

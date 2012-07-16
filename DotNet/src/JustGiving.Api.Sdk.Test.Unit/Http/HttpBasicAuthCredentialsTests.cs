@@ -2,7 +2,7 @@ using System;
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
-namespace GG.Api.Sdk.Test.Unit.Http
+namespace JustGiving.Api.Sdk.Test.Unit.Http
 {
     [TestFixture]
     [Category("Fast")]

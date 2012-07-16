@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 
-namespace GG.Api.Sdk.Test.Unit
+namespace JustGiving.Api.Sdk.Test.Unit
 {
     public class MockHttpClient<TResponseType> : IHttpClient where TResponseType : class, new()
     {
@@ -103,8 +103,7 @@ namespace GG.Api.Sdk.Test.Unit
         private static HttpContent BuildPayload<TPayloadType>(TPayloadType objectToSerialise)
         {
             var payloadContent = SerializeContentToXml(objectToSerialise);
-            //var payload = HttpContent.Create(payloadContent, "application/xml");
-            var pp = new HttpContent {Content = payloadContent, ContentType = "appication/xml"};
+            var pp = new HttpContent { Content = TextEncoding.Default.GetBytes(payloadContent), ContentType = "appication/xml" };
             return pp;
         }
 
