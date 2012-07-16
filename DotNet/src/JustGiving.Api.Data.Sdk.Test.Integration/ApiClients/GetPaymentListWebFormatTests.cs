@@ -6,6 +6,7 @@ using JustGiving.Api.Data.Sdk.Model.Payment;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
+using TestContext = GG.Api.Services.Data.Sdk.Test.Integration.TestContext;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {

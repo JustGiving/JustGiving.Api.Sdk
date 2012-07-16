@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="D:\JustGiving\sdk\JustGiving.Api.Sdk\DotNet\tests\JustGiving.Api.Sdk.Test.Unit.dll" total="53" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-07-16" time="16:22:41">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.4971" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="D:\JustGiving\sdk\JustGiving.Api.Sdk\DotNet" machine-name="DEVPC08" user="tbutterfield" user-domain="JUSTGIVING01" />
+  <culture-info current-culture="en-GB" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="D:\JustGiving\sdk\JustGiving.Api.Sdk\DotNet\tests\JustGiving.Api.Sdk.Test.Unit.dll" executed="True" result="Success" success="True" time="1.333" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="GG" executed="True" result="Success" success="True" time="0.856" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Api" executed="True" result="Success" success="True" time="0.856" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Sdk" executed="True" result="Success" success="True" time="0.856" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="0.856" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Unit" executed="True" result="Success" success="True" time="0.855" asserts="0">
+                        <results>
+                          <test-suite type="Namespace" name="ApiClients" executed="True" result="Success" success="True" time="0.855" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="PageApiTests" executed="True" result="Success" success="True" time="0.854" asserts="0">
+                                <categories>
+                                  <category name="Fast" />
+                                </categories>
+                                <results>
+                                  <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.Create_WhenProvidedWithNullRequest_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.035" asserts="3" />
+                                  <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.Create_WhenProvidedWithRequest_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.716" asserts="2" />
+                                  <test-suite type="ParameterizedTest" name="IsPageShortNameRegistered_WhenProvidedWithNullOrEmptyPageShortName_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.011" asserts="0">
+                                    <results>
+                                      <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.IsPageShortNameRegistered_WhenProvidedWithNullOrEmptyPageShortName_ThrowsArgumentNullException(&quot;&quot;)" executed="True" result="Success" success="True" time="0.010" asserts="4" />
+                                      <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.IsPageShortNameRegistered_WhenProvidedWithNullOrEmptyPageShortName_ThrowsArgumentNullException(null)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                    </results>
+                                  </test-suite>
+                                  <test-suite type="ParameterizedTest" name="IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortName_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                                    <results>
+                                      <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortName_CallsExpectedUrl(&quot;&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                                      <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortName_CallsExpectedUrl(null)" executed="True" result="Success" success="True" time="0.000" asserts="3" />
+                                    </results>
+                                  </test-suite>
+                                  <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.IsPageShortNameRegistered_WhenProvidedWithValidStringForPageShortNameAndDomain_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.ListAll_WhenPasswordAuthenticationIsNull_ThrowsException" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.ListAll_WhenUsernameAuthenticationIsNull_ThrowsException" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-case name="GG.Api.Sdk.Test.Unit.ApiClients.PageApiTests.ListAllPages_ValidUserNameAndPassword_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.062" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Namespace" name="JustGiving" executed="True" result="Success" success="True" time="0.451" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Api" executed="True" result="Success" success="True" time="0.451" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Sdk" executed="True" result="Success" success="True" time="0.451" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="0.450" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Unit" executed="True" result="Success" success="True" time="0.450" asserts="0">
+                        <results>
+                          <test-suite type="Namespace" name="ApiClients" executed="True" result="Success" success="True" time="0.177" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="AccountApiTests" executed="True" result="Success" success="True" time="0.118" asserts="0">
+                                <categories>
+                                  <category name="Fast" />
+                                </categories>
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.AreCredentialsValid_WhenProvidedWithEmailAndPassword_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.077" asserts="2" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.Create_WhenProvidedWithNullRequest_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.Create_WhenProvidedWithRequest_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.016" asserts="2" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.CreateAsync_WhenProvidedWithRequest_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.004" asserts="2" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.IsEmailRegistered_WhenProvidedWithEmail_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-suite type="ParameterizedTest" name="IsEmailRegistered_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                                    <results>
+                                      <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.IsEmailRegistered_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(null)" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                      <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.IsEmailRegistered_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(&quot;&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                    </results>
+                                  </test-suite>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.ListAllPages_WhenProvidedWithEmail_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-suite type="ParameterizedTest" name="ListAllPages_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.001" asserts="0">
+                                    <results>
+                                      <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.ListAllPages_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(&quot;&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                      <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.ListAllPages_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(null)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                    </results>
+                                  </test-suite>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.RequestPasswordReminder_WhenProvidedWithEmail_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.002" asserts="2" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.RequestPasswordReminder_WhenProvidedWithEmailAndDomain_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                                  <test-suite type="ParameterizedTest" name="RequestPasswordReminder_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                                    <results>
+                                      <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.RequestPasswordReminder_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(null)" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                      <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.AccountApiTests.RequestPasswordReminder_WhenProvidedWithNullOrEmptyEmail_ThrowsArgumentNullException(&quot;&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                    </results>
+                                  </test-suite>
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="DonationApiTests" executed="True" result="Success" success="True" time="0.017" asserts="0">
+                                <categories>
+                                  <category name="Fast" />
+                                </categories>
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.DonationApiTests.Create_WhenProvidedWithRequest_CallsExpectedUrl" executed="True" result="Success" success="True" time="0.017" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="SearchApiTests" executed="True" result="Success" success="True" time="0.039" asserts="0">
+                                <categories>
+                                  <category name="Fast" />
+                                </categories>
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.SearchApiTests.CharitySearch_AllParamsSpecified_CallsUrlWithGetParams" executed="True" result="Success" success="True" time="0.016" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.SearchApiTests.CharitySearch_AnySearch_PerformsHttpGet" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.SearchApiTests.CharitySearch_NoPageSizeSpecified_DefaultsPageSizeTo20" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.SearchApiTests.CharitySearch_NoPageSpecified_DefaultsPageTo1" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ApiClients.SearchApiTests.CharitySearch_SearchTermsSpecified_UrlEncodesSearchTerm" executed="True" result="Success" success="True" time="0.017" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="ClientConfigurationTests" executed="True" result="Success" success="True" time="0.008" asserts="0">
+                            <categories>
+                              <category name="Fast" />
+                            </categories>
+                            <results>
+                              <test-suite type="ParameterizedTest" name="Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.001" asserts="0">
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ClientConfigurationTests.Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(0)" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ClientConfigurationTests.Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(-1)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="ParameterizedTest" name="Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ClientConfigurationTests.Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(&quot;&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ClientConfigurationTests.Ctor_WhenApiKeyIsNullOrEmpty_ThrowsArgumentNullException(null)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="ParameterizedTest" name="Ctor_WhenDomainRootIsNullOrEmpty_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ClientConfigurationTests.Ctor_WhenDomainRootIsNullOrEmpty_ThrowsArgumentNullException(null)" executed="True" result="Success" success="True" time="0.001" asserts="4" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ClientConfigurationTests.Ctor_WhenDomainRootIsNullOrEmpty_ThrowsArgumentNullException(&quot;&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="4" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="Namespace" name="Http" executed="True" result="Success" success="True" time="0.189" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="HttpBasicAuthCredentialsTests" executed="True" result="Success" success="True" time="0.129" asserts="0">
+                                <categories>
+                                  <category name="Fast" />
+                                </categories>
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpBasicAuthCredentialsTests.Ctor_PassIsEmpty_ThrowsArgumentException" executed="True" result="Success" success="True" time="0.000" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpBasicAuthCredentialsTests.Ctor_UserIsEmpty_ThrowsArgumentException" executed="True" result="Success" success="True" time="0.000" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpBasicAuthCredentialsTests.ToString_UserAndPassSupplied_ReturnsUserPassBase64Encoded" executed="True" result="Success" success="True" time="0.125" asserts="1" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="HttpChannelTests" executed="True" result="Success" success="True" time="0.060" asserts="0">
+                                <categories>
+                                  <category name="Fast" />
+                                </categories>
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.Ctor_UserNameAndPasswordSpecified_SetsBasicAuthenticationHeader" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_LocationFormatContainsApiKeyAndApiVersionPlaceholder_CallsCorrectUrl" executed="True" result="Success" success="True" time="0.035" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_LocationFormatDoesNotContainApiKeyPlaceholder_ThrowsArgumentException" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_LocationFormatDoesNotContainApiVersionPlaceholder_ThrowsArgumentException" executed="True" result="Success" success="True" time="0.003" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_MethodGET_SendsRequest" executed="True" result="Success" success="True" time="0.010" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_MethodHEAD_SendsRequest" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_MethodInvalid_ThrowsArgumentException" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_MethodPOST_SendsRequest" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.Http.HttpChannelTests.PerformApiRequest_MethodPUT_SendsRequest" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="JustGivingClientTests" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                            <categories>
+                              <category name="Fast" />
+                            </categories>
+                            <results>
+                              <test-case name="JustGiving.Api.Sdk.Test.Unit.JustGivingClientTests.Ctor_WhenHttpClientIsProvidedAndNull_ThrowsArgumentNullException" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                              <test-case name="JustGiving.Api.Sdk.Test.Unit.JustGivingClientTests.Ctor_WhenHttpClientIsProvidedAndValid_Constructs" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="ModelTests" executed="True" result="Success" success="True" time="0.063" asserts="0">
+                            <categories>
+                              <category name="Fast" />
+                            </categories>
+                            <results>
+                              <test-suite type="ParameterizedTest" name="CanDeserialiseMobileAppeals" executed="True" result="Success" success="True" time="0.043" asserts="0">
+                                <results>
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ModelTests.CanDeserialiseMobileAppeals(&quot;SampleXml\\CharityResponse.xml&quot;)" executed="True" result="Success" success="True" time="0.042" asserts="2" />
+                                  <test-case name="JustGiving.Api.Sdk.Test.Unit.ModelTests.CanDeserialiseMobileAppeals(&quot;SampleXml\\CharityResponse2.xml&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
+                                </results>
+                              </test-suite>
+                              <test-case name="JustGiving.Api.Sdk.Test.Unit.ModelTests.SerialiseTest" executed="True" result="Success" success="True" time="0.018" asserts="0" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

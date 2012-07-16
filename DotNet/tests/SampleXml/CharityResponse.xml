@@ -1,0 +1,38 @@
+﻿<charity xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <caseStudyMessage i:nil="true" />
+  <caseStudyMessageHtml i:nil="true" />
+  <categories xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <dateAddedToJustGiving>2012-05-14T14:58:15.1658393+01:00</dateAddedToJustGiving>
+  <description>We save cute animals</description>
+  <donationDisplayAmounts>
+    <donationDisplayAmount>
+      <amount>1</amount>
+      <description>Description 1</description>
+      <name>Display Amount One</name>
+    </donationDisplayAmount>
+    <donationDisplayAmount>
+      <amount>2</amount>
+      <description>Description 2</description>
+      <name>Display Amount Two</name>
+    </donationDisplayAmount>
+  </donationDisplayAmounts>
+  <emailAddress>info@democharity.co.uk</emailAddress>
+  <id>2050</id>
+  <impactMessage i:nil="true" />
+  <impactMessageHtml i:nil="true" />
+  <keywords>TDC, Demo Charity</keywords>
+  <logoUrl>demo.jpg</logoUrl>
+  <mobileAppeals>
+    <mobileAppeal>
+      <name>wotsits</name>
+      <smsCode>WOTS14</smsCode>
+    </mobileAppeal>
+  </mobileAppeals>
+  <name>The Demo Charity</name>
+  <pageShortName>jgdemo</pageShortName>
+  <profilePageUrl>http://www.justgiving.com/jgdemo</profilePageUrl>
+  <registrationNumber>123456</registrationNumber>
+  <thankyouMessage>Thank you for making a donation through Justgiving.  Unfortunately, the charity you have chosen is for the purposes of testing and your donation will not be processed. There are over 5000 charities to choose from.  www.justgiving.com</thankyouMessage>
+  <websiteUrl>http://www.democharity.co.uk</websiteUrl>
+  <smsShortName>The Demo Charity</smsShortName>
+</charity>
