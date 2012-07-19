@@ -29,9 +29,9 @@
     <Message Text="Completed Unit Test Execution"></Message>
   </Target>
 
-  <Target Name="CreateTransforms">
+  <Target Name="CreateStagingTestConfiguration">
     <Message Text="Creating environment specific transformations"></Message>
-    <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\staging\app.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
+    <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\app.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
   </Target>
   
   <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests;CreateTransforms">
