@@ -6,6 +6,7 @@ using JustGiving.Api.Sdk.Model.Page;
 using JustGiving.Api.Sdk.Test.Unit;
 using JustGiving.Api.Sdk.Test.Unit.ApiClients;
 using NUnit.Framework;
+using TestContext = JustGiving.Api.Sdk.Test.Unit.TestContext;
 
 namespace GG.Api.Sdk.Test.Unit.ApiClients
 {

@@ -2,6 +2,8 @@
 obj
 bin
 */tests/**/*.dll
+*/tests/**/*.pdb
+*/tests/**/*.xml
 *.dotCover
 *.suo
 logs

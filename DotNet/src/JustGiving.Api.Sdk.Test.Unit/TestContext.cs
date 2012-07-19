@@ -1,6 +1,4 @@
-﻿using JustGiving.Api.Sdk;
-
-namespace GG.Api.Sdk.Test.Unit
+﻿namespace JustGiving.Api.Sdk.Test.Unit
 {
     public static class TestContext
     {

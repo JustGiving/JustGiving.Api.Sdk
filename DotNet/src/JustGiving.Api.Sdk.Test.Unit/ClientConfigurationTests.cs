@@ -1,6 +1,6 @@
 ﻿using System;
-using GG.Api.Sdk.Test.Unit;
 using NUnit.Framework;
+using TestContext = JustGiving.Api.Sdk.Test.Unit.TestContext;
 
 namespace JustGiving.Api.Sdk.Test.Unit
 {

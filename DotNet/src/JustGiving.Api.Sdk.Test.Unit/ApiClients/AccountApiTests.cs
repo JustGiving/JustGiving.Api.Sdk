@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net;
-using GG.Api.Sdk.Test.Unit;
-using GG.Api.Sdk.Test.Unit.ApiClients;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.MicrosoftHttp;

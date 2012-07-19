@@ -51,10 +51,12 @@
     <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Http">
+      <HintPath>..\ExternalLibs\WCF REST Starter Kit Preview 2\Assemblies\Microsoft.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\Nunit\NUnit-2.5.10.11092\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+      <HintPath>..\ExternalLibs\Nunit\NUnit-2.5.10.11092\bin\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

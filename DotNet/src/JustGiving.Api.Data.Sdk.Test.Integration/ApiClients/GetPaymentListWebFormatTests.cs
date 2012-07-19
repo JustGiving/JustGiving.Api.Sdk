@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GG.Api.Services.Data.Sdk.Test.Integration;
 using JustGiving.Api.Data.Sdk.Model.Payment;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
