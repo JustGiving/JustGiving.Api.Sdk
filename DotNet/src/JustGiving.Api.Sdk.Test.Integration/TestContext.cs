@@ -1,18 +1,20 @@
 ﻿using System.Configuration;
-using System.IO;
-using System.Reflection;
 using JustGiving.Api.Sdk.Test.Integration.Configuration;
 
 namespace JustGiving.Api.Sdk.Test.Integration
 {
     public static class TestContext
     {
-        public static string ApiKey = "8b347861";
-        public static string TestUsername = "apiunittests@justgiving.com";
-        public static string TestValidPassword = "password";
+        public static string TestUsername = "apisdktester@justgiving.com";
+        public static string TestValidPassword = "api5dkt3st3r";
         public static string TestInvalidPassword = "badPassword";
         public static string CharityTestUserPassword = "zcnfh377";
         public static string CharityTestUserPin = "2050";
+
+        public static string ApiKey = "c064cbf2";
+        //{
+        //    get { return TestConfigurationsHelper.GetProperty(x => x.ApiKey); }
+        //}
 
         public static string ApiLocation
         {

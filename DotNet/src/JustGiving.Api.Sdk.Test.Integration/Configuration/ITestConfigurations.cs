@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
         int ValidEventId { get; set; }
         string RflUsernName { get; set; }
         string ApiLocation { get; set; }
+        string ApiKey { get; set; }
     }
 }

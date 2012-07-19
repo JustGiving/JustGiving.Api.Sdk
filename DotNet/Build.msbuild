@@ -25,7 +25,7 @@
     <ItemGroup>
         <Assemblies Include="$(TestPath)\JustGiving.Api.Sdk.Test.Integration.dll" />
     </ItemGroup>
-    <NUnit Assemblies="@(Assemblies)" ToolPath="$(DependencyPath)\src\ExternalLibs\nunit\NUnit-2.5.10.11092\bin\net-2.0\" />
+    <NUnit Assemblies="@(Assemblies)" ToolPath="$(NunitToolPath)" />
     <Message Text="Completed Unit Test Execution"></Message>
   </Target>
 
@@ -34,15 +34,15 @@
     <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\JustGiving.Api.Sdk.Test.Integration.dll.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
  </Target>
   
-  <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests;CreateTransforms">
+  <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests">
 	<Message Text="Compile and run unit tests"></Message>
   </Target>
   
-  <Target Name="BIT" DependsOnTargets="Compile;ExecuteIntegrationTests;CreateTransforms">
+  <Target Name="BIT" DependsOnTargets="Compile;ExecuteIntegrationTests">
 	<Message Text="Compile and run integration tests"></Message>
   </Target>
   
-  <Target Name="BALL" DependsOnTargets="Compile;ExecuteUnitTests;ExecuteIntegrationTests;CreateTransforms">
+  <Target Name="BALL" DependsOnTargets="Compile;ExecuteUnitTests;ExecuteIntegrationTests">
 	<Message Text="Compile and run unit and integration tests"></Message>
   </Target>
 </Project>

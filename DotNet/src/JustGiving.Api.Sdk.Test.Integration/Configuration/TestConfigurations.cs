@@ -39,6 +39,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             get { return (string)this["apiLocation"]; }
             set { this["apiLocation"] = value; }
         }
+
+        [ConfigurationProperty("apiKey")]
+        public string ApiKey
+        {
+            get { return (string) this["apiKey"]; }
+            set { this["apiKey"] = value; }
+        }
     }
 
     public class TestConfigurationsHelper

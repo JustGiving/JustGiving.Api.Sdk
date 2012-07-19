@@ -1,9 +1,7 @@
 # VS Bits
 DotNet/src/JustGiving.Api.*/bin
 DotNet/src/JustGiving.Api.*/obj
-*/tests/**/*.dll
-*/tests/**/*.pdb
-*/tests/**/*.xml
+DotNet/tests/*.*
 *.dotCover
 *.suo
 logs
