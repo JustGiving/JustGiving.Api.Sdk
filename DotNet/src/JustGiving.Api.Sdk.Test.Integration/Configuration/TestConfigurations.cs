@@ -55,11 +55,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
 
         private static TReturnType GetProperty<TReturnType>(string propertyToFind)
         {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var file = new StreamWriter(Path.Combine(path, "testLog.txt"));
+
             var configuration = (ITestConfigurations) ConfigurationManager.GetSection("testConfigurations");
             foreach (var property in configuration.GetType().GetProperties())
             {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var file = new StreamWriter(Path.Combine(path, "testLog.txt"));
+                
                 file.WriteLine("Trying to get property : " + property.Name);
                 file.WriteLine("Property : " +  property.Name + " Value : " + property.GetValue(configuration, null) );
 
@@ -68,6 +70,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
                     var value = property.GetValue(configuration, null);
                     return (TReturnType)value;
                 }
+                file.Close();
             }
 
             return default(TReturnType);
