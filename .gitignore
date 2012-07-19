@@ -1,6 +1,7 @@
 # VS Bits
 obj
 bin
+!src/ExternalLibs/**/bin
 */tests/**/*.dll
 */tests/**/*.pdb
 */tests/**/*.xml
