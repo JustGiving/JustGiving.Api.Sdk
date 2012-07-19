@@ -31,9 +31,8 @@
 
   <Target Name="CreateStagingTestConfiguration">
     <Message Text="Creating environment specific transformations"></Message>
-    <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\app.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
-    <Delete Files="$(MSBuildProjectDirectory)\tests\JustGiving.Api.Sdk.Test.Integration.dll.config" />
-  </Target>
+    <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\JustGiving.Api.Sdk.Test.Integration.dll.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
+ </Target>
   
   <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests;CreateTransforms">
 	<Message Text="Compile and run unit tests"></Message>
