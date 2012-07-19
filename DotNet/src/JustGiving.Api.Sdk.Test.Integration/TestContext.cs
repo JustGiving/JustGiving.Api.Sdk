@@ -10,15 +10,14 @@ namespace JustGiving.Api.Sdk.Test.Integration
         public static string TestInvalidPassword = "badPassword";
         public static string CharityTestUserPassword = "zcnfh377";
         public static string CharityTestUserPin = "2050";
-
         public static string ApiKey = "c064cbf2";
-        //{
-        //    get { return TestConfigurationsHelper.GetProperty(x => x.ApiKey); }
-        //}
-
+   
         public static string ApiLocation
         {
-            get { return TestConfigurationsHelper.GetProperty(x => x.ApiLocation); }
+            get 
+            { 
+                return TestConfigurationsHelper.GetProperty(x => x.ApiLocation); 
+            }
         }
 
         public static string CharityTestUserName
