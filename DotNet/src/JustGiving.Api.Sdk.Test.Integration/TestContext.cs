@@ -1,4 +1,6 @@
 ﻿using System.Configuration;
+using System.IO;
+using System.Reflection;
 using JustGiving.Api.Sdk.Test.Integration.Configuration;
 
 namespace JustGiving.Api.Sdk.Test.Integration
@@ -50,6 +52,7 @@ namespace JustGiving.Api.Sdk.Test.Integration
 
         public static JustGivingClient CreateClientInvalidCredentials(WireDataFormat wireDataFormat)
         {
+
             var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
             {
                 Username = TestUsername,

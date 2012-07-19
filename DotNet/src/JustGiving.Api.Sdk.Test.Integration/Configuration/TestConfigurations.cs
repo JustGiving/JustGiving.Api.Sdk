@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace JustGiving.Api.Sdk.Test.Integration.Configuration
 {
@@ -56,6 +58,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             var configuration = (ITestConfigurations) ConfigurationManager.GetSection("testConfigurations");
             foreach (var property in configuration.GetType().GetProperties())
             {
+                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var file = new StreamWriter(Path.Combine(path, "testLog.txt"));
+                file.WriteLine("Trying to get property : " + property.Name);
+                file.WriteLine("Property : " +  property.Name + " Value : " + property.GetValue(configuration, null) );
+
                 if (property.Name == propertyToFind)
                 {
                     var value = property.GetValue(configuration, null);
