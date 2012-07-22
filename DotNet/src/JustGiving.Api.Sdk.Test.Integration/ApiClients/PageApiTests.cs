@@ -65,10 +65,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
-            var domain = TestConfigurationsHelper.GetProperty(x => x.RflDomain);
-
             var client = TestContext.CreateClientValidRflCredentials(format);
-            client.SetWhiteLabelDomain(domain);
+            client.SetWhiteLabelDomain(TestConfigurationsHelper.GetProperty(x => x.RflDomain));
 
 			var pageClient = new PageApi(client.HttpChannel);
             
@@ -80,16 +78,16 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 Attribution =  null,
                 CharityId = 2050,
                 PageShortName = pageShortName,
-                PageTitle = "Page created on domain " + domain + " by an integration test",
+                PageTitle = "Page created on domain " + TestConfigurationsHelper.GetProperty(x => x.RflDomain) + " by an integration test",
                 EventDate = null,
                 EventName = null,
-                EventId = 1,
+                EventId = TestConfigurationsHelper.GetProperty(x => x.RflEventReference), //Was 1 for local
                 TargetAmount = null
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
 
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(TestConfigurationsHelper.GetProperty(x => x.RflDomain)));
         }
 
         [TestCase(WireDataFormat.Json)]

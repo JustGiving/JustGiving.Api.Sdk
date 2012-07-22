@@ -46,6 +46,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             get { return (string) this["apiKey"]; }
             set { this["apiKey"] = value; }
         }
+
+        [ConfigurationProperty("rflEventReference")]
+        public int RflEventReference
+        {
+            get {  return (int)this["rflEventReference"];}
+            set { this["rflEventReference"] = value; }
+        }
     }
 
     public class TestConfigurationsHelper
