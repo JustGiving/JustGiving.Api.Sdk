@@ -19,6 +19,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             set { this["charityUserUserName"] = value; }
         }
 
+        [ConfigurationProperty("charityTestUserPassword")]
+        public string CharityTestUserPassword
+        {
+            get { return (string) this["charityTestUserPassword"]; }
+            set { this["charityTestUserPassword"] = value; }
+        }
+
         [ConfigurationProperty("validEventId", IsRequired = false)]
         public int ValidEventId
         {
