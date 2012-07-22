@@ -5,15 +5,12 @@ using JustGiving.Api.Data.Sdk.Model.Payment;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
-using TestContext = GG.Api.Services.Data.Sdk.Test.Integration.TestContext;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
     public class GetPaymentListWebFormatTests
     {
-        
-
         [Test]
         public void CanGetDataBetweenTwoDates()
         {
@@ -53,7 +50,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [Test]
         public void DateRange_CannotExceedThreeMonths()
         {
-            var clientConfiguration = new DataClientConfiguration(TestContext.ApiKey)
+            var clientConfiguration = new DataClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1)
             {
                 WireDataFormat = WireDataFormat.Json,
                 IsZipSupportedByClient = false,
@@ -72,7 +69,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 
         private static DataClientConfiguration GetDataClientConfiguration()
         {
-            return new DataClientConfiguration(TestContext.ApiKey)
+            return new DataClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1)
             {
                 WireDataFormat = WireDataFormat.Json,
                 IsZipSupportedByClient = false,

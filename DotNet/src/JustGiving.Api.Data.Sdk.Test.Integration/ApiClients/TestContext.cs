@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace GG.Api.Services.Data.Sdk.Test.Integration
+namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     public class TestContext
     {
-        public const string ApiLocation = "https://dataapi.local.justgiving.com/";
+        public const string ApiLocation = "http://dataapi.local.justgiving.com/";
         public const string ApiKey = "decbf1d2";
         public const string TestUsername = "ehaevaj.hbvef@ngazszqoqt.obx.xm";
         public const string TestValidPassword = "zqfed068";

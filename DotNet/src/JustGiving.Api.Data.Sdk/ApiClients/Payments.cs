@@ -19,7 +19,7 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         
         public override string ResourceBase
         {
-            get { return BaseRoot + "payments"; }
+            get { return BaseRoot + "/payments"; }
         }
         
         private string BuildFormatUri(DateTime date1, DateTime date2)
