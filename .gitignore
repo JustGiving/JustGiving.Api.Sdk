@@ -2,6 +2,7 @@
 DotNet/src/JustGiving.Api.*/bin
 DotNet/src/JustGiving.Api.*/obj
 DotNet/tests/*.*
+DotNet/tests/**/*.config
 *.dotCover
 *.suo
 logs
