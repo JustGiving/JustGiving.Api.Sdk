@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.Payment;
-using JustGiving.Api.Data.Sdk.Test.Integration.Configuration;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
-using JustGiving.Api.Sdk.Test.Common.Configuration;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
