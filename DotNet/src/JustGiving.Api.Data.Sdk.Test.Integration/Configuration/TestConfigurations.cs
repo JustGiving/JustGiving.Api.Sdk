@@ -14,5 +14,12 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             get { return (DateTime)this["startDate"]; }
             set { this["startDate"] = value; }
         }
-      }
+
+        [ConfigurationProperty("apiLocation")]
+        public string ApiLocation
+        {
+            get { return (string) this["apiLocation"]; }
+            set { this["apiLocation"] = value; }
+        }
+    }
 }
