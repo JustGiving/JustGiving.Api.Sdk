@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using JustGiving.Api.Sdk.Test.Common.Configuration;
 using JustGiving.Api.Sdk.Test.Integration.Configuration;
 
 namespace JustGiving.Api.Sdk.Test.Integration
@@ -15,15 +15,15 @@ namespace JustGiving.Api.Sdk.Test.Integration
         {
             get
             {
-                return TestConfigurationsHelper.GetProperty(x => x.CharityTestUserPassword);
+                return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.CharityTestUserPassword);
             }
         }
 
         public static string ApiLocation
         {
             get 
-            { 
-                return TestConfigurationsHelper.GetProperty(x => x.ApiLocation); 
+            {
+                return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.ApiLocation); 
             }
         }
 
@@ -31,11 +31,11 @@ namespace JustGiving.Api.Sdk.Test.Integration
         {
             get
             {
-                return (TestConfigurationsHelper.GetProperty(x => x.CharityUserUserName));
+                return (TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.CharityUserUserName));
             }
         }
 
-        public static string RflUserName { get { return TestConfigurationsHelper.GetProperty(x => x.RflUsernName) ?? "rfltester@justgiving.com"; } }
+        public static string RflUserName { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflUsernName) ?? "rfltester@justgiving.com"; } }
 
 
 

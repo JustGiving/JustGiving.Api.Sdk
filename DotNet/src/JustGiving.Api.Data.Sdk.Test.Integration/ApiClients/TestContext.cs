@@ -1,4 +1,6 @@
 ﻿using System;
+using JustGiving.Api.Data.Sdk.Test.Integration.Configuration;
+using JustGiving.Api.Sdk.Test.Common.Configuration;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
@@ -6,8 +8,11 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
     {
         public const string ApiLocation = "http://dataapi.local.justgiving.com/";
         public const string ApiKey = "decbf1d2";
-        public const string TestUsername = "ehaevaj.hbvef@ngazszqoqt.obx.xm";
-        public const string TestValidPassword = "zqfed068";
+        public const string TestUsername = "Phlag.qykght@fixyhvjuzh.gac.iq"; //"ehaevaj.hbvef@ngazszqoqt.obx.xm";
+        public const string TestValidPassword = "nmjhpq32";// "zqfed068";
+
+        public static DateTime StartDate { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, DateTime>(x => x.StartDate); } }
+        //public static DateTime StartDate { get { return new DateTime(2012, 04, 17); } }
         public const string Base64 = "ZWhhZXZhai5oYnZlZkBuZ2F6c3pxb3F0Lm9ieC54bTp6cWZlZDA2OA==";
         public const string TestInvalidPassword = "badPassword";
         public const int KnownDonationPaymentId = 1062979;
@@ -29,5 +34,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public const string KnownAppealName = "mariecurie: General Appeal";
         public static readonly DateTime KnownExpiryDate = new DateTime(2006, 11, 17);
         public static readonly DateTime KnownEventDate = new DateTime(2006, 9, 9);
-    } 
+    }
+
+
 }

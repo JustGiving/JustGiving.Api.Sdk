@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Linq.Expressions;
+﻿using System.Configuration;
 
 namespace JustGiving.Api.Sdk.Test.Integration.Configuration
 {
@@ -59,32 +57,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
         {
             get {  return (int)this["rflEventReference"];}
             set { this["rflEventReference"] = value; }
-        }
-    }
-
-    public class TestConfigurationsHelper
-    {
-        public static TReturnType GetProperty<TReturnType>(Expression<Func<ITestConfigurations, TReturnType>> func)
-        {
-            var memberExpression = (MemberExpression)func.Body;
-            var propertyName = memberExpression.Member.Name;
-
-            return GetProperty <TReturnType>(propertyName);
-        }
-
-        private static TReturnType GetProperty<TReturnType>(string propertyToFind)
-        {
-            var configuration = (ITestConfigurations) ConfigurationManager.GetSection("testConfigurations");
-            foreach (var property in configuration.GetType().GetProperties())
-            {
-                if (property.Name == propertyToFind)
-                {
-                    var value = property.GetValue(configuration, null);
-                    return (TReturnType)value;
-                }   
-            }
-
-            return default(TReturnType);
         }
     }
 }

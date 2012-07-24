@@ -79,6 +79,10 @@
     <Folder Include="Http\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JustGiving.Api.Sdk.Test.Common\JustGiving.Api.Sdk.Test.Common.csproj">
+      <Project>{092936C8-F57D-4B9C-9235-5EA4D16C5422}</Project>
+      <Name>JustGiving.Api.Sdk.Test.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JustGiving.Api.Sdk.Test.Unit\JustGiving.Api.Sdk.Test.Unit.csproj">
       <Project>{06A85854-52E4-4B21-ABDE-69E0D0A3E68B}</Project>
       <Name>JustGiving.Api.Sdk.Test.Unit</Name>
@@ -96,6 +100,7 @@
   <ItemGroup>
     <None Include="App.config">
       <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
     </None>
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>

@@ -6,6 +6,7 @@ using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Page;
 using JustGiving.Api.Sdk.Model.Remember;
+using JustGiving.Api.Sdk.Test.Common.Configuration;
 using JustGiving.Api.Sdk.Test.Integration.Configuration;
 using NUnit.Framework;
 
@@ -51,7 +52,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
+                EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -66,7 +67,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidRflCredentials(format);
-            client.SetWhiteLabelDomain(TestConfigurationsHelper.GetProperty(x => x.RflDomain));
+            var domain = TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflDomain);
+            client.SetWhiteLabelDomain(domain);
 
 			var pageClient = new PageApi(client.HttpChannel);
             
@@ -78,16 +80,16 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 Attribution =  null,
                 CharityId = 2050,
                 PageShortName = pageShortName,
-                PageTitle = "Page created on domain " + TestConfigurationsHelper.GetProperty(x => x.RflDomain) + " by an integration test",
+                PageTitle = "Page created on domain " + domain + " by an integration test",
                 EventDate = null,
                 EventName = null,
-                EventId = TestConfigurationsHelper.GetProperty(x => x.RflEventReference), //Was 1 for local
+                EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.RflEventReference), //Was 1 for local
                 TargetAmount = null
             };
 
             var registrationResponse = pageClient.Create(pageCreationRequest);
 
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(TestConfigurationsHelper.GetProperty(x => x.RflDomain)));
+            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -132,7 +134,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "api test",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
+                EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -158,7 +160,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 PageTitle = "api test",
                 EventName = "The Other Occasion of ApTest and APITest",
                 CharityId = 2050,
-                EventId = TestConfigurationsHelper.GetProperty(x => x.ValidEventId),
+                EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.ValidEventId),
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
@@ -433,7 +435,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientInvalidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
 
-            var exists = pageClient.IsPageShortNameRegistered("rasha25", TestConfigurationsHelper.GetProperty(x => x.RflDomain));
+            var exists = pageClient.IsPageShortNameRegistered("rasha25", TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflDomain));
 
             Assert.IsFalse(exists);
         }

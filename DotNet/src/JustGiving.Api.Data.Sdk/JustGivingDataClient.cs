@@ -48,7 +48,7 @@ namespace JustGiving.Api.Data.Sdk
         public bool IsZipSupportedByClient { get; set; }
         public TimeSpan? ConnectionTimeOut { get; set; }
 
-        public DataClientConfiguration(string apiKey): base("https://dataapi.local.justgiving.com/", apiKey, 1)
+        public DataClientConfiguration(string apiKey): base("http://dataapi.local.justgiving.com/", apiKey, 1)
         {
         }
 

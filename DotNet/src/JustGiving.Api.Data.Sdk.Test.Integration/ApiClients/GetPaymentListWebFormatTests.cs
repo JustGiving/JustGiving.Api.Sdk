@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.Payment;
+using JustGiving.Api.Data.Sdk.Test.Integration.Configuration;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
+using JustGiving.Api.Sdk.Test.Common.Configuration;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
@@ -17,9 +19,12 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDataClientConfiguration();
 
             var dataClient = new JustGivingDataClient(clientConfiguration);
-            var startDate = DateTime.Now.Date.AddMonths(-2);
-            var endDate = startDate.AddMonths(1);
-
+//            var startDate = DateTime.Now.Date.AddMonths(-2);
+//            var endDate = startDate.AddMonths(1);
+//            
+            var startDate = TestContext.StartDate; 
+            var endDate = startDate.AddMonths(3);
+            
             var response = dataClient.Payments.PaymentsBetween(startDate, endDate);
             
             Assert.IsNotNull(response);
@@ -79,5 +84,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             };
         }
     }
+
+
 
 }

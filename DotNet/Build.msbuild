@@ -20,13 +20,21 @@
     <Message Text="Completed Unit Test Execution"></Message>
   </Target>
   
-  <Target Name="ExecuteIntegrationTests">
+  <Target Name="ExecuteApiSdkIntegrationTests">
     <Message Text="Starting Integration Test Execution"></Message>
     <ItemGroup>
         <Assemblies Include="$(TestPath)\JustGiving.Api.Sdk.Test.Integration.dll" />
     </ItemGroup>
     <NUnit Assemblies="@(Assemblies)" ToolPath="$(NunitToolPath)" />
     <Message Text="Completed Unit Test Execution"></Message>
+  </Target>
+
+  <Target Name="ExecuteDataApiSdkIntegrationTests">
+    <Message Text="Starting data api sdk integration tests"></Message>
+    <ItemGroup>
+      <Assemblies Include="$(TestPath)\Data\JustGiving.Api.Data.Sdk.Test.Integration.dll" />      
+    </ItemGroup>
+    <NUnit Assemblies="@(Assemblies)" ToolPath="$(NunitToolPath)" />
   </Target>
 
   <Target Name="CreateStagingTestConfiguration">
@@ -38,11 +46,11 @@
 	<Message Text="Compile and run unit tests"></Message>
   </Target>
   
-  <Target Name="BIT" DependsOnTargets="Compile;ExecuteIntegrationTests">
+  <Target Name="BIT" DependsOnTargets="Compile;ExecuteDataApiSdkIntegrationTests;ExecuteDataApiSdkIntegrationTests">
 	<Message Text="Compile and run integration tests"></Message>
   </Target>
   
-  <Target Name="BALL" DependsOnTargets="Compile;ExecuteUnitTests;ExecuteIntegrationTests">
+  <Target Name="BALL" DependsOnTargets="Compile;ExecuteUnitTests;ExecuteApiSdkIntegrationTests;ExecuteDataApiSdkIntegrationTests">
 	<Message Text="Compile and run unit and integration tests"></Message>
   </Target>
 </Project>
