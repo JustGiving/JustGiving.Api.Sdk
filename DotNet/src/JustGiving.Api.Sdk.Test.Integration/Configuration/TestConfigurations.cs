@@ -4,12 +4,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
 {
     public class TestConfigurations : ConfigurationSection, ITestConfigurations
     {
-        [ConfigurationProperty("rflDomain", IsRequired = false, DefaultValue = "www.local.raceforlifesponsorme.org")]
-        public string RflDomain
-        {
-            get { return (string) this["rflDomain"]; }
-            set { this["rflDomain"] = value; }  
-        }
         [ConfigurationProperty("charityUserUserName", IsRequired = false)]
         public string CharityUserUserName
         {
@@ -37,6 +31,20 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
             get { return (string) this["rflUsername"]; }
             set { this["rflUsername"] = value; }
         }
+        
+        [ConfigurationProperty("rflDomain", IsRequired = false, DefaultValue = "www.local.raceforlifesponsorme.org")]
+        public string RflDomain
+        {
+            get { return (string)this["rflDomain"]; }
+            set { this["rflDomain"] = value; }
+        }
+
+        [ConfigurationProperty("rflEventReference")]
+        public int RflEventReference
+        {
+            get { return (int)this["rflEventReference"]; }
+            set { this["rflEventReference"] = value; }
+        }
 
         [ConfigurationProperty("apiLocation")]
         public string ApiLocation
@@ -50,13 +58,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.Configuration
         {
             get { return (string) this["apiKey"]; }
             set { this["apiKey"] = value; }
-        }
-
-        [ConfigurationProperty("rflEventReference")]
-        public int RflEventReference
-        {
-            get {  return (int)this["rflEventReference"];}
-            set { this["rflEventReference"] = value; }
         }
     }
 }
