@@ -24,9 +24,11 @@ namespace JustGiving.Api.Sdk.Http
 
             ClientConfiguration = clientConfiguration;
             _httpClient = httpClient;
+            _httpClient.ConnectionTimeOut = clientConfiguration.ConnectionTimeOut;
             _payloadBuilder = new MultiformatPayloadBuilder(ClientConfiguration);
-
+            
             SetAuthenticationHeaders();
+            SetZippingHeader();
         }
 
         private void SetAuthenticationHeaders()
@@ -36,6 +38,14 @@ namespace JustGiving.Api.Sdk.Http
                 var credentials = new HttpBasicAuthCredentials(ClientConfiguration.Username, ClientConfiguration.Password);
                 _httpClient.AddHeader("Authorize", "Basic " + credentials);
                 _httpClient.AddHeader("Authorization", "Basic " + credentials);
+            }
+        }
+
+        private void SetZippingHeader()
+        {
+            if (ClientConfiguration.IsZipSupportedByClient)
+            {
+                _httpClient.AddHeader("Accept-Encoding", "gzip, deflate");
             }
         }
 

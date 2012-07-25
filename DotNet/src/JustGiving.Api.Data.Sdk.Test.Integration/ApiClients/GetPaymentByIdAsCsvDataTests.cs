@@ -1,34 +1,27 @@
 ﻿using System.IO;
 using GemBox.Spreadsheet;
-using GG.Api.Sdk;
-using GG.Api.Services.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
+using JustGiving.Api.Sdk;
 using NUnit.Framework;
 
-namespace GG.Api.Services.Data.Sdk.Test.Integration
+namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class GetPaymentByIdAsCsvDataTests
+    public class GetPaymentByIdAsCsvDataTests : ApiTestFixture
     {
         [TestCase(TestContext.KnownDonationPaymentId)]
         [TestCase(TestContext.KnownGiftAidPaymentId)]
         public void ResourceExists_ReturnsData(int paymentId)
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-                                          {
-                                              WireDataFormat = WireDataFormat.Other,
-                                              IsZipSupportedByClient = false,
-                                              Username = TestContext.TestUsername,
-                                              Password = TestContext.TestValidPassword
-                                          };
+            var clientConfiguration = GetDataClientConfiguration()
+                                        .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
 
-            // Act
-            var payment = dataApiClient.GetPaymentReport(paymentId, DataFileFormat.csv);
+            var client = new JustGivingDataClient(clientConfiguration);
 
-            // Assert
+            var payment = client.Payments.ReportFor(paymentId, DataFileFormat.csv);
+
             Assert.IsNotNull(payment);
         }
 
@@ -36,23 +29,12 @@ namespace GG.Api.Services.Data.Sdk.Test.Integration
         [TestCase(TestContext.KnownGiftAidPaymentId)]
         public void ResourceExists_DataIsValidCsv(int paymentId)
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-                                          {
-                                              WireDataFormat = WireDataFormat.Other,
-                                              IsZipSupportedByClient = false,
-                                              Username = TestContext.TestUsername,
-                                              Password = TestContext.TestValidPassword
-                                          };
+            var clientConfiguration = GetDataClientConfiguration()
+                                        .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
+            var client = new JustGivingDataClient(clientConfiguration);
+            var payment = client.Payments.ReportFor(paymentId, DataFileFormat.csv);
 
-            // Act
-            var payment = dataApiClient.GetPaymentReport(paymentId, DataFileFormat.csv);
-
-
-            // Assert
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
             using (var stream = new MemoryStream(payment))
@@ -69,23 +51,15 @@ namespace GG.Api.Services.Data.Sdk.Test.Integration
         [TestCase(TestContext.KnownGiftAidPaymentId)]
         public void ResourceExists_DataIsValidCsv_Compressed(int paymentId)
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Other,
-                IsZipSupportedByClient = true,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword
-            };
+            var clientConfiguration = GetDataClientConfiguration()
+                                        .With((clientConfig) => clientConfig.IsZipSupportedByClient = true)
+                                        .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
-            // Act
-            var payment = dataApiClient.GetPaymentReport(paymentId, DataFileFormat.csv);
-
-
-            // Assert
+            
+            var client = new JustGivingDataClient(clientConfiguration);
+            
+            var payment = client.Payments.ReportFor(paymentId, DataFileFormat.csv);
+            
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
             using (var stream = new MemoryStream(payment))

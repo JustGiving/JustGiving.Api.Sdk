@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.Payment;
-using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class GetPaymentListWebFormatTests
+    public class GetPaymentListWebFormatTests : ApiTestFixture
     {
         [Test]
         public void CanGetDataBetweenTwoDates()
@@ -17,9 +16,6 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDataClientConfiguration();
 
             var dataClient = new JustGivingDataClient(clientConfiguration);
-//            var startDate = DateTime.Now.Date.AddMonths(-2);
-//            var endDate = startDate.AddMonths(1);
-//            
             var startDate = TestContext.StartDate; 
             var endDate = startDate.AddMonths(3);
             
@@ -53,36 +49,13 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [Test]
         public void DateRange_CannotExceedThreeMonths()
         {
-            var clientConfiguration = new DataClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1)
-            {
-                WireDataFormat = WireDataFormat.Json,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
-
-            var startDate = DateTime.Now.Date.AddYears(-2);
+            var clientConfiguration = GetDataClientConfiguration();
+         var startDate = DateTime.Now.Date.AddYears(-2);
             var endDate = startDate.AddYears(1);
             var client = new JustGivingDataClient(clientConfiguration);
             var exception = Assert.Throws<ErrorResponseException>(() => client.Payments.PaymentsBetween(startDate, endDate));
             
             Assert.That(exception.Message.Contains("400"));
         }
-
-        private static DataClientConfiguration GetDataClientConfiguration()
-        {
-            return new DataClientConfiguration(TestContext.ApiLocation, TestContext.ApiKey, 1)
-            {
-                WireDataFormat = WireDataFormat.Json,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
-        }
     }
-
-
-
 }

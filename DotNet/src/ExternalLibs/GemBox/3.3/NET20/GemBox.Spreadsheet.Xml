@@ -1,0 +1,3589 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>GemBox.Spreadsheet</name>
+  </assembly>
+  <members>
+    <member name="T:GemBox.Spreadsheet.AbstractRange">
+      <summary>
+            Base class for classes representing one or more excel cells.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AbstractRange.Comment">
+      <summary>
+            Gets is sets comment
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AbstractRange.Formula">
+      <summary>
+            Gets or sets formula string.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AbstractRange.IsStyleDefault">
+      <summary>
+            Returns <b>true</b> if all cells in <see cref="T:GemBox.Spreadsheet.AbstractRange">AbstractRange</see> have default 
+            cell style; otherwise, <b>false</b>.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.AbstractRange.SetBorders(GemBox.Spreadsheet.MultipleBorders,System.Drawing.Color,GemBox.Spreadsheet.LineStyle)">
+      <summary>
+            Sets borders on one or more excel cells, taking cell position into account.
+            </summary>
+      <param name="multipleBorders">Borders to set.</param>
+      <param name="lineColor">Line color.</param>
+      <param name="lineStyle">Line style.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AbstractRange.Style">
+      <summary>
+            Gets or sets cell style (<see cref="T:GemBox.Spreadsheet.CellStyle">CellStyle</see>) on one or more excel cells.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AbstractRange.Value">
+      <summary>
+            Gets or sets cell value on one or more excel cells.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.AnchorCell">
+      <summary>
+            Represents a anchor cell object used by <see cref="T:GemBox.Spreadsheet.ExcelPictureCollection">ExcelPictureCollection</see> in the worksheet.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.AnchorCell.#ctor(GemBox.Spreadsheet.AnchorCell)">
+      <summary>
+            Initializes a new instance by using another anchor cell.
+            </summary>
+      <param name="anchorCell">Anchor cell to copy from.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.AnchorCell.#ctor(GemBox.Spreadsheet.ExcelColumn,GemBox.Spreadsheet.ExcelRow,System.Boolean)">
+      <summary>
+            Initializes a new instance without using offset values.
+            </summary>
+      <param name="column">Column where the anchor is placed.</param>
+      <param name="row">Row where the anchor is placed.</param>
+      <param name="topLeft">If true, anchor will be placed in the top left corner of the anchor cell.
+            Otherwise the anchor will be placed in the bottom right corner of the anchor cell.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.AnchorCell.#ctor(GemBox.Spreadsheet.ExcelColumn,GemBox.Spreadsheet.ExcelRow,System.Int64,System.Int64)">
+      <summary>
+            Initializes a new instance by using offset values.
+            </summary>
+      <param name="column">Column where the anchor is placed.</param>
+      <param name="row">Row where the anchor is placed.</param>
+      <param name="columnOffset">Column offset for the anchor.</param>
+      <param name="rowOffset">Row offset for the anchor.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AnchorCell.Column">
+      <summary>
+            Gets or sets column for the anchor cell.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AnchorCell.ColumnOffset">
+      <summary>
+            Gets or sets column offset for the anchor cell.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.AnchorCell.Equals(System.Object)">
+      <summary>
+            Determines whether the specified <see cref="T:GemBox.Spreadsheet.AnchorCell">AnchorCell</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.AnchorCell">AnchorCell</see>.
+            </summary>
+      <param name="obj">Object of <see cref="T:GemBox.Spreadsheet.AnchorCell">AnchorCell</see> type.</param>
+      <returns>
+        <b>true</b> if the specified <see cref="T:GemBox.Spreadsheet.AnchorCell">AnchorCell</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.AnchorCell">AnchorCell</see>; otherwise, <b>false</b>.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.AnchorCell.GetHashCode">
+      <summary>
+            Gets the hash code for anchor object.
+            </summary>
+      <returns>Hash code.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AnchorCell.Row">
+      <summary>
+            Gets or sets row for the anchor cell.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.AnchorCell.RowOffset">
+      <summary>
+            Gets or sets row offset for the anchor cell.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.BuiltInDocumentProperties">
+      <summary>
+            Enumeration of available built-in document properties.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Title">
+      <summary>
+            Title of the document.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Author">
+      <summary>
+            Name of the document's author.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Subject">
+      <summary>
+            Subject of the document.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Comments">
+      <summary>
+            Document comments.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Category">
+      <summary>
+            Category of the document.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Status">
+      <summary>
+            Status of the document.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Keywords">
+      <summary>
+            Document keywords.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.LastSavedBy">
+      <summary>
+            Name of the last author.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Manager">
+      <summary>
+            Manager.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.Company">
+      <summary>
+            Company.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.BuiltInDocumentProperties.HyperlinkBase">
+      <summary>
+            Base hyperlink.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.CellBorder">
+      <summary>
+            Contains settings for a single cell border.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellBorder.LineColor">
+      <summary>
+            Gets or sets border line color.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellBorder.LineStyle">
+      <summary>
+            Gets or sets border line style.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellBorder.SetBorder(System.Drawing.Color,GemBox.Spreadsheet.LineStyle)">
+      <summary>
+            Sets both border line color and line style.
+            </summary>
+      <param name="lineColor">Border line color.</param>
+      <param name="lineStyle">Border line style.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.CellBorders">
+      <summary>
+            Collection of cell borders (<see cref="T:GemBox.Spreadsheet.CellBorder">CellBorder</see>).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellBorders.Item(GemBox.Spreadsheet.IndividualBorder)">
+      <summary>
+            Gets specific border.
+            </summary>
+      <param name="individualBorder">Border to get.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellBorders.SetBorders(GemBox.Spreadsheet.MultipleBorders,System.Drawing.Color,GemBox.Spreadsheet.LineStyle)">
+      <summary>
+            Sets specific line color and line style on multiple borders.
+            </summary>
+      <param name="multipleBorders">Borders to set.</param>
+      <param name="lineColor">Border line color.</param>
+      <param name="lineStyle">Border line style.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.CellRange">
+      <summary>
+            Cell range is a rectangular group of worksheet cells.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Comment">
+      <summary>
+            Gets or sets comment
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.CopyTo(GemBox.Spreadsheet.ExcelWorksheet,System.Int32,System.Int32)">
+      <summary>
+            Copies this cell range to another worksheet.
+            </summary>
+      <param name="destinationWorksheet">Destination worksheet.</param>
+      <param name="absoluteRow">Absolute index of the destination row.</param>
+      <param name="absoluteColumn">Absolute index of the destination column.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if destination range is invalid.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.CopyTo(GemBox.Spreadsheet.ExcelWorksheet,System.String)">
+      <summary>
+            Copies this cell range to another worksheet.
+            </summary>
+      <param name="destinationWorksheet">Destination worksheet.</param>
+      <param name="topLeftCell">Full name of the top-left cell of the destination range.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if destination range is invalid.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.CopyTo(System.Int32,System.Int32)">
+      <summary>
+            Copies this cell range to another position in the same worksheet.
+            </summary>
+      <param name="absoluteRow">Absolute index of the destination row.</param>
+      <param name="absoluteColumn">Absolute index of the destination column.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if destination range is invalid.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.CopyTo(System.String)">
+      <summary>
+            Copies this cell range to another position in the same worksheet.
+            </summary>
+      <param name="topLeftCell">Full name of the top-left cell of the destination range.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if destination range is invalid.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.EndPosition">
+      <summary>
+            Gets name of the last (bottom-right) cell in this cell range.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.Equals(System.Object)">
+      <summary>
+            Determines whether the specified <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>.
+            </summary>
+      <param name="obj">Object of <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see> type.</param>
+      <returns>
+        <b>true</b> if the specified <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>; otherwise, <b>false</b>.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.ExportToHtml(System.String,GemBox.Spreadsheet.HtmlExporterOptions,System.Boolean)">
+      <summary>
+            Exports all data from the range to a new file in HTML format.
+            </summary>
+      <param name="filePath">File path.</param>
+      <param name="options">Options that describe exporting process. 
+            If the value is null, new HtmlExporterOptions is created with <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowColumnLetters">HtmlExporterOptions.ShowColumnLetters</see> and <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowRowNumbers">HtmlExporterOptions.ShowRowNumbers</see> set to true.</param>
+      <param name="indented">Saved file will use XmlTextWriter with Formatting property set to Formatting.Indented.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.ExportToHtml(System.Xml.XmlTextWriter,GemBox.Spreadsheet.HtmlExporterOptions,System.Boolean)">
+      <summary>
+            Exports all data from the range to a XmlTextWriter in HTML format.
+            </summary>
+      <param name="writer">Xml text writer.</param>
+      <param name="options">Options that describe exporting process. 
+            If the value is null, new HtmlExporterOptions is created with <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowColumnLetters">HtmlExporterOptions.ShowColumnLetters</see> and <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowRowNumbers">HtmlExporterOptions.ShowRowNumbers</see> set to true.</param>
+      <param name="entirePage">If true, entire page will be exported. If false, only table will be exported.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.FindText(System.String,System.Boolean,System.Boolean,System.Int32@,System.Int32@)">
+      <summary>
+            Finds the first occurrence of the specified text in the current cell range.
+            </summary>
+      <param name="text">Test to search.</param>
+      <param name="matchCase">
+        <b>True</b> to match exact case, <b>false</b> otherwise.</param>
+      <param name="matchEntireCellContents">
+        <b>True</b> to match entire cell contents, <b>false</b> otherwise.</param>
+      <param name="row">Index of the row where the text was found or -1 if no text was found.</param>
+      <param name="column">Index of the column where the text was found or -1 if no text was found.</param>
+      <returns>
+        <b>True</b> if text is found, <b>false</b> otherwise.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.FirstColumnIndex">
+      <summary>
+            Gets index of the first (leftmost) column.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.FirstRowIndex">
+      <summary>
+            Gets index of the first (topmost) row.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Formula">
+      <summary>
+            Gets or sets formula string.
+            </summary>
+      <exception cref="T:System.InvalidOperationException">Thrown if property get is attempted on a cell range 
+            which is not merged.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.GetEnumerator">
+      <summary>
+            Returns an enumerator for the <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see> (all cells).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.GetHashCode">
+      <summary>
+            Returns the hash code of this object.
+            </summary>
+      <returns>Hash code.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.GetReadEnumerator">
+      <summary>
+            Returns enumerator for the <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see> (only allocated cells).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.GetSubrange(System.String,System.String)">
+      <summary>
+            Returns new cell range using start and end position.
+            </summary>
+      <param name="firstCell">Name of first (top-left) cell.</param>
+      <param name="lastCell">Name of last (bottom-right) cell.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if arguments are out of range.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.GetSubrangeAbsolute(System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Returns new cell range using absolute indexing.
+            </summary>
+      <param name="firstRow">Absolute index of the first row.</param>
+      <param name="firstColumn">Absolute index of the first column.</param>
+      <param name="lastRow">Absolute index of the last row.</param>
+      <param name="lastColumn">Absolute index of the last column.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if arguments are out of range.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.GetSubrangeRelative(System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Returns new cell range using relative indexing.
+            </summary>
+      <param name="relativeRow">Relative index of the first row.</param>
+      <param name="relativeColumn">Relative index of the first column.</param>
+      <param name="width">Width of new cell range in columns.</param>
+      <param name="height">Height of new cell range in rows.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if arguments are out of range.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Height">
+      <summary>
+            Gets height of this cell range, in rows.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.IndexingMode">
+      <summary>
+            Gets indexing mode used for cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.IsAnyCellMerged">
+      <summary>
+            Returns <b>true</b> is any cell in this cell range is merged; otherwise, <b>false</b>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.IsStyleDefault">
+      <summary>
+            Returns <b>true</b> if all cells in cell range or merged range have default 
+            cell style; otherwise, <b>false</b>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Item(System.Int32)">
+      <summary>
+            Gets excel cell at the specified index.
+            </summary>
+      <param name="contextIndex">The zero-based context index of the cell.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Item(System.Int32,System.Int32)">
+      <summary>
+            Gets excel cell at the specified relative position.
+            </summary>
+      <param name="relativeRow">The zero-based relative row position.</param>
+      <param name="relativeColumn">The zero-based relative column position.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Item(System.String)">
+      <summary>
+            Gets excel cell with the specified full or partial name.
+            </summary>
+      <param name="contextName">Full or partial name of the cell.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.LastColumnIndex">
+      <summary>
+            Gets index of the last (rightmost) column.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.LastRowIndex">
+      <summary>
+            Gets index of the last (bottommost) row.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Merged">
+      <summary>
+            Gets or sets whether cells in this range are merged.
+            </summary>
+      <exception cref="T:System.ArgumentException">Thrown when merged range can't be created because some of the cells
+            in the range are already merged.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.Overlaps(GemBox.Spreadsheet.CellRange)">
+      <summary>
+            Checks if this cell range overlaps with another cell range.
+            </summary>
+      <param name="range">Cell range.</param>
+      <returns>
+        <b>true</b> if cell ranges overlap; otherwise, <b>false</b>.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.PositionToRowColumn(System.String,System.Int32@,System.Int32@)">
+      <summary>
+            Converts position string ("A1", "BN27", etc.) to row and column index.
+            </summary>
+      <param name="position">Position string.</param>
+      <param name="row">Row index.</param>
+      <param name="column">Column index.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.RowColumnToPosition(System.Int32,System.Int32)">
+      <summary>
+            Converts row and column index to position string ("A1", "BN27", etc.).
+            </summary>
+      <param name="row">Row index.</param>
+      <param name="column">Column index.</param>
+      <returns>Position string.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.SetBorders(GemBox.Spreadsheet.MultipleBorders,System.Drawing.Color,GemBox.Spreadsheet.LineStyle)">
+      <summary>
+            Sets borders on one or more excel cells, taking cell position into account.
+            </summary>
+      <param name="multipleBorders">Borders to set.</param>
+      <param name="lineColor">Line color.</param>
+      <param name="lineStyle">Line style.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.StartPosition">
+      <summary>
+            Gets name of the first (top-left) cell in this cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Style">
+      <summary>
+            Gets or sets cell style (<see cref="T:GemBox.Spreadsheet.CellStyle">CellStyle</see>) on one or more excel cells.
+            </summary>
+      <exception cref="T:System.InvalidOperationException">Thrown if property get is attempted on a cell range 
+            which is not merged.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRange.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents the current <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>.
+            </summary>
+      <returns>
+            A <see cref="T:System.String" /> that represents the current <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>.
+            </returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Value">
+      <summary>
+            Gets or sets cell value on one or more excel cells.
+            </summary>
+      <exception cref="T:System.InvalidOperationException">Thrown if property get is attempted on a cell range 
+            which is not merged.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRange.Width">
+      <summary>
+            Gets width of this cell range, in columns.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.CellRangeEnumerator">
+      <summary>
+            Enumerator used for iterating cells in a <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRangeEnumerator.Current">
+      <summary>
+            Gets the current element in the cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRangeEnumerator.CurrentCell">
+      <summary>
+            Gets the current <see cref="T:GemBox.Spreadsheet.ExcelCell">ExcelCell</see> in the cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRangeEnumerator.CurrentColumn">
+      <summary>
+            Current absolute column index in the cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRangeEnumerator.CurrentRow">
+      <summary>
+            Current absolute row index in the cell range.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRangeEnumerator.MoveNext">
+      <summary>
+            Advances the enumerator to the next element of the cell range.
+            </summary>
+      <returns>
+        <b>true</b> if the enumerator was successfully advanced to the next element; <b>false</b> if 
+            the enumerator has passed the end of the cell range.
+            </returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellRangeEnumerator.Parent">
+      <summary>
+            Parent <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>. 
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellRangeEnumerator.Reset">
+      <summary>
+            Sets the enumerator to its initial position, which is one column before 
+            the first cell in the cell range.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.CellStyle">
+      <summary>
+            Contains settings specifying how the cell data will be displayed.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellStyle.#ctor">
+      <summary>
+            Creates new cell style with default values (Arial font with size 200).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.CellStyle.#ctor(GemBox.Spreadsheet.ExcelFile)">
+      <summary>
+            Creates new cell style with default values (copies default font from ExcelFile object).
+            </summary>
+      <param name="ef">ExcelFile object.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.Borders">
+      <summary>
+            Gets or sets cell borders (<see cref="T:GemBox.Spreadsheet.CellBorder">CellBorder</see>).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.FillPattern">
+      <summary>
+            Get or sets fill pattern.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.Font">
+      <summary>
+            Gets or sets font related settings.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.FormulaHidden">
+      <summary>
+            Gets or sets whether the formula is hidden in the formula bar when the cell is selected.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.HorizontalAlignment">
+      <summary>
+            Gets or sets horizontal alignment.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.Indent">
+      <summary>
+            Gets or sets cell data indentation.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if value is out of range.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.IsDefault">
+      <summary>
+            Returns <b>true</b> if cell style is default; otherwise, <b>false</b>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.IsTextVertical">
+      <summary>
+            Gets or sets whether the cell text is displayed in a vertical style.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.Locked">
+      <summary>
+            Gets or sets if the cell is locked.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.NumberFormat">
+      <summary>
+            Gets or sets format string that will be used to interpret and display cell value.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.Rotation">
+      <summary>
+            Gets or sets cell data rotation.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if value is not between -90 and 90.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.ShrinkToFit">
+      <summary>
+            Gets or sets if the cell text is shrunk to fit the cell.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.VerticalAlignment">
+      <summary>
+            Gets or sets vertical alignment.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.CellStyle.WrapText">
+      <summary>
+            Gets or sets if the text is wrapped.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.CsvType">
+      <summary>
+            Formatting type for CSV files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.CsvType.CommaDelimited">
+      <summary>
+            Comma delimited CSV (most frequently used). 
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.CsvType.SemicolonDelimited">
+      <summary>
+            Semicolon delimited CSV (used by Excel if current culture specifies comma as decimal separator).
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.CsvType.TabDelimited">
+      <summary>
+            Tab delimited CSV.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.DefaultHtmlExporter">
+      <summary>
+            Default methods for exporting to HTML.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultCellStyleToHtml(GemBox.Spreadsheet.ExcelCell,GemBox.Spreadsheet.HtmlExportPosition)">
+      <summary>
+            If cell style is not the same as the default one, the default style is overrided with style string.
+            </summary>
+      <param name="cell">Excel cell.</param>
+      <param name="position">Current position of the exporting process. It can be null.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultCellToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.ExcelCell,GemBox.Spreadsheet.HtmlExportPosition)">
+      <summary>
+            Returns XmlNode with single cell entry.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="cell">Excel cell.</param>
+      <param name="position">Current position of the exporting process. It can be null.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultCellValueToHtml(GemBox.Spreadsheet.ExcelCell,GemBox.Spreadsheet.HtmlExportPosition)">
+      <summary>
+            Returns a string that will be writen as cell value.
+            </summary>
+      <param name="cell">Excel cell.</param>
+      <param name="position">Current position of the exporting process. It can be null.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultColumnLettersToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.ExcelColumn,GemBox.Spreadsheet.ExcelColumn)">
+      <summary>
+            Returns XmlNode with row entry for header row.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="startColumn">Start excel column.</param>
+      <param name="endColumn">End excel column.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultColumnLetterToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.ExcelColumn,System.Int32)">
+      <summary>
+            Returns XmlNode with cell entry for cell that represent column letter.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="column">Current excel column.</param>
+      <param name="htmlColumnIndex">Column index in HTML table.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultPageToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.CellRange)">
+      <summary>
+            Returns XmlDocument with page and table entry for specified range.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="range">Range that is exporting.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultRowNumberToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.ExcelRow,GemBox.Spreadsheet.CellRange,System.Int32)">
+      <summary>
+            Returns XmlNode with cell entry for cell that represent row number.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="row">Current excel row.</param>
+      <param name="range">Cell range that is been exported.</param>
+      <param name="htmlRowIndex">Row index in HTML table.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultRowToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.ExcelRow,GemBox.Spreadsheet.CellRange,System.Int32)">
+      <summary>
+            Returns XmlNode with row entry for specified excel row.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="row">Current excel row.</param>
+      <param name="range">Cell range that is been exported.</param>
+      <param name="htmlRowIndex">Row index in HTML table</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefaultHtmlExporter.DefaultTableToHtml(GemBox.Spreadsheet.HtmlExporterOptions,GemBox.Spreadsheet.CellRange)">
+      <summary>
+            Returns XmlNode with table entry for specified range.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="range">Range that is exporting.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.DefinedName">
+      <summary>
+            Defined name class describes defined name that is not directly related with one cell range.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DefinedName.LocalSheetIndex">
+      <summary>
+            Gets or sets the local sheet index of the defined name.
+            If the local sheet index is -1, defined name is global.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DefinedName.Name">
+      <summary>
+            Gets or sets the name of the defined name object.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DefinedName.Value">
+      <summary>
+            Gets or sets the value of the defined name.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.DefinedNameCollection">
+      <summary>
+            Collection of defined names that are not directly related with one cell range.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefinedNameCollection.AddDefinedName(System.String,System.String,System.Int32)">
+      <summary>
+            Adds defined name to collection and returns index of that defined name.
+            </summary>
+      <param name="name">Name of the defined name.</param>
+      <param name="value">Range string.</param>
+      <param name="localSheetIndex">Local sheet index. If the value is -1, defined name is global.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefinedNameCollection.Clear">
+      <summary>
+            Removes all elements from defined names collection.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DefinedNameCollection.Count">
+      <summary>
+            Returns the number of defined names in collection.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefinedNameCollection.GetEnumerator">
+      <summary>
+            Returns an IEnumerator for the collection. 
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DefinedNameCollection.Item(System.Int32)">
+      <summary>
+            Gets or sets defined name described by index from collection.
+            </summary>
+      <param name="index">Index of the defined name.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DefinedNameCollection.Item(System.String)">
+      <summary>
+            Gets defined name described by name from collection.
+            </summary>
+      <param name="definedName">Name of the defined name.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefinedNameCollection.RemoveDefinedName(System.String)">
+      <summary>
+            Removes the defined name described by name from collection.
+            </summary>
+      <param name="definedName">Name of the defined name.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DefinedNameCollection.RemoveDefinedNameAt(System.Int32)">
+      <summary>
+            Removes the defined name described by index from collection.
+            </summary>
+      <param name="index">Index of the defined name.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.DocumentProperties">
+      <summary>
+            Contains a collection of built-in and custom document properties.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DocumentProperties.BuiltIn">
+      <summary>
+            Gets a collection of built-in document properties.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.DocumentProperties.Custom">
+      <summary>
+            Gets a collection of custom document properties.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.DocumentProperties.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents the current <see cref="T:GemBox.Spreadsheet.DocumentProperties" />.
+            </summary>
+      <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:GemBox.Spreadsheet.DocumentProperties" />.</returns>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelCell">
+      <summary>
+            Excel cell provides access to a single worksheet cell or to a merged range if the cell is merged.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.Comment">
+      <summary>
+            Gets or sets cell comment.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelCell.ConvertExcelNumberToDateTime(System.Double,System.Boolean)">
+      <summary>
+            Converts Excel floating-point number to <see cref="T:System.DateTime">DateTime</see> structure.
+            </summary>
+      <param name="num">Excel floating-point number.</param>
+      <param name="use1904DateSystem">True to use 1904 date system.</param>
+      <returns>Converted DateTime structure.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.Formula">
+      <summary>
+            Gets or sets cell formula string.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.HasHyperlink">
+      <summary>
+            If cell has hyperlink returns true, else returns false.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.Hyperlink">
+      <summary>
+            Gets or sets cell hyperlink.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.IsStyleDefault">
+      <summary>
+            Returns <b>true</b> if style is default; otherwise, <b>false</b>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.MergedRange">
+      <summary>
+            Returns associated merged range if the cell is merged; otherwise, <b>null</b>.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelCell.SetBorders(GemBox.Spreadsheet.MultipleBorders,System.Drawing.Color,GemBox.Spreadsheet.LineStyle)">
+      <summary>
+            Sets borders on this cell or on merged range if this cell is merged.
+            </summary>
+      <param name="multipleBorders">Borders to set.</param>
+      <param name="lineColor">Line color.</param>
+      <param name="lineStyle">Line style.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.Style">
+      <summary>
+            Gets or sets cell style (<see cref="T:GemBox.Spreadsheet.CellStyle">CellStyle</see>) of this cell or 
+            of merged range if this cell is merged.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCell.Value">
+      <summary>
+            Gets or sets value of this cell or of merged range if this cell is merged.
+            </summary>
+      <exception cref="T:System.NotSupportedException">Thrown for unsupported types.</exception>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelCellCollection">
+      <summary>
+            Collection of excel cells (<see cref="T:GemBox.Spreadsheet.ExcelCell">ExcelCell</see>).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelCellCollection.Item(System.Int32)">
+      <summary>
+            Gets the cell with the specified index.
+            </summary>
+      <param name="index">The zero-based index of the cell.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelColumn">
+      <summary>
+            Excel column contains column options and cell range with column cells.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumn.AutoFit">
+      <summary>
+            Automatically fits column width to the minimum size required for all data in the column to be visible.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumn.AutoFitAdvanced(System.Single)">
+      <summary>
+            Automatically fits column width by checking all the cells in the column.
+            </summary>
+      <param name="scaling">Scaling factor.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumn.AutoFitAdvanced(System.Single,GemBox.Spreadsheet.ExcelRow,GemBox.Spreadsheet.ExcelRow)">
+      <summary>
+            Automatically fits column width by checking only the cells in the column that are specified by row range.
+            </summary>
+      <param name="scaling">Scaling factor.</param>
+      <param name="firstRow">First row.</param>
+      <param name="lastRow">Last row.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumn.Cells">
+      <summary>
+            Gets cell range with column cells.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumn.Delete">
+      <summary>
+            Deletes this column from the worksheet.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumn.InsertCopy(System.Int32,GemBox.Spreadsheet.ExcelColumn)">
+      <summary>
+            Inserts specified number of copied columns before the current column.
+            </summary>
+      <param name="columnCount">Number of columns to insert.</param>
+      <param name="sourceColumn">Source column to copy.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumn.InsertEmpty(System.Int32)">
+      <summary>
+            Inserts specified number of empty columns before the current column.
+            </summary>
+      <param name="columnCount">Number of columns to insert.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumn.Width">
+      <summary>
+            Gets or sets column width.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelColumnCollection">
+      <summary>
+            Collection of excel columns (<see cref="T:GemBox.Spreadsheet.ExcelColumn">ExcelColumn</see>).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumnCollection.ColumnIndexToName(System.Int32)">
+      <summary>
+            Converts column index (0, 1, ...) to column name ("A", "B", ...).
+            </summary>
+      <param name="columnIndex">Column index.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelColumnCollection.ColumnNameToIndex(System.String)">
+      <summary>
+            Converts column name ("A", "B", ...) to column index (0, 1, ...).
+            </summary>
+      <param name="name">Column name.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnCollection.Item(System.Int32)">
+      <summary>
+            Gets the column with the specified index.
+            </summary>
+      <param name="index">The zero-based index of the column.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnCollection.Item(System.String)">
+      <summary>
+            Gets the column with the specified name.
+            </summary>
+      <param name="name">The name of the column.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelColumnRowBase">
+      <summary>
+            Base class for the excel column and row classes.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnRowBase.Collapsed">
+      <summary>
+            Gets or sets whether object is collapsed in outlining.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnRowBase.Hidden">
+      <summary>
+            Gets or sets whether excel object is hidden.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnRowBase.Index">
+      <summary>
+            Gets the index.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnRowBase.IsStyleDefault">
+      <summary>
+            Returns <b>true</b> if style is default; otherwise, <b>false</b>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnRowBase.OutlineLevel">
+      <summary>
+            Gets or sets outline level.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if value is out of 0 to 7 range.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelColumnRowBase.Style">
+      <summary>
+            Gets or sets cell style (<see cref="T:GemBox.Spreadsheet.CellStyle">CellStyle</see>) for contained cells.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelComment">
+      <summary>
+            Represents a comment object used by <see cref="P:GemBox.Spreadsheet.ExcelCell.Comment">Comment</see> in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelComment.Author">
+      <summary>
+            Gets or sets comment author.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelComment.BottomRightCell">
+      <summary>
+            Gets or sets the bottom right anchor cell for the comment shape.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelComment.IsVisible">
+      <summary>
+            Gets or sets a value indicating whether this instance is visible.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelComment.Text">
+      <summary>
+            Gets the comment text assigned to excel cell
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelComment.TopLeftCell">
+      <summary>
+            Gets or sets the top left anchor cell for the comment shape.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelFile">
+      <summary>
+            Excel file contains one or more worksheets (<see cref="T:GemBox.Spreadsheet.ExcelWorksheet">ExcelWorksheet</see>)
+            and workbook related properties and methods.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.#ctor">
+      <summary>
+            Initializes an empty (no worksheets) instance of the ExcelFile class.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.AutoDetectCsvSeparator(System.IO.Stream)">
+      <summary>
+            Autodetects CSV separator. If there's no separators in the input stream returns (char)0. 
+            </summary>
+      <param name="stream">Input Stream.</param>
+      <returns>Char that is CSV separator. If there's no separators in the input StreamReader returns (char)0, 
+            and if there are two with equal number of occurance, returns first of them.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.AutoDetectCsvSeparator(System.IO.StreamReader,System.Int32,System.Char[])">
+      <summary>
+            Autodetects CSV separator. If there's no separators in the input stream returns (char)0. 
+            </summary>
+      <param name="sr">Input StreamReader.</param>
+      <param name="rowsToTest">Number of rows to test.</param>
+      <param name="possibleSeparators">Chars that can be CSV separators.</param>
+      <returns>Char that is CSV separator. If there's no separators in the input StreamReader returns (char)0, 
+            and if there are two with equal number of occurance, returns first of them.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.CsvAllowNewlineInQuotes">
+      <summary>
+            Gets or sets whether SaveCsv() methods will allow newline in quotes.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.CsvAlwaysQuoteValues">
+      <summary>
+            Gets or sets whether SaveCsv() methods will always put values in quotes.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.CsvParseNumbersDuringLoad">
+      <summary>
+            Gets or sets whether LoadCsv() methods will try to convert text values to numbers.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.DefaultFontName">
+      <summary>
+            Gets or sets name of the default font used in the workbook.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.DefaultFontSize">
+      <summary>
+            Gets or sets default font size.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.DefinedNames">
+      <summary>
+            Gets the collection of defined names that are not directly related with one cell range.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.DelayFormulaParse">
+      <summary>
+            Delays formula parsing until one of SaveXls methods is called.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.DocumentProperties">
+      <summary>
+            Gets <see cref="P:GemBox.Spreadsheet.ExcelFile.DocumentProperties" /> of this <see cref="T:GemBox.Spreadsheet.ExcelFile" />.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.GroupMethodsAffectedCellsLimit">
+      <summary>
+            Maximum number of affected cells in group set methods.
+            </summary>
+    </member>
+    <member name="E:GemBox.Spreadsheet.ExcelFile.IoWarning">
+      <summary>
+            Fired for unexpected situations when reading or writing XLS / CSV files.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadCsv(System.IO.Stream,GemBox.Spreadsheet.CsvType)">
+      <summary>
+            Loads the existing stream with specified CSV format.
+            </summary>
+      <param name="stream">Input stream.</param>
+      <param name="csvType">CSV type.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadCsv(System.IO.Stream,System.Char)">
+      <summary>
+            Loads the existing stream, using specified character as a delimiter.
+            </summary>
+      <param name="stream">Input stream.</param>
+      <param name="separator">Separator used for delimiting data values.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadCsv(System.IO.StreamReader,GemBox.Spreadsheet.CsvType)">
+      <summary>
+            Loads all data using specified StreamReader and CSV Type.
+            </summary>
+      <param name="sr">Stream reader.</param>
+      <param name="csvType">CSV type.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadCsv(System.IO.StreamReader,System.Char)">
+      <summary>
+            Loads all data using specified StreamReader and character delimiter.
+            </summary>
+      <param name="sr">Stream reader.</param>
+      <param name="separator">Separator used for delimiting data values.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadCsv(System.String,GemBox.Spreadsheet.CsvType)">
+      <summary>
+            Loads the existing file with specified CSV format.
+            </summary>
+      <param name="fileName">Existing CSV file name (opened for reading).</param>
+      <param name="csvType">CSV type.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadCsv(System.String,System.Char)">
+      <summary>
+            Loads the existing file, using specified character as a delimiter.
+            </summary>
+      <param name="fileName">File name.</param>
+      <param name="separator">Separator used for delimiting data values.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadOds(System.IO.Stream,GemBox.Spreadsheet.OdsOptions)">
+      <summary>
+            Loads the existing ODS file from the input stream.
+            </summary>
+      <param name="stream">Input stream (opened for reading).</param>
+      <param name="odsOptions">ODS options.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadOds(System.String,GemBox.Spreadsheet.OdsOptions)">
+      <summary>
+            Loads the existing ODS file.
+            </summary>
+      <param name="fileName">Existing ODS file name.</param>
+      <param name="odsOptions">ODS options.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadOdsFromDirectory(System.String,GemBox.Spreadsheet.OdsOptions)">
+      <summary>
+            Loads all parts of ODS file as separate files from input directory.
+            </summary>
+      <param name="path">Path of input directory.</param>
+      <param name="odsOptions">ODS options.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadXls(System.IO.Stream)">
+      <summary>
+            Loads the existing XLS file from the input stream (preserving MS Excel records).
+            </summary>
+      <param name="stream">Input stream.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadXls(System.IO.Stream,GemBox.Spreadsheet.XlsOptions)">
+      <summary>
+            Loads the existing XLS file from the input stream (optionally preserving MS Excel records).
+            </summary>
+      <param name="stream">Input stream.</param>
+      <param name="xlsOptions">XLS options.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadXls(System.String)">
+      <summary>
+            Loads the existing XLS file (preserving MS Excel records).
+            </summary>
+      <param name="fileName">Existing XLS file name (opened for reading).</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadXls(System.String,GemBox.Spreadsheet.XlsOptions)">
+      <summary>
+            Loads the existing XLS file (optionally preserving MS Excel records).
+            </summary>
+      <param name="fileName">Existing XLS file name (opened for reading).</param>
+      <param name="xlsOptions">XLS options.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.LoadXlsxFromDirectory(System.String,GemBox.Spreadsheet.XlsxOptions)">
+      <summary>
+            Loads all parts of XLSX file as separate files from input directory.
+            </summary>
+      <param name="path">Path of input directory.</param>
+      <param name="xlsxOptions">XLS options.</param>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFile.MaxColumns">
+      <summary>
+            Maximum number of columns in <see cref="T:GemBox.Spreadsheet.ExcelWorksheet">ExcelWorksheet</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFile.MaxRows">
+      <summary>
+            Maximum number of rows in <see cref="T:GemBox.Spreadsheet.ExcelWorksheet">ExcelWorksheet</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFile.MaxXlsCellStyles">
+      <summary>
+            Maximum number of user-defined cell styles in XLS (BIFF8) file.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFile.MaxXlsColors">
+      <summary>
+            Maximum number of colors in XLS (BIFF8) file.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFile.MaxXlsColumns">
+      <summary>
+            Maximum number of columns in XLS (BIFF8) file.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFile.MaxXlsRows">
+      <summary>
+            Maximum number of rows in XLS (BIFF8) file.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.Protected">
+      <summary>
+            Gets or sets the workbook protection flag.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.RowColumnResolutionMethod">
+      <summary>
+            Gets or sets the <see cref="T:GemBox.Spreadsheet.CellStyle">CellStyle</see> resolution method.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveCsv(System.IO.Stream,GemBox.Spreadsheet.CsvType)">
+      <summary>
+            Saves all data to a stream in a specified CSV format.
+            </summary>
+      <param name="stream">Output stream.</param>
+      <param name="csvType">CSV type.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveCsv(System.IO.Stream,System.Char)">
+      <summary>
+            Saves all data to a stream, using specified character as a delimiter.
+            </summary>
+      <param name="stream">Output stream.</param>
+      <param name="separator">Separator used for delimiting data values.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveCsv(System.IO.TextWriter,GemBox.Spreadsheet.CsvType)">
+      <summary>
+            Saves all data using specified TextWriter and CSV Type.
+            </summary>
+      <param name="tw">Text writer.</param>
+      <param name="csvType">CSV type.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveCsv(System.IO.TextWriter,System.Char)">
+      <summary>
+            Saves all data using specified TextWriter and character delimiter.
+            </summary>
+      <param name="tw">Text writer.</param>
+      <param name="separator">Separator used for delimiting data values.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveCsv(System.String,GemBox.Spreadsheet.CsvType)">
+      <summary>
+            Saves all data to a new file in a specified CSV format.
+            </summary>
+      <param name="fileName">File name.</param>
+      <param name="csvType">CSV type.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveCsv(System.String,System.Char)">
+      <summary>
+            Saves all data to a new file, using specified character as a delimiter.
+            </summary>
+      <param name="fileName">File name.</param>
+      <param name="separator">Separator used for delimiting data values.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveHtml(System.String,GemBox.Spreadsheet.HtmlExporterOptions,System.Boolean)">
+      <summary>
+            Saves the data from used range of the active worksheet to a new file in HTML format.
+            </summary>
+      <param name="filePath">File path.</param>
+      <param name="options">Options that describe exporting process. 
+            If the value is null, new HtmlExporterOptions is created with <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowColumnLetters">HtmlExporterOptions.ShowColumnLetters</see> and <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowRowNumbers">HtmlExporterOptions.ShowRowNumbers</see> set to true.</param>
+      <param name="indented">Saved file will use XmlTextWriter with Formatting property set to Formatting.Indented.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveHtml(System.Xml.XmlTextWriter,GemBox.Spreadsheet.HtmlExporterOptions,System.Boolean)">
+      <summary>
+            Saves the data from used range of the active worksheet to a XmlTextWriter in HTML format.
+            </summary>
+      <param name="writer">Xml text writer.</param>
+      <param name="options">Options that describe exporting process. 
+            If the value is null, new HtmlExporterOptions is created with <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowColumnLetters">HtmlExporterOptions.ShowColumnLetters</see> and <see cref="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowRowNumbers">HtmlExporterOptions.ShowRowNumbers</see> set to true.</param>
+      <param name="entirePage">If true, entire page will be exported. If false, only table will be exported.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveOds(System.IO.Stream)">
+      <summary>
+            Saves all data to an output stream in ODF format.
+            </summary>
+      <param name="stream">Output stream.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveOds(System.String)">
+      <summary>
+            Saves all data to a new file in ODF format.
+            </summary>
+      <param name="fileName">File name.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveOdsToDirectory(System.String)">
+      <summary>
+            Saves all parts of ODS file as separate files to output directory.
+            </summary>
+      <param name="path">Path of output directory.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveXls(System.IO.Stream)">
+      <summary>
+            Saves all data to an output stream in XLS format.
+            </summary>
+      <param name="stream">Output stream.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveXls(System.String)">
+      <summary>
+            Saves all data to a new file in XLS format.
+            </summary>
+      <param name="fileName">File name.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SaveXlsxToDirectory(System.String)">
+      <summary>
+            Saves all parts of XLSX file as separate files to output directory.
+            </summary>
+      <param name="path">Path of output directory.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFile.SupportsType(System.Type)">
+      <summary>
+            Gets a value indicating whether the objects of specified type can be assigned 
+            to <see cref="P:GemBox.Spreadsheet.ExcelCell.Value">ExcelCell.Value</see> property.
+            </summary>
+      <param name="type">Queried type.</param>
+      <returns>
+        <b>true</b> if the specified type is supported; otherwise, <b>false</b>.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.Use1904DateSystem">
+      <summary>
+            Gets or sets whether 1904 date system is used.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFile.Worksheets">
+      <summary>
+            Collection of all worksheets (<see cref="T:GemBox.Spreadsheet.ExcelWorksheet">ExcelWorksheet</see>) in a workbook. 
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelFillPattern">
+      <summary>
+            Contains fill pattern settings.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFillPattern.PatternBackgroundColor">
+      <summary>
+            Get or sets fill pattern background color.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFillPattern.PatternForegroundColor">
+      <summary>
+            Get or sets fill pattern foreground color.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFillPattern.PatternStyle">
+      <summary>
+            Gets or sets fill pattern style.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFillPattern.SetPattern(GemBox.Spreadsheet.FillPatternStyle,System.Drawing.Color,System.Drawing.Color)">
+      <summary>
+            Sets complex (non-empty and non-solid) pattern.
+            </summary>
+      <param name="patternStyle">Pattern style.</param>
+      <param name="foregroundColor">Foreground color.</param>
+      <param name="backgroundColor">Background color.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelFillPattern.SetSolid(System.Drawing.Color)">
+      <summary>
+            Sets solid pattern using specified fill color.
+            </summary>
+      <param name="fillColor">Fill color.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelFont">
+      <summary>
+            Contains font related settings.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFont.BoldWeight">
+      <summary>
+            Default bold font weight.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.Color">
+      <summary>
+            Gets or sets font color.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.Italic">
+      <summary>
+            Gets or sets if the font is italic.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFont.MaxWeight">
+      <summary>
+            Maximum font weight.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFont.MinWeight">
+      <summary>
+            Minimum font weight.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.Name">
+      <summary>
+            Gets or sets name of the font.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelFont.NormalWeight">
+      <summary>
+            Normal font weight.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.ScriptPosition">
+      <summary>
+            Gets or sets font script position.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.Size">
+      <summary>
+            Gets or sets font size.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.Strikeout">
+      <summary>
+            Gets or sets if the font is struck out.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.UnderlineStyle">
+      <summary>
+            Gets or sets font underlining.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelFont.Weight">
+      <summary>
+            Gets or sets font weight (font boldness).
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if font weight is out of allowed range.</exception>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelPicture">
+      <summary>
+            Represents a picture object used by <see cref="T:GemBox.Spreadsheet.ExcelPictureCollection">ExcelPictureCollection</see> in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.BottomRightCell">
+      <summary>
+            Gets or sets the bottom right anchor cell for the picture.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.BoundingRectangle">
+      <summary>
+            Gets the image bounding rectangle.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPicture.Delete">
+      <summary>
+            Deletes this picture from picture collection.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.Image">
+      <summary>
+            Gets the image previously loaded.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.ImageStream">
+      <summary>
+            Gets the image stream.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.PictureFormat">
+      <summary>
+            Gets the picture format.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.Positioning">
+      <summary>
+            Gets or sets the positioning options of the pictue.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPicture.TopLeftCell">
+      <summary>
+            Gets or sets the top left anchor cell for the picture.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelPictureCollection">
+      <summary>
+            Collection of the <see cref="T:GemBox.Spreadsheet.ExcelPicture">ExcelPicture</see>.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPictureCollection.Add(System.IO.MemoryStream,GemBox.Spreadsheet.PositioningMode,GemBox.Spreadsheet.AnchorCell,GemBox.Spreadsheet.AnchorCell,GemBox.Spreadsheet.ExcelPictureFormat)">
+      <summary>
+            Adds the image with defined anchor properties.
+            </summary>
+      <param name="imageStream">Stream of the image to be added.</param>
+      <param name="mode">Positioning mode of the image.</param>
+      <param name="topLeftCell">Top left anchor cell.</param>
+      <param name="bottomRightCell">Bottom right anchor cell.</param>
+      <param name="format">Picture format.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPictureCollection.Add(System.IO.MemoryStream,System.Drawing.Rectangle,GemBox.Spreadsheet.ExcelPictureFormat)">
+      <summary>
+            Adds image from the image object by using defined rectangle.
+            </summary>
+      <param name="imageStream">Image stream.</param>
+      <param name="rect">Destination rectangle.</param>
+      <param name="format">Picture format.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPictureCollection.Add(System.String,GemBox.Spreadsheet.PositioningMode,GemBox.Spreadsheet.AnchorCell,GemBox.Spreadsheet.AnchorCell)">
+      <summary>
+            Adds the image from specified fileName with defined anchor properties.
+            </summary>
+      <param name="fileName">File name of the image to be added.</param>
+      <param name="mode">Positioning mode of the image.</param>
+      <param name="topLeftCell">Top left anchor cell.</param>
+      <param name="bottomRightCell">Bottom right anchor cell.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPictureCollection.Add(System.String,System.Drawing.Rectangle)">
+      <summary>
+            Adds the image from specified fileName.
+            </summary>
+      <param name="fileName">The fileName.</param>
+      <param name="rect">The destination rectangle.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPictureCollection.Clear">
+      <summary>
+            Clears ExcelPictureCollection.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPictureCollection.Count">
+      <summary>
+            Gets the count of pictures items.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPictureCollection.GetEnumerator">
+      <summary>
+            Returns an enumerator that can iterate through a collection.
+            </summary>
+      <returns>
+            An <see cref="T:System.Collections.IEnumerator" />
+            that can be used to iterate through the collection.
+            </returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPictureCollection.Item(System.Int32)">
+      <summary>
+            Gets the <see cref="T:GemBox.Spreadsheet.ExcelPicture" /> at the specified index.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelPictureFormat">
+      <summary>
+            Picture formats.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Jpeg">
+      <summary>
+            Jpeg picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Png">
+      <summary>
+            Png picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Tiff">
+      <summary>
+            Tiff picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Gif">
+      <summary>
+            Gif picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Emf">
+      <summary>
+            Emf picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Wmf">
+      <summary>
+            Wmf picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Bmp">
+      <summary>
+            Bmp picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Exif">
+      <summary>
+            Exif picture format.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExcelPictureFormat.Ico">
+      <summary>
+            Ico picture format.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelPrintOptions">
+      <summary>
+            Stores MS Excel print and print related options.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.AutomaticPageBreakScalingFactor">
+      <summary>
+            Scaling factor for automatic page breaks.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if value is out of 10 to 400 range.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.BottomMargin">
+      <summary>
+            Bottom margin.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.DraftQuality">
+      <summary>
+        <b>True</b> for printing in draft quality, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPrintOptions.Equals(System.Object)">
+      <summary>
+            Determines whether the specified <see cref="T:GemBox.Spreadsheet.ExcelPrintOptions">ExcelPrintOptions</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.ExcelPrintOptions">ExcelPrintOptions</see>.
+            </summary>
+      <param name="obj">Object of <see cref="T:GemBox.Spreadsheet.ExcelPrintOptions">ExcelPrintOptions</see> type.</param>
+      <returns>
+        <b>true</b> if the specified <see cref="T:GemBox.Spreadsheet.ExcelPrintOptions">ExcelPrintOptions</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.ExcelPrintOptions">ExcelPrintOptions</see>; otherwise, <b>false</b>.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.FitToPage">
+      <summary>
+        <b>True</b> for using 
+            <see cref="P:GemBox.Spreadsheet.ExcelPrintOptions.FitWorksheetHeightToPages">FitWorksheetHeightToPages</see>
+            and <see cref="P:GemBox.Spreadsheet.ExcelPrintOptions.FitWorksheetWidthToPages">FitWorksheetWidthToPages</see>, 
+            <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.FitWorksheetHeightToPages">
+      <summary>
+            Fit worksheet height to this number of pages (0 = use as many as needed).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.FitWorksheetWidthToPages">
+      <summary>
+            Fit worksheet width to this number of pages (0 = use as many as needed).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.FooterMargin">
+      <summary>
+            Footer margin.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelPrintOptions.GetHashCode">
+      <summary>
+            Returns the hash code of this object.
+            </summary>
+      <returns>Hash code.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.HeaderMargin">
+      <summary>
+            Header margin.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.HorizontalCentered">
+      <summary>
+        <b>True</b> for printing sheet horizontal centered, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.LeftMargin">
+      <summary>
+            Left margin.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.NumberOfCopies">
+      <summary>
+            Number of copies to print.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PaperSize">
+      <summary>
+            MS Excel specific paper size / type index.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.Portrait">
+      <summary>
+        <b>True</b> for portrait orientation, <b>false</b> for landscape orientation.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintBlackWhite">
+      <summary>
+        <b>True</b> for printing in black and white, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintCellNotes">
+      <summary>
+        <b>True</b> for printing cell notes, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintGridlines">
+      <summary>
+        <b>True</b> for printing gridlines, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintHeadings">
+      <summary>
+        <b>True</b> for print headings, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintNotesSheetEnd">
+      <summary>
+        <b>True</b> for printing notes at end of sheet, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintPagesInRows">
+      <summary>
+        <b>True</b> for printing pages in rows, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.PrintResolution">
+      <summary>
+            Print resolution in dpi.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.RightMargin">
+      <summary>
+            Right margin.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.StartPageNumber">
+      <summary>
+            Start page number.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.TopMargin">
+      <summary>
+            Top margin.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.UseStartPageNumber">
+      <summary>
+        <b>True</b> for using start page number, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.VerticalCentered">
+      <summary>
+        <b>True</b> for printing sheet vertical centered, <b>false</b> otherwise.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelPrintOptions.VerticalPrintResolution">
+      <summary>
+            Vertical print resolution in dpi.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelRow">
+      <summary>
+            Excel row contains row options and cell range with row cells.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelRow.AllocatedCells">
+      <summary>
+            Gets only currently allocated cells for this row.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRow.AutoFit">
+      <summary>
+            Automatically fits row height to the minimum size required for all lines in the row cells to be visible.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelRow.Cells">
+      <summary>
+            Gets cell range with row cells.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRow.Delete">
+      <summary>
+            Deletes this row from the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelRow.Height">
+      <summary>
+            Gets or sets row height.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRow.InsertCopy(System.Int32,GemBox.Spreadsheet.ExcelRow)">
+      <summary>
+            Inserts specified number of copied rows before the current row.
+            </summary>
+      <param name="rowCount">Number of rows to insert.</param>
+      <param name="sourceRow">Source row to copy.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRow.InsertEmpty(System.Int32)">
+      <summary>
+            Inserts specified number of empty rows before the current row.
+            </summary>
+      <param name="rowCount">Number of rows to insert.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelRowCollection">
+      <summary>
+            Collection of excel rows (<see cref="T:GemBox.Spreadsheet.ExcelRow">ExcelRow</see>).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelRowCollection.Item(System.Int32)">
+      <summary>
+            Gets the row with the specified index.
+            </summary>
+      <param name="index">The zero-based index of the row.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelRowCollection.Item(System.String)">
+      <summary>
+            Gets the row with the specified name.
+            </summary>
+      <param name="name">The name of the row.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRowCollection.RowIndexToName(System.Int32)">
+      <summary>
+            Converts row index (0, 1, ...) to row name ("1", "2", ...).
+            </summary>
+      <param name="rowIndex">Row index.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRowCollection.RowNameToIndex(System.String)">
+      <summary>
+            Converts row name ("1", "2", ...) to row index (0, 1, ...).
+            </summary>
+      <param name="name">Row name.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelRowColumnCellCollectionBase">
+      <summary>
+            Base class for row, column and cell collections.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelRowColumnCellCollectionBase.Count">
+      <summary>
+            Gets the number of currently allocated elements (dynamically changes when worksheet is modified -- read remarks).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelRowColumnCellCollectionBase.GetEnumerator">
+      <summary>
+            Returns an enumerator for the <see cref="T:GemBox.Spreadsheet.ExcelRowColumnCellCollectionBase">
+            ExcelRowColumnCellCollectionBase</see>.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelRowColumnCollectionBase">
+      <summary>
+            Base class for row and column collections.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelViewOptions">
+      <summary>
+            Stores MS Excel display and view related options.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.FirstVisibleColumn">
+      <summary>
+            Index of the first visible column in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.FirstVisibleRow">
+      <summary>
+            Index of the first visible row in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.OutlineColumnButtonsRight">
+      <summary>
+            Gets or sets whether outline column buttons are displayed on the right side of groups.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.OutlineRowButtonsBelow">
+      <summary>
+            Gets or sets whether outline row buttons are displayed below groups.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.PageBreakViewZoom">
+      <summary>
+            Magnification factor in page break view.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if value is out of 10 to 400 range.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowColumnsFromRightToLeft">
+      <summary>
+            If true, MS Excel shows columns from right to left.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowFormulas">
+      <summary>
+            If true, MS Excel shows formulas. Otherwise, formula results are shown. 
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowGridLines">
+      <summary>
+            If true, MS Excel shows grid lines.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowInPageBreakPreview">
+      <summary>
+            If true, MS Excel shows worksheet in page break preview. Otherwise, normal view is used.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowOutlineSymbols">
+      <summary>
+            If true, MS Excel shows outline symbols.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowSheetHeaders">
+      <summary>
+            If true, MS Excel shows row and column headers.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.ShowZeroValues">
+      <summary>
+            If true, MS Excel shows zero values. Otherwise, zero values are shown as empty cells.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelViewOptions.Zoom">
+      <summary>
+            Magnification factor in normal view.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if value is out of 10 to 400 range.</exception>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelWorksheet">
+      <summary>
+            Excel worksheet is a table with additional properties, identified by a unique name.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.CalculateMaxUsedColumns">
+      <summary>
+            Iterates all rows and finds maximum number of used columns.
+            </summary>
+      <returns>Maximum number of occupied columns in this sheet.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Cells">
+      <summary>
+            Gets <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see> with all the cells 
+            (<see cref="T:GemBox.Spreadsheet.ExcelCell">ExcelCell</see>) 
+            in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Columns">
+      <summary>
+            Gets collection of all columns (<see cref="T:GemBox.Spreadsheet.ExcelColumn">ExcelColumn</see>) in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.DefaultColumnWidth">
+      <summary>
+            Gets or sets default column width.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.Delete">
+      <summary>
+            Deletes this worksheet from the workbook.
+            </summary>
+    </member>
+    <member name="E:GemBox.Spreadsheet.ExcelWorksheet.ExtractDataEvent">
+      <summary>
+            Event that fires when specific error occurs while extracting data to DataTable.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.ExtractToDataTable(System.Data.DataTable,System.Int32,GemBox.Spreadsheet.ExtractDataOptions,GemBox.Spreadsheet.ExcelRow,GemBox.Spreadsheet.ExcelColumn)">
+      <summary>
+            Extracts data to DataTable with the same column order as it is in ExcelWorksheet.
+            </summary>
+      <param name="dataTable">Destination DataTable.</param>
+      <param name="numberOfRows">Number of rows to extract.</param>
+      <param name="options">Options that describe how data will be extracted.</param>
+      <param name="startRow">Start ExcelRow.</param>
+      <param name="startColumn">Start ExcelColumn.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.ExtractToDataTable(System.Data.DataTable,System.Int32,GemBox.Spreadsheet.ExtractDataOptions,System.Data.Common.DataColumnMappingCollection,GemBox.Spreadsheet.ExcelRow)">
+      <summary>
+            Extracts data to DataTable with column mapping.
+            </summary>
+      <param name="dataTable">Destination DataTable.</param>
+      <param name="numberOfRows">Number of rows to extract.</param>
+      <param name="options">Options that describe how data will be extracted.</param>
+      <param name="dataColumnMappingCollection">Column mapping.</param>
+      <param name="startRow">Start ExcelRow.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.GetUsedCellRange">
+      <summary>
+            Calculates cell range that is used in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.HasHeadersFooters">
+      <summary>
+            Returns true if worksheet has headers/footers.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.HasSplitOrFreezePanes">
+      <summary>
+            Returns true if worksheet has split or freeze panes.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.HeadersFooters">
+      <summary>
+            Gets or sets headers/footers for the sheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.HorizontalPageBreaks">
+      <summary>
+            Gets collection of all horizontal page breaks 
+            (<see cref="T:GemBox.Spreadsheet.HorizontalPageBreak">HorizontalPageBreak</see>) in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Hyperlinks">
+      <summary>
+            Gets hyperlinks in this  sheet.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.InsertCopy(System.String,GemBox.Spreadsheet.ExcelWorksheet)">
+      <summary>
+            Inserts a copy of an existing worksheet before the current worksheet.
+            </summary>
+      <param name="destinationWorksheetName">Name of the new worksheet.</param>
+      <param name="sourceWorksheet">Source worksheet.</param>
+      <returns>Newly created worksheet.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.InsertDataTable(System.Data.DataTable,System.Int32,System.Int32,System.Boolean)">
+      <summary>
+            Inserts a <see cref="T:System.Data.DataTable">DataTable</see> at the specified row and column in 
+            the current worksheet.
+            </summary>
+      <param name="dataTable">Source DataTable.</param>
+      <param name="startRow">Index of the start row.</param>
+      <param name="startColumn">Index of the start column.</param>
+      <param name="columnHeaders">True to insert column names above data.</param>
+      <returns>Number of inserted rows.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.InsertDataTable(System.Data.DataTable,System.String,System.Boolean)">
+      <summary>
+            Inserts a <see cref="T:System.Data.DataTable">DataTable</see> at the specified position in 
+            the current worksheet.
+            </summary>
+      <param name="dataTable">Source DataTable.</param>
+      <param name="startCell">Name of start (top-left) cell.</param>
+      <param name="columnHeaders">True to insert column names above data.</param>
+      <returns>Number of inserted rows.</returns>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheet.InsertEmpty(System.String)">
+      <summary>
+            Inserts an empty worksheet before the current worksheet.
+            </summary>
+      <param name="worksheetName">Worksheet name.</param>
+      <returns>Newly created worksheet.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Name">
+      <summary>
+            Gets or sets worksheet name. 
+            </summary>
+      <exception cref="T:System.ArgumentException">Thrown if worksheet name is not unique.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.NamedRanges">
+      <summary>
+            Gets <see cref="T:GemBox.Spreadsheet.NamedRangeCollection">NamedRangeCollection</see> 
+            containing descriptive names which are used to represent cells, ranges of cells, 
+            formulas, or constant values.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Panes">
+      <summary>
+            Gets or sets the panes in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Pictures">
+      <summary>
+            Gets <see cref="T:GemBox.Spreadsheet.ExcelPictureCollection">ExcelPictureCollection</see> containing images.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.PrintOptions">
+      <summary>
+            Contains MS Excel print and print related options.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Protected">
+      <summary>
+            Gets or sets the worksheet protection flag.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Rows">
+      <summary>
+            Gets collection of all rows (<see cref="T:GemBox.Spreadsheet.ExcelRow">ExcelRow</see>) in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.VerticalPageBreaks">
+      <summary>
+            Gets collection of all vertical page breaks 
+            (<see cref="T:GemBox.Spreadsheet.VerticalPageBreak">VerticalPageBreak</see>) in the worksheet.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.ViewOptions">
+      <summary>
+            Contains MS Excel display and view related options.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheet.Visibility">
+      <summary>
+            Gets or sets the worksheet visible property.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelWorksheet.ExtractDataEventHandler">
+      <summary>
+            Delegate for handling the ExtractData events.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExcelWorksheetCollection">
+      <summary>
+            Collection of worksheets (<see cref="T:GemBox.Spreadsheet.ExcelWorksheet">ExcelWorksheet</see>).
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheetCollection.ActiveWorksheet">
+      <summary>
+            Gets or sets active worksheet.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheetCollection.Add(System.String)">
+      <summary>
+            Adds an empty worksheet to the end of the collection.
+            </summary>
+      <param name="worksheetName">Worksheet name.</param>
+      <returns>Newly created worksheet.</returns>
+      <exception cref="T:System.ArgumentException">Thrown if worksheet name is not unique.</exception>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheetCollection.AddCopy(System.String,GemBox.Spreadsheet.ExcelWorksheet)">
+      <summary>
+            Adds a copy of an existing worksheet to the end of the collection.
+            </summary>
+      <param name="destinationWorksheetName">Name of new worksheet.</param>
+      <param name="sourceWorksheet">Source worksheet.</param>
+      <returns>Newly created worksheet.</returns>
+      <exception cref="T:System.ArgumentException">Thrown if worksheet name is not unique.</exception>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheetCollection.Count">
+      <summary>
+            Gets the number of elements contained in the <see cref="T:GemBox.Spreadsheet.ExcelWorksheetCollection">
+            ExcelWorksheetCollection</see>.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.ExcelWorksheetCollection.GetEnumerator">
+      <summary>
+            Returns an enumerator for the <see cref="T:GemBox.Spreadsheet.ExcelWorksheetCollection">
+            ExcelWorksheetCollection</see>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheetCollection.Item(System.Int32)">
+      <summary>
+            Gets the worksheet with the specified index.
+            </summary>
+      <param name="index">The zero-based index of the worksheet.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExcelWorksheetCollection.Item(System.String)">
+      <summary>
+            Gets the worksheet with the specified name.
+            </summary>
+      <param name="name">The name of the worksheet.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExtractDataDelegateEventArgs">
+      <summary>
+            Arguments of ExtractDataDelegate.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.Action">
+      <summary>
+            Defines how the error will be handled.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.DataTableRow">
+      <summary>
+            Index of <see cref="T:System.Data.DataTable">DataTable</see> row where an error has occurred.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.DataTableValue">
+      <summary>
+            Value of the <see cref="T:System.Data.DataTable">DataTable</see> cell.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.DestinationTable">
+      <summary>
+            Destinaton <see cref="T:System.Data.DataTable">DataTable</see>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.ErrorID">
+      <summary>
+            Description of error that occurred.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.ExcelValue">
+      <summary>
+            Value of the <see cref="T:GemBox.Spreadsheet.ExcelCell">ExcelCell</see>.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.Mapping">
+      <summary>
+            Mapping of column which contains a cell where error occurred.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.ExtractDataDelegateEventArgs.WorksheetRow">
+      <summary>
+        <see cref="T:GemBox.Spreadsheet.ExcelRow">ExcelRow</see> which contains a cell where error occurred.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExtractDataError">
+      <summary>
+            Possible errors that can occur while extracting to DataTable.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataError.WrongType">
+      <summary>
+            Error that indicates that data in ExcelWorksheet can't convert to DataTable type.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExtractDataEventAction">
+      <summary>
+            Possible ways of dealing with error after the event has been handled.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataEventAction.ThrowException">
+      <summary>
+            Throw exception after event has been handled.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataEventAction.Continue">
+      <summary>
+            Continue extracting data to DataTable.
+            To the <see cref="T:System.Data.DataTable">DataTable</see> cell the
+            DataTableValue property from <see cref="T:GemBox.Spreadsheet.ExtractDataDelegateEventArgs">ExtractDataDelegateEventArgs</see> object 
+            is assigned.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataEventAction.StopReading">
+      <summary>
+            Stop extracting data to DataTable.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataEventAction.SkipRow">
+      <summary>
+            Skip row.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ExtractDataOptions">
+      <summary>
+            Options specified when extracting data to <see cref="T:System.Data.DataTable">DataTable</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataOptions.None">
+      <summary>
+            None of the options is set. 
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataOptions.StopAtFirstEmptyRow">
+      <summary>
+            Extracting data stops at the first empty row.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ExtractDataOptions.SkipEmptyRows">
+      <summary>
+            When extracting data, skip all empty rows.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.FillPatternStyle">
+      <summary>
+            Fill pattern styles used for 
+            <see cref="P:GemBox.Spreadsheet.ExcelFillPattern.PatternStyle">ExcelFillPattern.PatternStyle</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.None">
+      <summary>
+            No fill pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.Solid">
+      <summary>
+            "Solid" fill pattern using foreground color.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.Gray6">
+      <summary>
+            "6% Gray" is Microsoft Excel pattern name, but any color can be used instead of black as a foreground color.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.Gray12">
+      <summary>
+            "12% Gray" is Microsoft Excel pattern name, but any color can be used instead of black as a foreground color.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.Gray25">
+      <summary>
+            "25% Gray" is Microsoft Excel pattern name, but any color can be used instead of black as a foreground color.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.Gray50">
+      <summary>
+            "50% Gray" is Microsoft Excel pattern name, but any color can be used instead of black as a foreground color.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.Gray75">
+      <summary>
+            "75% Gray" is Microsoft Excel pattern name, but any color can be used instead of black as a foreground color.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.HorizontalStripe">
+      <summary>
+            "Horizontal Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.VerticalStripe">
+      <summary>
+            "Vertical Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.DiagonalStripe">
+      <summary>
+            "Diagonal Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ReverseDiagonalStripe">
+      <summary>
+            "Reverse Diagonal Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.DiagonalCrosshatch">
+      <summary>
+            "Diagonal Crosshatch" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThickDiagonalCrosshatch">
+      <summary>
+            "Thick Diagonal Crosshatch" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThinHorizontalStripe">
+      <summary>
+            "Thin Horizontal Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThinVerticalStripe">
+      <summary>
+            "Thin Vertical Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThinDiagonalStripe">
+      <summary>
+            "Thin Diagonal Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThinReverseDiagonalStripe">
+      <summary>
+            "Thin Reverse Diagonal Stripe" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThinHorizontalCrosshatch">
+      <summary>
+            "Thin Horizontal Crosshatch" pattern.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.FillPatternStyle.ThinDiagonalCrosshatch">
+      <summary>
+            "Thin Diagonal Crosshatch" pattern.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HorizontalAlignmentStyle">
+      <summary>
+            Horizontal alignment styles used for <see cref="P:GemBox.Spreadsheet.CellStyle.HorizontalAlignment">
+            CellStyle.HorizontalAlignment</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.General">
+      <summary>
+            Aligns data depending on the data type (text, number, etc.). Consult Microsoft Excel documentation.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.Left">
+      <summary>
+            Left alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.Center">
+      <summary>
+            Center alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.Right">
+      <summary>
+            Right alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.Fill">
+      <summary>
+            Fill alignment repeats cell data to fill the whole cell.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.Justify">
+      <summary>
+            Justify alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.CenterAcross">
+      <summary>
+            Centered across selection. Multiple cells can be selected but only one should have value for this alignment to have effect.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.HorizontalAlignmentStyle.Distributed">
+      <summary>
+            Distributed alignment.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HorizontalPageBreak">
+      <summary>
+            Specifies a horizontal position where the new page begins when the worksheet is printed.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HorizontalPageBreak.FirstColumn">
+      <summary>
+            Index of the first column of the new page.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HorizontalPageBreak.LastColumn">
+      <summary>
+            Index of the last column of the new page.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HorizontalPageBreak.Row">
+      <summary>
+            Index of the first row of the new page.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HorizontalPageBreakCollection">
+      <summary>
+            Collection of horizontal page breaks (<see cref="T:GemBox.Spreadsheet.HorizontalPageBreak">HorizontalPageBreak</see>).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.HorizontalPageBreakCollection.Add(System.Int32)">
+      <summary>
+            Ads a new horizontal page break above the specified row.
+            </summary>
+      <param name="row">The zero-based index of the row.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.HorizontalPageBreakCollection.Add(System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Ads a new horizontal page break above the specified row and within specified columns.
+            </summary>
+      <param name="row">The zero-based index of the row.</param>
+      <param name="firstColumn">The zero-based index of the first column.</param>
+      <param name="lastColumn">The zero-based index of the last column.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HorizontalPageBreakCollection.Item(System.Int32)">
+      <summary>
+            Gets or sets the horizontal page break at the specified index.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions">
+      <summary>
+            Options and methods that define HTML export behavior.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.HtmlExporterOptions.#ctor">
+      <summary>
+            Creates new HTML exporter options.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.HtmlExporterOptions.#ctor(System.Xml.XmlDocument)">
+      <summary>
+            Creates new HTML exporter options with defined xml document.
+            </summary>
+      <param name="exportingXmlDocument">Xml document used to create xml nodes.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.CalculateTableWidth">
+      <summary>
+            Gets or sets the option to calculate table width.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.ExportHiddenColumns">
+      <summary>
+            If true, hidden columns will be exported.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.ExportHiddenRows">
+      <summary>
+            If true, hidden rows will be exported.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.ExportingXmlDocument">
+      <summary>
+            Gets XmlDocument that is used to create new nodes.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodCellStyleToHtml">
+      <summary>
+            Gets or sets a method that exports cell style to HTML string.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodCellToHtml">
+      <summary>
+            Gets or sets a method that exports cell to xml node.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodCellValueToHtml">
+      <summary>
+            Gets or sets a method that exports cell value to HTML string.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodColumnLettersToHtml">
+      <summary>
+            Gets or sets a method that creates xml node for row with column letters.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodColumnLetterToHtml">
+      <summary>
+            Gets or sets a method that creates xml node with column letter cell.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodPageToHtml">
+      <summary>
+            Gets or sets a method that creates xml node for HTML page from specified cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodRowNumberToHtml">
+      <summary>
+            Gets or sets a method that creates xml node with row number cell.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodRowToHtml">
+      <summary>
+            Gets or sets a method that creates xml node for specified excel row.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.MethodTableToHtml">
+      <summary>
+            Gets or sets a method that creates xml node for HTML table from specified cell range.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowColumnLetters">
+      <summary>
+            Gets or sets the option to show column letters in the first row.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowGridLines">
+      <summary>
+            If true, grid lines will be exported.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExporterOptions.ShowRowNumbers">
+      <summary>
+            Gets or sets the option to show row numbers in the first column.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.CellStyleToHtmlDelegate">
+      <summary>
+            Delegate for handling export of cell style to string.
+            </summary>
+      <param name="cell">Excel cell.</param>
+      <param name="position">Current position of the exporting process. It can be null.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.CellToHtmlDelegate">
+      <summary>
+            Delegate for handling cell export.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="cell">Excel cell.</param>
+      <param name="position">Current position of the exporting process. It can be null.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.CellValueToHtmlDelegate">
+      <summary>
+            Delegate for handling export of cell value to string.
+            </summary>
+      <param name="cell">Excel cell.</param>
+      <param name="position">Current position of the exporting process. It can be null.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.ColumnLettersToHtmlDelegate">
+      <summary>
+            Delegate for handling export of header row.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="startColumn">Start excel column.</param>
+      <param name="endColumn">End excel column.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.ColumnLetterToHtmlDelegate">
+      <summary>
+            Delegate for handling export of cell that represent column letter.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="column">Current excel column.</param>
+      <param name="htmlColumnIndex">Column index in HTML table.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.PageToHtmlDelegate">
+      <summary>
+            Delegate for handling export of the whole HTML page.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="range">Range that is exporting.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.RowNumberToHtmlDelegate">
+      <summary>
+            Delegate for handling export of cell that represent row number.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="row">Current excel row.</param>
+      <param name="range">Cell range that is been exported.</param>
+      <param name="htmlRowIndex">Row index in HTML table.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.RowToHtmlDelegate">
+      <summary>
+            Delegate for handling export of specified excel row.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="row">Current excel row.</param>
+      <param name="range">Cell range that is been exported.</param>
+      <param name="htmlRowIndex">Row index in HTML table</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExporterOptions.TableToHtmlDelegate">
+      <summary>
+            Delegate for handling export of table for specified range.
+            </summary>
+      <param name="options">Options that describe exporting process.</param>
+      <param name="range">Range that is exporting.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.HtmlExportPosition">
+      <summary>
+            Data that describes the current position in the exporter methods.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.HtmlExportPosition.#ctor(GemBox.Spreadsheet.CellRange,GemBox.Spreadsheet.ExcelRow,GemBox.Spreadsheet.ExcelColumn,System.Int32,System.Int32)">
+      <summary>
+            Creates new HTML export position.
+            </summary>
+      <param name="range">Cell range.</param>
+      <param name="sheetRow">Current sheet row.</param>
+      <param name="sheetColumn">Current sheet column.</param>
+      <param name="htmlRowIndex">Current HTML row index.</param>
+      <param name="htmlColumnIndex">Current HTML column index.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExportPosition.HtmlColumnIndex">
+      <summary>
+            Gets column index for the current column in HTML table.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExportPosition.HtmlRowIndex">
+      <summary>
+            Gets row index for the current row in HTML table.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExportPosition.Range">
+      <summary>
+            Gets the cell range that is exporting to HTML.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExportPosition.SheetColumn">
+      <summary>
+            Gets the current sheet column.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.HtmlExportPosition.SheetRow">
+      <summary>
+            Gets the current sheet row.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.IndividualBorder">
+      <summary>
+            Different borders that can be set on excel cell. Members of this enumeration can't be combined.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IndividualBorder.Top">
+      <summary>
+            Top border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IndividualBorder.Bottom">
+      <summary>
+            Bottom border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IndividualBorder.Left">
+      <summary>
+            Left border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IndividualBorder.Right">
+      <summary>
+            Right border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IndividualBorder.DiagonalUp">
+      <summary>
+            Diagonal-up border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IndividualBorder.DiagonalDown">
+      <summary>
+            Diagonal-down border.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.IoOperation">
+      <summary>
+            Possible operations that can fire notification events.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.XlsReading">
+      <summary>
+            XLS reading methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.CsvReading">
+      <summary>
+            CSV reading methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.XlsWriting">
+      <summary>
+            XLS writing methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.CsvWriting">
+      <summary>
+            CSV writing methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.XlsxReading">
+      <summary>
+            XLSX reading methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.XlsxWriting">
+      <summary>
+            XLSX writing methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.OdsReading">
+      <summary>
+            ODS reading methods.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.IoOperation.OdsWriting">
+      <summary>
+            ODS writing methods.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.IoWarningEventArgs">
+      <summary>
+            Warning event arguments class used by the event which is raised on warning happens in the excel lite library
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.IoWarningEventArgs.FileName">
+      <summary>
+            Gets the file name passed to the XLS / CSV file reading / writing method.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.IoWarningEventArgs.Operation">
+      <summary>
+            Indicates which operation caused this event to fire.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.IoWarningEventArgs.WarningMsg">
+      <summary>
+            Gets the message explaining the specific warning.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.IoWarningEventHandler">
+      <summary>
+            Delegate for handling the notification events.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.LineStyle">
+      <summary>
+            Line styles used for 
+            <see cref="P:GemBox.Spreadsheet.CellBorder.LineStyle">CellBorder.LineStyle</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.None">
+      <summary>
+            No line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Thin">
+      <summary>
+            Thin line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Medium">
+      <summary>
+            Medium line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Dashed">
+      <summary>
+            Dashed line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Dotted">
+      <summary>
+            Dotted line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Thick">
+      <summary>
+            Thick line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Double">
+      <summary>
+            Double line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.Hair">
+      <summary>
+            Hair line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.MediumDashed">
+      <summary>
+            Medium dashed line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.DashDot">
+      <summary>
+            Dash-dot line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.MediumDashDot">
+      <summary>
+            Medium dash-dot line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.DashDotDot">
+      <summary>
+            Dash-dot-dot line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.MediumDashDotDot">
+      <summary>
+            Medium dash-dot-dot line.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.LineStyle.SlantDashDot">
+      <summary>
+            Slanted dash-dot line.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.MultipleBorders">
+      <summary>
+            Flags for borders and border groups that can be set on the excel cell. 
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.None">
+      <summary>
+            None of the borders are used.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Top">
+      <summary>
+            Top border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Bottom">
+      <summary>
+            Bottom border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Left">
+      <summary>
+            Left border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Right">
+      <summary>
+            Right border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.DiagonalUp">
+      <summary>
+            Diagonal-up border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.DiagonalDown">
+      <summary>
+            Diagonal-down border.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Horizontal">
+      <summary>
+            Horizontal borders.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Vertical">
+      <summary>
+            Vertical borders.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Diagonal">
+      <summary>
+            Diagonal borders.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.Outside">
+      <summary>
+            Outside borders.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.MultipleBorders.All">
+      <summary>
+            All borders are used.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.NamedRange">
+      <summary>
+            Represents a named range in the worksheet.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.NamedRange.Delete">
+      <summary>
+            Deletes this named range from the named ranges collection.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.NamedRange.GlobalName">
+      <summary>
+            gets global flag
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.NamedRange.Name">
+      <summary>
+            Gets the named range name.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.NamedRange.Range">
+      <summary>
+            Gets or sets the named cell range.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.NamedRangeCollection">
+      <summary>
+            Collection of the descriptive names which are used 
+            to represent cells, ranges of cells, formulas, or constant values.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.NamedRangeCollection.Add(System.String,GemBox.Spreadsheet.CellRange)">
+      <summary>
+            Adds a new named range. Named ranges are used to represent cells, ranges of cells,
+            formulas or constant values.
+            </summary>
+      <param name="name">The user-defined name.</param>
+      <param name="range">The range to be refered by name.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.NamedRangeCollection.Add(System.String,GemBox.Spreadsheet.CellRange,System.Boolean)">
+      <summary>
+            Adds a new named range. Named ranges are used to represent cells, ranges of cells,
+            formulas or constant values.
+            </summary>
+      <param name="name">The user-defined name.</param>
+      <param name="range">The range to be refered by name.</param>
+      <param name="globalName">sets the range as global if set to true</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.NamedRangeCollection.Count">
+      <summary>
+            Gets the number of named ranges contained in the collection.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.NamedRangeCollection.GetEnumerator">
+      <summary>
+            Returns an enumerator that can iterate through a collection.
+            </summary>
+      <returns>
+            An <see cref="T:System.Collections.IEnumerator" />
+            that can be used to iterate through the collection.
+            </returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.NamedRangeCollection.Item(System.Int32)">
+      <summary>
+            Gets the <see cref="T:GemBox.Spreadsheet.NamedRange">NamedRange</see> at the specified index.
+            </summary>
+      <param name="index">Range index.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.NamedRangeCollection.Item(System.String)">
+      <summary>
+            Gets the <see cref="T:GemBox.Spreadsheet.NamedRange">NamedRange</see> with the specified name.
+            </summary>
+      <param name="name">Range name.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.OdsOptions">
+      <summary>
+            Options specified when loading ODS files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.OdsOptions.None">
+      <summary>
+            Do not preserve ODS parts and ignore display values (display strings). Only parts recognized 
+            by GemBox.Spreadsheet API will be loaded.
+            Use this if you are just loading ODS file or you don't want to preserve unrecognized 
+            ODS parts for next save.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.OdsOptions.PreserveKeepOpen">
+      <summary>
+            Preserves unrecognized ODS parts in a way it keeps loaded file open. Use if locking of input file
+            for reading is not a problem and you want to save RAM/CPU when working with large files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.OdsOptions.PreserveMakeCopy">
+      <summary>
+            Preserves unrecognized ODS parts in a way it makes a copy of input file in memory. Use if 
+            locking of input file presents a problem or you are not working with large files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.OdsOptions.ReadDisplayValues">
+      <summary>
+            Reads display values instead of stored values. Values in ODS are stored as value - display string pairs.
+            Normally stored value is read but that looses number formatting. If you want to read value as
+            formatted display string (for example, date as "Wednesday, May 5th, 2009" string), set this flag.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.PageBreak">
+      <summary>
+            Base class for all page breaks.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.PageBreakCollection">
+      <summary>
+            Base class for page break collections.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.PageBreakCollection.Clear">
+      <summary>
+            Removes all page breaks. 
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.PageBreakCollection.Count">
+      <summary>
+            Gets the number of page breaks contained in the collection. 
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.PageBreakCollection.GetEnumerator">
+      <summary>
+            Returns an enumerator for the collection.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.PageBreakCollection.RemoveAt(System.Int32)">
+      <summary>
+            Removes the page break at the specified index.
+            </summary>
+      <param name="index">The zero-based index of the page break to remove.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.PanePosition">
+      <summary>
+            Represents the position of the pane.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanePosition.BottomRight">
+      <summary>
+            Bottom right pane.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanePosition.TopRight">
+      <summary>
+            Top right pane.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanePosition.BottomLeft">
+      <summary>
+            Bottom left pane.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanePosition.TopLeft">
+      <summary>
+            Top left pane.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.PanesState">
+      <summary>
+            Represents the state of the pane.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanesState.Frozen">
+      <summary>
+            Panes are frozen, but were not split being frozen. In this state, when the panes are unfrozen again, a single pane results, with no split. In this state, the split bars are not adjustable.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanesState.FrozenSplit">
+      <summary>
+            Panes are frozen and were split before being frozen. In this state, when the panes are unfrozen again, the split remains, but is adjustable.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PanesState.Split">
+      <summary>
+            Panes are split, but not frozen. In this state, the split bars are adjustable by the user.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.PositioningMode">
+      <summary>
+            Option that specify the behaviour of the picture in the worksheet. 
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PositioningMode.FreeFloating">
+      <summary>
+            Picture will not move with any of the anchor cells.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PositioningMode.Move">
+      <summary>
+            Picture will move with the top left anchor cell.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.PositioningMode.MoveAndSize">
+      <summary>
+            Picture will move and resize with both anchor cells.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.RangeIndexingMode">
+      <summary>
+            Indexing modes used by <see cref="T:GemBox.Spreadsheet.CellRange">CellRange</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.RangeIndexingMode.Rectangular">
+      <summary>
+            Rectangular indexing mode. Rectangular cell range is higher than one row and wider than one column.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.RangeIndexingMode.Horizontal">
+      <summary>
+            Horizontal indexing mode. Horizontal cell range has 
+            <see cref="P:GemBox.Spreadsheet.CellRange.Height">CellRange.Height</see> equal to 1.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.RangeIndexingMode.Vertical">
+      <summary>
+            Vertical indexing mode. Vertical cell range has 
+            <see cref="P:GemBox.Spreadsheet.CellRange.Width">CellRange.Width</see> equal to 1.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.RowColumnResolutionMethod">
+      <summary>
+            Defines different methods of <see cref="T:GemBox.Spreadsheet.CellStyle">CellStyle</see> resolution.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.RowColumnResolutionMethod.RowOverColumn">
+      <summary>
+            Row has precedence over column.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.RowColumnResolutionMethod.ColumnOverRow">
+      <summary>
+            Column has precedence over row.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.ScriptPosition">
+      <summary>
+            Script positions used in <see cref="P:GemBox.Spreadsheet.ExcelFont.ScriptPosition">ExcelFont.ScriptPosition</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ScriptPosition.Normal">
+      <summary>
+            Normal script position.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ScriptPosition.Superscript">
+      <summary>
+            Displays script above normal position.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.ScriptPosition.Subscript">
+      <summary>
+            Displays script below normal position.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.SheetHeaderFooter">
+      <summary>
+            Represents sheet header/footer.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SheetHeaderFooter.#ctor">
+      <summary>
+            SheetHeaderFooter constructor.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.AlignWithMargins">
+      <summary>
+            Gets or sets if header/footer margin will align with page margins.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.DifferentFirst">
+      <summary>
+            Gets or sets if header/footer is different on the first page. 
+            If true, FirstFooter and FirstHeader are on the first page.
+            If false FirstFooter and FirstHeader are ignored.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.DifferentOddEven">
+      <summary>
+            Gets or sets if there are different headers/footers on the even and odd pages.
+            If true, Header/Footer and EvenHeader/EvenFooter specify page header and footer values for odd
+            and even pages. 
+            If false then Header/Footer is used, even when EvenHeader/EvenFooter are present.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SheetHeaderFooter.Equals(System.Object)">
+      <summary>
+            Determines whether the specified <see cref="T:GemBox.Spreadsheet.SheetHeaderFooter">SheetHeaderFoote</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.SheetHeaderFooter">SheetHeaderFoote</see>.
+            </summary>
+      <param name="obj">Object of <see cref="T:GemBox.Spreadsheet.SheetHeaderFooter">SheetHeaderFoote</see> type.</param>
+      <returns>
+        <b>true</b> if the specified <see cref="T:GemBox.Spreadsheet.SheetHeaderFooter">SheetHeaderFoote</see> is equal 
+            to the current <see cref="T:GemBox.Spreadsheet.SheetHeaderFooter">SheetHeaderFoote</see>; otherwise, <b>false</b>.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.EvenFooter">
+      <summary>
+            Gets or sets even footer.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.EvenHeader">
+      <summary>
+            Gets or sets even header.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.FirstFooter">
+      <summary>
+            Gets or sets first footer.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.FirstHeader">
+      <summary>
+            Gets or sets first header.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.Footer">
+      <summary>
+            Gets or sets default footer.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SheetHeaderFooter.GetHashCode">
+      <summary>
+            Returns the hash code of this object.
+            </summary>
+      <returns>Hash code.</returns>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.Header">
+      <summary>
+            Gets or sets default header.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SheetHeaderFooter.ScaleWithDoc">
+      <summary>
+            Gets or sets if headers/footers will be scaled with document scaling.
+            Supported in XLSX only.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.SheetVisibility">
+      <summary>
+            Script positions used in <see cref="P:GemBox.Spreadsheet.ExcelWorksheet.Visibility">ExcelWorksheet.Visibility</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.SheetVisibility.Visible">
+      <summary>
+            Sheet is visible.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.SheetVisibility.Hidden">
+      <summary>
+            Sheet is hidden, but is displayed in unhide dialog.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.SheetVisibility.VeryHidden">
+      <summary>
+            Sheet is very hidden and can be made visible only programmatically
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.SpreadsheetException">
+      <summary>
+            Represents errors that can occur in the GemBox.Spreadsheet component. 
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetException.#ctor">
+      <summary>
+            Initializes a new instance of the Exception class. 
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetException.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the Exception class with a specified error message. 
+            </summary>
+      <param name="msg">Message string.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetException.#ctor(System.String,System.Exception)">
+      <summary>
+            Initializes a new instance of the Exception class with a specified error message 
+            and a reference to the inner exception that is the cause of this exception. 
+            </summary>
+      <param name="msg">Message string.</param>
+      <param name="inner">Inner exception.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.SpreadsheetHyperlink">
+      <summary>
+            Hyperlink class.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SpreadsheetHyperlink.IsExternal">
+      <summary>
+            Defines if hyperlink location is in this excel file.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SpreadsheetHyperlink.Location">
+      <summary>
+            Gets or sets the location string for hyperlink.
+            <remarks>URL have to be in escaped format(You can use<see cref="M:System.Uri.EscapeUriString(System.String)">System.Uri.EscapeUriString</see> method).</remarks></summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SpreadsheetHyperlink.ToolTip">
+      <summary>
+            Gets or sets ToolTip for hyperlink.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.SpreadsheetHyperlinkCollection">
+      <summary>
+            Collection of hyperlinks (<see cref="T:GemBox.Spreadsheet.SpreadsheetHyperlink">SpreadsheetHyperlink</see>).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetHyperlinkCollection.Clear">
+      <summary>
+            Removes all hyperlinks. 
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.SpreadsheetHyperlinkCollection.Count">
+      <summary>
+            Gets the number of hyperlinks contained in the collection. 
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetHyperlinkCollection.GetEnumerator">
+      <summary>
+            Returns an enumerator for the collection.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetHyperlinkCollection.RemoveAt(System.Int32)">
+      <summary>
+            Removes the SpreadsheetHyperlink at the specified index.
+            </summary>
+      <param name="index">The zero-based index of the page break to remove.</param>
+    </member>
+    <member name="T:GemBox.Spreadsheet.SpreadsheetInfo">
+      <summary>
+            Contains static licensing methods (GemBox.Spreadsheet Professional only) and diagnostic 
+            information about executing GemBox.Spreadsheet assembly.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.SpreadsheetInfo.FullVersion">
+      <summary>
+            GemBox.Spreadsheet assembly full version.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.SpreadsheetInfo.SetLicense(System.String)">
+      <summary>
+            Call this method from your application to set GemBox.Spreadsheet Professional 
+            serial key.  <b>(Professional version only)</b></summary>
+      <param name="serialKey">Serial key.</param>
+    </member>
+    <member name="F:GemBox.Spreadsheet.SpreadsheetInfo.Title">
+      <summary>
+            GemBox.Spreadsheet assembly title.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.UnderlineStyle">
+      <summary>
+            Underline styles used in <see cref="P:GemBox.Spreadsheet.ExcelFont.UnderlineStyle">ExcelFont.UnderlineStyle</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.UnderlineStyle.None">
+      <summary>
+            No underline.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.UnderlineStyle.Single">
+      <summary>
+            Single underline. Underlines only cell data.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.UnderlineStyle.Double">
+      <summary>
+            Double underline. Underlines only cell data.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.UnderlineStyle.SingleAccounting">
+      <summary>
+            Single accounting underline. Underlines whole cell.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.UnderlineStyle.DoubleAccounting">
+      <summary>
+            Double accounting underline. Underlines whole cell.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.VerticalAlignmentStyle">
+      <summary>
+            Vertical alignment styles used for <see cref="P:GemBox.Spreadsheet.CellStyle.VerticalAlignment">
+            CellStyle.VerticalAlignment</see>.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.VerticalAlignmentStyle.Top">
+      <summary>
+            Top alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.VerticalAlignmentStyle.Center">
+      <summary>
+            Center alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.VerticalAlignmentStyle.Bottom">
+      <summary>
+            Bottom alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.VerticalAlignmentStyle.Justify">
+      <summary>
+            Justify alignment.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.VerticalAlignmentStyle.Distributed">
+      <summary>
+            Distributed alignment.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.VerticalPageBreak">
+      <summary>
+            Specifies a vertical position where the new page begins when the worksheet is printed.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.VerticalPageBreak.Column">
+      <summary>
+            Index of the first column of the new page.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.VerticalPageBreak.FirstRow">
+      <summary>
+            Index of the first row of the new page.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.VerticalPageBreak.LastRow">
+      <summary>
+            Index of the last row of the new page.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.VerticalPageBreakCollection">
+      <summary>
+            Collection of vertical page breaks (<see cref="T:GemBox.Spreadsheet.VerticalPageBreak">VerticalPageBreak</see>).
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.VerticalPageBreakCollection.Add(System.Int32)">
+      <summary>
+            Ads a new vertical page break left to the specified column.
+            </summary>
+      <param name="column">The zero-based index of the column.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.VerticalPageBreakCollection.Add(System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Ads a new vertical page break left to the specified column and within specified rows.
+            </summary>
+      <param name="column">The zero-based index of the column.</param>
+      <param name="firstRow">The zero-based index of the first row.</param>
+      <param name="lastRow">The zero-based index of the last row.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.VerticalPageBreakCollection.Item(System.Int32)">
+      <summary>
+            Gets or sets the vertical page break at the specified index.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.WorksheetPanes">
+      <summary>
+            Represents the worksheet panes.
+            </summary>
+    </member>
+    <member name="M:GemBox.Spreadsheet.WorksheetPanes.#ctor(GemBox.Spreadsheet.PanesState,System.Single,System.Single,System.String,GemBox.Spreadsheet.PanePosition)">
+      <summary>
+            Worksheet panes constructor.
+            </summary>
+      <param name="state">State of the panes.</param>
+      <param name="xSplit">If the panes are frozen, xSplit represents the number of columns visible in the top right pane. If the panes are not frozen, xSplit represents the position of the split, in 1/20th of a point, 0 (zero) if none.</param>
+      <param name="ySplit">If the panes are frozen, ySplit represents the number of rows visible in the top right pane. If the panes are not frozen, ySplit represents the position of the split, in 1/20th of a point, 0 (zero) if none.</param>
+      <param name="topLeftCell">Top left visible cell in the bottom right pane.</param>
+      <param name="activePane">Position of the active pane.</param>
+    </member>
+    <member name="M:GemBox.Spreadsheet.WorksheetPanes.#ctor(GemBox.Spreadsheet.WorksheetPanes)">
+      <summary>
+            Copy constructor.
+            </summary>
+      <param name="sourcePane">Source pane.</param>
+    </member>
+    <member name="P:GemBox.Spreadsheet.WorksheetPanes.ActivePane">
+      <summary>
+            Gets or sets the active pane.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.WorksheetPanes.State">
+      <summary>
+            Gets or sets the state of the panes.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.WorksheetPanes.TopLeftCell">
+      <summary>
+            Gets or sets the top left visible cell in the bottom right pane. 
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.WorksheetPanes.XSplit">
+      <summary>
+            Gets or sets the XSplit value.
+            </summary>
+    </member>
+    <member name="P:GemBox.Spreadsheet.WorksheetPanes.YSplit">
+      <summary>
+            Gets or sets the XSplit value.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.XlsOptions">
+      <summary>
+            Options specified when reading XLS files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsOptions.None">
+      <summary>
+            Do not preserve records. Only records fully supported by GemBox.Spreadsheet API will be loaded.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsOptions.PreserveGlobalRecords">
+      <summary>
+            Preserve global (workbook) records.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsOptions.PreserveWorksheetRecords">
+      <summary>
+            Preserve worksheet records.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsOptions.PreserveSummaries">
+      <summary>
+            Preserve summaries.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsOptions.PreserveMacros">
+      <summary>
+            Preserve macros and VBA code.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsOptions.PreserveAll">
+      <summary>
+            Preserve all possible information.
+            </summary>
+    </member>
+    <member name="T:GemBox.Spreadsheet.XlsxOptions">
+      <summary>
+            Options specified when reading XLSX files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsxOptions.None">
+      <summary>
+            Do not preserve XLSX parts. Only parts recognized by GemBox.Spreadsheet API will be loaded.
+            Use this if you are just loading XLSX file or you don't want to preserve unrecognized 
+            XLSX parts for next save.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsxOptions.PreserveKeepOpen">
+      <summary>
+            Preserves unrecognized XLSX parts in a way it keeps loaded file open. Use if locking of input file
+            for reading is not a problem and you want to save RAM/CPU when working with large files.
+            </summary>
+    </member>
+    <member name="F:GemBox.Spreadsheet.XlsxOptions.PreserveMakeCopy">
+      <summary>
+            Preserves unrecognized XLSX parts in a way it makes a copy of input file in memory. Use if 
+            locking of input file presents a problem or you are not working with large files.
+            </summary>
+    </member>
+  </members>
+</doc>

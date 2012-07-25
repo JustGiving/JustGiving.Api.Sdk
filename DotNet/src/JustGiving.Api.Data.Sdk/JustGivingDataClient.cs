@@ -1,6 +1,4 @@
-﻿using System;
-using JustGiving.Api.Data.Sdk.ApiClients;
-using JustGiving.Api.Sdk;
+﻿using JustGiving.Api.Data.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.MicrosoftHttp;
 
@@ -12,8 +10,8 @@ namespace JustGiving.Api.Data.Sdk
         private readonly IHttpClient _httpClient;
         public HttpChannel HttpChannel { get; private set; }
 
-        private IPayments _payments;
-        public IPayments Payments
+        private IPaymentsApi _payments;
+        public IPaymentsApi Payments
         {
             get { return _payments; }
             private set { _payments = value; }
@@ -39,27 +37,7 @@ namespace JustGiving.Api.Data.Sdk
         {
             HttpChannel = new HttpChannel(_dataClientConfiguration, _httpClient);
 
-            _payments = new Payments(HttpChannel);
+            _payments = new PaymentsApiApi(HttpChannel);
         }
-    }
-
-    public class DataClientConfiguration : ClientConfiguration
-    {
-        public bool IsZipSupportedByClient { get; set; }
-        public TimeSpan? ConnectionTimeOut { get; set; }
-
-        public DataClientConfiguration(string apiKey): base("http://dataapi.local.justgiving.com/", apiKey, 1)
-        {
-        }
-
-        public DataClientConfiguration(string rootDomain, string apiKey, int apiVersion) : base(rootDomain, apiKey, apiVersion)
-        {
-        }
-    }
-
-    public interface IJustGivingDataClient
-    {
-        IHttpClient HttpClient { get; }
-        HttpChannel HttpChannel { get; }
     }
 }

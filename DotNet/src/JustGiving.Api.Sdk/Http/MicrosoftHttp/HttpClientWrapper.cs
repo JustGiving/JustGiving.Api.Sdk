@@ -44,6 +44,19 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             var response = _httpClient.Send(httpRequestMessage);
             return ToNativeResponse(response);
         }
+        
+        public TimeSpan? ConnectionTimeOut
+        {
+            get
+            {
+                return _httpClient.TransportSettings.ConnectionTimeout;
+            }
+            set
+            {
+                _httpClient.TransportSettings.ConnectionTimeout = value;
+            }
+        }
+        
 
         public void Dispose()
         {

@@ -11,7 +11,9 @@ namespace JustGiving.Api.Sdk
         public string RootDomain { get; set; }
         public WireDataFormat WireDataFormat { get; set; }
         public string WhiteLabelDomain { get; set; }
-        
+        public bool IsZipSupportedByClient { get; set; }
+        public TimeSpan? ConnectionTimeOut { get; set; }
+
         public ClientConfiguration(string apiKey): this("https://api.justgiving.com/", apiKey, 1)
         {
         }
@@ -35,6 +37,7 @@ namespace JustGiving.Api.Sdk
             ApiKey = apiKey;
             ApiVersion = apiVersion;
             RootDomain = rootDomain;
+            IsZipSupportedByClient = false;
         }
     }
 }

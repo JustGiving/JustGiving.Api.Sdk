@@ -3,6 +3,7 @@
     public enum WireDataFormat
     {
         Xml,
-        Json
+        Json,
+        Other
     }
 }
