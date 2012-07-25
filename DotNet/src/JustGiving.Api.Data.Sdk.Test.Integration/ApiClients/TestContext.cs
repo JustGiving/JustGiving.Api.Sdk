@@ -8,6 +8,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
     {
         public static string ApiLocation { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.ApiLocation); } }
         public const string ApiKey = "decbf1d2";
+
+        public static string TestUserName { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.TestUserName); } }
         public const string TestUsername = "Phlag.qykght@fixyhvjuzh.gac.iq"; //"ehaevaj.hbvef@ngazszqoqt.obx.xm";
         public const string TestValidPassword = "nmjhpq32";// "zqfed068";
 

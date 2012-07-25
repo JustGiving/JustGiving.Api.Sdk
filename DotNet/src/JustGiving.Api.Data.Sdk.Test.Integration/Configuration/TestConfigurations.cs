@@ -21,5 +21,19 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             get { return (string) this["apiLocation"]; }
             set { this["apiLocation"] = value; }
         }
+
+        [ConfigurationProperty("testUserName")]
+        public string TestUserName
+        {
+            get { return (string) this["testUserName"]; }
+            set { this["testUserName"] = value; }
+        }
+
+        [ConfigurationProperty("testUserPassword")]
+        public string TestUserPassword
+        {
+            get { return (string)this["testUserPassword"]; }
+            set { this["testUserPassword"] = value; }
+        }
     }
 }

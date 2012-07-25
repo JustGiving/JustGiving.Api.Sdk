@@ -32,7 +32,7 @@
   <Target Name="ExecuteDataApiSdkIntegrationTests">
     <Message Text="Starting data api sdk integration tests"></Message>
     <ItemGroup>
-      <Assemblies Include="$(TestPath)\Data\JustGiving.Api.Data.Sdk.Test.Integration.dll" />      
+      <Assemblies Include="$(TestPath)\JustGiving.Api.Data.Sdk.Test.Integration.dll" />      
     </ItemGroup>
     <NUnit Assemblies="@(Assemblies)" ToolPath="$(NunitToolPath)" />
   </Target>
@@ -40,7 +40,7 @@
   <Target Name="CreateStagingTestConfigurations">
     <Message Text="Creating environment specific transformations"></Message>
     <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\JustGiving.Api.Sdk.Test.Integration.dll.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Sdk.Test.Integration\App.Staging.config"/>
-    <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Data.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\data\JustGiving.Api.Data.Sdk.Test.Integration.dll.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Data.Sdk.Test.Integration\App.Staging.config"/>
+    <Exec Command="$(MSBuildProjectDirectory)/Utils/TransformVsConfiguration.exe --source=$(MSBuildProjectDirectory)\src\JustGiving.Api.Data.Sdk.Test.Integration\App.config --destination=$(MSBuildProjectDirectory)\tests\JustGiving.Api.Data.Sdk.Test.Integration.dll.config --transform=$(MSBuildProjectDirectory)\src\JustGiving.Api.Data.Sdk.Test.Integration\App.Staging.config"/>
  </Target>
   
   <Target Name="BUT" DependsOnTargets="Compile;ExecuteUnitTests">

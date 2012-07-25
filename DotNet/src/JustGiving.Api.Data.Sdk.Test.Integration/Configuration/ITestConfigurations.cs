@@ -6,5 +6,6 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
     {
         DateTime StartDate { get; set; }
         string ApiLocation { get; set; }
+        string TestUserName { get; set; }
     }
 }
