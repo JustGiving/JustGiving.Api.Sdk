@@ -37,7 +37,7 @@ namespace JustGiving.Api.Data.Sdk
         {
             HttpChannel = new HttpChannel(_dataClientConfiguration, _httpClient);
 
-            _payments = new PaymentsApiApi(HttpChannel);
+            _payments = new PaymentsApi(HttpChannel);
         }
     }
 }

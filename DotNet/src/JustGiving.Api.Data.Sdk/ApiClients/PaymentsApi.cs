@@ -9,9 +9,9 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
     /// <summary>
     /// Makes Http calls to the Payment List resources made available by the JustGiving Data Api
     /// </summary>
-    public class PaymentsApiApi : DataApiClientBase, IPaymentsApi
+    public class PaymentsApi : DataApiClientBase, IPaymentsApi
     {
-        public PaymentsApiApi(HttpChannel channel)
+        public PaymentsApi(HttpChannel channel)
             : base(channel)
         {
         }

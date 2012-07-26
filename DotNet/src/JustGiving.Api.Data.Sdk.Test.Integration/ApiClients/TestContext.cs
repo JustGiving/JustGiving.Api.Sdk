@@ -1,4 +1,5 @@
 ﻿using System;
+using JustGiving.Api.Data.Sdk.Configuration;
 using JustGiving.Api.Data.Sdk.Test.Integration.Configuration;
 using JustGiving.Api.Sdk.Test.Common.Configuration;
 
@@ -6,12 +7,19 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     public class TestContext
     {
-        public static string ApiLocation { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.ApiLocation); } }
-        public const string ApiKey = "decbf1d2";
 
-        public static string TestUserName { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.TestUserName); } }
-        public const string TestUsername = "Phlag.qykght@fixyhvjuzh.gac.iq"; //"ehaevaj.hbvef@ngazszqoqt.obx.xm";
-        public const string TestValidPassword = "nmjhpq32";// "zqfed068";
+        public static string ApiLocation
+        {
+            get { return DataSdkConfigurationManager.GetProperty(x => x.RootDomain); }
+        }
+
+        public static string ApiKey
+        {
+            get {return DataSdkConfigurationManager.GetProperty(x => x.ApiKey);}
+        }    
+       
+        public static string TestUsername {get {return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.TestUserName);}}
+        public static string TestValidPassword { get {return TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.TestUserPassword);}} //"nmjhpq32"; //staging - "zqfed068";
 
         public static DateTime StartDate { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, DateTime>(x => x.StartDate); } }
         public const string Base64 = "ZWhhZXZhai5oYnZlZkBuZ2F6c3pxb3F0Lm9ieC54bTp6cWZlZDA2OA==";

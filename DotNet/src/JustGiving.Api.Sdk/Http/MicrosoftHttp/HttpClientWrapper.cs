@@ -2,6 +2,7 @@
 using System.Net.Mime;
 using System.Text;
 using Microsoft.Http;
+using Microsoft.Http.Headers;
 using HttpContent = Microsoft.Http.HttpContent;
 using HttpRequestMessage = Microsoft.Http.HttpRequestMessage;
 using HttpResponseMessage = Microsoft.Http.HttpResponseMessage;
@@ -70,12 +71,12 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
         {
             if (httpRequestMessage.Content == null || httpRequestMessage.Content.Content.Length == 0)
             {
-                return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri);
+                return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri) { Headers = { Accept = new HeaderValues<StringWithOptionalQuality> { httpRequestMessage.AcceptContentType } } };
             }
             
             return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri,
                                           HttpContent.Create(httpRequestMessage.Content.Content,
-                                                             httpRequestMessage.Content.ContentType));
+                                                             httpRequestMessage.Content.ContentType)) { Headers = { Accept = new HeaderValues<StringWithOptionalQuality> { httpRequestMessage.AcceptContentType } } };
         }
 
         private static DataPackets.HttpResponseMessage ToNativeResponse(HttpResponseMessage response)

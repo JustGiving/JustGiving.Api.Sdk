@@ -9,6 +9,7 @@ namespace JustGiving.Api.Sdk.Http.DataPackets
         public string Method { get; set; }
         public ICollection<object> Properties { get; set; }
         public Uri Uri { get; set; }
+        public string AcceptContentType { get; set; }
 
         public HttpRequestMessage()
         {

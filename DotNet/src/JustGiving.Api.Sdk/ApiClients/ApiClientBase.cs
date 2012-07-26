@@ -4,7 +4,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
 	public abstract class ApiClientBase
 	{
-		protected readonly HttpChannel HttpChannel;
+	    public readonly HttpChannel HttpChannel;
 
 		public abstract string ResourceBase { get; }
 

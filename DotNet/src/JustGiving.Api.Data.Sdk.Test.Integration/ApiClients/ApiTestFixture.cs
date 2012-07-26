@@ -1,5 +1,7 @@
 using System;
+using System.Text;
 using JustGiving.Api.Sdk;
+using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
@@ -15,6 +17,11 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                            Password = TestContext.TestValidPassword,
                            ConnectionTimeOut = TimeSpan.FromMinutes(20)
                        };
+        }
+
+        protected static void AssertResponseDoesNotHaveAnError(byte[] payment)
+        {
+            Assert.That(!Encoding.UTF8.GetString(payment).Contains("<error>"));
         }
     }
 }

@@ -44,11 +44,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -57,7 +57,9 @@
     <Compile Include="ApiClients\DataApiClientBase.cs" />
     <Compile Include="ApiClients\DataFileFormat.cs" />
     <Compile Include="ApiClients\IPaymentsApi.cs" />
-    <Compile Include="ApiClients\PaymentsApiApi.cs" />
+    <Compile Include="ApiClients\PaymentsApi.cs" />
+    <Compile Include="Configuration\DataSdkConfigurationManager.cs" />
+    <Compile Include="Configuration\JustGivingDataSdkConfiguration.cs" />
     <Compile Include="DataClientConfiguration.cs" />
     <Compile Include="IJustGivingDataClient.cs" />
     <Compile Include="JustGivingDataClient.cs" />

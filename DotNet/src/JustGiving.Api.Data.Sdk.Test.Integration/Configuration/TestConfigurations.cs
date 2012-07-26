@@ -8,32 +8,26 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
     public class TestConfigurations : ConfigurationSection, ITestConfigurations
     {
         [TypeConverter(typeof(StringToEnGBDateTimeConverter))]
-        [ConfigurationProperty("startDate")]
+        [ConfigurationProperty("StartDate")]
         public DateTime StartDate
         {
-            get { return (DateTime)this["startDate"]; }
-            set { this["startDate"] = value; }
+            get { return (DateTime)this["StartDate"]; }
+            set { this["StartDate"] = value; }
         }
 
-        [ConfigurationProperty("apiLocation")]
-        public string ApiLocation
-        {
-            get { return (string) this["apiLocation"]; }
-            set { this["apiLocation"] = value; }
-        }
 
-        [ConfigurationProperty("testUserName")]
+        [ConfigurationProperty("TestUserName")]
         public string TestUserName
         {
-            get { return (string) this["testUserName"]; }
-            set { this["testUserName"] = value; }
+            get { return (string)this["TestUserName"]; }
+            set { this["TestUserName"] = value; }
         }
 
-        [ConfigurationProperty("testUserPassword")]
+        [ConfigurationProperty("TestUserPassword")]
         public string TestUserPassword
         {
-            get { return (string)this["testUserPassword"]; }
-            set { this["testUserPassword"] = value; }
+            get { return (string)this["TestUserPassword"]; }
+            set { this["TestUserPassword"] = value; }
         }
     }
 }

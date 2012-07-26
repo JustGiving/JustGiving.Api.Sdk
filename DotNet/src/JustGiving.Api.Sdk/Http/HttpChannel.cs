@@ -96,11 +96,11 @@ namespace JustGiving.Api.Sdk.Http
             return _httpClient.Send(request);
         }
 
-        public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType)
+        public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string acceptContentType)
         {
-            var url = BuildUrl(locationFormat);
-            var content = new HttpContent(contentType);
-            return _httpClient.Send(method, url, content);
+            var uri = BuildUrl(locationFormat);
+            var request = new HttpRequestMessage {Method = method, Uri = uri, AcceptContentType = acceptContentType};
+            return _httpClient.Send(request);
         }
 
         public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string contentType, byte[] postData)
