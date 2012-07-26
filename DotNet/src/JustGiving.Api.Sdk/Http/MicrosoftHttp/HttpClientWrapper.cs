@@ -71,14 +71,15 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
         {
             if (httpRequestMessage.Content == null || httpRequestMessage.Content.Content.Length == 0)
             {
-                return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri) { Headers = { Accept = new HeaderValues<StringWithOptionalQuality> { httpRequestMessage.AcceptContentType } } };
+                return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri)
+                            .WithAcceptHeader(httpRequestMessage);
             }
-            
-            return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri,
-                                          HttpContent.Create(httpRequestMessage.Content.Content,
-                                                             httpRequestMessage.Content.ContentType)) { Headers = { Accept = new HeaderValues<StringWithOptionalQuality> { httpRequestMessage.AcceptContentType } } };
+
+            return new HttpRequestMessage(httpRequestMessage.Method, httpRequestMessage.Uri, HttpContent.Create(httpRequestMessage.Content.Content, httpRequestMessage.Content.ContentType))
+                                           .WithAcceptHeader(httpRequestMessage);
         }
 
+        
         private static DataPackets.HttpResponseMessage ToNativeResponse(HttpResponseMessage response)
         {
             var responseFormat = new DataPackets.HttpResponseMessage
@@ -148,5 +149,17 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
             var responseMessage = _httpClient.EndSend(response);
             state.HttpClientCallback(ToNativeResponse(responseMessage));
         }
+    }
+
+    public static class HttpRequestExtensions
+    {
+        public static HttpRequestMessage WithAcceptHeader(this HttpRequestMessage request, DataPackets.HttpRequestMessage httpRequestMessage)
+        {
+            if (httpRequestMessage != null && !string.IsNullOrEmpty(httpRequestMessage.AcceptContentType))
+                request.Headers.Accept = new HeaderValues<StringWithOptionalQuality> { httpRequestMessage.AcceptContentType };
+
+            return request;
+        }
+
     }
 }

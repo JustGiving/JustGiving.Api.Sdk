@@ -63,6 +63,9 @@
     <Compile Include="DataClientConfiguration.cs" />
     <Compile Include="IJustGivingDataClient.cs" />
     <Compile Include="JustGivingDataClient.cs" />
+    <Compile Include="Model\Payment\GiftAid\DonationGiftAid.cs" />
+    <Compile Include="Model\Payment\GiftAid\FundraisingPage.cs" />
+    <Compile Include="Model\Payment\Payment.cs" />
     <Compile Include="Model\Payment\PaymentSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

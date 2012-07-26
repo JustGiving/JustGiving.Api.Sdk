@@ -37,5 +37,7 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         /// <param name="fileFormat">Choose between Excel and CSV</param>
         /// <returns>The downloaded report</returns>
         byte[] ReportFor(int paymentId, DataFileFormat fileFormat);
+
+        T Report<T>(int paymentId);
     }
 }

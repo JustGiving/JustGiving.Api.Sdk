@@ -53,6 +53,12 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
             var response = HttpChannel.PerformRawRequest("GET", uri, ContentTypes.GetAcceptContentType(fileFormat));
             return response.Content.Content;
         }
+
+        public T Report<T>(int paymentId)
+        {
+            var uri = Uri.Combine(ResourceBase, paymentId.ToString());
+            return HttpChannel.PerformRequest<T>("GET", uri);
+        }
     }
 
     public class Uri

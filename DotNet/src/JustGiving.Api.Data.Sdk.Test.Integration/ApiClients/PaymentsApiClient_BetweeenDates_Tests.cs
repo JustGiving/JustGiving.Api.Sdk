@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class GetPaymentListWebFormatTests : ApiTestFixture
+    public class PaymentsApiClient_BetweeenDates_Tests : ApiTestFixture
     {
         [Test]
         public void CanGetDataBetweenTwoDates()

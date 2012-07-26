@@ -74,11 +74,7 @@ namespace JustGiving.Api.Sdk.Test.Unit
             return response;
         }
 
-        public TimeSpan? ConnectionTimeOut
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public TimeSpan? ConnectionTimeOut { get; set; }
 
         public HttpResponseMessage Delete(string url)
         {
