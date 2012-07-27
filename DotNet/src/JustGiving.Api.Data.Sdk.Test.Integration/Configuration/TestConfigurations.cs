@@ -37,6 +37,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             set { this["EventId"] = value; }
         }
 
+        [TypeConverter(typeof(StringToEnGBDateTimeConverter))]
         [ConfigurationProperty("PageCreatedStartDate")]
         public DateTime PageCreatedStartDate
         {

@@ -7,7 +7,7 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
 {
     public interface IPagesApi
     {
-        PagesCreated Created(DateTime startDate, DateTime endDate, int eventId);
+        PagesCreated Created(DateTime startDate, DateTime endDate, int eventId = 0);
     }
 
     public class PagesApi : DataApiClientBase, IPagesApi
