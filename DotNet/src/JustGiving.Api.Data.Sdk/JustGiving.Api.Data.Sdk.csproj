@@ -57,12 +57,15 @@
     <Compile Include="ApiClients\DataApiClientBase.cs" />
     <Compile Include="ApiClients\DataFileFormat.cs" />
     <Compile Include="ApiClients\IPaymentsApi.cs" />
+    <Compile Include="ApiClients\PagesApi.cs" />
     <Compile Include="ApiClients\PaymentsApi.cs" />
     <Compile Include="Configuration\DataSdkConfigurationManager.cs" />
     <Compile Include="Configuration\JustGivingDataSdkConfiguration.cs" />
     <Compile Include="DataClientConfiguration.cs" />
     <Compile Include="IJustGivingDataClient.cs" />
     <Compile Include="JustGivingDataClient.cs" />
+    <Compile Include="Model\Pages\PagesCreated.cs" />
+    <Compile Include="Model\Payment\Donations\Payment.cs" />
     <Compile Include="Model\Payment\GiftAid\DonationGiftAid.cs" />
     <Compile Include="Model\Payment\GiftAid\FundraisingPage.cs" />
     <Compile Include="Model\Payment\Payment.cs" />

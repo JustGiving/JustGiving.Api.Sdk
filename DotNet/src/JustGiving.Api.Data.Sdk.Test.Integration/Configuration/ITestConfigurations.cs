@@ -7,5 +7,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
         DateTime StartDate { get; set; }
         string TestUserName { get; set; }
         string TestUserPassword { get; set; }
+        int EventId { get; set; }
+        DateTime PageCreatedStartDate { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payments.ReportFor(paymentId, fileFormat);
+            var payment = client.Payment.ReportFor(paymentId, fileFormat);
             AssertResponseDoesNotHaveAnError(payment);
             Assert.IsNotNull(payment);
         }
@@ -35,7 +35,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payments.ReportFor(paymentId, fileFormat);
+            var payment = client.Payment.ReportFor(paymentId, fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
@@ -56,13 +56,13 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat_AndCompressed(int paymentId, DataFileFormat fileFormat)
         {
             var clientConfiguration = GetDataClientConfiguration()
-                                        .With((clientConfig) => clientConfig.IsZipSupportedByClient = true)
-                                        .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
-
+                .With((clientConfig) => clientConfig.IsZipSupportedByClient = true)
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
+                                        
             
             var client = new JustGivingDataClient(clientConfiguration);
 
-            var payment = client.Payments.ReportFor(paymentId, fileFormat);
+            var payment = client.Payment.ReportFor(paymentId, fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();

@@ -19,7 +19,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var startDate = TestContext.StartDate; 
             var endDate = startDate.AddMonths(3);
             
-            var response = dataClient.Payments.PaymentsBetween(startDate, endDate);
+            var response = dataClient.Payment.PaymentsBetween(startDate, endDate);
             
             Assert.IsNotNull(response);
             Assert.That(response.FirstOrDefault(i => i.PaymentDate > endDate), Is.Null);
@@ -37,7 +37,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var data = new List<PaymentSummary>();
             while(data.Count == 0 && endDate <= DateTime.Now)
             {
-                data.AddRange(dataClient.Payments.PaymentsBetween(startDate, endDate));
+                data.AddRange(dataClient.Payment.PaymentsBetween(startDate, endDate));
                 startDate = endDate.AddDays(1);
                 endDate = startDate.AddMonths(3);
             }
@@ -53,7 +53,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
          var startDate = DateTime.Now.Date.AddYears(-2);
             var endDate = startDate.AddYears(1);
             var client = new JustGivingDataClient(clientConfiguration);
-            var exception = Assert.Throws<ErrorResponseException>(() => client.Payments.PaymentsBetween(startDate, endDate));
+            var exception = Assert.Throws<ErrorResponseException>(() => client.Payment.PaymentsBetween(startDate, endDate));
             
             Assert.That(exception.Message.Contains("400"));
         }

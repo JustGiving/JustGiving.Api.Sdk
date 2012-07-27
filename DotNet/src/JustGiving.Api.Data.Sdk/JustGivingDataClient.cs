@@ -10,11 +10,19 @@ namespace JustGiving.Api.Data.Sdk
         private readonly IHttpClient _httpClient;
         public HttpChannel HttpChannel { get; private set; }
 
-        private IPaymentsApi _payments;
-        public IPaymentsApi Payments
+        private IPaymentsApi _payment;
+        private IPagesApi _pages;
+
+        public IPaymentsApi Payment
         {
-            get { return _payments; }
-            private set { _payments = value; }
+            get { return _payment; }
+            private set { _payment = value; }
+        }
+
+        public IPagesApi Pages
+        {
+            get {return _pages;}
+            private set {_pages = value;}
         }
 
         public JustGivingDataClient(DataClientConfiguration dataClientConfiguration, IHttpClient httpClient)
@@ -37,7 +45,8 @@ namespace JustGiving.Api.Data.Sdk
         {
             HttpChannel = new HttpChannel(_dataClientConfiguration, _httpClient);
 
-            _payments = new PaymentsApi(HttpChannel);
+            _payment = new PaymentsApi(HttpChannel);
+            _pages = new PagesApi(HttpChannel);
         }
     }
 }

@@ -30,7 +30,14 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public const int KnownPageId = 2739376;
         public const int KnownCharityId = 50;
         public const int KnownEventId = 11493;
-        public const int KnownEventIdWithPage = 498800;
+
+        public static int KnownEventIdWithPage { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.EventId); } }
+        
+        public static DateTime PageCreatedStartDate
+        {
+            get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, DateTime>(x => x.PageCreatedStartDate); }
+        }        
+
         public const string KnownEventCustomCode1 = "value1";
         public const string KnownEventCustomCode2 = "value2";
         public const string KnownEventCustomCode3 = "value3";

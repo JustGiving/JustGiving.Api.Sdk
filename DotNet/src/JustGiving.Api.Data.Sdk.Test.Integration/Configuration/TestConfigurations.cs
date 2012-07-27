@@ -29,5 +29,19 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             get { return (string)this["TestUserPassword"]; }
             set { this["TestUserPassword"] = value; }
         }
+
+        [ConfigurationProperty("EventId")]
+        public int EventId
+        {
+            get { return (int) this["EventId"]; }
+            set { this["EventId"] = value; }
+        }
+
+        [ConfigurationProperty("PageCreatedStartDate")]
+        public DateTime PageCreatedStartDate
+        {
+            get { return (DateTime) this["PageCreatedStartDate"]; }
+            set { this["EventId"] = value; }
+        }
     }
 }

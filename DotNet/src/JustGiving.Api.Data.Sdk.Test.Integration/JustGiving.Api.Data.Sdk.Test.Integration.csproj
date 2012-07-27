@@ -64,7 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\ApiTestFixture.cs" />
-    <Compile Include="ApiClients\GetPaymentGiftAidReportByIdWebFormatTests.cs" />
+    <Compile Include="ApiClients\PagesApiClient_EventTests.cs" />
+    <Compile Include="ApiClients\PaymentsApiEndToEndTests.cs" />
+    <Compile Include="ApiClients\PaymentsApiClient_GiftAidReportTests.cs" />
     <Compile Include="ApiClients\PaymentsApiClientTests.cs" />
     <Compile Include="ApiClients\PaymentsApiClient_BetweeenDates_Tests.cs" />
     <Compile Include="ApiClients\TestContext.cs" />
