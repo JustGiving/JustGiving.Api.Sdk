@@ -41,10 +41,10 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         //    return response;
         //}
 
-        public HttpResponseMessage SetPageCustomCodes(int pageId, PageCustomCodes codes)
+        public SetCustomCodesResponse SetPageCustomCodes(int pageId, PageCustomCodes codes)
         {
             var uri = ResourceBase + "/" + pageId +  "/customcodes";
-            var response = HttpChannel.PerformRequest<PageCustomCodes, HttpResponseMessage>("PUT", uri, codes);
+            var response = HttpChannel.PerformRequest<PageCustomCodes, SetCustomCodesResponse>("PUT", uri, codes);
 
             return response;
         }

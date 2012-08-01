@@ -47,7 +47,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public const string KnownPageCustomCode4 = "8GarrickRoad";
         public const string KnownPageCustomCode5 = "Blah";
         public const string KnownPageCustomCode6 = "Northampton";
-        public const string KnownAppealName = "mariecurie: General Appeal";
+        public const string KnownAppealName = "demo: General Appeal";
         public static readonly DateTime KnownExpiryDate = new DateTime(2006, 11, 17);
         public static readonly DateTime KnownEventDate = new DateTime(2006, 9, 9);
     }

@@ -73,6 +73,7 @@
     <Compile Include="Model\CustomCodes\EventCustomCodes.cs" />
     <Compile Include="Model\CustomCodes\PageCustomCodeListItem.cs" />
     <Compile Include="Model\CustomCodes\PageCustomCodes.cs" />
+    <Compile Include="Model\CustomCodes\SetCustomCodesResponse.cs" />
     <Compile Include="Model\Pages\PagesCreated.cs" />
     <Compile Include="Model\Payment\Donations\Payment.cs" />
     <Compile Include="Model\Payment\GiftAid\DonationGiftAid.cs" />

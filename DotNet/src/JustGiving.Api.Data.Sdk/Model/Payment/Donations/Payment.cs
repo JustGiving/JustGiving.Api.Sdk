@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace JustGiving.Api.Data.Sdk.Model.Payment.Donations
 {
-    [DataContract(Name = "Payment")]
+    [DataContract(Name = "Payment", Namespace = "")]
     public class Payment : DtoBase
     {
         public Payment()

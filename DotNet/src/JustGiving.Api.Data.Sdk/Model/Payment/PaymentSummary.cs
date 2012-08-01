@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace JustGiving.Api.Data.Sdk.Model.Payment
 {
-    [DataContract(Name = "Payment")]
+    [DataContract(Name = "Payment", Namespace = "")]
     public class PaymentSummary
     {
         /// <summary>

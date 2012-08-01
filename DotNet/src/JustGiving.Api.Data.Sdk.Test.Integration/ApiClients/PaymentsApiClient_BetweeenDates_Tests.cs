@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.Payment;
+using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
+using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
@@ -16,6 +18,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDefaultDataClientConfiguration();
 
             var dataClient = new JustGivingDataClient(clientConfiguration);
+
             var startDate = TestContext.StartDate; 
             var endDate = startDate.AddMonths(3);
             

@@ -25,7 +25,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void CanSetCustomCode()
         {
             var response = _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageId, new PageCustomCodes {CustomCode1 = "foo"});
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
         
         [Test]
@@ -61,7 +61,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void CustomCodesAreValidated_Single(string badText)
         {
             var response = _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageId, new PageCustomCodes { CustomCode1 = badText });
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]

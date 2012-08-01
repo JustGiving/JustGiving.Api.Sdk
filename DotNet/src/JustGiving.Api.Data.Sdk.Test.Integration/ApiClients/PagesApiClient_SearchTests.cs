@@ -10,6 +10,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
     [TestFixture, Category("Slowest")]
     public class PagesApiClient_SearchTests : ApiTestFixture
     {
+        private DateTime _startDate;
+        private DateTime _endDate;
+
         [TestFixtureSetUp]
         public void FixtureSetUp()
         {
@@ -34,7 +37,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                                                                   TestContext.KnownPageCustomCode6
                                                                           });
 
-
+            _startDate = new DateTime(2012, 03, 01);
+            _endDate = new DateTime(2012, 05, 31); 
         }
 
         [TestCase(TestContext.KnownEventCustomCode1, "", "")]
@@ -49,7 +53,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = XmlDataClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var report = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = customCode1, EventCustomCode2 = customCode2, EventCustomCode3 = customCode3 }, new DateTime(2004, 1, 1), new DateTime(2004, 2, 1));
+            var report = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = customCode1, EventCustomCode2 = customCode2, EventCustomCode3 = customCode3 }, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -65,8 +69,10 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var clientConfiguration = XmlDataClientConfiguration();
 
-            var client = new JustGivingDataClient(clientConfiguration);          
-            var report = client.Pages.Search(new PageCreatedSearchQuery { PageCustomCode1 = pageCustomCode1, PageCustomCode2 = pageCustomCode2, PageCustomCode3 = pageCustomCode3, PageCustomCode4 = pageCustomCode4, PageCustomCode5 = pageCustomCode5, PageCustomCode6 = pageCustomCode6 }, new DateTime(2006,1,1), new DateTime(2006,3,1));
+            var client = new JustGivingDataClient(clientConfiguration);
+            _startDate = new DateTime(2012,03,01);
+            _endDate = new DateTime(2012,05,31);
+            var report = client.Pages.Search(new PageCreatedSearchQuery { PageCustomCode1 = pageCustomCode1, PageCustomCode2 = pageCustomCode2, PageCustomCode3 = pageCustomCode3, PageCustomCode4 = pageCustomCode4, PageCustomCode5 = pageCustomCode5, PageCustomCode6 = pageCustomCode6 }, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -77,7 +83,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = XmlDataClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var report = client.Pages.Search(new PageCreatedSearchQuery { PageCustomCode1 = TestContext.KnownPageCustomCode1, IsActivePage = false }, new DateTime(2006,1,1), new DateTime(2006,3,1));
+            var report = client.Pages.Search(new PageCreatedSearchQuery { PageCustomCode1 = TestContext.KnownPageCustomCode1, IsActivePage = false }, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -99,7 +105,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = XmlDataClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var report = client.Pages.Search(new PageCreatedSearchQuery { PageCustomCode1 = TestContext.KnownPageCustomCode1, AppealName = TestContext.KnownAppealName }, new DateTime(2006,1,1), new DateTime(2006,3,1));
+            var report = client.Pages.Search(new PageCreatedSearchQuery { PageCustomCode1 = TestContext.KnownPageCustomCode1, AppealName = TestContext.KnownAppealName }, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -151,9 +157,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var report = client.Pages.Search(new PageCreatedSearchQuery
                                          {
                                              PageCustomCode1 = TestContext.KnownPageCustomCode1,
-                                             PageExpiresAfter = TestContext.KnownExpiryDate,
-                                             PageExpiresBefore = TestContext.KnownExpiryDate
-                                         }, new DateTime(2006,1,1), new DateTime(2006,3,1));
+                                             PageExpiresAfter = new DateTime(2012, 01, 01), //2017-03-08 00:00:00.000
+                                             PageExpiresBefore = new DateTime(2020, 01, 01)
+                                         }, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -169,11 +175,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var clientConfiguration = XmlDataClientConfiguration();
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            var startDate = new DateTime(2004, 1, 1);
-            var endDate = new DateTime(2004, 2, 1);
 
-            var report = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = customCode1, EventCustomCode2 = customCode2, EventCustomCode3 = customCode3 }, startDate, endDate);
+            var report = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = customCode1, EventCustomCode2 = customCode2, EventCustomCode3 = customCode3 }, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
