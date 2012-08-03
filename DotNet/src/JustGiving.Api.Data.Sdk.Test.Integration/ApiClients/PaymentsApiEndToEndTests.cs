@@ -21,7 +21,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             int count = 0;
             const int numberToDownload = 10;
             
-            var payments = client.Payment.PaymentsBetween(DateTime.Now.AddMonths(-1), DateTime.Now);
+            var payments = client.Payment.PaymentsBetween(new DateTime(2012,06,01), new DateTime(2012,06,30));
             foreach(var payment in payments)
             {
                 if (count >= numberToDownload) break;
