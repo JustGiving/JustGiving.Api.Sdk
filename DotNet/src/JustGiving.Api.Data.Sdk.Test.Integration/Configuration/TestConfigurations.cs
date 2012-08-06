@@ -93,6 +93,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             set { this["KnownPageId"] = value; }
         }
 
+         [TypeConverter(typeof(StringToEnGBDateTimeConverter))]
         [ConfigurationProperty("ValidPageSearchStartDate")]
         public DateTime ValidPageSearchStartDate
         {
@@ -100,6 +101,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             set { this["ValidPageSearchStartDate"] = value; }
         }
 
+        [TypeConverter(typeof(StringToEnGBDateTimeConverter))]
         [ConfigurationProperty("ValidPageSearchEndDate")]
         public DateTime ValidPageSearchEndDate
         {
