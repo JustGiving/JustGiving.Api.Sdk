@@ -29,7 +29,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public const string GemBoxSerial = "REMOVED"; //see https://github.com/github/dmca/blob/master/2014-04-04-Gembox.md
         public const int KnownPageId = 3621516;
         public const int KnownEventId = 805390;
-
+        public static int KnownPageIdWithCustomCodes { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.CustomCodePageId); } }
         public static int KnownEventIdWithPage { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.EventId); } }
         
         public static DateTime PageCreatedStartDate

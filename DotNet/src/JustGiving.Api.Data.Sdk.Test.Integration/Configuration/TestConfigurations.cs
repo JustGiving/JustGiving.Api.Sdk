@@ -44,5 +44,12 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             get { return (DateTime) this["PageCreatedStartDate"]; }
             set { this["EventId"] = value; }
         }
+
+        [ConfigurationProperty("CustomCodePageId")]
+        public int CustomCodePageId
+        {
+            get { return (int) this["CustomCodePageId"]; }
+            set { this["CustomCodePageId"] = value; }
+        }
     }
 }

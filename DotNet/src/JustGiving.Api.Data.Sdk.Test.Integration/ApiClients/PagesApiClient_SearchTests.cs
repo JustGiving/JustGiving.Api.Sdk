@@ -20,8 +20,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Xml);
             
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            client.CustomCodes.SetPageCustomCodes(3621516, new PageCustomCodes
+
+            //3665746
+            client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes
                                                                           {
                                                                               CustomCode1 =
                                                                                   TestContext.KnownPageCustomCode1,
