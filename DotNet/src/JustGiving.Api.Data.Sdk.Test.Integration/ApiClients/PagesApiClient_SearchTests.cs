@@ -45,10 +45,10 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                                                                                    CustomCode3 = TestContext.KnownEventCustomCode3
                                                                                                });
             //2012-08-03 09:59:19.000
-            _startDate = new DateTime(2012, 08, 01);
-            _endDate = new DateTime(2012, 10, 31); 
-            //_startDate = new DateTime(2012, 03, 01);
-            //_endDate = new DateTime(2012, 05, 31); 
+            //_startDate = new DateTime(2012, 08, 01);
+            //_endDate = new DateTime(2012, 10, 31); 
+            _startDate = new DateTime(2012, 03, 01);
+            _endDate = new DateTime(2012, 05, 31); 
         }
 
         [TestCase(TestContext.KnownEventCustomCode1, "", "")]
@@ -63,7 +63,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = XmlDataClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var report = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = customCode1, EventCustomCode2 = customCode2, EventCustomCode3 = customCode3, IsActivePage = true}, _startDate, _endDate);
+            var report = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = customCode1, EventCustomCode2 = customCode2, EventCustomCode3 = customCode3, IsActivePage = TestContext.PageStatus}, _startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
