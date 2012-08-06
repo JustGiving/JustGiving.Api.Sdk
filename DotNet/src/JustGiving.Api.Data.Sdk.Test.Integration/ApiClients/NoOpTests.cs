@@ -1,4 +1,5 @@
 using System.Net;
+using JustGiving.Api.Data.Sdk.ApiClients;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using NUnit.Framework;
 
@@ -15,8 +16,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             _dataClientConfiguration = GetDefaultDataClientConfiguration();
             _client = new JustGivingDataClient(_dataClientConfiguration);
+            var paymentClient = new PaymentsApi(_client.HttpChannel);
 
-            var response = _client.Payment.NoOp();
+            var response = paymentClient.NoOp();
             Assert.That(response, Is.EqualTo(HttpStatusCode.OK));
         }
 
@@ -25,8 +27,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             _dataClientConfiguration = GetDefaultDataClientConfiguration().With((clientConfig) => clientConfig.Password = "NotARealPassword");
             _client = new JustGivingDataClient(_dataClientConfiguration);
-
-            var response = _client.Payment.NoOp();
+            var paymentClient = new PaymentsApi(_client.HttpChannel);
+            var response = paymentClient.NoOp();
             
             Assert.That(response, Is.EqualTo(HttpStatusCode.Unauthorized));
         }

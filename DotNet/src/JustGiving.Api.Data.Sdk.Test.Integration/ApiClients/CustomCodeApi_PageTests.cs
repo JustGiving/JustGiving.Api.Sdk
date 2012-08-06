@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Linq;
+using JustGiving.Api.Data.Sdk.ApiClients;
 using JustGiving.Api.Data.Sdk.Model.CustomCodes;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
@@ -10,22 +11,24 @@ using NUnit.Framework;
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class UpdatePageCustomCodesTests : ApiTestFixture
+    public class CustomCodeApi_PageTests : ApiTestFixture
     {
         private DataClientConfiguration _dataClientConfiguration;
-        private JustGivingDataClient _client;
+        private CustomCodesApi _customCodeClient;
 
         [SetUp]
         public void SetUp()
         {
             _dataClientConfiguration = XmlDataConfiguration();
-            _client = new JustGivingDataClient(_dataClientConfiguration);
+            var client = new JustGivingDataClient(_dataClientConfiguration);
+            _customCodeClient = CreateCustomCodeClient(client);
+
         }
 
         [Test]
         public void CanSetCustomCode()
         {
-            var response = _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = "foo" });
+            var response = _customCodeClient.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = "foo" });
             Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
         
@@ -33,16 +36,16 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void CanGetCustomCode()
         {
             var val = Guid.NewGuid().ToString().Substring(0, 5);
-            _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = val });
+            _customCodeClient.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = val });
 
-            var response = _client.CustomCodes.GetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes);
+            var response = _customCodeClient.RetrievePageCustomCodes(TestContext.KnownPageIdWithCustomCodes);
             Assert.That(response.CustomCode1, Is.EqualTo(val));
         }
 
         [Test]
         public void CanSetMultipleCustomCodes()
         {
-            var response = _client.CustomCodes.SetPageCustomCodes(new[] { new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes, CustomCode1 = "foo" }, new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes + 1, CustomCode1 = "bar" } });
+            var response = _customCodeClient.SetPageCustomCodes(new[] { new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes, CustomCode1 = "foo" }, new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes + 1, CustomCode1 = "bar" } });
             Assert.That(response.Count(r => r.Status == 200), Is.GreaterThanOrEqualTo(1));
         }
 
@@ -52,7 +55,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var csvString = string.Format("PageId,CustomCode1,CustomCode2,CustomCode3,CustomCode4,CustomCode5,CustomCode6\r\n{0},value1,value2,value3,value4,value5,value6\r\n{1},value1,value2,value3,value4,value5,value6",
                 TestContext.KnownPageIdWithCustomCodes, TestContext.KnownPageIdWithCustomCodes + 1);
 
-            var response = _client.CustomCodes.SetPageCustomCodes(csvString);
+            var response = _customCodeClient.SetPageCustomCodes(csvString);
 
             Assert.That(response.Count(r => r.Status == 200), Is.GreaterThanOrEqualTo(1));
         }
@@ -61,7 +64,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase("a,b")]
         public void CustomCodesAreValidated_Single(string badText)
         {
-            var excep = Assert.Throws<ErrorResponseException>(() => _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = badText }));
+            var excep = Assert.Throws<ErrorResponseException>(() => _customCodeClient.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = badText }));
             Assert.That(excep.Message.Contains("400"));
         }
 
@@ -69,7 +72,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase("a,b")]
         public void CustomCodesAreValidated_Multiple(string badText)
         {
-            var response = _client.CustomCodes.SetPageCustomCodes(new[] { new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes, CustomCode1 = badText }, new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes + 1, CustomCode1 = "bar" } });
+            var response = _customCodeClient.SetPageCustomCodes(new[] { new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes, CustomCode1 = badText }, new PageCustomCodesListItem { PageId = TestContext.KnownPageIdWithCustomCodes + 1, CustomCode1 = "bar" } });
             Assert.That(response.Count(r => r.Status == (int)HttpStatusCode.BadRequest), Is.GreaterThanOrEqualTo(1));
         }
 
@@ -78,8 +81,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var csvString = string.Format("PageId,CustomCode1,CustomCode2,CustomCode3,CustomCode4,CustomCode5,CustomCode6\r\n{0},value1,value2,value3,value44444444444444444444444444444444444444,value5,value6\r\n{1},value1,value2,value3,value4,value5,value6",
                     TestContext.KnownPageIdWithCustomCodes, TestContext.KnownPageIdWithCustomCodes + 1);
-            
-            var response = _client.CustomCodes.SetPageCustomCodes(csvString);
+
+            var response = _customCodeClient.SetPageCustomCodes(csvString);
 
             Assert.That(response.Count(r => r.Status == (int)HttpStatusCode.BadRequest), Is.GreaterThanOrEqualTo(1));
         }

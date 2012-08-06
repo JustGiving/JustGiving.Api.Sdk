@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using GemBox.Spreadsheet;
 using JustGiving.Api.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Model;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
 using NUnit.Framework;
@@ -26,7 +27,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.ReportFor(GetPaymentId(paymentType), fileFormat);
+            CreatePaymentsClient(client);
+
+            var payment = PaymentsClient.RetrieveReport(GetPaymentId(paymentType), fileFormat);
             AssertResponseDoesNotHaveAnError(payment);
             Assert.IsNotNull(payment);
         }
@@ -49,7 +52,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.ReportFor(GetPaymentId(paymentType), fileFormat);
+            CreatePaymentsClient(client);
+
+            var payment = PaymentsClient.RetrieveReport(GetPaymentId(paymentType), fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
@@ -75,8 +80,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                                         
             
             var client = new JustGivingDataClient(clientConfiguration);
-
-            var payment = client.Payment.ReportFor(GetPaymentId(paymentType), fileFormat);
+            CreatePaymentsClient(client);
+            var payment = PaymentsClient.RetrieveReport(GetPaymentId(paymentType), fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();

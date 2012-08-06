@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace JustGiving.Api.Data.Sdk.Model.Payment.Donations
+namespace JustGiving.Api.Data.Sdk.Model.Payment.GiftAid
 {
     [DataContract(Name = "Payment", Namespace = "")]
     public class Payment : DtoBase
     {
         public Payment()
         {
-            Donations = new List<Donation>();
+            Donations = new List<DonationGiftAid>();
         }
 
         [DataMember(Name = "PaymentRef", Order = 0)]
@@ -19,7 +19,7 @@ namespace JustGiving.Api.Data.Sdk.Model.Payment.Donations
         }
 
         [DataMember(Name = "Donations", Order = 1)]
-        public List<Donation> Donations
+        public List<DonationGiftAid> Donations
         {
             get;
             set;

@@ -82,6 +82,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public static DateTime KnownEndDateForPageSearch = new DateTime(2012, 05, 01);
         public static readonly DateTime KnownExpiryDate = new DateTime(2006, 11, 17);
         public static readonly DateTime KnownEventDate = new DateTime(2006, 9, 9);
+        public static DateTime ValidPageSearchStartDate = TestConfigurationsHelper.GetProperty<ITestConfigurations, DateTime>(x => x.ValidPageSearchStartDate);
+        public static DateTime ValidPageSearchEndDate = TestConfigurationsHelper.GetProperty<ITestConfigurations, DateTime>(x => x.ValidPageSearchEndDate);
     }
 
 

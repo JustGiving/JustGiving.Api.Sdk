@@ -2,11 +2,8 @@
 using System.Text;
 using System.Web;
 
-namespace GG.Api.Services.Data.Sdk.ApiClients
+namespace JustGiving.Api.Data.Sdk.ApiClients
 {
-    ///<summary>
-    /// Encapsulates a query for the Pages Created report
-    ///</summary>
     public class PageCreatedSearchQuery
     {
         public string EventCustomCode1 { get; set; }

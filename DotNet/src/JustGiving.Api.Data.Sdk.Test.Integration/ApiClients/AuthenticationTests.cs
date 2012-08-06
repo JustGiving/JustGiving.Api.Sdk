@@ -1,7 +1,7 @@
 ﻿using System.Net;
+using JustGiving.Api.Data.Sdk.ApiClients;
 using JustGiving.Api.Data.Sdk.Model.Payment.Donations;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
-using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
@@ -19,7 +19,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
                 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.Report<Payment>(_paymentId);
+            var paymentClient = new PaymentsApi(client.HttpChannel);
+
+            var payment = paymentClient.RetrieveReport<Payment>(_paymentId);
 
             Assert.That(payment.HttpStatusCode, Is.Not.EqualTo(HttpStatusCode.Unauthorized));
         }
@@ -32,8 +34,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.Password = "");
             
             var client = new JustGivingDataClient(clientConfiguration);
-           
-            var exception = Assert.Throws<ErrorResponseException>(() => client.Payment.Report<Payment>(_paymentId));
+            var paymentClient = new PaymentsApi(client.HttpChannel);
+
+            var exception = Assert.Throws<ErrorResponseException>(() => paymentClient.RetrieveReport<Payment>(_paymentId));
             Assert.That(exception.Message.Contains("401"));
           
         }

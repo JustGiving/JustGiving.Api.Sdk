@@ -17,11 +17,12 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDefaultDataClientConfiguration();
 
             var dataClient = new JustGivingDataClient(clientConfiguration);
+            CreatePaymentsClient(dataClient);
 
             var startDate = TestContext.StartDate; 
             var endDate = startDate.AddMonths(3);
-            
-            var response = dataClient.Payment.PaymentsBetween(startDate, endDate);
+
+            var response = PaymentsClient.RetrievePaymentsBetween(startDate, endDate);
             
             Assert.IsNotNull(response);
             Assert.That(response.Count(), Is.GreaterThan(0));
@@ -34,13 +35,15 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var clientConfiguration = GetDefaultDataClientConfiguration();
             var dataClient = new JustGivingDataClient(clientConfiguration);
+            CreatePaymentsClient(dataClient);
+
             var startDate = DateTime.Now.AddYears(-1);
             var endDate = startDate.AddMonths(3);
 
             var data = new List<PaymentSummary>();
             while(data.Count == 0 && startDate <= DateTime.Now.AddMonths(4))
             {
-                var response = dataClient.Payment.PaymentsBetween(startDate, endDate); 
+                var response = PaymentsClient.RetrievePaymentsBetween(startDate, endDate); 
                 if (response.Any())
                 {
                     data.AddRange(response);
@@ -60,7 +63,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
          var startDate = DateTime.Now.Date.AddYears(-2);
             var endDate = startDate.AddYears(1);
             var client = new JustGivingDataClient(clientConfiguration);
-            var exception = Assert.Throws<ErrorResponseException>(() => client.Payment.PaymentsBetween(startDate, endDate));
+            CreatePaymentsClient(client);
+
+            var exception = Assert.Throws<ErrorResponseException>(() => PaymentsClient.RetrievePaymentsBetween(startDate, endDate));
             
             Assert.That(exception.Message.Contains("400"));
         }

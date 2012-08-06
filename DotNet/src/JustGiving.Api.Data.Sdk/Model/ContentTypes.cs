@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace JustGiving.Api.Data.Sdk.ApiClients
+namespace JustGiving.Api.Data.Sdk.Model
 {
     internal static class ContentTypes
     {

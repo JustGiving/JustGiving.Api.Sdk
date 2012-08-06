@@ -27,8 +27,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration =  GetDefaultDataClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            var excep = Assert.Throws<ErrorResponseException>(() => client.Pages.Created(new DateTime(2011,4,28), DateTime.Now));
+            var pagesClient = CreatePagesClient(client);
+            var excep = Assert.Throws<ErrorResponseException>(() => pagesClient.RetrievePagesCreated(new DateTime(2011, 4, 28), DateTime.Now));
             Assert.That(excep.Message.Contains("400"));
         }
 
@@ -38,8 +38,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDefaultDataClientConfiguration(); 
 
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            var report = client.Pages.Created(_startDate, _endDate);
+            var pagesClient = CreatePagesClient(client);
+            var report = pagesClient.RetrievePagesCreated(_startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -49,8 +49,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var clientConfiguration = GetDefaultDataClientConfiguration();
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            var report = client.Pages.Created(_startDate, _endDate);
+            var pagesClient = CreatePagesClient(client);
+            var report = pagesClient.RetrievePagesCreated(_startDate, _endDate);
 
             // Assert
             Assert.That(report.Pages.Count(p => p.CreatedDate < _startDate), Is.EqualTo(0));

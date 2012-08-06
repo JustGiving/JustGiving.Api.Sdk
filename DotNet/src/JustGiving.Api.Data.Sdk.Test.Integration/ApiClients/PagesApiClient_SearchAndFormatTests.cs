@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using GemBox.Spreadsheet;
-using GG.Api.Services.Data.Sdk.ApiClients;
 using JustGiving.Api.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Model;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
 using NUnit.Framework;
@@ -10,7 +9,7 @@ using NUnit.Framework;
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slowest")]
-    public class SearchPagesCreatedCsvDataTests : ApiTestFixture
+    public class PagesApiClient_SearchAndFormatTests : ApiTestFixture
     {
         [TestCase(DataFileFormat.csv)]
         [TestCase(DataFileFormat.excel)]
@@ -19,7 +18,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             
             var clientConfiguration = OtherFormatDataClientConfiguration();
             var client = new JustGivingDataClient(clientConfiguration);
-            var data = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = TestContext.KnownEventCustomCode1, EventCustomCode2 = TestContext.KnownEventCustomCode2, EventCustomCode3 = TestContext.KnownEventCustomCode3 }, TestContext.KnownStartDateForPageSearch, TestContext.KnownEndDateForPageSearch, fileFormat);
+            var pagesClient = CreatePagesClient(client);
+
+            var data = pagesClient.Search(new PageCreatedSearchQuery { EventCustomCode1 = TestContext.KnownEventCustomCode1, EventCustomCode2 = TestContext.KnownEventCustomCode2, EventCustomCode3 = TestContext.KnownEventCustomCode3 }, TestContext.KnownStartDateForPageSearch, TestContext.KnownEndDateForPageSearch, fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();

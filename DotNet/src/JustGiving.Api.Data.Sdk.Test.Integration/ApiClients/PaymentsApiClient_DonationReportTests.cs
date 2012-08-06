@@ -1,4 +1,5 @@
-﻿using JustGiving.Api.Data.Sdk.Model.Payment.Donations;
+﻿using JustGiving.Api.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Model.Payment.Donations;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
@@ -17,10 +18,17 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDefaultDataClientConfiguration()
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Xml);
             
-            var client = new JustGivingDataClient(clientConfiguration);           
-            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
+            var client = new JustGivingDataClient(clientConfiguration);
+            CreatePaymentsClient(client);
+
+            var payment = PaymentsClient.RetrieveReport<Payment>(TestContext.KnownDonationPaymentId);
 
             Assert.IsNotNull(payment);
+        }
+
+        private static PaymentsApi GetPaymentClient(JustGivingDataClient client)
+        {
+            return new PaymentsApi(client.HttpChannel);
         }
 
         [Test]
@@ -31,7 +39,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
             
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
+            CreatePaymentsClient(client);
+
+            var payment = PaymentsClient.RetrieveReport<Payment>(TestContext.KnownDonationPaymentId);
             
             Assert.IsNotNull(payment);
         }
@@ -42,7 +52,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = GetDefaultDataClientConfiguration()
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Json);               
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
+            CreatePaymentsClient(client);
+            var payment = PaymentsClient.RetrieveReport<Payment>(TestContext.KnownDonationPaymentId);
 
             Assert.IsNotNull(payment);
         }
@@ -55,8 +66,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
 
             var client = new JustGivingDataClient(clientConfiguration);
+            CreatePaymentsClient(client);
 
-            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
+            var payment = PaymentsClient.RetrieveReport<Payment>(TestContext.KnownDonationPaymentId);
 
             Assert.IsNotNull(payment);
         }
@@ -69,8 +81,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            Assert.Throws<ResourceNotFoundException>(() => client.Payment.Report<Payment>(BadPaymentId));
+            CreatePaymentsClient(client);
+
+            Assert.Throws<ResourceNotFoundException>(() => PaymentsClient.RetrieveReport<Payment>(BadPaymentId));
         }
     }
 }

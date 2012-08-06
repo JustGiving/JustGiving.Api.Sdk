@@ -26,8 +26,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = DefaultClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            var report = client.Pages.Created(_startDate, _endDate, TestContext.KnownEventIdWithPage);
+            var pagesClient = CreatePagesClient(client);
+            var report = pagesClient.RetrievePagesCreated(_startDate, _endDate, TestContext.KnownEventIdWithPage);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }
@@ -38,8 +38,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = DefaultClientConfiguration();
 
             var client = new JustGivingDataClient(clientConfiguration);
-
-            var report = client.Pages.Created(_startDate, _endDate, TestContext.KnownEventIdWithPage);
+            var pagesClient = CreatePagesClient(client);
+            var report = pagesClient.RetrievePagesCreated(_startDate, _endDate, TestContext.KnownEventIdWithPage);
 
             Assert.That(report.Pages.Count(p => p.Event.Id == TestContext.KnownEventIdWithPage), Is.GreaterThan(0));
             Assert.That(report.Pages.Count(p => p.Event.Id != TestContext.KnownEventIdWithPage), Is.EqualTo(0));
@@ -51,8 +51,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var clientConfiguration = DefaultClientConfiguration();
             
             var client = new JustGivingDataClient(clientConfiguration);
-            
-            Assert.Throws<ResourceNotFoundException>(() => client.Pages.Created(DateTime.Now.AddMonths(-12), DateTime.Now.AddMonths(-10), -1));
+            var pagesClient = CreatePagesClient(client);
+            Assert.Throws<ResourceNotFoundException>(() => pagesClient.RetrievePagesCreated(DateTime.Now.AddMonths(-12), DateTime.Now.AddMonths(-10), -1));
         }
 
         private static DataClientConfiguration DefaultClientConfiguration()

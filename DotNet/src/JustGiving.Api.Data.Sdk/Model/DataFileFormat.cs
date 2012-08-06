@@ -1,4 +1,4 @@
-﻿namespace JustGiving.Api.Data.Sdk.ApiClients
+namespace JustGiving.Api.Data.Sdk.Model
 {
     /// <summary>
     /// Enum type for choosing the format of downloaded data

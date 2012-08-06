@@ -75,10 +75,10 @@
     <Compile Include="ApiClients\PaymentsApiClientTests.cs" />
     <Compile Include="ApiClients\PaymentsApiClient_BetweeenDates_Tests.cs" />
     <Compile Include="ApiClients\PagesApiClient_SearchTests.cs" />
-    <Compile Include="ApiClients\SearchPagesCreatedCsvDataTests.cs" />
+    <Compile Include="ApiClients\PagesApiClient_SearchAndFormatTests.cs" />
     <Compile Include="ApiClients\TestContext.cs" />
-    <Compile Include="ApiClients\UpdateEventCustomCodesTests.cs" />
-    <Compile Include="ApiClients\UpdatePageCustomCodesTests.cs" />
+    <Compile Include="ApiClients\CustomCodeApi_EventTests.cs" />
+    <Compile Include="ApiClients\CustomCodeApi_PageTests.cs" />
     <Compile Include="Configuration\ITestConfigurations.cs" />
     <Compile Include="Configuration\TestConfigurations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -92,5 +92,19 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
             get { return (int) this["KnownPageId"]; }
             set { this["KnownPageId"] = value; }
         }
+
+        [ConfigurationProperty("ValidPageSearchStartDate")]
+        public DateTime ValidPageSearchStartDate
+        {
+            get { return (DateTime) this["ValidPageSearchStartDate"]; }
+            set { this["ValidPageSearchStartDate"] = value; }
+        }
+
+        [ConfigurationProperty("ValidPageSearchEndDate")]
+        public DateTime ValidPageSearchEndDate
+        {
+            get { return (DateTime) this["ValidPageSearchEndDate"]; }
+            set { this["ValidPageSearchEndDate"] = value; }
+        }
     }
 }

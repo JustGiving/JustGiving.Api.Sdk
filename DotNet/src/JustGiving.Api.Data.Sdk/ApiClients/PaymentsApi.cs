@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using JustGiving.Api.Data.Sdk.Model;
 using JustGiving.Api.Data.Sdk.Model.Payment;
 using JustGiving.Api.Sdk.Http;
 
 namespace JustGiving.Api.Data.Sdk.ApiClients
 {
-    /// <summary>
-    /// Makes Http calls to the Payment List resources made available by the JustGiving Data Api
-    /// </summary>
     public class PaymentsApi : DataApiClientBase, IPaymentsApi
     {
         public PaymentsApi(HttpChannel channel)
@@ -26,13 +24,13 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
             return ResourceBase + string.Format("/{0:yyyy-MM-dd};{1:yyyy-MM-dd}", date1.Date, date2.Date);
         }
 
-        public IEnumerable<PaymentSummary> PaymentsBetween(DateTime startDate, DateTime endDate)
+        public IEnumerable<PaymentSummary> RetrievePaymentsBetween(DateTime startDate, DateTime endDate)
         {
             var uri = BuildFormatUri(startDate, endDate);
             return HttpChannel.PerformRequest<IEnumerable<PaymentSummary>>("GET", uri);          
         }
 
-        public byte[] GetPaymentSummaryList(DateTime startDate, DateTime endDate, DataFileFormat fileFormat)
+        public byte[] RetrievePaymentsBetween(DateTime startDate, DateTime endDate, DataFileFormat fileFormat)
         {
             var uri = BuildFormatUri(startDate, endDate);
             var response = HttpChannel.PerformRawRequest("GET", uri, ContentTypes.GetAcceptContentType(fileFormat));
@@ -47,14 +45,14 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
             return response.StatusCode;
         }
 
-        public byte[] ReportFor(int paymentId, DataFileFormat fileFormat)
+        public byte[] RetrieveReport(int paymentId, DataFileFormat fileFormat)
         {
             var uri = Uri.Combine(ResourceBase, paymentId.ToString());
             var response = HttpChannel.PerformRawRequest("GET", uri, ContentTypes.GetAcceptContentType(fileFormat));
             return response.Content.Content;
         }
 
-        public T Report<T>(int paymentId)
+        public T RetrieveReport<T>(int paymentId)
         {
             var uri = Uri.Combine(ResourceBase, paymentId.ToString());
             return HttpChannel.PerformRequest<T>("GET", uri);

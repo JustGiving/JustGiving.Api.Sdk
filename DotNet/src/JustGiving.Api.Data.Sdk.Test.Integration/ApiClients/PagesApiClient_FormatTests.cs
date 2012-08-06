@@ -2,6 +2,7 @@
 using System.IO;
 using GemBox.Spreadsheet;
 using JustGiving.Api.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Model;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
 using NUnit.Framework;
@@ -31,8 +32,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                     .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other); 
 
             var client = new JustGivingDataClient(clientConfiguration);
+            var pagesClient = CreatePagesClient(client);
 
-            var data = client.Pages.Created(_startDate, _endDate, fileFormat);
+            var data = pagesClient.RetrievePagesCreated(_startDate, _endDate, fileFormat);
 
             Assert.That(data, Is.Not.Null);
             AssertResponseDoesNotHaveAnError(data);
@@ -53,11 +55,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             Assert.That(data.Length, Is.GreaterThan(0));
         }
 
-        private byte[] GetPagesCreated(DataClientConfiguration clientConfiguration, DataFileFormat fileFormat)
-        {
-            var client = new JustGivingDataClient(clientConfiguration);
-            return client.Pages.Created(_startDate, _endDate, fileFormat);
-        }
+        
 
         [TestCase(DataFileFormat.csv)]
         [TestCase(DataFileFormat.excel)]
@@ -67,11 +65,12 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other); 
 
             var client = new JustGivingDataClient(clientConfiguration);
-            
+            var pagesClient = CreatePagesClient(client);
+
             var startDate = new DateTime(2011,4,28);
             var endDate = new DateTime(2011,6,28);
 
-            var data = client.Pages.Created(startDate, endDate, fileFormat);
+            var data = pagesClient.RetrievePagesCreated(startDate, endDate, fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
@@ -95,11 +94,12 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other); ;
             
             var client = new JustGivingDataClient(clientConfiguration);
+            var pagesClient = CreatePagesClient(client);
 
             var startDate = new DateTime(2011,4,28);
             var endDate = new DateTime(2011,6,28);
 
-            var data = client.Pages.Created(startDate, endDate, fileFormat);
+            var data = pagesClient.RetrievePagesCreated(startDate, endDate, fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
@@ -109,6 +109,13 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             }
 
             Assert.That(sheet.Worksheets.Count, Is.GreaterThan(0));
+        }
+        
+        private byte[] GetPagesCreated(DataClientConfiguration clientConfiguration, DataFileFormat fileFormat)
+        {
+            var client = new JustGivingDataClient(clientConfiguration);
+            var pagesClient = new PagesApi(client.HttpChannel);
+            return pagesClient.RetrievePagesCreated(_startDate, _endDate, fileFormat);
         }
     }
 }

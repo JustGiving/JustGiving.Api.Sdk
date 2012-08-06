@@ -1,4 +1,5 @@
 ﻿using System;
+using JustGiving.Api.Data.Sdk.ApiClients;
 using JustGiving.Api.Data.Sdk.Model.Payment.Donations;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
@@ -17,15 +18,16 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            
+            var paymentClient = new PaymentsApi(client.HttpChannel);
+
             int count = 0;
             const int numberToDownload = 10;
-            
-            var payments = client.Payment.PaymentsBetween(new DateTime(2012,06,01), new DateTime(2012,06,30));
+
+            var payments = paymentClient.RetrievePaymentsBetween(new DateTime(2012, 06, 01), new DateTime(2012, 06, 30));
             foreach(var payment in payments)
             {
                 if (count >= numberToDownload) break;
-                var report = client.Payment.Report<Payment>(payment.PaymentRef);
+                var report = client.Payment.RetrieveReport<Payment>(payment.PaymentRef);
 
                 Assert.That(report, Is.Not.Null);
                 count++;

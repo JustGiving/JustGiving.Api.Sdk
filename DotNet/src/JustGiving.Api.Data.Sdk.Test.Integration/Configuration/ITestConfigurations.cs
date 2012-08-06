@@ -16,5 +16,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
         int KnownDonationPaymentId { get; set; }
         int KnownEventIdForCustomCodes { get; set; }
         int KnownPageId { get; set; }
+        DateTime ValidPageSearchStartDate { get; set; }
+        DateTime ValidPageSearchEndDate { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using JustGiving.Api.Data.Sdk.Model.Payment;
+using JustGiving.Api.Data.Sdk.Model.Payment.GiftAid;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
@@ -35,10 +36,11 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             Assert.Throws<ResourceNotFoundException>(() => GetPayment(clientConfiguration, BadPaymentId));
         }
 
-        private static Payment GetPayment(DataClientConfiguration clientConfiguration, int paymentId = 0)
+        private Payment GetPayment(DataClientConfiguration clientConfiguration, int paymentId = 0)
         {
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.Report<Payment>(paymentId == 0 ? TestContext.KnownGiftAidPaymentId : paymentId);
+            CreatePaymentsClient(client);
+            var payment = PaymentsClient.RetrieveReport<Payment>(paymentId == 0 ? TestContext.KnownGiftAidPaymentId : paymentId);
             return payment;
         }
 
