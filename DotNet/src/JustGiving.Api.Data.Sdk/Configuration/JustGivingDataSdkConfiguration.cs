@@ -49,5 +49,20 @@ namespace JustGiving.Api.Data.Sdk.Configuration
                 this["ApiVersion"] = value;
             }
         }
+
+        [ConfigurationProperty("Username")]
+        public string Username
+        {
+            get { return (string)this["Username"]; }
+            set { this["Username"] = value; }
+        }
+
+        [ConfigurationProperty("Password")]
+        public string Password
+        {
+            get { return (string) this["Password"]; }
+            set { this["Password"] = value; }
+
+        }
     }
 }

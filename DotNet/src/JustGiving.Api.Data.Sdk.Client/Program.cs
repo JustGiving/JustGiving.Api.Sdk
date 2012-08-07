@@ -25,7 +25,6 @@ namespace JustGiving.Api.Data.Sdk.Client
                                   {"e|enddate=", "the date to view payments until", (DateTime v) => _endDate = v},
                                   {"x|excel=", "save the data as an excel file to the specified location",  v => _excelFile = new FileInfo(v)},
                                   {"h|help", "show this message and exit", v => _showHelp = v != null}
-
                             };
 
             try
@@ -45,35 +44,78 @@ namespace JustGiving.Api.Data.Sdk.Client
                 ShowHelp(options);
                 return;
             }
+            var success = false;
+            GetDonationPayment(ref success);
+            
+            if (success)
+                return;
 
-            GetDonationPayment();
+            GetGiftAidPayment(ref success);
+              if (success)
+                return;
 
-
-            //if (_giftAidPayentId != null)
-            //{
-            //    if (_startDate != null || _endDate != null)
-            //    {
-            //        Console.WriteLine("You cannot specify date ranges when retrieving a single payment.");
-            //        Console.WriteLine("Try 'jgdata --help' for more information.");
-            //        return;
-            //    }
-
-            //    try
-            //    {
-            //        RetrieveSingleGiftAidPayment(_giftAidPayentId.Value);
-            //    }
-            //    catch (ResourceNotFoundException)
-            //    {
-            //        Console.WriteLine("404 Not found");
-            //    }
-
-            //    return;
-            //}
-
-
+            GetPaymentList(ref success);
+            if (success)
+                return;
         }
 
-        private static void GetDonationPayment()
+        private static void GetPaymentList(ref bool success)
+        {
+            if (_startDate != null)
+            {
+                if (_endDate == null)
+                {
+                    Console.WriteLine("You must also specify an end date.");
+                    Console.WriteLine("Try 'jgdata --help' for more information.");
+                    return;
+                }
+            }
+
+            if (_endDate != null)
+            {
+                if (_startDate == null)
+                {
+                    Console.WriteLine("You must also specify a start date.");
+                    Console.WriteLine("Try 'jgdata --help' for more information.");
+                    return;
+                }
+            }
+
+            if (_startDate == null && _endDate == null)
+            {
+                Console.WriteLine("No payment id or date range specified.");
+                Console.WriteLine("Try 'jgdata --help' for more information.");
+                return;
+            }
+
+            PaymentReport.RetrievePaymentList(_startDate.Value, _endDate.Value, _excelFile);
+            success = true;
+        }
+
+        private static void GetGiftAidPayment(ref bool success)
+        {
+            if (_giftAidPayentId != null)
+            {
+                if (_startDate != null || _endDate != null)
+                {
+                    Console.WriteLine("You cannot specify date ranges when retrieving a single payment.");
+                    Console.WriteLine("Try 'jgdata --help' for more information.");
+                    return;
+                }
+
+                try
+                {
+                    PaymentReport.RetrieveSingleGiftAidPayment(_giftAidPayentId.Value, _excelFile);
+                    success = true;
+                }
+                catch (ResourceNotFoundException)
+                {
+                    Console.WriteLine("404 Not found");
+                }
+            }
+        }
+
+        private static void GetDonationPayment(ref bool success)
         {
             if (_paymentId != null)
             {
@@ -87,71 +129,14 @@ namespace JustGiving.Api.Data.Sdk.Client
                 try
                 {
                     PaymentReport.RetrieveSingleDonationPayment(_paymentId.Value, _excelFile);
+                    success = true;
                 }
                 catch (ResourceNotFoundException)
                 {
                     Console.WriteLine("404 Not found");
                 }
-
-                return;
             }
         }
-
-        //private static void RetrieveSingleDonationPayment(int paymentId)
-        //{
-        //    var client = CreateClient();
-        //    var paymentsClient = new PaymentsApi(client.HttpChannel);
-
-        //    if (_excelFile == null)
-        //    {
-        //        var paymentReport = paymentsClient.RetrieveReport<DonatoionPayment>(paymentId);
-        //        foreach (var item in paymentReport.Donations)
-        //        {
-        //            Console.WriteLine("£{0} on {1:dd/MM/yyyy} from donor {2} {3} who said: '{4}'", item.Amount, item.Date, item.Donor.FirstName, item.Donor.LastName, item.MessageFromDonor);
-        //        }
-        //    }
-        //    else
-        //    {
-
-        //        var excelData = paymentsClient.RetrieveReport(paymentId, DataFileFormat.excel);
-
-        //        using (var fs = new FileStream(_excelFile.FullName, FileMode.Create))
-        //        {
-        //            fs.Write(excelData, 0, excelData.Length);
-        //            fs.Close();
-        //        }
-        //        Console.WriteLine("Saved!");
-        //    }
-        //}
-
-        //private static void RetrieveSingleGiftAidPayment(int giftAidPaymentId)
-        //{
-        //    var client = CreateClient();
-        //    var paymentsClient = new PaymentsApi(client.HttpChannel);
-            
-        //    if (_excelFile == null)
-        //    {
-        //        var paymentReport = paymentsClient.RetrieveReport<GiftAidPayment>(giftAidPaymentId);
-        //        foreach (var item in paymentReport.Donations)
-        //        {
-        //            Console.WriteLine("£{0} Gift Aid on {1:dd/MM/yyyy} from a donation of {2}", item.NetGiftAidAmount, item.Date, item.Amount);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var excelData = paymentsClient.RetrieveReport(giftAidPaymentId, DataFileFormat.excel);
-
-        //        using (var fs = new FileStream(_excelFile.FullName, FileMode.Create))
-        //        {
-        //            fs.Write(excelData, 0, excelData.Length);
-        //            fs.Close();
-        //        }
-        //        Console.WriteLine("Saved!");
-        //    }
-
-        //}
-
-        
 
         static void ShowHelp(OptionSet p)
         {
