@@ -97,9 +97,14 @@
     <Compile Include="Model\Payment\Donations\OrganisationPortal.cs" />
     <Compile Include="Model\Payment\Donations\Payment.cs" />
     <Compile Include="Model\Payment\Donations\ReferralWebsite.cs" />
+    <Compile Include="Model\Payment\GiftAid\Address.cs" />
     <Compile Include="Model\Payment\GiftAid\Charges.cs" />
+    <Compile Include="Model\Payment\GiftAid\CustomCodes.cs" />
     <Compile Include="Model\Payment\GiftAid\DonationGiftAid.cs" />
     <Compile Include="Model\Payment\GiftAid\Donor.cs" />
+    <Compile Include="Model\Payment\GiftAid\Event.cs" />
+    <Compile Include="Model\Payment\GiftAid\EventCustomCodes.cs" />
+    <Compile Include="Model\Payment\GiftAid\Fundraiser.cs" />
     <Compile Include="Model\Payment\GiftAid\FundraisingPage.cs" />
     <Compile Include="Model\Payment\GiftAid\Payment.cs" />
     <Compile Include="Model\Payment\GiftAid\ReferralWebsite.cs" />
