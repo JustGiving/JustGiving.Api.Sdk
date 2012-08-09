@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Windows;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
@@ -11,6 +12,8 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
     public class SilverlightHttpClient: IHttpClient
     {
         private readonly Dictionary<string, string> _headers;
+
+        public TimeSpan? ConnectionTimeOut { get; set; }
 
         public SilverlightHttpClient()
         {
@@ -138,7 +141,7 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
             {
                 Content =
                 {
-                    Content = content,
+                    Content = Encoding.UTF8.GetBytes(content),
                     ContentType = response.ContentType
                 },
                 Method = response.Method,
@@ -160,7 +163,7 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
             {
                 Content =
                 {
-                    Content = content,
+                    Content = Encoding.UTF8.GetBytes(content),
                     ContentType = response.ContentType
                 },
                 StatusCode = HttpStatusCode.InternalServerError,
@@ -183,5 +186,6 @@ namespace JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7
         {
             throw new NotImplementedException("Not implemented in Silverlight, use Async methods.");
         }
-    }
+
+        }
 }

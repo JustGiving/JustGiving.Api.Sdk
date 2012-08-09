@@ -29,10 +29,10 @@ namespace JustGiving.Api.Sdk.Http.DataPackets
         {
             if (Encoding != null)
             {
-                return Encoding.GetString(Content);
+                return Encoding.GetString(Content, 0, Content.Length);
             }
 
-            return TextEncoding.Default.GetString(Content);
+            return TextEncoding.Default.GetString(Content, 0, Content.Length);
         }
 
         public static implicit operator string(HttpContent content)

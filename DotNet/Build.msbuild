@@ -8,7 +8,7 @@
 </PropertyGroup>
 
   <Target Name="Compile">
-    <MSBuild Projects ="src/JustGiving.Api.Sdk-No-WP7.sln"></MSBuild>
+    <MSBuild Projects ="src/JustGiving.Api.Sdk.sln"></MSBuild>
   </Target>
 
   <Target Name="ExecuteUnitTests">
@@ -47,7 +47,7 @@
 	<Message Text="Compile and run unit tests"></Message>
   </Target>
   
-  <Target Name="BIT" DependsOnTargets="Compile;ExecuteDataApiSdkIntegrationTests;ExecuteDataApiSdkIntegrationTests">
+  <Target Name="BIT" DependsOnTargets="Compile;ExecuteApiSdkIntegrationTests;ExecuteDataApiSdkIntegrationTests">
 	<Message Text="Compile and run integration tests"></Message>
   </Target>
   

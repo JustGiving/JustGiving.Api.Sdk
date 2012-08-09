@@ -158,6 +158,7 @@
     <Compile Include="Model\Team\TeamTargetType.cs" />
     <Compile Include="Model\Team\TeamType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextEncoding.cs" />
     <Compile Include="WireDataFormat.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
