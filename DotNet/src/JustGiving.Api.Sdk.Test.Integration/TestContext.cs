@@ -45,12 +45,12 @@ namespace JustGiving.Api.Sdk.Test.Integration
             return new JustGivingClient(cfg);
         }
 
-        public static JustGivingClient CreateClientValidCredentials(WireDataFormat wireDataFormat)
+        public static JustGivingClient CreateClientValidCredentials(WireDataFormat wireDataFormat, string username = null, string password = null)
         {
             var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
             {
-                Username = TestUsername,
-                Password = TestValidPassword,
+                Username = username ?? TestUsername,
+                Password = username ?? TestValidPassword,
                 WireDataFormat = wireDataFormat
             };
 

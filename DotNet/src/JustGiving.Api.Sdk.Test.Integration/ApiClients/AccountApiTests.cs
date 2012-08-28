@@ -48,7 +48,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientInvalidCredentials(format);
 			var accountClient = new AccountApi(client.HttpChannel);
 
-            accountClient.ListAllPages(TestContext.TestUsername);
+            // NOTE: The user apiunittests@justgiving.com has too many pages, slowing this down too much,
+            //       so I'm using my credentials for now, which are the same on all environments.
+            accountClient.ListAllPages("sam@justgiving.com");
         }
 
         [TestCase(WireDataFormat.Json)]
