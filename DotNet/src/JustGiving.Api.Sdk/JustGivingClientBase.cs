@@ -41,6 +41,7 @@ namespace JustGiving.Api.Sdk
             }
 
             HttpClient = httpClient;
+            HttpClient.ConnectionTimeOut = TimeSpan.FromMinutes(3);
 
             Account = accountApi;
             Donation = donationApi;

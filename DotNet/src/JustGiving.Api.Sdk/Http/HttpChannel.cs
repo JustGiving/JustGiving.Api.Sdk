@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using JustGiving.Api.Sdk.Http.DataPackets;
 
@@ -259,10 +260,11 @@ namespace JustGiving.Api.Sdk.Http
 
     static class Extensions
     {
+        static readonly IList<string> AcceptedMethods = new[] {"get", "post", "put", "head"};
+
         public static bool NotAccepted(this string method)
         {
-            var lc = method.ToLower();
-            return !(lc == "get" || lc == "post" || lc == "put" || lc == "head");
+            return !AcceptedMethods.Contains(method.ToLower());
         }
     }
 }
