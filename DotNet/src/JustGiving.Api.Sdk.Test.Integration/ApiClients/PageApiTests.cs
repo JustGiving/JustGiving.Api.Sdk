@@ -217,9 +217,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void ListPages_WhenProvidedCredentials_ReturnsPages(WireDataFormat format)
         {
-            // NOTE: The user apiunittests@justgiving.com has too many pages, slowing this down too much,
-            //       so I'm using my credentials for now, which are the same on all environments.
-            var client = TestContext.CreateClientValidCredentials(format, "sam@justgiving.com", "123456");
+            var client = TestContext.CreateClientValidCredentials(format, "apiunittests2@justgiving.com", "123456");
 			var pageClient = new PageApi(client.HttpChannel);
 
             var pageData = pageClient.ListAll();

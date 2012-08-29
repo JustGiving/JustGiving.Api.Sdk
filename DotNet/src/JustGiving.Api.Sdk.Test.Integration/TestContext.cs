@@ -50,7 +50,7 @@ namespace JustGiving.Api.Sdk.Test.Integration
             var cfg = new ClientConfiguration(ApiLocation, ApiKey, 1)
             {
                 Username = username ?? TestUsername,
-                Password = username ?? TestValidPassword,
+                Password = password ?? TestValidPassword,
                 WireDataFormat = wireDataFormat
             };
 
