@@ -28,7 +28,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var response = _customCodeClient.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = "foo" });
 
-            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.Href, Is.Not.Empty);
         }
 
         [Test]

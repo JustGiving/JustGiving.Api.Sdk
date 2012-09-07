@@ -29,7 +29,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void CanSetCustomCode()
         {
             var response = _customCodeClient.SetPageCustomCodes(TestContext.KnownPageIdWithCustomCodes, new PageCustomCodes { CustomCode1 = "foo" });
-            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            Assert.That(response.Href, Is.Not.Empty);
         }
         
         [Test]
