@@ -46,6 +46,8 @@ namespace JustGiving.Api.Sdk.Http
                 contentType = JsonContentType;
             }
 
+            System.Diagnostics.Debug.WriteLine("Payload:\r\n"+payload);
+
             return new HttpContent { Content = TextEncoding.Default.GetBytes(payload), ContentType = contentType };
         }
 
