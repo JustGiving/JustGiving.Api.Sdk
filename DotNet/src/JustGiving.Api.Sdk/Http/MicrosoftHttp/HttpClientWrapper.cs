@@ -40,6 +40,7 @@ namespace JustGiving.Api.Sdk.Http.MicrosoftHttp
 
         public DataPackets.HttpResponseMessage Send(string method, Uri uri, DataPackets.HttpContent postData)
         {
+            System.Diagnostics.Debug.WriteLine("Request: " + uri.ToString() + " ("+method+")");
             var httpRequestMessage = new HttpRequestMessage(method, uri, HttpContent.Create(postData.Content, postData.ContentType))
                                          {Headers = {ContentType = postData.ContentType}};
             var response = _httpClient.Send(httpRequestMessage);

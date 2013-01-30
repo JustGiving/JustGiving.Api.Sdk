@@ -170,7 +170,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var report = pagesClient.Search(new PageCreatedSearchQuery
                                          {
                                              PageCustomCode1 = TestContext.KnownPageCustomCode1,
-                                             PageExpiresAfter = new DateTime(2012, 01, 01), //2017-03-08 00:00:00.000
+                                             PageExpiresAfter = new DateTime(2000, 01, 01), //2017-03-08 00:00:00.000
                                              PageExpiresBefore = new DateTime(2020, 01, 01)
                                          }, _startDate, _endDate);
 
