@@ -27,7 +27,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
 
-            var items = searchClient.EventSearch("running");
+            var items = searchClient.EventSearch("Test");
             Assert.IsTrue(items.Results.Any());
         }
 
