@@ -64,6 +64,12 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string RssUrl { get; set; }
         [DataMember(Name = "story", EmitDefaultValue = false)]
         public string Story { get; set; }
+
+        [DataMember(Name = "pageSummaryWhat", EmitDefaultValue = false)]
+        public string PageSummaryWhat { get; set; }
+        [DataMember(Name = "pageSummaryWhy", EmitDefaultValue = false)]
+        public string PageSummaryWhy { get; set; }
+
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
         [DataMember(Name = "smsCode", EmitDefaultValue = false)]
