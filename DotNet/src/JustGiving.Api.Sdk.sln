@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk", "JustGiving.Api.Sdk\JustGiving.Api.Sdk.csproj", "{6D16BFF7-1384-4797-87E8-AE03D173BBA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Unit", "JustGiving.Api.Sdk.Test.Unit\JustGiving.Api.Sdk.Test.Unit.csproj", "{06A85854-52E4-4B21-ABDE-69E0D0A3E68B}"

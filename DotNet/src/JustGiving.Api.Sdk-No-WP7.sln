@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk", "JustGiving.Api.Sdk\JustGiving.Api.Sdk.csproj", "{6D16BFF7-1384-4797-87E8-AE03D173BBA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Unit", "JustGiving.Api.Sdk.Test.Unit\JustGiving.Api.Sdk.Test.Unit.csproj", "{06A85854-52E4-4B21-ABDE-69E0D0A3E68B}"
@@ -14,6 +14,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Common", "JustGiving.Api.Sdk.Test.Common\JustGiving.Api.Sdk.Test.Common.csproj", "{092936C8-F57D-4B9C-9235-5EA4D16C5422}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Data.Sdk.Client", "JustGiving.Api.Data.Sdk.Client\JustGiving.Api.Data.Sdk.Client.csproj", "{F3168D68-4DC3-4F0D-B83A-8A5996732179}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8A80073D-1EFD-499F-BB84-8308C5BE1170}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

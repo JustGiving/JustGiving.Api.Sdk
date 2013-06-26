@@ -722,6 +722,37 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.NotNull(page.RememberedPersonSummary.Name);
             Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
         }
+
+
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Register_WithWhatAndWhy_CreatesCorrectly(WireDataFormat format)
+        {
+            var guid = Guid.NewGuid();
+            var client = TestContext.CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageShortName = "api-test-" + guid;
+
+            var pageCreationRequest = new RegisterPageRequest
+            {
+                ActivityType = ActivityType.OtherCelebration,
+                PageShortName = pageShortName,
+                PageTitle = "api test Name",
+                EventName = "ApiTest",
+                PageSummaryWhat = "saving the universe",
+                PageSummaryWhy = "because I'm Batman",
+                CharityId = 2050,
+                TargetAmount = 20M,
+                EventDate = DateTime.Now.AddDays(5),
+            };
+
+            pageClient.Create(pageCreationRequest);
+            var page = pageClient.Retrieve(pageShortName);
+
+            Assert.That(page.PageSummaryWhat, Is.EqualTo("saving the universe"));
+            Assert.That(page.PageSummaryWhy, Is.EqualTo("because I'm Batman"));
+        }
     }
 
     

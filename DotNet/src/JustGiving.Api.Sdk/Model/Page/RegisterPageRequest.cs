@@ -69,6 +69,12 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "pageStory")]
         public string PageStory { get; set; }
 
+        [DataMember(Name = "pageSummaryWhat")]
+        public string PageSummaryWhat { get; set; }
+
+        [DataMember(Name = "pageSummaryWhy")]
+        public string PageSummaryWhy { get; set; }
+
         [DataMember(Name = "customCodes")]
         public PageCustomCodes CustomCodes { get; set; }
 
