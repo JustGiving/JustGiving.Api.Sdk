@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace JustGiving.Api.Sdk.Model.Page
@@ -32,6 +33,8 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string EventName { get; set; }
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
+        [DataMember(Name = "inMemoryPerson")]
+        public InMemoryPerson InMemoryPerson { get; set; }
         [DataMember(Name = "charityId", Order = 13)]
         public string CharityId { get; set; }
         [DataMember(Name = "smsCode", Order = 14)]
@@ -41,5 +44,18 @@ namespace JustGiving.Api.Sdk.Model.Page
         {
             PageImages = new List<string>();
         }
+    }
+
+    [DataContract(Namespace = "", Name = "inMemoryPerson")]
+    public class InMemoryPerson
+    {
+        [DataMember(Name = "FirstName")]
+        public string FirstName { get; set; }
+        [DataMember(Name = "LastName")]
+        public string LastName { get; set; }
+        [DataMember(Name = "dateOfBirth")]
+        public DateTime DateOfBirth { get; set; }
+        [DataMember(Name = "dateOfDeath")]
+        public DateTime DateOfDeath { get; set; }
     }
 }
