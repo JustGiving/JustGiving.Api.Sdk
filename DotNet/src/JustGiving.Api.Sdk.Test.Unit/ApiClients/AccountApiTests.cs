@@ -160,5 +160,26 @@ namespace JustGiving.Api.Sdk.Test.Unit.ApiClients
             Assert.That(httpClient.LastRequest.Method, Is.StringContaining("POST"));
         }
 
+        [Test]
+        public void RetrieveAccount_ValidUserNameAndPassword_CallsExpectedUrl()
+        {
+            var client = new MockHttpClient<AccountDetails>(HttpStatusCode.OK);
+            var config = new ClientConfiguration("test") { Username = "user", Password = "pass" };
+            var api = ApiClient.Create<AccountApi, AccountDetails>(config, client);
+            api.RetrieveAccount();
+
+            var expected = string.Format(
+                "{0}{1}/v{2}/account/", config.RootDomain, config.ApiKey, config.ApiVersion);
+            var url = client.LastRequestedUrl;
+            Assert.AreEqual(expected, url);
+        }
+
+        [Test]
+        public void RetrieveAccount_InvalidUserNameAndPassword_ThrowsArgumentNullException()
+        {
+            var exception = Assert.Throws<Exception>(() => _api.RetrieveAccount());
+
+            Assert.That(exception.Message, Is.StringContaining("Authentication required to retrieve account details."));
+        }
     }
 }

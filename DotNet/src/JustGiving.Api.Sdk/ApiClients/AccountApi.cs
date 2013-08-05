@@ -104,6 +104,22 @@ namespace JustGiving.Api.Sdk.ApiClients
             HttpChannel.PerformRawRequestAsync("GET", locationFormat, ProcessRequestPasswordReminder);
         }
 
+        public string RetrieveAccountLocationFormat()
+        {
+            if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
+            {
+                throw new Exception("Authentication required to retrieve account details.");
+            }
+
+            return ResourceBase + "/";
+        }
+
+        public AccountDetails RetrieveAccount()
+        {
+            var locationFormat = RetrieveAccountLocationFormat();
+            return HttpChannel.PerformRequest<AccountDetails>("GET", locationFormat);
+        }
+
         private static void ProcessRequestPasswordReminder(HttpResponseMessage response)
         {
             if (response.StatusCode == HttpStatusCode.OK)

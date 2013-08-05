@@ -107,6 +107,7 @@
     <Compile Include="Http\MicrosoftHttp\HttpClientWrapper.cs" />
     <Compile Include="Http\IHttpClient.cs" />
     <Compile Include="Http\ErrorResponseException.cs" />
+    <Compile Include="Model\Account\AccountDetails.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
     <Compile Include="Model\Account\ValidateUser.cs" />
     <Compile Include="Model\Account\ValidateUserCommandResponse.cs" />

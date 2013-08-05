@@ -116,6 +116,18 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             accountClient.RequestPasswordReminder(TestContext.TestUsername);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RequestRetrieveAccount_ReturnsAccountDetails(WireDataFormat format)
+        {
+            var client = TestContext.CreateClientInvalidCredentials(format);
+			var accountClient = new AccountApi(client.HttpChannel);
+
+            var account = accountClient.RetrieveAccount();
+
+            Assert.AreEqual(TestContext.TestUsername, account.Email);
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest

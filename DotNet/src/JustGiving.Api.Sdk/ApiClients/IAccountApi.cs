@@ -10,5 +10,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         FundraisingPageSummaries ListAllPages(string email);
         void RequestPasswordReminder(string email);
         bool IsEmailRegistered(string email);
+        AccountDetails RetrieveAccount();
     }
 }
