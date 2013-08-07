@@ -35,9 +35,9 @@ namespace JustGiving.Api.Sdk.Model.Page
         public string Domain { get; set; }
         [DataMember(Name = "inMemoryPerson")]
         public InMemoryPerson InMemoryPerson { get; set; }
-        [DataMember(Name = "charityId", Order = 13)]
+        [DataMember(Name = "charityId", Order = 17)]
         public string CharityId { get; set; }
-        [DataMember(Name = "smsCode", Order = 14)]
+        [DataMember(Name = "smsCode", Order = 16)]
         public string SmsCode { get; set; }
 
         public FundraisingPageSummary()
