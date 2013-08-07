@@ -35,5 +35,8 @@ namespace JustGiving.Api.Sdk.Model.Charity
 
         [DataMember(Name="mobileAppeals")]
         public IList<MobileAppeal> MobileAppeals { get; set; }
+
+        [DataMember(Name="emailAddress")]
+        public string EmailAddress { get; set; }
     }
 }
