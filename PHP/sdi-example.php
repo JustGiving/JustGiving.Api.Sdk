@@ -6,7 +6,9 @@
 
 <?php
 
-$donationId = $_GET['donationId'];
+if (isset($_GET['donationId'])) {
+  $donationId = $_GET['donationId'];
+}
 
 if (!isset($donationId)) { ?>
 
