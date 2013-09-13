@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Model.Event;
 using JustGiving.Api.Sdk.Model.Team;
@@ -24,15 +26,16 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
 			WithAValidClient(format);
 
-        	var team = new Team
-        	             	{
-        	             		Name = "My Awesome event",
-								Target = 1000.00m,
-								Story = "My kick ass story",
-								TargetType = TeamTargetType.Fixed.ToString(),
-								TeamShortName = "my-great-team" + Guid.NewGuid(),
-								TeamType = TeamType.ByInvitationOnly.ToString()
-        	             	};
+            var team = new Team
+            {
+                Name = "My Awesome event",
+                Target = 1000.00m,
+                Story = "My kick ass story",
+                TargetType = TeamTargetType.Fixed.ToString(),
+                TeamShortName = "my-great-team" + Guid.NewGuid(),
+                TeamType = TeamType.Open.ToString(),
+                TeamMembers = new List<TeamMember> { new TeamMember { PageShortName = "api-test-c166ab39-fc80-4cf1-aed0-9236974740ca" } }
+            };
 
 			var eventRegistrationResponse = _api.CreateOrUpdate(team);
 
@@ -52,7 +55,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 								Story = "My kick ass story",
 								TargetType = TeamTargetType.Fixed.ToString(),
 								TeamShortName = Guid.NewGuid().ToString(),
-								TeamType = TeamType.ByInvitationOnly.ToString()
+                                TeamType = TeamType.ByInvitationOnly.ToString(),
+                                TeamMembers = new List<TeamMember> { new TeamMember { PageShortName = "api-test-c166ab39-fc80-4cf1-aed0-9236974740ca" } }
         	             	};
 
 			_api.CreateOrUpdate(team);
@@ -86,7 +90,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 				Story = "My kick ass story",
 				TargetType = TeamTargetType.Fixed.ToString(),
 				TeamShortName = Guid.NewGuid().ToString(),
-				TeamType = TeamType.ByInvitationOnly.ToString()
+                TeamType = TeamType.ByInvitationOnly.ToString(),
+                TeamMembers = new List<TeamMember> { new TeamMember { PageShortName = "api-test-c166ab39-fc80-4cf1-aed0-9236974740ca" } }
 			};
 
 			var teamId = _api.CreateOrUpdate(team1).Id;
