@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace JustGiving.Api.Sdk.Model.Team
@@ -54,5 +56,8 @@ namespace JustGiving.Api.Sdk.Model.Team
 		/// </summary>
 		[DataMember(Name = "raisedSoFar", EmitDefaultValue = false)]
 		public decimal? RaisedSoFar { get; set; }
+
+        [DataMember(Name = "teamMembers", EmitDefaultValue = false)]
+        public IList<TeamMember> TeamMembers { get; set; }
 	}
 }

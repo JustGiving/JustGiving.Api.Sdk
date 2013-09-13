@@ -167,6 +167,7 @@
     <Compile Include="Model\Search\EventSearchResult.cs" />
     <Compile Include="Model\Summaries\Summaries.cs" />
     <Compile Include="Model\Team\Team.cs" />
+    <Compile Include="Model\Team\TeamMember.cs" />
     <Compile Include="Model\Team\TeamTargetType.cs" />
     <Compile Include="Model\Team\TeamType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
