@@ -130,6 +130,7 @@
     <Compile Include="Model\Page\AddFundraisingPageImageRequest.cs" />
     <Compile Include="Model\Page\AddFundraisingPageVideoConfirmation.cs" />
     <Compile Include="Model\Page\AddFundraisingPageVideoRequest.cs" />
+    <Compile Include="Model\Page\FundraisingPageSummariesPaginated.cs" />
     <Compile Include="Model\Page\Donation.cs" />
     <Compile Include="Model\Page\FundraisingPage.cs" />
     <Compile Include="Model\Page\FundraisingPageBranding.cs" />

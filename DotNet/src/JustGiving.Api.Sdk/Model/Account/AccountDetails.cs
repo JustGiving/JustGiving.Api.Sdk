@@ -25,5 +25,14 @@ namespace JustGiving.Api.Sdk.Model.Account
 
         [DataMember(Name = "totalRaised", IsRequired = true)]
         public decimal TotalRaised { get; set; }
+
+        [DataMember(Name = "inMemoryPagesCount", IsRequired = true)]
+        public int InMemoryPagesCount { get; set; }
+
+        [DataMember(Name = "firstName", IsRequired = true)]
+        public string FirstName { get; set; }
+
+        [DataMember(Name = "lastName", IsRequired = true)]
+        public string LastName { get; set; }
     }
 }

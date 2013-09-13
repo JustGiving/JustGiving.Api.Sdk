@@ -11,6 +11,9 @@ namespace JustGiving.Api.Sdk.Model
         [DataMember(Name = "totalPages")]
         public int TotalPages { get; set; }
 
+        [DataMember(Name = "totalResults")]
+        public int TotalResults { get; set; }
+
         [DataMember(Name = "pageSizeRequested")]
         public int PageSizeRequested { get; set; }
 

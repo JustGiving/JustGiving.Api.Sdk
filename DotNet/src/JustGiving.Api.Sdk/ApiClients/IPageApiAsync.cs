@@ -6,6 +6,7 @@ namespace JustGiving.Api.Sdk.ApiClients
     public interface IPageApiAsync
     {
         void ListAllAsync(Action<FundraisingPageSummaries> callback);
+        void ListAllAsync(int? page, int? pageSize, string inMemoryPersonSearch, Action<FundraisingPageSummariesPaginated> callback);
         void RetrieveAsync(string pageShortName, Action<FundraisingPage> callback);
         void RetrieveDonationsForPageAsync(string pageShortName, Action<FundraisingPageDonations> callback);
         void RetrieveDonationsForPageAsync(string pageShortName, int? pageSize, int? pageNumber, Action<FundraisingPageDonations> callback);

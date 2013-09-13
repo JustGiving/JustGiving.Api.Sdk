@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using JustGiving.Api.Sdk.Model.Page;
+﻿using JustGiving.Api.Sdk.Model.Page;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public interface IPageApi: IPageApiAsync
     {
         FundraisingPageSummaries ListAll();
+        FundraisingPageSummariesPaginated ListAll(int? page, int? pageSize, string inMemoryPersonSearch);
         FundraisingPage Retrieve(string pageShortName);
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName);
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName, int? pageSize, int? pageNumber);

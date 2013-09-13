@@ -25,12 +25,48 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
 
             return ResourceBase + "/pages";
+        }    
+    
+        public string ListAllLocationPaginatedFormat()
+        {
+			if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
+            {
+                throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
+            }
+
+            return ResourceBase + "/paginatedpages";
+        }
+
+        public FundraisingPageSummariesPaginated ListAll(int? page, int? pageSize, string inMemoryPersonSearch)
+        {
+            var locationFormat = ListAllLocationPaginatedFormat();
+            locationFormat += "?page=" + page.GetValueOrDefault(1);
+            locationFormat += "&pagesize=" + pageSize.GetValueOrDefault(Int32.MaxValue);
+
+            if (inMemoryPersonSearch != null)
+            {
+                locationFormat += "&inMemoryPersonNameSearch=" + inMemoryPersonSearch;
+            }
+            return HttpChannel.PerformRequest<FundraisingPageSummariesPaginated>("GET", locationFormat);
         }
 
         public FundraisingPageSummaries ListAll()
         {
             var locationFormat = ListAllLocationFormat();
             return HttpChannel.PerformRequest<FundraisingPageSummaries>("GET", locationFormat);
+        }
+
+        public void ListAllAsync(int? page, int? pageSize, string inMemoryPersonSearch, Action<FundraisingPageSummariesPaginated> callback)
+        {
+            var locationFormat = ListAllLocationPaginatedFormat();
+            locationFormat += "?page=" + page.GetValueOrDefault(1);
+            locationFormat += "&pagesize=" + pageSize.GetValueOrDefault(Int32.MaxValue);
+
+            if (inMemoryPersonSearch != null)
+            {
+                locationFormat += "&inMemoryPersonNameSearch=" + inMemoryPersonSearch;
+            }
+            HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
         }
 
         public void ListAllAsync(Action<FundraisingPageSummaries> callback)
