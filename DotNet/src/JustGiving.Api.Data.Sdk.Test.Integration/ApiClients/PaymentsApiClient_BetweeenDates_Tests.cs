@@ -37,11 +37,11 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var dataClient = new JustGivingDataClient(clientConfiguration);
             CreatePaymentsClient(dataClient);
 
-            var startDate = DateTime.Now.AddYears(-1);
+            var startDate = TestContext.StartDate;
             var endDate = startDate.AddMonths(3);
 
             var data = new List<PaymentSummary>();
-            while(data.Count == 0 && startDate <= DateTime.Now.AddMonths(4))
+            while (data.Count == 0 && startDate <= TestContext.StartDate.AddMonths(9))
             {
                 var response = PaymentsClient.RetrievePaymentsBetween(startDate, endDate); 
                 if (response.Any())
