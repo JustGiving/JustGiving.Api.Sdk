@@ -15,7 +15,7 @@ namespace JustGiving.Api.Sdk
         public TimeSpan? ConnectionTimeOut { get; set; }
 
         public ClientConfiguration(string apiKey): this("https://api.justgiving.com/", apiKey, 1)
-        {
+        { 
         }
         public ClientConfiguration(string rootDomain, string apiKey, int apiVersion)
         {
