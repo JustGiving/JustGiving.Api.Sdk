@@ -18,9 +18,14 @@ class ClientBase
 	}
 	
 	public function BuildAuthenticationValue()
-	{
-		$stringForEnc = $this->Parent->Username.":".$this->Parent->Password;
-		return base64_encode($stringForEnc);
+	{	
+		if($this->Parent->Username != null && $this->Parent->Username != "")
+		{
+			$stringForEnc = $this->Parent->Username.":".$this->Parent->Password;
+			return base64_encode($stringForEnc);
+		}
+		
+		return "";	
 	}
 	
 	public function WriteLine($string)
