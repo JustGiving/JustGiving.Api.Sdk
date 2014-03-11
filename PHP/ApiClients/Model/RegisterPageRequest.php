@@ -15,4 +15,19 @@ class RegisterPageRequest
 	public $attribution;
 	public $charityFunded;
 	public $causeId;
+	public $images;
+	public $videos;
+} 
+
+class PageImage
+{
+	public $url;
+	public $caption;
+	public $isDefault;
+}
+
+class PageVideo
+{
+	public $url;
+	public $caption;
 }
