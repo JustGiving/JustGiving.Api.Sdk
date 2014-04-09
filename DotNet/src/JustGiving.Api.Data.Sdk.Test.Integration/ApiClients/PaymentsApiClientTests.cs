@@ -7,35 +7,49 @@ using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
+    public enum PaymentType
+    {
+        GiftAid, 
+        Donation
+    }
+
     [TestFixture, Category("Slow")]
     public class PaymentsApiClientTests : ApiTestFixture
     {
-        [TestCase(TestContext.KnownDonationPaymentId, DataFileFormat.csv)]
-        [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.csv)]
-        [TestCase(TestContext.KnownDonationPaymentId, DataFileFormat.excel)]
-        [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.excel)]
-        public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned(int paymentId, DataFileFormat fileFormat)
+        [TestCase(PaymentType.Donation, DataFileFormat.csv)]
+        [TestCase(PaymentType.GiftAid, DataFileFormat.csv)]
+        [TestCase(PaymentType.Donation, DataFileFormat.excel)]
+        [TestCase(PaymentType.GiftAid, DataFileFormat.excel)]
+        public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned(PaymentType paymentType, DataFileFormat fileFormat)
         {
             var clientConfiguration = GetDefaultDataClientConfiguration()
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.ReportFor(paymentId, fileFormat);
+            var payment = client.Payment.ReportFor(GetPaymentId(paymentType), fileFormat);
             AssertResponseDoesNotHaveAnError(payment);
             Assert.IsNotNull(payment);
         }
 
-        [TestCase(TestContext.KnownDonationPaymentId, DataFileFormat.csv)]
-        [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.csv)]
-        [TestCase(TestContext.KnownDonationPaymentId, DataFileFormat.excel)]
-        [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.excel)]
-        public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat(int paymentId, DataFileFormat fileFormat)
+        private int GetPaymentId(PaymentType paymentType)
+        {
+            if (paymentType == PaymentType.GiftAid)
+                return TestContext.KnownGiftAidPaymentId;
+
+            return TestContext.KnownDonationPaymentId;
+        }
+
+        [TestCase(PaymentType.Donation, DataFileFormat.csv)]
+        [TestCase(PaymentType.GiftAid, DataFileFormat.csv)]
+        [TestCase(PaymentType.Donation, DataFileFormat.excel)]
+        [TestCase(PaymentType.GiftAid, DataFileFormat.excel)]
+        public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat(PaymentType paymentType, DataFileFormat fileFormat)
         {
             var clientConfiguration = GetDefaultDataClientConfiguration()
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
-            var payment = client.Payment.ReportFor(paymentId, fileFormat);
+            var payment = client.Payment.ReportFor(GetPaymentId(paymentType), fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
@@ -49,11 +63,11 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             Assert.That(sheet.Worksheets.Count, Is.GreaterThan(0));
         }
 
-        [TestCase(TestContext.KnownDonationPaymentId, DataFileFormat.csv)]
-        [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.csv)]
-        [TestCase(TestContext.KnownDonationPaymentId, DataFileFormat.excel)]
-        [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.excel)]
-        public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat_AndCompressed(int paymentId, DataFileFormat fileFormat)
+        [TestCase(PaymentType.Donation, DataFileFormat.csv)]
+        [TestCase(PaymentType.GiftAid, DataFileFormat.csv)]
+        [TestCase(PaymentType.Donation, DataFileFormat.excel)]
+        [TestCase(PaymentType.GiftAid, DataFileFormat.excel)]
+        public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat_AndCompressed(PaymentType paymentType, DataFileFormat fileFormat)
         {
             var clientConfiguration = GetDefaultDataClientConfiguration()
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true)
@@ -62,7 +76,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             
             var client = new JustGivingDataClient(clientConfiguration);
 
-            var payment = client.Payment.ReportFor(paymentId, fileFormat);
+            var payment = client.Payment.ReportFor(GetPaymentId(paymentType), fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();

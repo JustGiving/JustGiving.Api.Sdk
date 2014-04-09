@@ -10,5 +10,11 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.Configuration
         int EventId { get; set; }
         DateTime PageCreatedStartDate { get; set; }
         int CustomCodePageId { get; set; }
+        int CustomCodeEventId { get; set; }
+        bool PageStatus { get; set; }
+        int KnownGiftAidPaymentId { get; set; }
+        int KnownDonationPaymentId { get; set; }
+        int KnownEventIdForCustomCodes { get; set; }
+        int KnownPageId { get; set; }
     }
 }
