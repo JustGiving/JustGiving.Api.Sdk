@@ -96,6 +96,14 @@ namespace JustGiving.Api.Sdk.Http
             return _httpClient.Send(request);
         }
 
+        public TResult PerformRequest<TResult>(string method, string locationFormat, byte[] postData, string contentType, string acceptContentType)
+        {
+            var url = BuildUrl(locationFormat);
+            var request = new HttpRequestMessage(method, url) { Content = new HttpContent(postData, contentType), AcceptContentType = acceptContentType};
+            var response = _httpClient.Send(request);
+            return ProcessResponse<TResult>(response);
+        }
+
         public HttpResponseMessage PerformRawRequest(string method, string locationFormat, string acceptContentType)
         {
             var uri = BuildUrl(locationFormat);
@@ -185,6 +193,7 @@ namespace JustGiving.Api.Sdk.Http
                 case HttpStatusCode.Accepted:
                 case HttpStatusCode.Continue:
                 case HttpStatusCode.Found:
+                case (HttpStatusCode)207:
                     var errorsDespiteSuccess = TryExtractErrorsFromResponse(content);
                     if (errorsDespiteSuccess != null && errorsDespiteSuccess.Count > 0)
                     {

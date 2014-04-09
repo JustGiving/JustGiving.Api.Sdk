@@ -15,4 +15,15 @@ namespace JustGiving.Api.Data.Sdk.Model.CustomCodes
         [DataMember(Name = "href")]
         public string Href { get; set; }
     }
+
+    [DataContract(Namespace = "")]
+    public class SetCustomCodesForPageResponse : SetCustomCodesResponse
+    {
+    }
+
+    [DataContract(Namespace = "")]
+    public class SetCustomCodesForEventResponse : SetCustomCodesResponse
+    {
+    }
+
 }

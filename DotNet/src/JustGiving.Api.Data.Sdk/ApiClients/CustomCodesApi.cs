@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using JustGiving.Api.Data.Sdk.Model.CustomCodes;
+using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 
@@ -27,116 +29,90 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         //    return FormatUriRoot + resourceType + "/" + resourceId + "/customcodes";
         //}
 
-        //public PageCustomCodes GetPageCustomCodes(int pageId)
-        //{
-        //    var uri = BuildFormatUri("pages", pageId);
-        //    var response = Parent.HttpChannel.PerformApiRequest<PageCustomCodes>("GET", uri);
-        //    return response;
-        //}
-
-        //public EventCustomCodes GetEventCustomCodes(int eventId)
-        //{
-        //    var uri = BuildFormatUri("events", eventId);
-        //    var response = Parent.HttpChannel.PerformApiRequest<EventCustomCodes>("GET", uri);
-        //    return response;
-        //}
-
-        public SetCustomCodesResponse SetPageCustomCodes(int pageId, PageCustomCodes codes)
+        public PageCustomCodes GetPageCustomCodes(int pageId)
         {
-            var uri = ResourceBase + "/" + pageId +  "/customcodes";
-            var response = HttpChannel.PerformRequest<PageCustomCodes, SetCustomCodesResponse>("PUT", uri, codes);
+            var uri = ResourceBase + "/" + pageId + "/customcodes" ;
+            var response = HttpChannel.PerformRequest<PageCustomCodes>("GET", uri);
+            return response;
+        }
+
+        public SetCustomCodesResponse SetEventCustomCodes(int eventId, EventCustomCodes codes)
+        {
+            var uri = BaseRoot + "/events/" + eventId + "/customcodes";
+
+            var response = HttpChannel.PerformRequest<EventCustomCodes, SetCustomCodesResponse>("PUT", uri, codes);
 
             return response;
         }
 
-        
-        public PageCustomCodes GetPageCustomCodes(int pageId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public EventCustomCodes GetEventCustomCodes(int eventId)
         {
-            throw new System.NotImplementedException();
+            var uri = BaseRoot + "/events/" + eventId + "/customcodes";
+            var response = HttpChannel.PerformRequest<EventCustomCodes>("GET", uri);
+            return response;
         }
+
+        public SetCustomCodesForPageResponse SetPageCustomCodes(int pageId, PageCustomCodes codes)
+        {
+            var uri = ResourceBase + "/" + pageId +  "/customcodes";
+            var response = HttpChannel.PerformRequest<PageCustomCodes, SetCustomCodesForPageResponse>("PUT", uri, codes);
+
+            return response;
+        }
+
 
         public MultiStatus SetPageCustomCodes(IEnumerable<PageCustomCodesListItem> codes)
         {
-            return HttpChannel.PerformRequest<IEnumerable<PageCustomCodesListItem>, MultiStatus>("PUT", ResourceBase, codes);
+            var uri = ResourceBase + "/customcodes";
+            return HttpChannel.PerformRequest<IEnumerable<PageCustomCodesListItem>, MultiStatus>("PUT", uri, codes);
         }
 
         public MultiStatus SetPageCustomCodes(string csvData)
         {
-            throw new System.NotImplementedException();
+            return PutCustomCodes("pages", csvData);
         }
 
-        public HttpResponseMessage SetEventCustomCodes(int eventId, EventCustomCodes codes)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public MultiStatus SetEventCustomCodes(IEnumerable<EventCustomCodesListItem> codes)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public MultiStatus SetEventCustomCodes(string csvData)
         {
-            throw new System.NotImplementedException();
+            return PutCustomCodes("events", csvData);
         }
 
-//        public MultiStatus SetPageCustomCodes(string csvData)
-//        {
-//            return PutCustomCodes("pages", csvData);
-//        }
 
-        //public HttpResponseMessage SetEventCustomCodes(int eventId, EventCustomCodes codes)
-        //{
-        //    var uri = BuildFormatUri("events", eventId);
+        public MultiStatus SetEventCustomCodes(IEnumerable<EventCustomCodesListItem> codes)
+        {
+            var uri = BaseRoot + "/events/customcodes";
+            var response = HttpChannel.PerformRequest<IEnumerable<EventCustomCodesListItem>, MultiStatus>("PUT", uri, codes);
 
-        //    var response = Parent.HttpChannel.PerformApiRequest("PUT", uri, codes);
+            return response;
+        }
 
-        //    return response;
-        //}
+      
+        private MultiStatus PutCustomCodes(string resourceType, string csvData)
+        {
+            // only Xml and Json responses are available: if the client sets something else, we change it
+            // to Xml for this request, then change it back at the end
+            var tempWireDataFormat = HttpChannel.ClientConfiguration.WireDataFormat;
 
-        //public MultiStatus SetEventCustomCodes(IEnumerable<EventCustomCodesListItem> codes)
-        //{
-        //    var uri = FormatUriRoot + "events/customcodes";
+            if (HttpChannel.ClientConfiguration.WireDataFormat == WireDataFormat.Other)
+            {
+                HttpChannel.ClientConfiguration.WireDataFormat = WireDataFormat.Xml;
+            }
 
-        //    var response = Parent.HttpChannel.PerformApiRequest<IEnumerable<EventCustomCodesListItem>, MultiStatus>("PUT", uri, codes);
+            var uri = BaseRoot + "/" + resourceType + "/customcodes";
 
-        //    return response;
-        //}
-
-        //public MultiStatus SetEventCustomCodes(string csvData)
-        //{
-        //    return PutCustomCodes("events", csvData);
-        //}
-
-        //private MultiStatus PutCustomCodes(string resourceType, string csvData)
-        //{
-        //    // only Xml and Json responses are available: if the client sets something else, we change it
-        //    // to Xml for this request, then change it back at the end
-
-        //    var tempWireDataFormat = Parent.Configuration.WireDataFormat;
-        //    if (Parent.Configuration.WireDataFormat == WireDataFormat.Other)
-        //    {
-        //        Parent.Configuration.WireDataFormat = WireDataFormat.Xml;
-        //    }
-
-        //    var uri = FormatUriRoot + resourceType + "/customcodes";
-
-        //    var data = new UTF8Encoding().GetBytes(csvData);
-        //    var message = new HttpRequestMessage { Method = "PUT", Content = new HttpContent(data, "text/csv"), AcceptContentType = "application/xml" };
-        //    try
-        //    {
-        //        return Parent.HttpChannel.Send<MultiStatus>(message, uri);
-        //    }
-        //    finally
-        //    {
-        //        Parent.Configuration.WireDataFormat = tempWireDataFormat;
-        //    }
-        //}
+            var data = new UTF8Encoding().GetBytes(csvData);
+            //var message = new HttpRequestMessage { Method = "PUT", Content = new HttpContent(data, "text/csv"), AcceptContentType = "application/xml" };
+            try
+            {
+                //return HttpChannel.PerformRequest<HttpRequestMessage, MultiStatus>("PUT", uri, message);
+                return HttpChannel.PerformRequest<MultiStatus>("PUT", uri, data, "text/csv", "application/xml");
+            }
+            finally
+            {
+                HttpChannel.ClientConfiguration.WireDataFormat = tempWireDataFormat;
+            }
+        }
         
     }
 }

@@ -37,7 +37,9 @@ namespace JustGiving.Api.Data.Sdk.Model.Payment
             StatusSummary = "OK";
         }
 
+        [DataMember]
         public virtual HttpStatusCode HttpStatusCode { get; set; }
+        [DataMember]
         public virtual string StatusSummary { get; set; }
 
         public void SetStatusCode(HttpStatusCode statusCode, string statusSummary = "")

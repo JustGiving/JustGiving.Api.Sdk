@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using JustGiving.Api.Data.Sdk.Model.Payment;
 
 namespace JustGiving.Api.Data.Sdk.Model.CustomCodes
 {
-    [DataContract]
+    [DataContract(Namespace = "")]
     public class EventCustomCodes
     {
         /// <summary>
@@ -30,16 +29,5 @@ namespace JustGiving.Api.Data.Sdk.Model.CustomCodes
         [StringLength(20)]
         [RegularExpression(Regex.CustomCode)]
         public string CustomCode3 { get; set; }
-    }
-
-    [DataContract(Namespace = "")]
-    public class SetCustomCodeResponse : DtoBase
-    {
-        [DataMember]
-        public string Rel { get; set; }
-        [DataMember]
-        public string Method { get; set; }
-        [DataMember]
-        public string Href { get; set; }
     }
 }

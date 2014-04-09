@@ -35,7 +35,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 stream.Close();
                 return;
             }
-            
+
+            File.WriteAllBytes(@"C:\Test.csv", stream.ToArray());
             sheet.LoadCsv(stream, CsvType.CommaDelimited);
             stream.Close();
         }

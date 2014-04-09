@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace JustGiving.Api.Data.Sdk.Model.CustomCodes
 {
-    [DataContract(Name = "EventCustomCodes")]
+    [DataContract(Name = "EventCustomCodes", Namespace = "")]
     public class EventCustomCodesListItem 
     {
         /// <summary>

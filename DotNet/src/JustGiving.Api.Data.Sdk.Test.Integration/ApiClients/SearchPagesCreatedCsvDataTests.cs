@@ -16,9 +16,10 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase(DataFileFormat.excel)]
         public void CustomCodes_Existing_IsValidForFormat(DataFileFormat fileFormat)
         {
+            
             var clientConfiguration = OtherFormatDataClientConfiguration();
             var client = new JustGivingDataClient(clientConfiguration);
-            var data = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = TestContext.KnownEventCustomCode1, EventCustomCode2 = TestContext.KnownEventCustomCode2, EventCustomCode3 = TestContext.KnownEventCustomCode3 }, DateTime.Now.AddMonths(-3), DateTime.Now, DataFileFormat.csv);
+            var data = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = TestContext.KnownEventCustomCode1, EventCustomCode2 = TestContext.KnownEventCustomCode2, EventCustomCode3 = TestContext.KnownEventCustomCode3 }, TestContext.KnownStartDateForPageSearch, TestContext.KnownEndDateForPageSearch, fileFormat);
 
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();

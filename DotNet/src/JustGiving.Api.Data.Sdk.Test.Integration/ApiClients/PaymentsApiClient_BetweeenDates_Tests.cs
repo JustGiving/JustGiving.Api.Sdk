@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.Payment;
-using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
-using JustGiving.Api.Sdk;
+
 using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
@@ -35,7 +34,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         {
             var clientConfiguration = GetDefaultDataClientConfiguration();
             var dataClient = new JustGivingDataClient(clientConfiguration);
-            var startDate = DateTime.Now.AddYears(-4);
+            var startDate = DateTime.Now.AddYears(-1);
             var endDate = startDate.AddMonths(3);
 
             var data = new List<PaymentSummary>();
@@ -45,10 +44,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                 if (response.Any())
                 {
                     data.AddRange(response);
-                    startDate = endDate.AddDays(1);
-                    endDate = startDate.AddMonths(3);
                 }
-                
+                startDate = endDate.AddDays(1);
+                endDate = startDate.AddMonths(3);
             }
 
             Assert.That(data.Count > 0);

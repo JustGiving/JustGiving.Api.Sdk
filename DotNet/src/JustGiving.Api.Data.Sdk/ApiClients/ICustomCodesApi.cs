@@ -15,7 +15,7 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         /// <param name="pageId">The id of a fundraising page</param>
         /// <param name="codes">The code values</param>
         /// <returns>A standard HTTP response indicating success or failure</returns>
-        SetCustomCodesResponse SetPageCustomCodes(int pageId, PageCustomCodes codes);
+        SetCustomCodesForPageResponse SetPageCustomCodes(int pageId, PageCustomCodes codes);
        
         /// <summary>
         /// Retrieves custom codes of a single fundrasing page.
@@ -58,7 +58,7 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         /// <param name="eventId">The id of the fundraising event</param>
         /// <param name="codes">The code values</param>
         /// <returns>A standard HTTP response indicating success or failure</returns>
-        HttpResponseMessage SetEventCustomCodes(int eventId, EventCustomCodes codes);
+        SetCustomCodesResponse SetEventCustomCodes(int eventId, EventCustomCodes codes);
         
         /// <summary>
         /// Applies several sets of custom codes to several fundraising events

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class GetPaymentDonationReportByIdWebFormatTests : ApiTestFixture
+    public class PaymentsApiClient_DonationReportTests : ApiTestFixture
     {
         private const int BadPaymentId = -1;
 

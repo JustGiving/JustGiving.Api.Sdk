@@ -65,7 +65,7 @@
   <ItemGroup>
     <Compile Include="ApiClients\ApiTestFixture.cs" />
     <Compile Include="ApiClients\AuthenticationTests.cs" />
-    <Compile Include="ApiClients\GetPaymentDonationReportByIdWebFormatTests.cs" />
+    <Compile Include="ApiClients\PaymentsApiClient_DonationReportTests.cs" />
     <Compile Include="ApiClients\NoOpTests.cs" />
     <Compile Include="ApiClients\PagesApiClient_FormatTests.cs" />
     <Compile Include="ApiClients\PagesApiClientTests.cs" />

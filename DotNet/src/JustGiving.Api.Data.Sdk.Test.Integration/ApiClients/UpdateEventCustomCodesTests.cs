@@ -4,6 +4,7 @@ using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.CustomCodes;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
+using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
@@ -20,7 +21,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var client = new JustGivingDataClient(clientConfiguration);
             var response = client.CustomCodes.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = "foo" });
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         private static DataClientConfiguration XmlDataClientConfiguration()
@@ -66,11 +67,10 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void CustomCodesAreValidated_Single()
         {
             var clientConfiguration = XmlDataClientConfiguration();
-
             var client = new JustGivingDataClient(clientConfiguration);
-            var response = client.CustomCodes.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" });
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+            
+            var excep = Assert.Throws<ErrorResponseException>(() => client.CustomCodes.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }));
+            Assert.That(excep.Message.Contains("400"));
         }
 
         [Test]

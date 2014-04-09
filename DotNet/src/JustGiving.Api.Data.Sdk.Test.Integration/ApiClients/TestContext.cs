@@ -27,9 +27,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public const int KnownDonationPaymentId = 1062979;
         public const int KnownGiftAidPaymentId = 2428911;
         public const string GemBoxSerial = "REMOVED"; //see https://github.com/github/dmca/blob/master/2014-04-04-Gembox.md
-        public const int KnownPageId = 2739376;
-        public const int KnownCharityId = 50;
-        public const int KnownEventId = 11493;
+        public const int KnownPageId = 3621516;
+        public const int KnownEventId = 805390;
 
         public static int KnownEventIdWithPage { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.EventId); } }
         
@@ -48,6 +47,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public const string KnownPageCustomCode5 = "Blah";
         public const string KnownPageCustomCode6 = "Northampton";
         public const string KnownAppealName = "demo: General Appeal";
+        public static DateTime KnownStartDateForPageSearch = new DateTime(2012, 03, 01);
+        public static DateTime KnownEndDateForPageSearch = new DateTime(2012, 05, 01);
         public static readonly DateTime KnownExpiryDate = new DateTime(2006, 11, 17);
         public static readonly DateTime KnownEventDate = new DateTime(2006, 9, 9);
     }

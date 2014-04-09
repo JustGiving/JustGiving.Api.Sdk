@@ -4,6 +4,7 @@ using System.Linq;
 using JustGiving.Api.Data.Sdk.Model.CustomCodes;
 using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
 using JustGiving.Api.Sdk;
+using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
 namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
@@ -60,8 +61,8 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase("a,b")]
         public void CustomCodesAreValidated_Single(string badText)
         {
-            var response = _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageId, new PageCustomCodes { CustomCode1 = badText });
-            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+            var excep = Assert.Throws<ErrorResponseException>(() => _client.CustomCodes.SetPageCustomCodes(TestContext.KnownPageId, new PageCustomCodes { CustomCode1 = badText }));
+            Assert.That(excep.Message.Contains("400"));
         }
 
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
