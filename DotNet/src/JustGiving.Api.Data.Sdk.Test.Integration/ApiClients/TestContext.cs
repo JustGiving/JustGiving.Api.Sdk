@@ -37,11 +37,10 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 
         public const string Base64 = "ZWhhZXZhai5oYnZlZkBuZ2F6c3pxb3F0Lm9ieC54bTp6cWZlZDA2OA==";
         public const string TestInvalidPassword = "badPassword";
-        public const int KnownDonationPaymentId = 1062979;
-        public const int KnownGiftAidPaymentId = 2428911;
+        
         
         public const int KnownPageId = 3621516;
-        public const int KnownEventId = 805390;
+        
         public static int KnownDonationPaymentId { get { return TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.KnownDonationPaymentId); } }
 
 //local;
