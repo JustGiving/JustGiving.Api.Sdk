@@ -56,3 +56,9 @@ http://www.justgiving.com/developer/simple-donation-integration
 https://github.com/JustGiving/JustGiving.Api.Sdk/wiki
 
 	For some quick hack-tastic examples in a few languages
+
+
+Further Support
+===============
+
+If your're having issues that the resources above don't help with, feel free to email us at apisupport@justgiving.com
