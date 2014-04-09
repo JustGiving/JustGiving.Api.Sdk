@@ -17,7 +17,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml, false)]
         public void ResourceExists_ReturnsPayment(WireDataFormat format, bool isZipSupported)
         {
-            var clientConfiguration = GetDataClientConfiguration()
+            var clientConfiguration = GetDefaultDataClientConfiguration()
                .With((clientConfig) => clientConfig.WireDataFormat = format)
                .With((clientConfig) => clientConfig.IsZipSupportedByClient = isZipSupported);
 
@@ -28,7 +28,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         public void ResourceDoesNotExist_ThrowsNotFoundException()
         {
 
-            var clientConfiguration = GetDataClientConfiguration()
+            var clientConfiguration = GetDefaultDataClientConfiguration()
                     .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Json)
                     .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
             

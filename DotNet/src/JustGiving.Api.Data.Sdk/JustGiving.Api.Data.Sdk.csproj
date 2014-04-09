@@ -44,9 +44,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -54,9 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\ContentTypes.cs" />
+    <Compile Include="ApiClients\CustomCodesApi.cs" />
     <Compile Include="ApiClients\DataApiClientBase.cs" />
     <Compile Include="ApiClients\DataFileFormat.cs" />
+    <Compile Include="ApiClients\ICustomCodesApi.cs" />
     <Compile Include="ApiClients\IPaymentsApi.cs" />
+    <Compile Include="ApiClients\PageCreatedSearchQuery.cs" />
     <Compile Include="ApiClients\PagesApi.cs" />
     <Compile Include="ApiClients\PaymentsApi.cs" />
     <Compile Include="Configuration\DataSdkConfigurationManager.cs" />
@@ -64,6 +69,10 @@
     <Compile Include="DataClientConfiguration.cs" />
     <Compile Include="IJustGivingDataClient.cs" />
     <Compile Include="JustGivingDataClient.cs" />
+    <Compile Include="Model\CustomCodes\EventCustomCodeListItem.cs" />
+    <Compile Include="Model\CustomCodes\EventCustomCodes.cs" />
+    <Compile Include="Model\CustomCodes\PageCustomCodeListItem.cs" />
+    <Compile Include="Model\CustomCodes\PageCustomCodes.cs" />
     <Compile Include="Model\Pages\PagesCreated.cs" />
     <Compile Include="Model\Payment\Donations\Payment.cs" />
     <Compile Include="Model\Payment\GiftAid\DonationGiftAid.cs" />
@@ -71,6 +80,7 @@
     <Compile Include="Model\Payment\Payment.cs" />
     <Compile Include="Model\Payment\PaymentSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JustGiving.Api.Sdk\JustGiving.Api.Sdk.csproj">

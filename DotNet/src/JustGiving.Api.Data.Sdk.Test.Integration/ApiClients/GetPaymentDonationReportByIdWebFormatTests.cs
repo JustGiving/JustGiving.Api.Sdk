@@ -1,120 +1,76 @@
-﻿using GG.Api.Sdk;
-using GG.Api.Sdk.Http;
-using GG.Api.Services.Data.Sdk.ApiClients;
+﻿using JustGiving.Api.Data.Sdk.Model.Payment.Donations;
+using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
+using JustGiving.Api.Sdk;
+using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
-namespace GG.Api.Services.Data.Sdk.Test.Integration
+namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class GetPaymentDonationReportByIdWebFormatTests
+    public class GetPaymentDonationReportByIdWebFormatTests : ApiTestFixture
     {
         private const int BadPaymentId = -1;
 
         [Test]
         public void ResourceExists_ReturnsPayment_RawXml()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-                                          {
-                                              WireDataFormat = WireDataFormat.Xml,
-                                              IsZipSupportedByClient = false,
-                                              Username = TestContext.TestUsername,
-                                              Password = TestContext.TestValidPassword
-                                          };
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Xml);
+            
+            var client = new JustGivingDataClient(clientConfiguration);           
+            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
-            // Act
-            var payment = dataApiClient.GetDonationPaymentReport(TestContext.KnownDonationPaymentId);
-
-            // Assert
             Assert.IsNotNull(payment);
         }
 
         [Test]
         public void ResourceExists_ReturnsPayment_GZipXml()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = true,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword
-            };
-
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
-            // Act
-            var payment = dataApiClient.GetDonationPaymentReport(TestContext.KnownDonationPaymentId);
-
-            // Assert
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Xml)
+                .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
+            
+            var client = new JustGivingDataClient(clientConfiguration);
+            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
+            
             Assert.IsNotNull(payment);
         }
 
         [Test]
         public void ResourceExists_ReturnsPayment_RawJson()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Json,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword
-            };
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Json);               
+            var client = new JustGivingDataClient(clientConfiguration);
+            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
-            // Act
-            var payment = dataApiClient.GetDonationPaymentReport(TestContext.KnownDonationPaymentId);
-
-            // Assert
             Assert.IsNotNull(payment);
         }
 
         [Test]
         public void ResourceExists_ReturnsPayment_GZipJson()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Json,
-                IsZipSupportedByClient = true,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword
-            };
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Json)
+                .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
+            var client = new JustGivingDataClient(clientConfiguration);
 
-            // Act
-            var payment = dataApiClient.GetDonationPaymentReport(TestContext.KnownDonationPaymentId);
+            var payment = client.Payment.Report<Payment>(TestContext.KnownDonationPaymentId);
 
-            // Assert
             Assert.IsNotNull(payment);
         }
 
         [Test]
         public void ResourceDoesNotExist_ThrowsNotFoundException()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Json,
-                IsZipSupportedByClient = true,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword
-            };
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Json)
+                .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
-            // Act
-            Assert.Throws<ResourceNotFoundException>(() => dataApiClient.GetDonationPaymentReport(BadPaymentId));
+            var client = new JustGivingDataClient(clientConfiguration);
+            
+            Assert.Throws<ResourceNotFoundException>(() => client.Payment.Report<Payment>(BadPaymentId));
         }
     }
 }

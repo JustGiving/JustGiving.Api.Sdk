@@ -44,7 +44,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             Assert.That(report.Pages.Count(p => p.Event.Id == TestContext.KnownEventIdWithPage), Is.GreaterThan(0));
             Assert.That(report.Pages.Count(p => p.Event.Id != TestContext.KnownEventIdWithPage), Is.EqualTo(0));
         }
-//
+
         [Test]
         public void BadEventId_DateRange_Returns404()
         {
@@ -57,7 +57,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 
         private static DataClientConfiguration DefaultClientConfiguration()
         {
-            return GetDataClientConfiguration()
+            return GetDefaultDataClientConfiguration()
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Xml);
         }
     }

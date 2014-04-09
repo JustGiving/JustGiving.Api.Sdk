@@ -1,54 +1,39 @@
 ﻿using System.Net;
-using GG.Api.Sdk;
-using GG.Api.Sdk.Http;
-using GG.Api.Services.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Model.Payment.Donations;
+using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
+using JustGiving.Api.Sdk;
+using JustGiving.Api.Sdk.Http;
 using NUnit.Framework;
 
-namespace GG.Api.Services.Data.Sdk.Test.Integration
+namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class AuthenticationTests
+    public class AuthenticationTests : ApiTestFixture
     {
+        private int _paymentId = 1062979;
+
         [Test]
         public void AuthenticationSuccess_DoesNotReturnHttp401Unauthorised()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-                                          {
-                                              WireDataFormat = WireDataFormat.Json,
-                                              IsZipSupportedByClient = true,
-                                              Username = TestContext.TestUsername,
-                                              Password = TestContext.TestValidPassword
-                                          };
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
+                
+            var client = new JustGivingDataClient(clientConfiguration);
+            var payment = client.Payment.Report<Payment>(_paymentId);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
-            // Act
-            var payment = dataApiClient.GetDonationPaymentReport(1062979);
-
-            // Assert
             Assert.That(payment.HttpStatusCode, Is.Not.EqualTo(HttpStatusCode.Unauthorized));
         }
 
         [Test]
         public void AuthenticationFailure_ReturnsHttp401Unauthorised()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-                                          {
-                                              WireDataFormat = WireDataFormat.Json,
-                                              IsZipSupportedByClient = false,
-                                              Username = "",
-                                              Password = ""
-                                          };
-
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PaymentReportClient(client);
-
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.Username = "")
+                .With((clientConfig) => clientConfig.Password = "");
             
-            var exception =
-                    Assert.Throws<ErrorResponseException>(() => dataApiClient.GetDonationPaymentReport(1062979));
+            var client = new JustGivingDataClient(clientConfiguration);
+           
+            var exception = Assert.Throws<ErrorResponseException>(() => client.Payment.Report<Payment>(_paymentId));
             Assert.That(exception.Message.Contains("401"));
           
         }

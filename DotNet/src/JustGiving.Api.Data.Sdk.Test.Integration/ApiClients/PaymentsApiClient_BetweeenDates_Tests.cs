@@ -13,7 +13,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [Test]
         public void CanGetDataBetweenTwoDates()
         {
-            var clientConfiguration = GetDataClientConfiguration();
+            var clientConfiguration = GetDefaultDataClientConfiguration();
 
             var dataClient = new JustGivingDataClient(clientConfiguration);
             var startDate = TestContext.StartDate; 
@@ -22,6 +22,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var response = dataClient.Payment.PaymentsBetween(startDate, endDate);
             
             Assert.IsNotNull(response);
+            Assert.That(response.Count(), Is.GreaterThan(0));
             Assert.That(response.FirstOrDefault(i => i.PaymentDate > endDate), Is.Null);
             Assert.That(response.FirstOrDefault(i => i.PaymentDate < startDate), Is.Null);
         }
@@ -29,17 +30,22 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [Test]
         public void CanProcessLotOfData()
         {
-            var clientConfiguration = GetDataClientConfiguration();
+            var clientConfiguration = GetDefaultDataClientConfiguration();
             var dataClient = new JustGivingDataClient(clientConfiguration);
             var startDate = DateTime.Now.AddYears(-4);
             var endDate = startDate.AddMonths(3);
 
             var data = new List<PaymentSummary>();
-            while(data.Count == 0 && endDate <= DateTime.Now)
+            while(data.Count == 0 && startDate <= DateTime.Now.AddMonths(4))
             {
-                data.AddRange(dataClient.Payment.PaymentsBetween(startDate, endDate));
-                startDate = endDate.AddDays(1);
-                endDate = startDate.AddMonths(3);
+                var response = dataClient.Payment.PaymentsBetween(startDate, endDate); 
+                if (response.Any())
+                {
+                    data.AddRange(response);
+                    startDate = endDate.AddDays(1);
+                    endDate = startDate.AddMonths(3);
+                }
+                
             }
 
             Assert.That(data.Count > 0);
@@ -49,7 +55,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [Test]
         public void DateRange_CannotExceedThreeMonths()
         {
-            var clientConfiguration = GetDataClientConfiguration();
+            var clientConfiguration = GetDefaultDataClientConfiguration();
          var startDate = DateTime.Now.Date.AddYears(-2);
             var endDate = startDate.AddYears(1);
             var client = new JustGivingDataClient(clientConfiguration);

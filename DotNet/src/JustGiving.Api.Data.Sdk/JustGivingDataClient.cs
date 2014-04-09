@@ -25,6 +25,13 @@ namespace JustGiving.Api.Data.Sdk
             private set {_pages = value;}
         }
 
+        private ICustomCodesApi _customCodes;
+        public ICustomCodesApi CustomCodes
+        {
+            get { return _customCodes; }
+            set { _customCodes = value; }
+        }
+
         public JustGivingDataClient(DataClientConfiguration dataClientConfiguration, IHttpClient httpClient)
         {
             _dataClientConfiguration = dataClientConfiguration;
@@ -47,6 +54,7 @@ namespace JustGiving.Api.Data.Sdk
 
             _payment = new PaymentsApi(HttpChannel);
             _pages = new PagesApi(HttpChannel);
+            _customCodes = new CustomCodesApi(HttpChannel);
         }
     }
 }

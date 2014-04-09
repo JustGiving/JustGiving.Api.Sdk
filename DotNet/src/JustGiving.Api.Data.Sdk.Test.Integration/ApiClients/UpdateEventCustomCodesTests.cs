@@ -1,168 +1,87 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using GG.Api.Sdk;
-using GG.Api.Services.Data.Dto.CustomCodes;
-using GG.Api.Services.Data.Sdk.ApiClients;
+using System.Linq;
+using JustGiving.Api.Data.Sdk.Model.CustomCodes;
+using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
+using JustGiving.Api.Sdk;
 using NUnit.Framework;
 
-namespace GG.Api.Services.Data.Sdk.Test.Integration
+namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slow")]
-    public class UpdateEventCustomCodesTests
+    public class UpdateEventCustomCodesTests : ApiTestFixture
     {
         [Test]
         public void CanSetCustomCode()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
 
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
+            var clientConfiguration = XmlDataClientConfiguration();
+            
+            var client = new JustGivingDataClient(clientConfiguration);
+            var response = client.CustomCodes.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = "foo" });
 
-            // Act
-            var response = ccClient.SetEventCustomCodes(TestContext.KnownEventId,
-                                                       new EventCustomCodes { CustomCode1 = "foo" });
-
-            // assert
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+
+        private static DataClientConfiguration XmlDataClientConfiguration()
+        {
+            var clientConfiguration = GetDefaultDataClientConfiguration()
+                .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Xml);
+            return clientConfiguration;
         }
 
         [Test]
         public void CanGetCustomCode()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
-
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
-
-            // Act
+            var clientConfiguration = XmlDataClientConfiguration();
+            var client = new JustGivingDataClient(clientConfiguration);
             var val = Guid.NewGuid().ToString().Substring(0, 5);
-            ccClient.SetEventCustomCodes(TestContext.KnownEventId,
-                                                       new EventCustomCodes { CustomCode1 = val });
-
-            var response = ccClient.GetEventCustomCodes(TestContext.KnownEventId);
-
-            // assert
+            client.CustomCodes.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = val });
+            var response = client.CustomCodes.GetEventCustomCodes(TestContext.KnownEventId);
             Assert.That(response.CustomCode1, Is.EqualTo(val));
         }
-
 
         [Test]
         public void CanSetMultipleCustomCodes()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
-
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
-
-            // Act
-            var response = ccClient.SetEventCustomCodes(new[] { new EventCustomCodesListItem { EventId = TestContext.KnownEventId, CustomCode1 = "foo" }, new EventCustomCodesListItem { EventId = TestContext.KnownEventId + 1, CustomCode1 = "bar" } });
-
-            // assert
+            var clientConfiguration = XmlDataClientConfiguration();
+            var client = new JustGivingDataClient(clientConfiguration);
+            var response = client.CustomCodes.SetEventCustomCodes(new[] { new EventCustomCodesListItem { EventId = TestContext.KnownEventId, CustomCode1 = "foo" }, new EventCustomCodesListItem { EventId = TestContext.KnownEventId + 1, CustomCode1 = "bar" } });
             Assert.That(response.Count(r => r.Status == 200), Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
         public void CanSetMultipleCustomCodesWithCsvData()
         {
-            // Arrange
-
-            var csvString =
-                string.Format(
-                    "EventId,CustomCode1,CustomCode2,CustomCode3\r\n{0},value1,value2,value3\r\n{1},value1,value2,value3",
+            var csvString = string.Format("EventId,CustomCode1,CustomCode2,CustomCode3\r\n{0},value1,value2,value3\r\n{1},value1,value2,value3",
                     TestContext.KnownEventId, TestContext.KnownEventId + 1);
 
-
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
-
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
-
-            var response = ccClient.SetEventCustomCodes(csvString);
-
-            // assert
+            var clientConfiguration = XmlDataClientConfiguration();
+            var client = new JustGivingDataClient(clientConfiguration);
+            var response = client.CustomCodes.SetEventCustomCodes(csvString);
             Assert.That(response.Count(r => r.Status == 200), Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
         public void CustomCodesAreValidated_Single()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
+            var clientConfiguration = XmlDataClientConfiguration();
 
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
+            var client = new JustGivingDataClient(clientConfiguration);
+            var response = client.CustomCodes.SetEventCustomCodes(TestContext.KnownEventId, new EventCustomCodes { CustomCode1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" });
 
-            // Act
-            var response = ccClient.SetEventCustomCodes(TestContext.KnownEventId,
-                                                       new EventCustomCodes { CustomCode1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" });
-
-            // assert
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [Test]
         public void CustomCodesAreValidated_Multiple()
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
+            var clientConfiguration = XmlDataClientConfiguration();
+            var client = new JustGivingDataClient(clientConfiguration);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
-
-            // Act
-            var response = ccClient.SetEventCustomCodes(new[] { new EventCustomCodesListItem { EventId = TestContext.KnownEventId, CustomCode1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }, 
+            var response = client.CustomCodes.SetEventCustomCodes(new[] { new EventCustomCodesListItem { EventId = TestContext.KnownEventId, CustomCode1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }, 
                 new EventCustomCodesListItem { EventId = TestContext.KnownEventId + 1, CustomCode1 = "bar" } });
-
-            // assert
+            
             Assert.That(response.Count(r => r.Status == (int)HttpStatusCode.BadRequest), Is.GreaterThanOrEqualTo(1));
         }
 
@@ -172,26 +91,13 @@ namespace GG.Api.Services.Data.Sdk.Test.Integration
             // Arrange
 
             var csvString =
-                string.Format(
-                    "EventId,CustomCode1,CustomCode2,CustomCode3\r\n{0},value1,value2,value3\r\n{1},value1,value222222222222222222222222222222222222222,value3",
-                    TestContext.KnownEventId, TestContext.KnownEventId + 1);
+                string.Format("EventId,CustomCode1,CustomCode2,CustomCode3\r\n{0},value1,value2,value3\r\n{1},value1,value222222222222222222222222222222222222222,value3",TestContext.KnownEventId, TestContext.KnownEventId + 1);
 
+            var clientConfiguration = XmlDataClientConfiguration();
+            var client = new JustGivingDataClient(clientConfiguration);
+            
+            var response = client.CustomCodes.SetEventCustomCodes(csvString);
 
-            var clientConfiguration = new ClientConfiguration
-            {
-                WireDataFormat = WireDataFormat.Xml,
-                IsZipSupportedByClient = false,
-                Username = TestContext.TestUsername,
-                Password = TestContext.TestValidPassword,
-                ConnectionTimeOut = TimeSpan.FromMinutes(20)
-            };
-
-            var client = new JustGivingClient(clientConfiguration);
-            var ccClient = new CustomCodesClient(client);
-
-            var response = ccClient.SetEventCustomCodes(csvString);
-
-            // assert
             Assert.That(response.Count(r => r.Status == (int)HttpStatusCode.BadRequest), Is.GreaterThanOrEqualTo(1));
         }
     }

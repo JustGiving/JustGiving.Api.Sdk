@@ -12,7 +12,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [Test]
         public void GetPaymentListAndDownloadSeveralPayments()
         {
-            var clientConfiguration = GetDataClientConfiguration()
+            var clientConfiguration = GetDefaultDataClientConfiguration()
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Json)
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true);
 

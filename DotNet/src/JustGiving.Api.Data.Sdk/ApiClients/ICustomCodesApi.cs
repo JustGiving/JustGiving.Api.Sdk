@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using GG.Api.Sdk.Http.DataPackets;
-using GG.Api.Services.Data.Dto;
-using GG.Api.Services.Data.Dto.CustomCodes;
+using JustGiving.Api.Data.Sdk.Model.CustomCodes;
+using JustGiving.Api.Sdk.Http.DataPackets;
 
-namespace GG.Api.Services.Data.Sdk.ApiClients
+namespace JustGiving.Api.Data.Sdk.ApiClients
 {
     /// <summary>
     /// Provides methods for applying custom codes to fundraising pages and events, either one at a time, or as a batch operation.
     /// </summary>
-    public interface ICustomCodesClient
+    public interface ICustomCodesApi
     {
         /// <summary>
         /// Applies a set of custom codes to a single fundrasing page.
@@ -17,7 +16,7 @@ namespace GG.Api.Services.Data.Sdk.ApiClients
         /// <param name="codes">The code values</param>
         /// <returns>A standard HTTP response indicating success or failure</returns>
         HttpResponseMessage SetPageCustomCodes(int pageId, PageCustomCodes codes);
-
+       
         /// <summary>
         /// Retrieves custom codes of a single fundrasing page.
         /// </summary>

@@ -16,7 +16,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.excel)]
         public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned(int paymentId, DataFileFormat fileFormat)
         {
-            var clientConfiguration = GetDataClientConfiguration()
+            var clientConfiguration = GetDefaultDataClientConfiguration()
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
@@ -31,7 +31,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.excel)]
         public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat(int paymentId, DataFileFormat fileFormat)
         {
-            var clientConfiguration = GetDataClientConfiguration()
+            var clientConfiguration = GetDefaultDataClientConfiguration()
                                         .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
 
             var client = new JustGivingDataClient(clientConfiguration);
@@ -55,7 +55,7 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         [TestCase(TestContext.KnownGiftAidPaymentId, DataFileFormat.excel)]
         public void When_GettingPaymentReportForKnownPaymentId_DataIsReturned_AndCanBeWrittenInValidFormat_AndCompressed(int paymentId, DataFileFormat fileFormat)
         {
-            var clientConfiguration = GetDataClientConfiguration()
+            var clientConfiguration = GetDefaultDataClientConfiguration()
                 .With((clientConfig) => clientConfig.IsZipSupportedByClient = true)
                 .With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
                                         
@@ -74,19 +74,6 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 
             AssertResponseDoesNotHaveAnError(payment);
             Assert.That(sheet.Worksheets.Count, Is.GreaterThan(0));
-        }
-
-        private static void LoadDataInToWorkSheet(MemoryStream stream, ExcelFile sheet, DataFileFormat fileFormat)
-        {
-            if (fileFormat == DataFileFormat.excel)
-            {
-                sheet.LoadXls(stream);
-                stream.Close();
-                return;
-            }
-            
-            sheet.LoadCsv(stream, CsvType.CommaDelimited);
-            stream.Close();
         }
     }
 }

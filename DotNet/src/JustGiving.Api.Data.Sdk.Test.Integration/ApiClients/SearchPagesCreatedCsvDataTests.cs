@@ -1,43 +1,38 @@
 ﻿using System;
 using System.IO;
 using GemBox.Spreadsheet;
-using GG.Api.Sdk;
 using GG.Api.Services.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.ApiClients;
+using JustGiving.Api.Data.Sdk.Test.Integration.TestExtensions;
+using JustGiving.Api.Sdk;
 using NUnit.Framework;
 
-namespace GG.Api.Services.Data.Sdk.Test.Integration
+namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
 {
     [TestFixture, Category("Slowest")]
-    public class SearchPagesCreatedCsvDataTests
+    public class SearchPagesCreatedCsvDataTests : ApiTestFixture
     {
-        [Test]
-        public void CustomCodes_Existing_IsValidCsv()
+        [TestCase(DataFileFormat.csv)]
+        [TestCase(DataFileFormat.excel)]
+        public void CustomCodes_Existing_IsValidForFormat(DataFileFormat fileFormat)
         {
-            // Arrange
-            var clientConfiguration = new ClientConfiguration
-                                          {
-                                              WireDataFormat = WireDataFormat.Other,
-                                              IsZipSupportedByClient = false,
-                                              Username = TestContext.TestUsername,
-                                              Password = TestContext.TestValidPassword
-                                          };
+            var clientConfiguration = OtherFormatDataClientConfiguration();
+            var client = new JustGivingDataClient(clientConfiguration);
+            var data = client.Pages.Search(new PageCreatedSearchQuery { EventCustomCode1 = TestContext.KnownEventCustomCode1, EventCustomCode2 = TestContext.KnownEventCustomCode2, EventCustomCode3 = TestContext.KnownEventCustomCode3 }, DateTime.Now.AddMonths(-3), DateTime.Now, DataFileFormat.csv);
 
-            var client = new JustGivingClient(clientConfiguration);
-            var dataApiClient = new PageCreatedReportClient(client);
-
-            // Act
-            var data = dataApiClient.Search(new PageCreatedSearchQuery { EventCustomCode1 = TestContext.KnownEventCustomCode1, EventCustomCode2 = TestContext.KnownEventCustomCode2, EventCustomCode3 = TestContext.KnownEventCustomCode3 }, DateTime.Now.AddMonths(-3), DateTime.Now, DataFileFormat.csv);
-
-            // Assert
             SpreadsheetInfo.SetLicense(TestContext.GemBoxSerial);
             var sheet = new ExcelFile();
             using (var stream = new MemoryStream(data))
             {
-                sheet.LoadCsv(stream, CsvType.CommaDelimited);
-                stream.Close();
+                LoadDataInToWorkSheet(stream, sheet, fileFormat);
             }
 
             Assert.That(sheet.Worksheets.Count, Is.GreaterThan(0));
+        }
+
+        private DataClientConfiguration OtherFormatDataClientConfiguration()
+        {
+            return GetDefaultDataClientConfiguration().With((clientConfig) => clientConfig.WireDataFormat = WireDataFormat.Other);
         }
     }
 }

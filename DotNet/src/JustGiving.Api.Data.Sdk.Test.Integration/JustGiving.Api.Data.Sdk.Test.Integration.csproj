@@ -64,12 +64,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\ApiTestFixture.cs" />
+    <Compile Include="ApiClients\AuthenticationTests.cs" />
+    <Compile Include="ApiClients\GetPaymentDonationReportByIdWebFormatTests.cs" />
+    <Compile Include="ApiClients\NoOpTests.cs" />
+    <Compile Include="ApiClients\PagesApiClient_FormatTests.cs" />
+    <Compile Include="ApiClients\PagesApiClientTests.cs" />
     <Compile Include="ApiClients\PagesApiClient_EventTests.cs" />
     <Compile Include="ApiClients\PaymentsApiEndToEndTests.cs" />
     <Compile Include="ApiClients\PaymentsApiClient_GiftAidReportTests.cs" />
     <Compile Include="ApiClients\PaymentsApiClientTests.cs" />
     <Compile Include="ApiClients\PaymentsApiClient_BetweeenDates_Tests.cs" />
+    <Compile Include="ApiClients\PagesApiClient_SearchTests.cs" />
+    <Compile Include="ApiClients\SearchPagesCreatedCsvDataTests.cs" />
     <Compile Include="ApiClients\TestContext.cs" />
+    <Compile Include="ApiClients\UpdateEventCustomCodesTests.cs" />
+    <Compile Include="ApiClients\UpdatePageCustomCodesTests.cs" />
     <Compile Include="Configuration\ITestConfigurations.cs" />
     <Compile Include="Configuration\TestConfigurations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
