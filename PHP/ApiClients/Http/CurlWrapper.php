@@ -84,11 +84,11 @@ class CurlWrapper
 	{		
 		if($base64Credentials != null && $base64Credentials != "")
 		{			
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$contentType, 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials ));
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$contentType, 'Accept: '.$contentType, 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials ));
 		}
 		else
 		{
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$contentType));
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$contentType, 'Accept: '.$contentType));
 		}
 	}
 }
