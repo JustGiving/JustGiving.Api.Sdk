@@ -21,6 +21,9 @@ namespace JustGiving.Api.Sdk.Model.Page
         [DataMember(Name = "donationDate", EmitDefaultValue = false, IsRequired = false)]
         public DateTime? DonationDate { get; set; }
 
+        [DataMember(Name = "donationRef", EmitDefaultValue = false, IsRequired = false)]
+        public string DonationRef { get; set; }
+
         [DataMember(Name = "donorDisplayName", EmitDefaultValue = false, IsRequired = false)]
         public string DonorDisplayName { get; set; }
 
