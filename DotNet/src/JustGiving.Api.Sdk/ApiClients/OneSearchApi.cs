@@ -45,13 +45,35 @@ namespace JustGiving.Api.Sdk.ApiClients
             locationFormat += "&country=" + country;
             return locationFormat;
         }
+
+        public void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback, bool groupSearch = false, string resultsByIndex = "", int limit = 0, int offset = 0, string country = "GB")
+        {
+            var locationFormat = OneSearchQueryFormat(phraseToSearch, groupSearch, resultsByIndex, limit, offset,
+                country);
+            HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
+        }
+
+        public void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback)
+        {
+            OneSearchIndexAsync(phraseToSearch, callback, false, null, 0, 0);
+        }
     }
-    public interface IOneSearchApi
+    public interface IOneSearchApi : IOneSearchApiAsync
     {
         OneSearchResponse OneSearchIndex(string phraseToSearch, bool groupSearch = false, string resultsByIndex = "",
             int limit = 0, int offset = 0, string country = "GB");
 
         OneSearchResponse OneSearchIndex(string phraseToSearch);
+    }
+
+    public interface IOneSearchApiAsync
+    {
+        void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback, bool groupSearch = false,
+            string resultsByIndex = "",
+            int limit = 0, int offset = 0, string country = "GB");
+
+        void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback);
+
     }
 
     [DataContract(Name = "OneSearchResponse", Namespace = "")]
