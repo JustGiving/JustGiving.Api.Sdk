@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using JustGiving.Api.Sdk.Http;
+using JustGiving.Api.Sdk.Model.OneSearch;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
@@ -74,99 +75,5 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback);
 
-    }
-
-    [DataContract(Name = "OneSearchResponse", Namespace = "")]
-    public class OneSearchResponse
-    {
-        [DataMember(Name = "GroupedResults")]
-        public List<GroupedResults> GroupedResults { get; set; }
-
-        [DataMember(Name = "SpecificIndex")]
-        public string SpecificIndex { get; set; }
-
-        [DataMember(Name = "Country")]
-        public string Country { get; set; }
-
-        [DataMember(Name = "Query")]
-        public string Query { get; set; }
-
-        [DataMember(Name = "Limit")]
-        public int Limit { get; set; }
-
-        [DataMember(Name = "Total")]
-        public int Total { get; set; }
-
-        public OneSearchResponse()
-        {
-            GroupedResults = new List<GroupedResults>();
-        }
-    }
-
-    [DataContract(Name = "GroupedResults", Namespace = "")]
-    public class GroupedResults
-    {
-        [DataMember(Name = "Title")]
-        public string Title { get; set; }
-
-        [DataMember(Name = "Count")]
-        public int Count { get; set; }
-
-        [DataMember(Name = "Results")]
-        public List<Results> Results { get; set; }
-
-        [DataMember(Name = "Specific")]
-        public string Specific { get; set; }
-
-        public GroupedResults()
-        {
-            Results = new List<Results>();
-        }
-    }
-
-    [DataContract(Name = "Results", Namespace = "")]
-    public class Results
-    {
-        [DataMember(Name = "EventIds")]
-        public int[] EventIds { get; set; }
-
-        [DataMember(Name = "Subtext")]
-        public string Subtext { get; set; }
-
-        [DataMember(Name = "Link")]
-        public string Link { get; set; }
-
-        [DataMember(Name = "LinkPath")]
-        public string LinkPath { get; set; }
-
-        [DataMember(Name = "CountryCode")]
-        public string CountryCode { get; set; }
-
-        [DataMember(Name = "ProfileWhat")]
-        public string ProfileWhat { get; set; }
-
-        [DataMember(Name = "ProfileWhy")]
-        public string ProfileWhy { get; set; }
-
-        [DataMember(Name = "Highlight")]
-        public string Highlight { get; set; }
-
-        [DataMember(Name = "Id")]
-        public int Id { get; set; }
-
-        [DataMember(Name = "Name")]
-        public string Name { get; set; }
-
-        [DataMember(Name = "Description")]
-        public string Description { get; set; }
-
-        [DataMember(Name = "Logo")]
-        public string Logo { get; set; }
-
-        [DataMember(Name = "Type")]
-        public string Type { get; set; }
-
-        [DataMember(Name = "Score")]
-        public double Score { get; set; }
     }
 }
