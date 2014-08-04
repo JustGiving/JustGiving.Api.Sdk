@@ -27,7 +27,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public OneSearchResponse OneSearchIndex(string phraseToSearch)
         {
-            return OneSearchIndex(phraseToSearch, false, "", 3, 0, "GB");
+            return OneSearchIndex(phraseToSearch, false, "", 0, 0, "GB");
         }
 
         private string OneSearchQueryFormat(string phraseToSearch, bool groupSearch,
@@ -35,10 +35,10 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
             var locationFormat = ResourceBase;
             locationFormat += "?q=" + Uri.EscapeDataString(phraseToSearch ?? string.Empty);
-            //locationFormat += "&g=" + groupSearch;
-            //locationFormat += "&i=" + resultsByIndex;
-            //locationFormat += "&limit=" + limit;
-            //locationFormat += "&offset=" + offset;
+            locationFormat += "&g=" + groupSearch;
+            locationFormat += "&i=" + resultsByIndex;
+            locationFormat += "&limit=" + limit;
+            locationFormat += "&offset=" + offset;
             locationFormat += "&country=" + country;
             return locationFormat;
         }
