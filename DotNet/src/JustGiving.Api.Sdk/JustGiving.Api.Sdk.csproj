@@ -64,6 +64,7 @@
     <Compile Include="ApiClients\InMemoryApi.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
+    <Compile Include="ApiClients\OneSearchApi.cs" />
     <Compile Include="ApiClients\TeamApi.cs" />
     <Compile Include="ApiClients\EventApi.cs" />
     <Compile Include="ApiClients\IAccountApiAsync.cs" />
