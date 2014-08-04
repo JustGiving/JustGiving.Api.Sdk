@@ -59,21 +59,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             OneSearchIndexAsync(phraseToSearch, callback, false, null, 0, 0);
         }
     }
-    public interface IOneSearchApi : IOneSearchApiAsync
-    {
-        OneSearchResponse OneSearchIndex(string phraseToSearch, bool groupSearch = false, string resultsByIndex = "",
-            int limit = 0, int offset = 0, string country = "GB");
+    
 
-        OneSearchResponse OneSearchIndex(string phraseToSearch);
-    }
-
-    public interface IOneSearchApiAsync
-    {
-        void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback, bool groupSearch = false,
-            string resultsByIndex = "",
-            int limit = 0, int offset = 0, string country = "GB");
-
-        void OneSearchIndexAsync(string phraseToSearch, Action<OneSearchResponse> callback);
-
-    }
+    
 }

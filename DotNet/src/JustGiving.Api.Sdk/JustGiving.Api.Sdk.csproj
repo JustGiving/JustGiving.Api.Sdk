@@ -62,6 +62,8 @@
     <Compile Include="ApiClients\IInMemoryApiAsync.cs" />
     <Compile Include="ApiClients\IInMemoryApi.cs" />
     <Compile Include="ApiClients\InMemoryApi.cs" />
+    <Compile Include="ApiClients\IOneSearchApi.cs" />
+    <Compile Include="ApiClients\IOneSearchApiAsync.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
     <Compile Include="ApiClients\OneSearchApi.cs" />
