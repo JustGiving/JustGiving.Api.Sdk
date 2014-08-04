@@ -55,7 +55,4 @@ namespace JustGiving.Api.Sdk.ApiClients
             OneSearchIndexAsync(phraseToSearch, callback, false, null, 0, 0);
         }
     }
-    
-
-    
 }
