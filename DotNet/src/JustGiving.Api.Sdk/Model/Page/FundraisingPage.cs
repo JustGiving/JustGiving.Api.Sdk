@@ -82,6 +82,8 @@ namespace JustGiving.Api.Sdk.Model.Page
         public PageCustomCodes CustomCodes { get; set; }
         [DataMember(Name = "rememberedPersonSummary", EmitDefaultValue = false)]
         public RememberedPersonSummary RememberedPersonSummary { get; set; }
+        [DataMember(Name = "teamsId")]
+        public int[] TeamsId { get; set; }
 
     	public FundraisingPage()
     	{

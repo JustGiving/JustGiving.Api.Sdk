@@ -225,6 +225,37 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(pageData.Count, Is.GreaterThan(0));
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrivePage_WhenProvidedShortName_ReturnsNotEmptyCollectionOfTeams(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+
+            //act
+            var result = pageClient.Retrieve("jrowett-201408022359");
+
+            //assert
+            Assert.IsNotEmpty(result.TeamsId);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrivePage_WhenProvidedShortName_ReturnsNullCollectionOfTeam(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
+
+            //act
+            var result = pageClient.Retrieve("alwyn-2014-08-01-12-53");
+
+            //assert
+            Assert.IsNull(result.TeamsId);
+
+        }
+
         /// <summary>
         /// Assumes that Rasha25 exists in the given environment.
         /// </summary>
