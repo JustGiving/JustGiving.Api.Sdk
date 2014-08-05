@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Model.Remember;
 
@@ -9,6 +10,7 @@ namespace JustGiving.Api.Sdk.Model.Page
     [KnownType(typeof(FundraisingPageBranding))]
     [KnownType(typeof(FundraisingPageCharity))]
     [KnownType(typeof(FundraisingPageMedia))]
+    [KnownType(typeof(FundraisingPageTeam))]
     [DataContract(Name = "fundraisingPage", Namespace = "")]
     public class FundraisingPage
     {
@@ -82,12 +84,19 @@ namespace JustGiving.Api.Sdk.Model.Page
         public PageCustomCodes CustomCodes { get; set; }
         [DataMember(Name = "rememberedPersonSummary", EmitDefaultValue = false)]
         public RememberedPersonSummary RememberedPersonSummary { get; set; }
-        [DataMember(Name = "teamsId")]
-        public int[] TeamsId { get; set; }
+        [DataMember(Name = "teams")]
+        public List<FundraisingPageTeam> Teams { get; set; }
 
     	public FundraisingPage()
     	{
     		CustomCodes = new PageCustomCodes();
     	}
+    }
+
+    [DataContract(Name = "team", Namespace = "")]
+    public class FundraisingPageTeam
+    {
+        [DataMember(Name = "teamId")]
+        public int TeamId { get; set; }
     }
 }

@@ -237,7 +237,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var result = pageClient.Retrieve("jrowett-201408022359");
 
             //assert
-            Assert.IsNotEmpty(result.TeamsId);
+            Assert.IsNotEmpty(result.Teams);
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -252,7 +252,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var result = pageClient.Retrieve("alwyn-2014-08-01-12-53");
 
             //assert
-            Assert.IsNull(result.TeamsId);
+            Assert.IsNull(result.Teams);
 
         }
 
