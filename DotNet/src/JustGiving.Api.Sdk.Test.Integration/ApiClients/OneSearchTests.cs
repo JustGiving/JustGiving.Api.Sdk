@@ -12,6 +12,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         private const string CorrectQuery = "cancer";
         private const int CorrectLimit = 3;
         private const string CorrectCountry = "GB";
+        private const string CorrectCategory = "charity";
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
@@ -33,6 +34,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.AreEqual(CorrectQuery, result.Query);
             Assert.AreEqual(CorrectLimit, result.Limit);
             Assert.AreEqual(CorrectCountry, result.Country);
+            CollectionAssert.IsNotEmpty(result.GroupedResults);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void OneSearchIndex_KeywordWithCharityIndex_SearchResultsPresent(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var oneSearchClient = new OneSearchApi(client.HttpChannel);
+            if (format == WireDataFormat.Json)
+            {
+                client.HttpClient.AddHeader("Accept", "application/json");
+            }
+
+            //act
+            var result = oneSearchClient.OneSearchIndex(CorrectQuery, false, CorrectCategory, CorrectLimit, 0, CorrectCountry);
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(CorrectQuery, result.Query);
+            Assert.AreEqual(CorrectLimit, result.Limit);
+            Assert.AreEqual(CorrectCountry, result.Country);
+            Assert.AreEqual(CorrectCategory, result.SpecificIndex);
             CollectionAssert.IsNotEmpty(result.GroupedResults);
         }
     }
