@@ -15,7 +15,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         private const string CorrectCategory = "charity";
 
         [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
         public void OneSearchIndex_KeywordWithKnownResult_SearchResultsPresent(WireDataFormat format)
         {
             //arrange
@@ -38,7 +37,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         }
 
         [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
         public void OneSearchIndex_KeywordWithCharityIndex_SearchResultsPresent(WireDataFormat format)
         {
             //arrange
