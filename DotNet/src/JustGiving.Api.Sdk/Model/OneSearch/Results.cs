@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JustGiving.Api.Sdk.Model.OneSearch
 {
-    [DataContract(Name = "Results", Namespace = "")]
+    [DataContract(Name = "Results")]
     public class Results
     {
         [DataMember(Name = "EventIds")]

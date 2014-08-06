@@ -14,6 +14,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         private const string CorrectCountry = "GB";
 
         [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void OneSearchIndex_KeywordWithKnownResult_SearchResultsPresent(WireDataFormat format)
         {
             //arrange
@@ -32,7 +33,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.AreEqual(CorrectQuery, result.Query);
             Assert.AreEqual(CorrectLimit, result.Limit);
             Assert.AreEqual(CorrectCountry, result.Country);
-
+            CollectionAssert.IsNotEmpty(result.GroupedResults);
         }
     }
 }
