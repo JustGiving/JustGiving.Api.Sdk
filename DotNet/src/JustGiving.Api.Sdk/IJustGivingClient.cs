@@ -12,6 +12,7 @@ namespace JustGiving.Api.Sdk
         ICharityApi Charity { get; set; }
         IEventApi Event { get; set; }
         ITeamApi Team { get; set; }
+        IOneSearchApi OneSearch { get; set; }
         string WhiteLabelDomain { get; }
         IHttpClient HttpClient { get; }
         HttpChannel HttpChannel { get; }

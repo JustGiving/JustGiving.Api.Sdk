@@ -62,8 +62,11 @@
     <Compile Include="ApiClients\IInMemoryApiAsync.cs" />
     <Compile Include="ApiClients\IInMemoryApi.cs" />
     <Compile Include="ApiClients\InMemoryApi.cs" />
+    <Compile Include="ApiClients\IOneSearchApi.cs" />
+    <Compile Include="ApiClients\IOneSearchApiAsync.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
+    <Compile Include="ApiClients\OneSearchApi.cs" />
     <Compile Include="ApiClients\TeamApi.cs" />
     <Compile Include="ApiClients\EventApi.cs" />
     <Compile Include="ApiClients\IAccountApiAsync.cs" />
@@ -126,6 +129,9 @@
     <Compile Include="Model\Event\EventRegistrationResponse.cs" />
     <Compile Include="Model\Event\EventType.cs" />
     <Compile Include="Model\Event\GetPagesForEventResponse.cs" />
+    <Compile Include="Model\OneSearch\GroupedResults.cs" />
+    <Compile Include="Model\OneSearch\OneSearchResponse.cs" />
+    <Compile Include="Model\OneSearch\Results.cs" />
     <Compile Include="Model\Page\AddFundraisingPageImageConfirmation.cs" />
     <Compile Include="Model\Page\AddFundraisingPageImageRequest.cs" />
     <Compile Include="Model\Page\AddFundraisingPageVideoConfirmation.cs" />

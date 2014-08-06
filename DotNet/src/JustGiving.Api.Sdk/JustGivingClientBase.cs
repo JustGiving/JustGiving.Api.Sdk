@@ -13,6 +13,7 @@ namespace JustGiving.Api.Sdk
         public ICharityApi Charity { get; set; }
         public IEventApi Event { get; set; }
         public ITeamApi Team { get; set; }
+        public IOneSearchApi OneSearch { get; set; }
 
         public string WhiteLabelDomain { get; private set; }
     	public IHttpClient HttpClient { get; private set; }
@@ -21,7 +22,7 @@ namespace JustGiving.Api.Sdk
         public HttpChannel HttpChannel { get; private set; }
 
         protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null)
+            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null, null)
         {
         }
 
@@ -33,7 +34,7 @@ namespace JustGiving.Api.Sdk
 										ISearchApi searchApi, 
 										ICharityApi charityApi, 
 										IEventApi eventApi,
-										ITeamApi teamApi)
+										ITeamApi teamApi, IOneSearchApi oneSearch)
         {
             if(httpClient == null)
             {
@@ -50,6 +51,7 @@ namespace JustGiving.Api.Sdk
             Charity = charityApi;
             Event = eventApi;
             Team = teamApi;
+            OneSearch = oneSearch;
 
             Configuration = clientConfiguration;
 
@@ -73,6 +75,7 @@ namespace JustGiving.Api.Sdk
 			Charity = Charity ?? new CharityApi(HttpChannel);
 			Event = Event ?? new EventApi(HttpChannel);
 			Team = Team ?? new TeamApi(HttpChannel);
+            OneSearch = OneSearch ?? new OneSearchApi(HttpChannel);
         }
 
         public void UpdateConfiguration(ClientConfiguration configuration)
