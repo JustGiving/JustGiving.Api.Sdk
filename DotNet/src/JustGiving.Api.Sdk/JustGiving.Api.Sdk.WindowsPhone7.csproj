@@ -72,12 +72,15 @@
     <Compile Include="ApiClients\IInMemoryApi.cs" />
     <Compile Include="ApiClients\IInMemoryApiAsync.cs" />
     <Compile Include="ApiClients\InMemoryApi.cs" />
+    <Compile Include="ApiClients\IOneSearchApi.cs" />
+    <Compile Include="ApiClients\IOneSearchApiAsync.cs" />
     <Compile Include="ApiClients\IPageApi.cs" />
     <Compile Include="ApiClients\IPageApiAsync.cs" />
     <Compile Include="ApiClients\ISearchApi.cs" />
     <Compile Include="ApiClients\ISearchApiAsync.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
+    <Compile Include="ApiClients\OneSearchApi.cs" />
     <Compile Include="ApiClients\PageApi.cs" />
     <Compile Include="ApiClients\SearchApi.cs" />
     <Compile Include="ApiClients\TeamApi.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="IJustGivingClient.cs" />
     <Compile Include="JustGivingClientBase.cs" />
     <Compile Include="JustGivingMobileClient.cs" />
+    <Compile Include="Model\Account\AccountDetails.cs" />
     <Compile Include="Model\Account\AccountRegistrationConfirmation.cs" />
     <Compile Include="Model\Account\CreateAccountRequest.cs" />
     <Compile Include="Model\Account\ValidateUser.cs" />
@@ -120,6 +124,9 @@
     <Compile Include="Model\Event\EventRegistrationResponse.cs" />
     <Compile Include="Model\Event\EventType.cs" />
     <Compile Include="Model\Event\GetPagesForEventResponse.cs" />
+    <Compile Include="Model\OneSearch\GroupedResults.cs" />
+    <Compile Include="Model\OneSearch\OneSearchResponse.cs" />
+    <Compile Include="Model\OneSearch\Results.cs" />
     <Compile Include="Model\Page\AddFundraisingPageImageConfirmation.cs" />
     <Compile Include="Model\Page\AddFundraisingPageImageRequest.cs" />
     <Compile Include="Model\Page\AddFundraisingPageVideoConfirmation.cs" />
@@ -134,6 +141,7 @@
     <Compile Include="Model\Page\FundraisingPageImages.cs" />
     <Compile Include="Model\Page\FundraisingPageMedia.cs" />
     <Compile Include="Model\Page\FundraisingPageSummaries.cs" />
+    <Compile Include="Model\Page\FundraisingPageSummariesPaginated.cs" />
     <Compile Include="Model\Page\FundraisingPageSummary.cs" />
     <Compile Include="Model\Page\FundraisingPageVideo.cs" />
     <Compile Include="Model\Page\FundraisingPageVideos.cs" />
@@ -160,6 +168,7 @@
     <Compile Include="Model\Search\InMemorySearchResults.cs" />
     <Compile Include="Model\Summaries\Summaries.cs" />
     <Compile Include="Model\Team\Team.cs" />
+    <Compile Include="Model\Team\TeamMember.cs" />
     <Compile Include="Model\Team\TeamTargetType.cs" />
     <Compile Include="Model\Team\TeamType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
