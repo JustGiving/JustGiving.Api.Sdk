@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>justgiving-sdk</id>
-        <version>1.6.5</version>
+        <version>1.6.6</version>
         <authors>JustGiving</authors>
         <owners>David Whitney</owners>
         <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
