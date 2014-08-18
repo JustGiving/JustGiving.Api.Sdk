@@ -96,7 +96,7 @@ namespace JustGiving.Api.Sdk.Model.Page
     [DataContract(Name = "team", Namespace = "")]
     public class FundraisingPageTeam
     {
-        [DataMember(Name = "teamId")]
-        public int TeamId { get; set; }
+        [DataMember(Name = "teamShortName")]
+        public string TeamShortName { get; set; }
     }
 }
