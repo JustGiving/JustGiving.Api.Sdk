@@ -1,5 +1,7 @@
 <?php
 include_once '../ApiClients/Model/CreateAccountRequest.php';
+include_once '../ApiClients/Model/ValidateAccountRequest.php';
+
 class AccountApiTests
 {
 	function Create_WhenSuppliedWithValidNewAccountDetails_CreatesAccount($client)
@@ -72,6 +74,48 @@ class AccountApiTests
 			WriteLine("Email address listed as available - TEST FAILED");
 		}
 	}
+
+	function IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsValid($client, $knownEmail, $knownPassword)
+	{
+		echo "<hr />";
+		echo "<b>IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsValid</b><br /><br />";
+
+		$request = new ValidateAccountRequest();
+		$request->email = $knownEmail;
+		$request->password = $knownPassword;
+
+		$response = $client->Account->IsValid($request);
+
+		if($response->customerId > 0 && $response->IsValid == 1)
+		{
+			WriteLine("Account credentials are correct and account exist - TEST PASSED");
+		}
+		else
+		{
+			WriteLine("Account credentials are incorrect - TEST FAILED");
+		}
+	}
+
+	function IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsInValid($client, $knownEmail, $knownPassword)
+	{
+		echo "<hr />";
+		echo "<b>IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsInValid</b><br /><br />";
+
+		$request = new ValidateAccountRequest();
+		$request->email = $knownEmail;
+		$request->password = $knownPassword;
+
+		$response = $client->Account->IsValid($request);
+
+		if($response->customerId == 0 && $response->IsValid == 0)
+		{
+			WriteLine("Account credentials are incorrect or accound doesn't exist - TEST PASSED");
+		}
+		else
+		{
+			WriteLine("Account credentials are correct - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -95,3 +139,5 @@ $pageTests->Create_WhenSuppliedWithValidNewAccountDetails_CreatesAccount($client
 $pageTests->ListAllPages_WhenSuppliedWithAValidAccount_RetrievesPages($client);
 $pageTests->IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse($client);
 $pageTests->IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue($client, $testContext->TestUsername);
+$pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsValid($client, $testContext->TestUsername, $testContext->TestValidPassword);
+$pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsInValid($client, $testContext->TestUsername, $testContext->TestInvalidPassword);

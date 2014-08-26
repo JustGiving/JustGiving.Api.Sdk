@@ -57,4 +57,12 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json); 		
 	}
+
+	public function IsValid($validateAccountRequest){		
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/validate";
+		$url = $this->BuildUrl($locationFormat);			
+		$payload = json_encode($validateAccountRequest);		
+		$json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);	
+		return json_decode($json); 			
+	}
 }
