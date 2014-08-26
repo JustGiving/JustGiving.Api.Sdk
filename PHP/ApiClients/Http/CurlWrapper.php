@@ -79,6 +79,24 @@ class CurlWrapper
 		curl_close($ch);
 		return $info;
 	}
+
+	public function PostAndGetResponse($url, $base64Credentials = "", $payload, $contentType="application/json")
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+		
+		$this->SetCredentials($ch, $base64Credentials, $contentType);
+		
+		$buffer = curl_exec($ch);
+		$info = curl_getinfo($ch);
+		curl_close($ch);
+		return $buffer;
+	}
+	
 	
 	private function SetCredentials($ch, $base64Credentials = "", $contentType="application/json")
 	{		
