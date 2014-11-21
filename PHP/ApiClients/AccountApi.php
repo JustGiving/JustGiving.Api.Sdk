@@ -145,4 +145,20 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json);	 
 	}
+
+	public function AddInterest($addInterestRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/interest";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($addInterestRequest);
+		$json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+		if($json['http_code'] == 201)
+		{
+			return true;
+		}
+		else if($json['http_code'] == 401)
+		{
+			return false;
+		}
+	}
 }

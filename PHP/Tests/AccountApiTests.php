@@ -3,6 +3,7 @@ include_once '../ApiClients/Model/CreateAccountRequest.php';
 include_once '../ApiClients/Model/ValidateAccountRequest.php';
 include_once '../ApiClients/Model/ChangePasswordRequest.php';
 include_once '../ApiClients/Model/RateContentRequest.php';
+include_once '../ApiClients/Model/AddInterestRequest.php';
 
 class AccountApiTests
 {
@@ -244,6 +245,25 @@ class AccountApiTests
 			WriteLine("Couldn't find any entires - TEST FAILED");
 		}
 	}
+
+	function AddInterest_WhenSuppliedAuthenticationAndProperName_Return_True($client)
+	{
+		echo "<hr />";
+		echo "<b>RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True</b><br/>";
+
+		$request = new AddInterestRequest();
+		$request->interest = "swimming";
+		$response = $client->Account->AddInterest($request);
+
+		if($response == 1)
+		{
+			WriteLine("Interests has been added - TEST PASSED");
+		}
+		else if($response == 0)
+		{
+			WriteLine("Unable to add new interests, please check authentication - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -276,3 +296,4 @@ $pageTests->GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations($cl
 $pageTests->GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings($client);
 $pageTests->RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True($client);
 $pageTests->GetContentFeed_WhenSuppliedAuthenticatio_ReturnFeed($client);
+$pageTests->AddInterest_WhenSuppliedAuthenticationAndProperName_Return_True($client);
