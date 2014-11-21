@@ -264,6 +264,23 @@ class AccountApiTests
 			WriteLine("Unable to add new interests, please check authentication - TEST FAILED");
 		}
 	}
+
+	function ReplaceInterest_WhenSuppliedAuthenticationAndCorrectListOfInterest_Return_True($client)
+	{
+		echo "<hr />";
+		echo "<b>ReplaceInterest_WhenSuppliedAuthenticationAndCorrectListOfInterest_Return_True</b><br/>";
+
+		$request = array("Swimming", "Cricket");
+		$response = $client->Account->ReplaceInterest($request);
+		if($response == 1)
+		{
+			WriteLine("Interests has been replaced - TEST PASSED");
+		}
+		else if($response == 0)
+		{
+			WriteLine("Unable to replace interests, please check authentication - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -297,3 +314,4 @@ $pageTests->GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings($cli
 $pageTests->RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True($client);
 $pageTests->GetContentFeed_WhenSuppliedAuthenticatio_ReturnFeed($client);
 $pageTests->AddInterest_WhenSuppliedAuthenticationAndProperName_Return_True($client);
+$pageTests->ReplaceInterest_WhenSuppliedAuthenticationAndCorrectListOfInterest_Return_True($client);

@@ -161,4 +161,20 @@ class AccountApi extends ClientBase
 			return false;
 		}
 	}
+
+	public function ReplaceInterest($replaceInterestRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/interest";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($replaceInterestRequest);
+		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
+		if($json['http_code'] == 201)
+		{
+			return true;
+		}
+		else if($json['http_code'] == 401)
+		{
+			return false;
+		}
+	}
 }
