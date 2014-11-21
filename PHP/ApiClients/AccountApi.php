@@ -137,4 +137,12 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json);
 	}
+
+	public function GetInterests()
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/interest";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);	 
+	}
 }
