@@ -12,6 +12,14 @@ class AccountApi extends ClientBase
 		$this->Parent		=	$justGivingApi;
 		$this->curlWrapper	= new CurlWrapper();
 	}
+
+	public function AccountDetails()
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
+	}
 	
 	public function Create($createAccountRequest)
 	{

@@ -18,7 +18,7 @@ class AccountApiTests
 		$request->title = "Mr";
 		$request->address->line1 = "testLine1".$uniqueId;
 		$request->address->line2 = "testLine2".$uniqueId;
-		$request->address->country = "testCountry".$uniqueId;
+		$request->address->country = "United Kingdom";
 		$request->address->countyOrState = "testCountyOrState".$uniqueId;
 		$request->address->townOrCity = "testTownOrCity".$uniqueId;
 		$request->address->postcodeOrZipcode = "M130EJ";
@@ -34,7 +34,7 @@ class AccountApiTests
 		echo "<hr />";
 		echo "<b>ListAll_WhenSuppliedWithAValidAccount_RetrievesPages</b><br/><br/>";
 		
-		$response = $client->Account->ListAllPages("apiunittests@justgiving.com");
+		$response = $client->Account->ListAllPages("apiunittest@justgiving.com");
 		
 		foreach ($response as $page) {
 		   echo 'Page:' . $page->pageShortName . ' status: ' . $page->pageStatus ."<br/>". PHP_EOL;
@@ -85,8 +85,9 @@ class AccountApiTests
 		$request->password = $knownPassword;
 
 		$response = $client->Account->IsValid($request);
-
-		if($response->customerId > 0 && $response->IsValid == 1)
+		WriteLine ($response->consumerId);
+		WriteLine ($response->isValid);
+		if($response->consumerId > 0 && $response->isValid == 1)
 		{
 			WriteLine("Account credentials are correct and account exist - TEST PASSED");
 		}
@@ -106,14 +107,34 @@ class AccountApiTests
 		$request->password = $knownPassword;
 
 		$response = $client->Account->IsValid($request);
-
-		if($response->customerId == 0 && $response->IsValid == 0)
+		WriteLine ($response->consumerId);
+		WriteLine ($response->isValid);
+		if($response->consumerId == 0 && $response->isValid == 0)
 		{
 			WriteLine("Account credentials are incorrect or accound doesn't exist - TEST PASSED");
 		}
 		else
 		{
 			WriteLine("Account credentials are correct - TEST FAILED");
+		}
+	}
+
+	function GetAccountDetails_WhenSuppliedAuthentication_RetriveAccountDetails($client)
+	{		
+		echo "<hr />";
+		echo "<b>GetAccountDetails_WhenSuppliedAuthentication_RetriveAccountDetails</b><br/>";
+		
+		$response = $client->Account->AccountDetails();
+		if($response->email != null)
+		{
+			WriteLine ($response->email);
+			WriteLine ($response->firstName);
+			WriteLine ($response->lastName);
+			WriteLine("Account credentials are correct can get account details for " . $response->email ." - TEST PASSED");
+		}
+		else
+		{
+			WriteLine("Account credentials are incorrect can't get account details - TEST FAILED");
 		}
 	}
 }
@@ -141,3 +162,4 @@ $pageTests->IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse($cli
 $pageTests->IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue($client, $testContext->TestUsername);
 $pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsValid($client, $testContext->TestUsername, $testContext->TestValidPassword);
 $pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsInValid($client, $testContext->TestUsername, $testContext->TestInvalidPassword);
+$pageTests->GetAccountDetails_WhenSuppliedAuthentication_RetriveAccountDetails($client);
