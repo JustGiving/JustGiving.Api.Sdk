@@ -229,6 +229,21 @@ class AccountApiTests
 			WriteLine("Unable to add new content, please check authentication - TEST FAILED");
 		}
 	}
+
+	function GetContentFeed_WhenSuppliedAuthenticatio_ReturnFeed($client)
+	{
+		echo "<hr />";
+		echo "<b>GetContentFeed_WhenSuppliedAuthenticatio_ReturnFeed</b><br/>";
+		$response = $client->Account->ContentFeed();
+		if(count($response->entry) > 0)
+		{
+			WriteLine(count($response->entry) . " - Entries - TEST PASSED");
+		}
+		else
+		{
+			WriteLine("Couldn't find any entires - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -260,3 +275,4 @@ $pageTests->ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPass
 $pageTests->GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations($client);
 $pageTests->GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings($client);
 $pageTests->RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True($client);
+$pageTests->GetContentFeed_WhenSuppliedAuthenticatio_ReturnFeed($client);

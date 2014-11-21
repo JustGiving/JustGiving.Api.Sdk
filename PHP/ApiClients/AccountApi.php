@@ -129,4 +129,12 @@ class AccountApi extends ClientBase
 			return false;
 		}		
 	}
+
+	public function ContentFeed()
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/feed";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
+	}
 }
