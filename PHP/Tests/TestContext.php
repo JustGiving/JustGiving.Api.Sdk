@@ -12,9 +12,9 @@ class TestContext
 	
 	public function __construct()
 	{
-		$this->ApiLocation = "https://api-staging.justgiving.com/";
+		$this->ApiLocation = "https://api-sandbox.justgiving.com/";
 		$this->ApiKey = "decbf1d2";
-		$this->TestUsername = "apiunittests@justgiving.com";
+		$this->TestUsername = "apiunittest@justgiving.com";
 		$this->TestValidPassword = "password";
 		$this->TestInvalidPassword = "badPassword";
 		$this->ApiVersion = 1;
