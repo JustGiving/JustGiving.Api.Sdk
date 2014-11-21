@@ -90,4 +90,19 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json);
 	}
+
+	public function AllDonationsByCharity($charityId)
+	{
+		if($charityId > 0 )
+		{
+			$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/donations?charityId=". $charityId;
+			$url = $this->BuildUrl($locationFormat);
+			$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+			return json_decode($json);			
+		}
+		else
+		{
+			return AllDonations();
+		}		
+	}
 }
