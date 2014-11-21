@@ -2,6 +2,7 @@
 include_once '../ApiClients/Model/CreateAccountRequest.php';
 include_once '../ApiClients/Model/ValidateAccountRequest.php';
 include_once '../ApiClients/Model/ChangePasswordRequest.php';
+include_once '../ApiClients/Model/RateContentRequest.php';
 
 class AccountApiTests
 {
@@ -207,6 +208,27 @@ class AccountApiTests
 			WriteLine("Ratings response is empty, probably wrong authentication - TEST FAILED");
 		}
 	}
+
+	function RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True($client)
+	{
+		echo "<hr />";
+		echo "<b>RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True</b><br/>";
+
+		$rateContentRequest = new RateContentRequest();
+		$rateContentRequest->intent = "Like";
+		$rateContentRequest->type = "FundraisingPage";
+		$rateContentRequest->contentData = "Pawel-SawiczTest1";
+
+		$response = $client->Account->RateContent($rateContentRequest);
+		if($response == 1)
+		{
+			WriteLine("Content has been added - TEST PASSED");
+		}
+		else if($response == 0)
+		{
+			WriteLine("Unable to add new content, please check authentication - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -237,3 +259,4 @@ $pageTests->ChangeAccountPassword_WhenSuppliedCorrectCurrentPasswordAndNewPasswo
 $pageTests->ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPassword_ReturnSuccess_False($client, $testContext->TestUsername, $testContext->TestInvalidPassword);
 $pageTests->GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations($client);
 $pageTests->GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings($client);
+$pageTests->RateContent_WhenSuppliedAuthenticationAndProperRate_Return_True($client);
