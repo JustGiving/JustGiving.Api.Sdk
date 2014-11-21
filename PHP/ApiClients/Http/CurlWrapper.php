@@ -24,7 +24,7 @@ class CurlWrapper
 		return $buffer;
 	}	
 	
-	public function Put($url, $base64Credentials = "", $payload)
+	public function Put($url, $base64Credentials = "", $payload, $getHttpStatus = false)
 	{	
 		$fh = fopen('php://temp', 'r+');
 		fwrite($fh, $payload);
@@ -43,7 +43,15 @@ class CurlWrapper
 		$buffer = curl_exec($ch);
 		$info = curl_getinfo($ch);
 		curl_close($ch);
-		return $buffer;
+		if($getHttpStatus == 1)
+		{
+			return $info;
+		}
+		else
+		{
+			return $buffer;
+		}
+		
 	}
 	
 	public function Head($url, $base64Credentials = "")
