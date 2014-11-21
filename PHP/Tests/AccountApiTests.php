@@ -1,6 +1,7 @@
 <?php
 include_once '../ApiClients/Model/CreateAccountRequest.php';
 include_once '../ApiClients/Model/ValidateAccountRequest.php';
+include_once '../ApiClients/Model/ChangePasswordRequest.php';
 
 class AccountApiTests
 {
@@ -137,6 +138,47 @@ class AccountApiTests
 			WriteLine("Account credentials are incorrect can't get account details - TEST FAILED");
 		}
 	}
+
+	function ChangeAccountPassword_WhenSuppliedCorrectCurrentPasswordAndNewPassword_ReturnSuccess_True($client, $knownEmail, $knownPassword)
+	{
+		echo "<hr />";
+		echo "<b>ChangeAccountPassword_WhenSuppliedCorrectCurrentPasswordAndNewPassword_ReturnSuccess_True</b><br/>";
+		$request = new ChangePasswordRequest();
+		$request->emailaddress = $knownEmail;
+		$request->newpassword = $knownPassword;
+		$request->currentpassword = $knownPassword;
+
+		$response = $client->Account->ChangePassword($request);
+		WriteLine ($request->emailaddress);
+		WriteLine ($request->newpassword);
+		WriteLine ($request->currentpassword);
+		WriteLine ($response->success);
+		if($response->success == 1)
+		{
+			WriteLine("Password was changed for : " .  $request->emailaddress . " and new is password : " . $request->newpassword . " - TEST PASSED");
+		}
+		else{
+			WriteLine("Password wasn't changed for : " .  $request->emailaddress . " and new is password : " . $request->newpassword . " - TEST FAILED");
+		}
+	}
+
+	function ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPassword_ReturnSuccess_False($client, $knownEmail, $badPassword)
+	{
+		echo "<hr />";
+		echo "<b>ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPassword_ReturnSuccess_False</b><br/>";
+		$request = new ChangePasswordRequest();
+		$request->emailaddress = $knownEmail;
+		$request->newpassword = $badPassword;
+		$request->currentpassword = $badPassword;
+
+		$response = $client->Account->ChangePassword($request);
+		if($response->success == 0){
+			WriteLine("Password wasn't changed for : " .  $request->emailaddress . " and new is password : " . $request->newpassword . " - TEST PASSED");
+		}
+		else{
+			WriteLine("Password was changed for : " .  $request->emailaddress . " and new is password : " . $request->newpassword . " - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -163,3 +205,5 @@ $pageTests->IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue($client, $testC
 $pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsValid($client, $testContext->TestUsername, $testContext->TestValidPassword);
 $pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsInValid($client, $testContext->TestUsername, $testContext->TestInvalidPassword);
 $pageTests->GetAccountDetails_WhenSuppliedAuthentication_RetriveAccountDetails($client);
+$pageTests->ChangeAccountPassword_WhenSuppliedCorrectCurrentPasswordAndNewPassword_ReturnSuccess_True($client, $testContext->TestUsername, $testContext->TestValidPassword);
+$pageTests->ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPassword_ReturnSuccess_False($client, $testContext->TestUsername, $testContext->TestInvalidPassword);

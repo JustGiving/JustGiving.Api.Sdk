@@ -73,4 +73,13 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);	
 		return json_decode($json); 			
 	}
+
+	public function ChangePassword($changePasswordRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/changePassword";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($changePasswordRequest);
+		$json = $this->curlWrapper->PostAndGetResponse($url, "", $payload);
+		return json_decode($json);
+	}
 }
