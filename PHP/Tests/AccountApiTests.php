@@ -179,6 +179,20 @@ class AccountApiTests
 			WriteLine("Password was changed for : " .  $request->emailaddress . " and new is password : " . $request->newpassword . " - TEST FAILED");
 		}
 	}
+
+	function GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations($client)
+	{
+		echo "<hr />";
+		echo "<b>GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations</b><br/>";
+
+		$response = $client->Account->AllDonations();
+		if($response != null){
+			WriteLine("Donation response exist - TEST PASSED");
+		}
+		else{
+			WriteLine("donation response is empty, probably wrong authentication - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -207,3 +221,4 @@ $pageTests->IsAccountValid_WhenSuppliedKnownEmailAndPassword_ReturnsInValid($cli
 $pageTests->GetAccountDetails_WhenSuppliedAuthentication_RetriveAccountDetails($client);
 $pageTests->ChangeAccountPassword_WhenSuppliedCorrectCurrentPasswordAndNewPassword_ReturnSuccess_True($client, $testContext->TestUsername, $testContext->TestValidPassword);
 $pageTests->ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPassword_ReturnSuccess_False($client, $testContext->TestUsername, $testContext->TestInvalidPassword);
+$pageTests->GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations($client);
