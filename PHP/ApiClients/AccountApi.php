@@ -105,4 +105,12 @@ class AccountApi extends ClientBase
 			return AllDonations();
 		}		
 	}
+
+	public function RatingHistory()
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/rating";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);	
+	}
 }

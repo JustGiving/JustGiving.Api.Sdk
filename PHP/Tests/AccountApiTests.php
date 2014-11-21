@@ -193,6 +193,20 @@ class AccountApiTests
 			WriteLine("donation response is empty, probably wrong authentication - TEST FAILED");
 		}
 	}
+
+	function GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings($client)
+	{
+		echo "<hr />";
+		echo "<b>GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings</b><br/>";
+
+		$response = $client->Account->RatingHistory();
+		if($response != null){
+			WriteLine("Ratings response exist - TEST PASSED");
+		}
+		else{
+			WriteLine("Ratings response is empty, probably wrong authentication - TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -222,3 +236,4 @@ $pageTests->GetAccountDetails_WhenSuppliedAuthentication_RetriveAccountDetails($
 $pageTests->ChangeAccountPassword_WhenSuppliedCorrectCurrentPasswordAndNewPassword_ReturnSuccess_True($client, $testContext->TestUsername, $testContext->TestValidPassword);
 $pageTests->ChangeAccountPassword_WhenSuppliedInCorrectCurrentPasswordAndNewPassword_ReturnSuccess_False($client, $testContext->TestUsername, $testContext->TestInvalidPassword);
 $pageTests->GetAllDonations_WhenSuppliedAuthentication_ReturnListOfDonations($client);
+$pageTests->GetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings($client);
