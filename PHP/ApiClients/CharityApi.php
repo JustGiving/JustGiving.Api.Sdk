@@ -29,4 +29,12 @@ class CharityApi extends ClientBase
 		$json = $this->curlWrapper->PostAndGetResponse($url, "", $payload);
 		return json_decode($json);
 	}
+
+	public function GetEventsByCharityId($charityId)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $charityId . "/events";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json);
+	}
 }
