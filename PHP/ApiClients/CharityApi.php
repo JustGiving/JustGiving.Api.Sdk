@@ -96,4 +96,13 @@ class CharityApi extends ClientBase
 			return false;
 		}
 	}
+
+	public function GetFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
+	{
+		$request = $fundraisingPageAttributionRequest;
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/". $request->pageShortName ."/attribution";
+		$url = $this->BuildUrl($locationFormat);		
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		return json_decode($json);
+	}
 }
