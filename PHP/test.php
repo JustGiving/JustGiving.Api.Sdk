@@ -16,7 +16,7 @@ $request->password = "badPassword";
 $request->pin = "1111";
 $request->username = "apiunittest_charity@justgiving.com";
 
-$response = $client->Countries->Countries();
-echo $response[0]->countryCode;
+$response = $client->Currency->ValidCurrencies();
+echo $response[0]->currencyCode;
 
 ?>
