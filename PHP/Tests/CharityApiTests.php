@@ -73,7 +73,23 @@ class CharityApiTests
 		{
 			WriteLine("TEST FAILED");
 		}
+	}
 
+	function GetDonations_WhenSuppliedCorrectCharityId_ReturnDonations($client)
+	{
+		echo "<hr />";
+		echo "<b>GetDonations_WhenSuppliedCorrectCharityId_ReturnDonations</b><br/>";
+		
+		$response = $client->Charity->GetDonations(2050);
+
+		if($response != null && $response->donations != null)
+		{
+			WriteLine("TEST PASSED");
+		}
+		else
+		{
+			WriteLine("TEST FAILED");
+		}
 	}
 }
 
@@ -98,3 +114,4 @@ $tests->Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity($client);
 $tests->RetriveAccount_WhenSuppliedCorrectRequest_ReturnValid($client);
 $tests->RetriveAccount_WhenSuppliedInCorrectRequest_ReturnInValid($client);
 $tests->GetEventsByCharityId_WhenSuppliedCorrectCharityId_ReturnEvents($client);
+$tests->GetDonations_WhenSuppliedCorrectCharityId_ReturnDonations($client);
