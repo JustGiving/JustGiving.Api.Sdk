@@ -20,4 +20,13 @@ class CharityApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json); 
 	}
+
+	public function Authenticate($authenticateCharityAccountRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/authenticate";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($authenticateCharityAccountRequest);
+		$json = $this->curlWrapper->PostAndGetResponse($url, "", $payload);
+		return json_decode($json);
+	}
 }

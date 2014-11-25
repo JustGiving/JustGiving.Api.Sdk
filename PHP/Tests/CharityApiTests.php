@@ -1,15 +1,61 @@
 <?php
 include_once '../ApiClients/Model/CreateAccountRequest.php';
+include_once '../ApiClients/Model/AuthenticateCharityAccountRequest.php';
+
 class CharityApiTests
 {
 	function Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity($client)
 	{
 		echo "<hr />";
-		echo "<b>Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity</b><br/><br/>";
+		echo "<b>Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity</b><br/>";
 		
 		$response = $client->Charity->Retrieve(2050);
 		
 		WriteLine("Charity Name: " . $response->name);
+	}
+
+	function RetriveAccount_WhenSuppliedCorrectRequest_ReturnValid($client)
+	{
+		echo "<hr />";
+		echo "<b>RetriveAccount_WhenSuppliedCorrectRequest_ReturnValid</b><br/>";
+
+		$request = new AuthenticateCharityAccountRequest();
+		$request->password = "badPassword";
+		$request->pin = "1111";
+		$request->username = "apiunittest_charity@justgiving.com";
+
+		$response = $client->Charity->Authenticate($request);
+
+		if($response->isValid == 1 && $response->charityId > 0 && $response->error == null)
+		{
+			WriteLine("TEST PASSED");
+		}
+		else
+		{
+			WriteLine("TEST FAILED");
+		}
+	}
+
+	function RetriveAccount_WhenSuppliedInCorrectRequest_ReturnInValid($client)
+	{
+		echo "<hr />";
+		echo "<b>RetriveAccount_WhenSuppliedCorrectRequest_ReturnValid</b><br/>";
+
+		$request = new AuthenticateCharityAccountRequest();
+		$request->password = "badPassword";
+		$request->pin = "1111";
+		$request->username = "apiunittest_charity@justgiving.com";
+
+		$response = $client->Charity->Authenticate($request);
+
+		if($response->isValid == 0)
+		{
+			WriteLine("TEST PASSED");
+		}
+		else
+		{
+			WriteLine("TEST FAILED");
+		}
 	}
 }
 
@@ -31,3 +77,5 @@ echo "<h1>Executing Test Cases</h1>";
 
 $tests = new CharityApiTests();
 $tests->Retrieve_WhenSuppliedWithValidCharityId_RetrievesCharity($client);
+$tests->RetriveAccount_WhenSuppliedCorrectRequest_ReturnValid($client);
+$tests->RetriveAccount_WhenSuppliedInCorrectRequest_ReturnInValid($client);
