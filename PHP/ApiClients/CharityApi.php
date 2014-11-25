@@ -45,4 +45,21 @@ class CharityApi extends ClientBase
 		$json = $this->curlWrapper->Get($url);
 		return json_decode($json);
 	}
+
+	public function DeleteFundraisingPageAttribution($deleteFundraisingPageAttributionRequest)
+	{
+		$request = $deleteFundraisingPageAttributionRequest;
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/". $request->pageShortName ."/attribution";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Delete($url);
+		
+		if($json['http_code'] == 201)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
