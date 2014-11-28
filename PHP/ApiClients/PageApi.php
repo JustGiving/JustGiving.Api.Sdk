@@ -142,4 +142,13 @@ class PageApi extends ClientBase
 		$json = $this->curlWrapper->Get($url);
 		return json_decode($json);
 	}
+
+	public function AddPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/updates/";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($addPostToPageUpdateRequest);
+		$json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
+		return json_decode($json);
+	}
 }
