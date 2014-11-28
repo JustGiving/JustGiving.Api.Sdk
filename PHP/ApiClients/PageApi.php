@@ -111,4 +111,19 @@ class PageApi extends ClientBase
 			return $httpInfo;
 		}
 	}
+
+	public function RetrieveDonationsForPageByReference($pageShortName, $reference, $privateData = false)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/donations/ref/".$reference;
+		$url = $this->BuildUrl($locationFormat);
+		if($privateData == 1)
+		{
+			$json = $this->curlWrapper->Get($url);
+		}
+		else
+		{
+			$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		}
+		return json_decode($json);
+	}
 }
