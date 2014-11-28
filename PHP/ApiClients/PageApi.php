@@ -184,4 +184,21 @@ class PageApi extends ClientBase
 		}
 	}
 
+	public function AppendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
+	{
+		$requestBody = $appendToFundraisingPageAttributionRequest 
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/attribution";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($requestBody);
+		$json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+		if($json['http_code'] == 200)
+		{
+			return true;
+		}
+		else if($json['http_code'] == 404)
+		{
+			return false;
+		}
+	}
+
 }
