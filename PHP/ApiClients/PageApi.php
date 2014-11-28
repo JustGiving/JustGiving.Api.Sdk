@@ -209,4 +209,24 @@ class PageApi extends ClientBase
 		return json_decode($json);
 	}
 
+	public function UploadDefaultImage($pageShortName, $filename, $imageContentType)
+	{            
+		$fh = fopen($filename, 'r');
+		$imageBytes = fread($fh, filesize($filename));
+		fclose($fh);
+	
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName . "/images/default";
+		$url = $this->BuildUrl($locationFormat);
+		$httpInfo = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $imageBytes, $imageContentType);
+		
+		if($httpInfo['http_code'] == 200)
+		{
+			return true;
+		}
+		else
+		{
+			return $httpInfo;
+		}
+	}
+
 }
