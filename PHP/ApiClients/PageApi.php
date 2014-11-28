@@ -152,7 +152,7 @@ class PageApi extends ClientBase
 		return json_decode($json);
 	}
 
-	public function DeleteFundraisingPageAttribution()
+	public function DeleteFundraisingPageAttribution($pageShortName)
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/attribution";
 		$url = $this->BuildUrl($locationFormat);
