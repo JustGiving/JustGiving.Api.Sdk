@@ -151,4 +151,20 @@ class PageApi extends ClientBase
 		$json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
 		return json_decode($json);
 	}
+
+	public function DeleteFundraisingPageAttribution()
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/attribution";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Delete($url, $this->BuildAuthenticationValue());
+		if($json['http_code'] == 200)
+		{
+			return true;
+		}
+		else if($json['http_code'] == 404)
+		{
+			return false;
+		}
+	}
+
 }
