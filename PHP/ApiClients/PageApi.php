@@ -235,7 +235,7 @@ class PageApi extends ClientBase
 		$url = $this->BuildUrl($locationFormat);
 		$payload = json_encode($addImageRequest);
 		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
-		return $json;
+		return json_decode($json);
 	}
 
 	public function GetImages($pageShortName)
