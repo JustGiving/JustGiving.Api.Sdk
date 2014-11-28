@@ -263,4 +263,12 @@ class PageApi extends ClientBase
 		return json_decode($json);
 	}
 
+	public function Cancel($pageShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName;
+		$url = $this->BuildUrl($locationFormat);
+		$httpInfo = $this->curlWrapper->Delete($url, $this->BuildAuthenticationValue());
+		return $httpInfo;
+	}
+
 }
