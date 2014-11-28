@@ -238,4 +238,12 @@ class PageApi extends ClientBase
 		return $json;
 	}
 
+	public function GetImages($pageShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName . "/images";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json);
+	}
+
 }
