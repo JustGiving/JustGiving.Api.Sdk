@@ -169,7 +169,7 @@ class PageApi extends ClientBase
 
 	public function UpdateFundraisingPageAttribution($pageShortName, $updateFundraisingPageAttributionRequest)
 	{
-		$requestBody = $updateFundraisingPageAttributionRequest 
+		$requestBody = $updateFundraisingPageAttributionRequest; 
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/attribution";
 		$url = $this->BuildUrl($locationFormat);
 		$payload = json_encode($requestBody);
@@ -186,7 +186,7 @@ class PageApi extends ClientBase
 
 	public function AppendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
 	{
-		$requestBody = $appendToFundraisingPageAttributionRequest 
+		$requestBody = $appendToFundraisingPageAttributionRequest;
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/attribution";
 		$url = $this->BuildUrl($locationFormat);
 		$payload = json_encode($requestBody);
@@ -199,6 +199,14 @@ class PageApi extends ClientBase
 		{
 			return false;
 		}
+	}
+
+	public function GetFundraisingPageAttribution($pageShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/".$pageShortName."/attribution";
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json);
 	}
 
 }
