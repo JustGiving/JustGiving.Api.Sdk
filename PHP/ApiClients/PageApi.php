@@ -246,4 +246,13 @@ class PageApi extends ClientBase
 		return json_decode($json);
 	}
 
+	public function AddVideo($pageShortName, $addVideoRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName . "/videos";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($addVideoRequest);
+		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+		return json_decode($json);
+	}
+
 }
