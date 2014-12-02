@@ -21,4 +21,12 @@ class TeamApi extends ClientBase
 		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 		return json_decode($json);
 	}
+
+	public function Team($teamShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/" . $teamShortName;
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json);
+	}
 }
