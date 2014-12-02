@@ -28,6 +28,6 @@ class ProjectApi extends ClientBase
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/project/global/". $projectId;
 		$url = $this->BuildUrl($locationFormat);
 		$json = $this->curlWrapper->Get($url);
-		return ($json);
+		return json_decode($json);
 	}
 }
