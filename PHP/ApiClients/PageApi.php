@@ -93,23 +93,19 @@ class PageApi extends ClientBase
 	}
 	
 	public function UploadImage($pageShortName, $caption, $filename, $imageContentType)
-	{            
-		$fh = fopen($filename, 'r');
-		$imageBytes = fread($fh, filesize($filename));
-		fclose($fh);
-	
+	{ 
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode ($caption);
 		$url = $this->BuildUrl($locationFormat);
-		$httpInfo = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $imageBytes, $imageContentType);
-		
+		$httpInfo = $this->curlWrapper->PostBinary($url, $this->BuildAuthenticationValue(), $filename, $imageContentType);
 		if($httpInfo['http_code'] == 200)
 		{
 			return true;
 		}
 		else
 		{
-			return $httpInfo;
+			return false;
 		}
+		
 	}
 
 	public function RetrieveDonationsForPageByReference($pageShortName, $reference, $privateData = false)
