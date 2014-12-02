@@ -37,4 +37,19 @@ class SmsApi extends ClientBase
 			return false;
 		}
 	}
+
+	public function CheckSmsCodeAvailability($urn)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/sms/urn/". $urn . "/check";
+		$url = $this->BuildUrl($locationFormat);
+		$httpInfo = $this->curlWrapper->Post($url);
+		if($httpInfo['http_code'] == 200)
+		{
+			return true;
+		}
+		else if($httpInfo['http_code'] == 400)
+		{
+			return false;
+		}
+	}
 }
