@@ -20,4 +20,21 @@ class SmsApi extends ClientBase
 		$json = $this->curlWrapper->Get($url);
 		return json_decode($json);
 	}
+
+	public function UpdatePageSmsCode($pageShortName, $updatePageSmsCodeRequest)
+	{
+		$requestBody = $updatePageSmsCodeRequest;
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/". $pageShortName ."/sms";
+		$payload = json_encode($requestBody);
+		$url = $this->BuildUrl($locationFormat);
+		$httpInfo = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
+		if($httpInfo['http_code'] == 201)
+		{
+			return true;
+		}
+		else if($httpInfo['http_code'] == 404)
+		{
+			return false;
+		}
+	}
 }
