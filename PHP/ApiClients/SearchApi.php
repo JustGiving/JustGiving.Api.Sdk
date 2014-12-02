@@ -47,7 +47,7 @@ class SearchApi extends ClientBase
 
 	public function TeamSearch($teamShortName)
 	{
-		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/remember/search?teamname=". $teamShortName;
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/search?teamname=". $teamShortName;
 		$url = $this->BuildUrl($locationFormat);	
 		$json = $this->curlWrapper->Get($url);
 		return json_decode($json); 
