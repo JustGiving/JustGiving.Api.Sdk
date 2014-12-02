@@ -1,4 +1,7 @@
 <?php
+
+include_once '../ApiClients/Model/AddPostToPageUpdateRequest.php';
+
 class PageApiTests
 {
 	function Retrieve_WhenSuppliedWithValidPage_ReturnsPageData($client)
@@ -183,6 +186,25 @@ class PageApiTests
 			WriteLine("Image update failed for " . $dto->pageShortName);
 		}
 	}
+
+	function AddPostToPageUpdate_WhenSuppliedValidRequest_ReturnResponse($client)
+	{
+		echo "<hr />";
+		echo "<b>AddPostToPageUpdate_WhenSuppliedValidRequest_ReturnResponse</b><br/>";
+
+		$request = new AddPostToPageUpdateRequest();
+		$request->Message = "update story";
+
+		$response = $client->Page->AddPostToPageUpdate("api-test-54787f3435f75", $request);
+		if($response->Created != null)
+		{
+			WriteLine("TEST PASSED");
+		}
+		else
+		{
+			WriteLine("TEST FAILED");
+		}
+	}
 }
 
 ///############### RUN TESTS	
@@ -210,3 +232,4 @@ $tests->IsShortNameRegistered_KnownPage_ReturnsTrue($client);
 $tests->IsShortNameRegistered_ForUnregisteredPage_ReturnsFalse($client);
 $tests->UpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory($client);
 $tests->UploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption($client);
+$tests->AddPostToPageUpdate_WhenSuppliedValidRequest_ReturnResponse($client);

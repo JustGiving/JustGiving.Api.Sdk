@@ -20,4 +20,36 @@ class SearchApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json); 
 	}
+
+	public function EventSearch($searchTerms, $pageSize=50, $pageNumber=1)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/event/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
+		$url = $this->BuildUrl($locationFormat);	
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json); 
+	}
+
+	public function FundraiserSearch($searchTerms, $pageSize=50, $pageNumber=1)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
+		$url = $this->BuildUrl($locationFormat);	
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json); 
+	}
+
+	public function InMemorySearch($searchTerms, $pageSize=50, $pageNumber=1)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/remember/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
+		$url = $this->BuildUrl($locationFormat);	
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json); 
+	}
+
+	public function TeamSearch($teamShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/search?teamname=". $teamShortName;
+		$url = $this->BuildUrl($locationFormat);	
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json); 
+	}
 }

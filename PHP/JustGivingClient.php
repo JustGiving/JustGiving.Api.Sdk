@@ -7,6 +7,11 @@ include_once 'ApiClients/DonationApi.php';
 include_once 'ApiClients/SearchApi.php';
 include_once 'ApiClients/EventApi.php';
 include_once 'ApiClients/TeamApi.php';
+include_once 'ApiClients/CountriesApi.php';
+include_once 'ApiClients/CurrencyApi.php';
+include_once 'ApiClients/OneSearchApi.php';
+include_once 'ApiClients/ProjectApi.php';
+include_once 'ApiClients/SmsApi.php';
 
 class JustGivingClient
 {	
@@ -23,6 +28,11 @@ class JustGivingClient
 	public $Search;
 	public $Event;
 	public $Team;
+	public $Countries;
+	public $Currency;
+	public $OneSearch;
+	public $Project;
+	public $Sms;
 
 	public function __construct($rootDomain, $apiKey, $apiVersion, $username="", $password="")
 	{
@@ -42,5 +52,10 @@ class JustGivingClient
 		$this->Search			= new SearchApi($this);
 		$this->Event			= new EventApi($this);
 		$this->Team			    = new TeamApi($this);
+		$this->Countries 		= new CountriesApi($this);
+		$this->Currency 		= new CurrencyApi($this);
+		$this->OneSearch 		= new OneSearchApi($this);
+		$this->Project 			= new ProjectApi($this);
+		$this->Sms 				= new SmsApi($this);
 	}
 }
