@@ -29,4 +29,19 @@ class TeamApi extends ClientBase
 		$json = $this->curlWrapper->Get($url);
 		return json_decode($json);
 	}
+
+	public function CheckIfExist($teamShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/" . $teamShortName;
+		$url = $this->BuildUrl($locationFormat);
+		$json = $this->curlWrapper->Head($url);
+		if($httpInfo['http_code'] == 200)
+		{
+			return true;
+		}
+		else if($httpInfo['http_code'] == 404)
+		{
+			return false;
+		}
+	}
 }
