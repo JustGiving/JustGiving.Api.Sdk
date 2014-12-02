@@ -25,7 +25,7 @@ class SearchApi extends ClientBase
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/event/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
 		$url = $this->BuildUrl($locationFormat);	
-		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		$json = $this->curlWrapper->Get($url);
 		return json_decode($json); 
 	}
 
@@ -33,7 +33,7 @@ class SearchApi extends ClientBase
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
 		$url = $this->BuildUrl($locationFormat);	
-		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		$json = $this->curlWrapper->Get($url);
 		return json_decode($json); 
 	}
 
@@ -41,7 +41,15 @@ class SearchApi extends ClientBase
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/remember/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
 		$url = $this->BuildUrl($locationFormat);	
-		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		$json = $this->curlWrapper->Get($url);
+		return json_decode($json); 
+	}
+
+	public function TeamSearch($teamShortName)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/remember/search?teamname=". $teamShortName;
+		$url = $this->BuildUrl($locationFormat);	
+		$json = $this->curlWrapper->Get($url);
 		return json_decode($json); 
 	}
 }
