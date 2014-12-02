@@ -53,6 +53,30 @@ class CurlWrapper
 		}
 		
 	}
+
+	public function PostBinary($url, $base64Credentials = "", $filename, $imageContentType)
+	{	
+		$fh = fopen($filename, 'rb');
+		$imageBytes = fread($fh, filesize($filename));		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: '.$imageContentType, 'Authorize: Basic '.$base64Credentials, 'Authorization: Basic '.$base64Credentials));
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $imageBytes);
+		curl_setopt($ch, CURLOPT_INFILE, $fh);
+		curl_setopt($ch, CURLOPT_INFILESIZE, filesize($filename));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		curl_setopt($ch, CURLINFO_HEADER_OUT, true);			
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);		
+		$buffer = curl_exec($ch);	
+		$info = curl_getinfo($ch);
+		curl_close($ch);		
+		return $info;
+	}
 	
 	public function Head($url, $base64Credentials = "")
 	{
@@ -86,7 +110,7 @@ class CurlWrapper
 		$info = curl_getinfo($ch);
 		curl_close($ch);
 		return $info;
-	}
+	}	
 
 	public function PostAndGetResponse($url, $base64Credentials = "", $payload, $contentType="application/json")
 	{
