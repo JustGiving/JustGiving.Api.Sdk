@@ -18,7 +18,7 @@ class EventApi extends ClientBase
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/event";
 		$url = $this->BuildUrl($locationFormat);
 		$payload = json_encode($event);
-		$json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+		$json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
 		return json_decode($json);
 	}
 	
