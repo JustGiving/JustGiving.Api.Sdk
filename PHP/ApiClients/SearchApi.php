@@ -29,13 +29,13 @@ class SearchApi extends ClientBase
 		return json_decode($json); 
 	}
 
-	public function FundraiserSearch($searchTerms, $pageSize=50, $pageNumber=1)
+	public function FundraiserSearch($searchTerms, $charityId, $pageSize=50, $pageNumber=1)
 	{
-		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber;
-		$url = $this->BuildUrl($locationFormat);	
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/search?q=".urlencode($searchTerms)."&PageSize=".$pageSize."&PageNum=".$pageNumber."&charityId=".$charityId;
+		$url = $this->BuildUrl($locationFormat);
 		$json = $this->curlWrapper->Get($url);
 		return json_decode($json); 
-	}
+	}	
 
 	public function InMemorySearch($searchTerms, $pageSize=50, $pageNumber=1)
 	{
