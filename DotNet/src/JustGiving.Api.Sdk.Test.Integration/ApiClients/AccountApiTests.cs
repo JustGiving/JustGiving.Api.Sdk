@@ -48,7 +48,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientInvalidCredentials(format);
 			var accountClient = new AccountApi(client.HttpChannel);
 
-            accountClient.ListAllPages("apiunittests2@justgiving.com");
+            accountClient.ListAllPages("apiunittest@justgiving.com");
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -128,6 +128,22 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.AreEqual(TestContext.TestUsername, account.Email);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void ChangePassword_WhenSuppliedValidChangePasswordRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var validRequest = CreateValidChangePasswordForGivenAccount(TestContext.TestUsername);
+            var accountClient = new AccountApi(client.HttpChannel);
+
+            //act
+            var result = accountClient.ChangePassword(validRequest);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest
@@ -148,6 +164,16 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 },
                 AcceptTermsAndConditions = true
             };
+        }
+
+        private static AccountApi.ChangePasswordRequest CreateValidChangePasswordForGivenAccount(string email)
+        {
+            return new AccountApi.ChangePasswordRequest
+                {
+                    CurrentPassword = "password",
+                    EmailAddress = email,
+                    NewPassword = "password"
+                };
         }
     }
 }
