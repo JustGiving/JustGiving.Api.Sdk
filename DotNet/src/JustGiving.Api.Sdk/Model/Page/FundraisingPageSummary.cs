@@ -31,18 +31,26 @@ namespace JustGiving.Api.Sdk.Model.Page
         public List<string> PageImages { get; set; }
         [DataMember(Name = "eventName")]
         public string EventName { get; set; }
+        [DataMember(Name = "eventId")]
+        public int EventId { get; set; }
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
         [DataMember(Name = "inMemoryPerson")]
         public InMemoryPerson InMemoryPerson { get; set; }
+        [DataMember(Name = "currencyCode")]
+        public string CurrencyCode { get; set; }
+        [DataMember(Name = "currencySymbol")]
+        public string CurrencySymbol { get; set; }
         [DataMember(Name = "charityId", Order = 17)]
         public string CharityId { get; set; }
         [DataMember(Name = "smsCode", Order = 16)]
         public string SmsCode { get; set; }
-
+        [DataMember(Name = "images")]
+        public List<Image> Images { get; set; } 
         public FundraisingPageSummary()
         {
             PageImages = new List<string>();
+            Images = new List<Image>();
         }
     }
 
@@ -57,5 +65,15 @@ namespace JustGiving.Api.Sdk.Model.Page
         public DateTime DateOfBirth { get; set; }
         [DataMember(Name = "dateOfDeath")]
         public DateTime DateOfDeath { get; set; }
+    }
+
+    public class Image
+    {
+        [DataMember(Name = "caption")]
+        public string Caption { get; set; }
+        [DataMember(Name = "url")]
+        public string Url { get; set; }
+        [DataMember(Name = "absoluteUrl")]
+        public string AbsoluteUrl { get; set; }
     }
 }
