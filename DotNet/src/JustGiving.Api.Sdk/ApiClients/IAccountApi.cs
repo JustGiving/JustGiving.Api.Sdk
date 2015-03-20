@@ -11,5 +11,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         void RequestPasswordReminder(string email);
         bool IsEmailRegistered(string email);
         AccountDetails RetrieveAccount();
+        bool ChangePassword(AccountApi.ChangePasswordRequest changePasswordRequest);
     }
 }
