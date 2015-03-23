@@ -3,7 +3,7 @@ using JustGiving.Api.Sdk.Model.Page;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
-    public interface IAccountApi: IAccountApiAsync
+    public interface IAccountApi : IAccountApiAsync
     {
         bool AreCredentialsValid(string email, string password);
         string Create(CreateAccountRequest request);
@@ -13,5 +13,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         AccountDetails RetrieveAccount();
         bool ChangePassword(AccountApi.ChangePasswordRequest changePasswordRequest);
         AccountApi.ContentRatingHistoryResponse ContentRatingHistory();
+        bool RateContent(AccountApi.RateContentRequest rateContentRequest);
     }
 }

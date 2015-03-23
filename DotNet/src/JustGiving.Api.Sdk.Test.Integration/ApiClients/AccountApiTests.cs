@@ -157,6 +157,32 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsNotNull(result);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RateContent_WhenValidRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientInvalidCredentials(format);
+            var accountclient = new AccountApi(client.HttpChannel);
+            var validRequest = CreateValidRateContentRequest();
+
+            //act
+            var response = accountclient.RateContent(validRequest);
+
+            //assert
+            Assert.IsTrue(response);
+        }
+
+        private static AccountApi.RateContentRequest CreateValidRateContentRequest()
+        {
+            return new AccountApi.RateContentRequest
+                {
+                    ContentData = "my-page-short-url",
+                    Intent = "Like",
+                    Type = "FundraisingPage"
+                };
+        }
+
         private static CreateAccountRequest CreateValidRegisterAccountRequest(string email)
         {
             return new CreateAccountRequest
