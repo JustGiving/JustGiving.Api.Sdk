@@ -57,7 +57,7 @@ https://github.com/JustGiving/JustGiving.Api.Sdk/wiki
 
 	For some quick hack-tastic examples in a few languages
 	
-https://github.com/pawelsawicz/JustGiving.Api.Tools.Postman
+https://github.com/JustGiving/JustGiving.Api.Tools.Postman
 	
 	Config file for Postman that has collection of our http end points. 
 	
