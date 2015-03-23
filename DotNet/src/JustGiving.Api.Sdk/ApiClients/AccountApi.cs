@@ -29,7 +29,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 			HttpChannel.PutAsync<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request, response => callback(response.Email));
         }
 
-        public string ListAllPagesLocationFormat(string email)
+        private string ListAllPagesLocationFormat(string email)
         {
             if (string.IsNullOrEmpty(email))
             {
@@ -51,7 +51,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 			HttpChannel.GetAsync(locationFormat, callback);
         }
 
-        public string IsEmailRegisteredLocationFormat(string email)
+        private string IsEmailRegisteredLocationFormat(string email)
         {
             if (string.IsNullOrEmpty(email))
                 throw new ArgumentNullException("email", "Email cannot be null or empty.");
@@ -85,7 +85,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
-        public string RequestPasswordReminderLocationFormat(string email)
+        private string RequestPasswordReminderLocationFormat(string email)
         {
 			return ResourceBase + "/" + email + "/requestpasswordreminder";
         }
@@ -105,7 +105,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             HttpChannel.PerformRawRequestAsync("GET", locationFormat, ProcessRequestPasswordReminder);
         }
 
-        public string RetrieveAccountLocationFormat()
+        private string RetrieveAccountLocationFormat()
         {
             if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
             {
@@ -147,13 +147,14 @@ namespace JustGiving.Api.Sdk.ApiClients
                                                                                        response => callback(response.IsValid));
         }
 
-        public string ChangePasswordLocationFormat()
+        private string ChangePasswordLocationFormat()
         {
             return ResourceBase + "/changePassword";
         }
 
         public bool ChangePassword(ChangePasswordRequest changePasswordRequest)
         {
+
             var locationFormat = ChangePasswordLocationFormat();
             var response = HttpChannel.PerformRequest<ChangePasswordRequest, ChangePasswordResponse>("POST",
                                                                                                      locationFormat,
