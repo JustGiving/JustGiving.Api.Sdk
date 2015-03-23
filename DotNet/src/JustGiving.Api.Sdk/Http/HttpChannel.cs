@@ -97,6 +97,14 @@ namespace JustGiving.Api.Sdk.Http
             return _httpClient.Send(request);
         }
 
+        public HttpResponseMessage PerformRawRequest<TRequestType>(string method, string locationFormat, TRequestType request) where TRequestType : class
+        {
+            var url = BuildUrl(locationFormat);
+            var payload = _payloadBuilder.BuildPayload(request);
+            var response = _httpClient.Send(method, url, payload);
+            return response;
+        }
+
         public TResult PerformRequest<TResult>(string method, string locationFormat, byte[] postData, string contentType, string acceptContentType)
         {
             var url = BuildUrl(locationFormat);
