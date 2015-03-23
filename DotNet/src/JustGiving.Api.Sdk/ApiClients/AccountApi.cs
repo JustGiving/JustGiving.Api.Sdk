@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
+using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Account;
 using JustGiving.Api.Sdk.Model.Page;
 
@@ -162,7 +164,53 @@ namespace JustGiving.Api.Sdk.ApiClients
             return response.Success;
         }
 
-        [DataContract(Name = "changePassword")]
+        private string ContentRatingHistoryResourceEndpoint()
+        {
+            return ResourceBase + "/rating";
+        }
+
+        public ContentRatingHistoryResponse ContentRatingHistory()
+        {
+            var resourceEndpoint = ContentRatingHistoryResourceEndpoint();
+            return HttpChannel.PerformRequest<ContentRatingHistoryResponse>("GET", resourceEndpoint);
+        }
+
+        public void ContentRatingHistoryAsync(Action<ContentRatingHistoryResponse> callback)
+        {
+            var resourceEndpoint = ContentRatingHistoryResourceEndpoint();
+            HttpChannel.GetAsync(resourceEndpoint, callback);
+        }
+
+        [DataContract(Namespace = "", Name = "contentRatings")]
+        public class ContentRatingHistoryResponse
+        {
+            [DataMember(Name = "ratings")]
+            public List<Rating> Ratings { get; set; }
+
+            [DataMember(Name = "pagination")]
+            public Pagination Pagination { get; set; }
+        }
+
+        [DataContract(Namespace = "", Name = "rating")]
+        public class Rating
+        {
+            [DataMember(Name = "intent")]
+            public string Intent { get; set; }
+
+            [DataMember(Name = "type")]
+            public string Type { get; set; }
+
+            [DataMember(Name = "contentData")]
+            public string ContentData { get; set; }
+
+            [DataMember(Name = "created")]
+            public DateTime Created { get; set; }
+
+            [DataMember(Name = "updated")]
+            public DateTime Updated { get; set; }
+        } 
+
+        [DataContract(Namespace = "", Name = "changePassword")]
         public class ChangePasswordRequest
         {
             [DataMember(Name = "emailAddress")]
@@ -175,7 +223,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             public string CurrentPassword { get; set; } 
         }
 
-        [DataContract]
+        [DataContract(Namespace = "", Name = "changePasswordResponse")]
         public class ChangePasswordResponse
         {
             [DataMember(Name = "success")]
