@@ -12,5 +12,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         bool IsEmailRegistered(string email);
         AccountDetails RetrieveAccount();
         bool ChangePassword(AccountApi.ChangePasswordRequest changePasswordRequest);
+        AccountApi.ContentRatingHistoryResponse ContentRatingHistory();
     }
 }
