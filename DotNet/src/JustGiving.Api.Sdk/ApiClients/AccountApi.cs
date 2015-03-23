@@ -181,6 +181,31 @@ namespace JustGiving.Api.Sdk.ApiClients
             HttpChannel.GetAsync(resourceEndpoint, callback);
         }
 
+        private string RateContentResourceEndpoint()
+        {
+            return ResourceBase + "/rating";
+        }
+
+        public bool RateContent(RateContentRequest rateContentRequest)
+        {
+            var resourceEndpoint = RateContentResourceEndpoint();
+            var result = HttpChannel.PerformRawRequest("POST", resourceEndpoint, rateContentRequest);
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [DataContract(Namespace = "", Name = "rateContentRequest")]
+        public class RateContentRequest : Rating
+        {
+            
+        }
+
         [DataContract(Namespace = "", Name = "contentRatings")]
         public class ContentRatingHistoryResponse
         {
