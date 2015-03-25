@@ -1,5 +1,7 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using JustGiving.Api.Data.Sdk.Configuration;
+using JustGiving.Api.Sdk;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
 
@@ -7,35 +9,41 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
 {
     public abstract class DataApiClientBase : ApiClientBase
     {
-        private static JustGivingDataSdkConfiguration _configuration;
-        private static DataClientConfiguration DataConfiguration { get; set; }
+        private static DataClientConfiguration DataClientConfiguration { get; set; }
+
         protected DataApiClientBase(HttpChannel channel)
             : base(channel)
         {
-            _configuration = ConfigurationManager.GetSection("justGivingDataSdk") as JustGivingDataSdkConfiguration;
+            if (channel.ClientConfiguration == null)
+            {
+                DataClientConfiguration = new DataClientConfiguration();
+            }
+            else
+            {
+                DataClientConfiguration = channel.ClientConfiguration as DataClientConfiguration;
+            }
         }
 
-        protected DataApiClientBase(HttpChannel channel, DataClientConfiguration dataConfiguration)
+        protected DataApiClientBase(HttpChannel channel, ClientConfiguration clientConfiguration)
             : base(channel)
         {
-            DataConfiguration = dataConfiguration;
+            DataClientConfiguration = clientConfiguration as DataClientConfiguration;
         }
 
         protected static string BaseRoot
         {
             get
             {
-                var baseRoot = "{apiKey}/v{apiVersion}";
-                
+                string baseRoot = "{apiKey}/v{apiVersion}";
                 InitialiseConfiguration();
 
-                if (_configuration != null && _configuration.CharityId != 0)
+                if (DataClientConfiguration != null && DataClientConfiguration.CharityId != 0)
                 {
-                    baseRoot = baseRoot + "/charity/" + _configuration.CharityId;
+                    baseRoot = baseRoot + "/charity/" + DataClientConfiguration.CharityId;
                 }
-                if (DataConfiguration != null && DataConfiguration.CharityId != 0)
+                else
                 {
-                    baseRoot = baseRoot + "/charity/" + DataConfiguration.CharityId;
+                    throw new Exception("Couldn't get DataClientConfiguration, please double check if you have provided");
                 }
                 return baseRoot;
             }
@@ -43,15 +51,10 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
 
         private static void InitialiseConfiguration()
         {
-            if(_configuration == null)
+            if (DataClientConfiguration == null)
             {
-                _configuration = ConfigurationManager.GetSection("justGivingDataSdk") as JustGivingDataSdkConfiguration;
+                DataClientConfiguration = new DataClientConfiguration();
             }
-        }
-
-        protected static void ReloadDataConfiguration(DataClientConfiguration dataConfiguration)
-        {
-            DataConfiguration = dataConfiguration;
         }
     }
 }
