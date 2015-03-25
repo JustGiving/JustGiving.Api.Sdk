@@ -200,6 +200,129 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        private string ContentFeedResourceEndpoint()
+        {
+            return ResourceBase + "/feed";
+        }
+
+        public ContentFeedResponse ContentFeed()
+        {
+            var resourceEndpoint = ContentFeedResourceEndpoint();
+            var result = HttpChannel.PerformRequest<ContentFeedResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        [DataContract(Namespace = "", Name = "contentFeedResponse")]
+        public class ContentFeedResponse
+        {
+            [DataMember(Name = "xmlns")]
+            public string Xmlns { get; set; }
+
+            [DataMember(Name = "title")]
+            public Title Title { get; set; }
+
+            [DataMember(Name = "title")]
+            public Subtitle Subtitle { get; set; }
+
+            [DataMember(Name = "id")]
+            public string Id { get; set; }
+
+            [DataMember(Name = "rights")]
+            public Rights Rights { get; set; }
+
+            [DataMember(Name = "updated")]
+            public DateTime Updated { get; set; }
+
+            [DataMember(Name = "generator")]
+            public string Generator { get; set; }
+
+            [DataMember(Name = "link")]
+            public List<Link> Links { get; set; }
+
+            [DataMember(Name = "entry")]
+            public List<Entry> Entries { get; set; } 
+        }
+
+        public class Entry
+        {
+            public string Id { get; set; }
+            public Title Title { get; set; }
+            public DateTime Updated { get; set; }
+            public Author Author { get; set; }
+            public Link Link { get; set; }
+            public Content Content { get; set; }
+            public Datatype Datatype { get; set; }
+            public PageShortName PageShortName { get; set; }
+            public JgApiId JgApiId { get; set; }
+            public Images Images { get; set; }
+        }
+
+        public class Images
+        {
+            public string Xmlns { get; set; }
+            public Image Image { get; set; }
+        }
+
+        public class Image
+        {
+            public string Xmlns { get; set; }
+            public string Size { get; set; }
+            public string Uri { get; set; }
+        }
+
+        public class JgApiId : Datatype
+        {
+            
+        }
+
+        public class PageShortName : Datatype
+        {
+            
+        }
+
+        public class Datatype
+        {
+            public string Xmlns { get; set; }
+            public string Text { get; set; }
+        }
+
+        public class Content : Title
+        {
+            
+        }
+
+        public class Author
+        {
+            public string Name { get; set; }
+            public string Uri { get; set; }
+            public string Email { get; set; }
+        } 
+
+        public class Link
+        {
+            public string Rel { get; set; }
+            public string Type { get; set; }
+            public string Title { get; set; }
+            public string Href { get; set; }
+
+        }
+
+        public class Rights : Title
+        {
+            
+        }
+
+        public class Subtitle : Title
+        {
+            
+        }
+
+        public class Title
+        {
+            public string Type { get; set; }
+            public string Text { get; set; }
+        } 
+
         [DataContract(Namespace = "", Name = "rateContentRequest")]
         public class RateContentRequest : Rating
         {
