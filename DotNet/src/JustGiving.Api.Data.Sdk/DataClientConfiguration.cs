@@ -5,6 +5,8 @@ namespace JustGiving.Api.Data.Sdk
 {
     public class DataClientConfiguration : ClientConfiguration
     {
+        public int CharityId { get; set; }
+
         //Use this if api configuration in configuration file
         public DataClientConfiguration()
             : base(DataSdkConfigurationManager.GetProperty(x => x.RootDomain), DataSdkConfigurationManager.GetProperty(x => x.ApiKey), DataSdkConfigurationManager.GetProperty(x => x.ApiVersion))

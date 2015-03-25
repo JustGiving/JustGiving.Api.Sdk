@@ -8,11 +8,17 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
     public abstract class DataApiClientBase : ApiClientBase
     {
         private static JustGivingDataSdkConfiguration _configuration;
-
+        private static DataClientConfiguration DataConfiguration { get; set; }
         protected DataApiClientBase(HttpChannel channel)
             : base(channel)
         {
             _configuration = ConfigurationManager.GetSection("justGivingDataSdk") as JustGivingDataSdkConfiguration;
+        }
+
+        protected DataApiClientBase(HttpChannel channel, DataClientConfiguration dataConfiguration)
+            : base(channel)
+        {
+            DataConfiguration = dataConfiguration;
         }
 
         protected static string BaseRoot
@@ -24,8 +30,13 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
                 InitialiseConfiguration();
 
                 if (_configuration != null && _configuration.CharityId != 0)
+                {
                     baseRoot = baseRoot + "/charity/" + _configuration.CharityId;
-
+                }
+                if (DataConfiguration != null && DataConfiguration.CharityId != 0)
+                {
+                    baseRoot = baseRoot + "/charity/" + DataConfiguration.CharityId;
+                }
                 return baseRoot;
             }
         }
@@ -33,7 +44,14 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         private static void InitialiseConfiguration()
         {
             if(_configuration == null)
+            {
                 _configuration = ConfigurationManager.GetSection("justGivingDataSdk") as JustGivingDataSdkConfiguration;
+            }
+        }
+
+        protected static void ReloadDataConfiguration(DataClientConfiguration dataConfiguration)
+        {
+            DataConfiguration = dataConfiguration;
         }
     }
 }

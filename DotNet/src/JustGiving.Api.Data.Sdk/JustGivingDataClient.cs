@@ -51,8 +51,7 @@ namespace JustGiving.Api.Data.Sdk
         private void InitialiseClients()
         {
             HttpChannel = new HttpChannel(_dataClientConfiguration, _httpClient);
-
-            _payment = new PaymentsApi(HttpChannel);
+            _payment = new PaymentsApi(HttpChannel, _dataClientConfiguration);
             _pages = new PagesApi(HttpChannel);
             _customCodes = new CustomCodesApi(HttpChannel);
         }
