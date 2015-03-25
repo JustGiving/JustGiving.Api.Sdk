@@ -173,6 +173,21 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsTrue(response);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void ContentFeed_WhenSupplied_WhenSuppliedValidCredentials_ReturnContentFeed(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client.HttpChannel);
+
+            //act
+            var result = accountClient.ContentFeed();
+
+            //assert
+            Assert.IsNotNull(result);
+        }
+
         private static AccountApi.RateContentRequest CreateValidRateContentRequest()
         {
             return new AccountApi.RateContentRequest
