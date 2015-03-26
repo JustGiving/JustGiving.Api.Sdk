@@ -14,5 +14,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         bool ChangePassword(AccountApi.ChangePasswordRequest changePasswordRequest);
         AccountApi.ContentRatingHistoryResponse ContentRatingHistory();
         bool RateContent(AccountApi.RateContentRequest rateContentRequest);
+        AccountApi.ContentFeedResponse ContentFeed();
     }
 }
