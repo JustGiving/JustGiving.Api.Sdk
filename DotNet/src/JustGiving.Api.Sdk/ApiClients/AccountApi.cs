@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
@@ -221,7 +222,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             [DataMember(Name = "title")]
             public Title Title { get; set; }
 
-            [DataMember(Name = "title")]
+            [DataMember(Name = "subtitle")]
             public Subtitle Subtitle { get; set; }
 
             [DataMember(Name = "id")]
@@ -231,7 +232,14 @@ namespace JustGiving.Api.Sdk.ApiClients
             public Rights Rights { get; set; }
 
             [DataMember(Name = "updated")]
-            public DateTime Updated { get; set; }
+            private string RawUpdatedData { get; set; }
+
+            [IgnoreDataMember]
+            public DateTime Updated
+            {
+                get { return DateTime.ParseExact(RawUpdatedData, "o", CultureInfo.InvariantCulture); }
+                set { RawUpdatedData = value.ToString("o"); }
+            }
 
             [DataMember(Name = "generator")]
             public string Generator { get; set; }
