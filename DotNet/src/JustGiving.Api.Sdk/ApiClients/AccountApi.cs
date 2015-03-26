@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 using JustGiving.Api.Sdk.Model.Account;
@@ -144,6 +145,40 @@ namespace JustGiving.Api.Sdk.ApiClients
                                                                                        ResourceBase + "/validate",
                                                                                        request,
                                                                                        response => callback(response.IsValid));
+        }
+
+        public string ChangePasswordLocationFormat()
+        {
+            return ResourceBase + "/changePassword";
+        }
+
+        public bool ChangePassword(ChangePasswordRequest changePasswordRequest)
+        {
+            var locationFormat = ChangePasswordLocationFormat();
+            var response = HttpChannel.PerformRequest<ChangePasswordRequest, ChangePasswordResponse>("POST",
+                                                                                                     locationFormat,
+                                                                                                     changePasswordRequest);
+            return response.Success;
+        }
+
+        [DataContract(Name = "changePassword")]
+        public class ChangePasswordRequest
+        {
+            [DataMember(Name = "emailAddress")]
+            public string EmailAddress { get; set; }
+
+            [DataMember(Name = "newPassword")]
+            public string NewPassword { get; set; }
+
+            [DataMember(Name = "currentPassword")]
+            public string CurrentPassword { get; set; } 
+        }
+
+        [DataContract]
+        public class ChangePasswordResponse
+        {
+            [DataMember(Name = "success")]
+            public bool Success { get; set; }
         }
 	}
 }

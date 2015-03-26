@@ -13,7 +13,7 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
             : base(channel)
         {
         }
-        
+
         public override string ResourceBase
         {
             get { return BaseRoot + "/payments"; }
