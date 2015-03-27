@@ -16,7 +16,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenSuppliedEmailIsUnused_AccountIsCreatedAndEmailAddressReturned(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
 
@@ -30,7 +30,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenSuppliedWithEmailThatIsAlreadyRegistered_ReturnsAnError(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
             accountClient.Create(request);
@@ -46,7 +46,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void ListAllPages_WhenSuppliedEmailIsValid_ListsPages(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
 
             accountClient.ListAllPages("apiunittest@justgiving.com");
         }
@@ -56,7 +56,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsEmailRegistered_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
 
             var exists = accountClient.IsEmailRegistered(TestContext.TestUsername);
 
@@ -68,9 +68,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsEmailRegistered_WhenSuppliedEmailUnlikelyToExist_ReturnsFalse(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
 
-            var exists = accountClient.IsEmailRegistered(Guid.NewGuid().ToString() + "@justgiving.com"); 
+            var exists = accountClient.IsEmailRegistered(Guid.NewGuid().ToString() + "@justgiving.com");
 
             Assert.IsFalse(exists);
         }
@@ -81,11 +81,11 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             const string invalidPassowordValue = "abc"; //Password to short
             var client = TestContext.CreateClientNoCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
             var email = Guid.NewGuid() + "@tempuri.org";
             var request = CreateValidRegisterAccountRequest(email);
             request.Password = invalidPassowordValue;
-            
+
             var exception = Assert.Throws<ErrorResponseException>(() => accountClient.Create(request));
 
             Assert.AreEqual(1, exception.Errors.Count);
@@ -97,9 +97,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RequestPassWordReminder_WhenSuppliedKnownEmail_ReturnsTrue(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
-            
-            accountClient.RequestPasswordReminder(TestContext.TestUsername); 
+            var accountClient = new AccountApi(client.HttpChannel);
+
+            accountClient.RequestPasswordReminder(TestContext.TestUsername);
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -108,8 +108,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         {
             //arrange
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
-            
+            var accountClient = new AccountApi(client.HttpChannel);
+
             //act
             accountClient.RequestPasswordReminder(TestContext.TestUsername);
         }
@@ -119,7 +119,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RequestRetrieveAccount_ReturnsAccountDetails(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var accountClient = new AccountApi(client.HttpChannel);
+            var accountClient = new AccountApi(client.HttpChannel);
 
             var account = accountClient.RetrieveAccount();
 
@@ -195,12 +195,36 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //arrange
             var client = TestContext.CreateClientInvalidCredentials(format);
             var accountClient = new AccountApi(client.HttpChannel);
-            
+
             //act
             var result = accountClient.Interest();
 
             //assert
             Assert.IsNotNull(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AddInterest_WhenSuppliedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client.HttpChannel);
+            var validRequest = CreateValidUserInterestRequest();
+
+            //act
+            var result = accountClient.AddInterest(validRequest);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        private static AccountApi.UserInterest CreateValidUserInterestRequest()
+        {
+            return new AccountApi.UserInterest()
+                {
+                    Interest = "Foodball"
+                };
         }
 
         private static AccountApi.RateContentRequest CreateValidRateContentRequest()

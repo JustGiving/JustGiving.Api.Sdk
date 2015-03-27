@@ -232,6 +232,27 @@ namespace JustGiving.Api.Sdk.ApiClients
             HttpChannel.GetAsync(resourceEndpoint, callback);
         }
 
+        public bool AddInterest(UserInterest interest)
+        {
+            var resourceEndpoint = InterestResourceEndpoint();
+            var result = HttpChannel.PerformRawRequest("POST", resourceEndpoint, interest);
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [DataContract(Name = "interests", Namespace = "")]
+        public class UserInterest
+        {
+            [DataMember(Name = "interest")]
+            public string Interest { get; set; }
+        }
+
         [CollectionDataContract(Name = "interests", ItemName = "interest", Namespace = "")]
         public class InterestResponse : List<string>
         {
