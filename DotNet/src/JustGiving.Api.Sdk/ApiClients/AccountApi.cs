@@ -12,24 +12,25 @@ using JustGiving.Api.Sdk.Model.Page;
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class AccountApi : ApiClientBase, IAccountApi
-	{
-		public override string ResourceBase
-		{
-			get { return "{apiKey}/v{apiVersion}/account"; }
-		}
+    {
+        public override string ResourceBase
+        {
+            get { return "{apiKey}/v{apiVersion}/account"; }
+        }
 
-        public AccountApi(HttpChannel channel):base(channel)
+        public AccountApi(HttpChannel channel)
+            : base(channel)
         {
         }
 
         public string Create(CreateAccountRequest request)
         {
-        	return HttpChannel.Put<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request).Email;
+            return HttpChannel.Put<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request).Email;
         }
 
         public void CreateAsync(CreateAccountRequest request, Action<string> callback)
-		{
-			HttpChannel.PutAsync<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request, response => callback(response.Email));
+        {
+            HttpChannel.PutAsync<CreateAccountRequest, AccountRegistrationConfirmation>(ResourceBase, request, response => callback(response.Email));
         }
 
         private string ListAllPagesLocationFormat(string email)
@@ -39,26 +40,26 @@ namespace JustGiving.Api.Sdk.ApiClients
                 throw new ArgumentNullException("email", "Email cannot be null or empty.");
             }
 
-			return ResourceBase + "/" + email + "/pages";
+            return ResourceBase + "/" + email + "/pages";
         }
 
         public FundraisingPageSummaries ListAllPages(string email)
         {
             var locationFormat = ListAllPagesLocationFormat(email);
-			return HttpChannel.Get<FundraisingPageSummaries>(locationFormat);
+            return HttpChannel.Get<FundraisingPageSummaries>(locationFormat);
         }
 
         public void ListAllPagesAsync(string email, Action<FundraisingPageSummaries> callback)
         {
             var locationFormat = ListAllPagesLocationFormat(email);
-			HttpChannel.GetAsync(locationFormat, callback);
+            HttpChannel.GetAsync(locationFormat, callback);
         }
 
         private string IsEmailRegisteredLocationFormat(string email)
         {
             if (string.IsNullOrEmpty(email))
                 throw new ArgumentNullException("email", "Email cannot be null or empty.");
-            
+
             return ResourceBase + "/" + email;
         }
 
@@ -90,7 +91,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         private string RequestPasswordReminderLocationFormat(string email)
         {
-			return ResourceBase + "/" + email + "/requestpasswordreminder";
+            return ResourceBase + "/" + email + "/requestpasswordreminder";
         }
 
         public void RequestPasswordReminder(string email)
@@ -130,13 +131,13 @@ namespace JustGiving.Api.Sdk.ApiClients
             {
                 return;
             }
-            
+
             throw ErrorResponseExceptionFactory.CreateException(response, null);
         }
 
         public bool AreCredentialsValid(string email, string password)
         {
-            var request = new ValidateUser {Email = email, Password = password};
+            var request = new ValidateUser { Email = email, Password = password };
             var response = HttpChannel.PerformRequest<ValidateUser, ValidateUserCommandResponse>("POST", ResourceBase + "/validate", request);
             return response.IsValid;
         }
@@ -237,7 +238,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             [IgnoreDataMember]
             public DateTime Updated
             {
-                get { return DateTime.ParseExact(RawUpdatedData, "o", CultureInfo.InvariantCulture); }
+                get { return DateTime.Parse(RawUpdatedData, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind); }
                 set { RawUpdatedData = value.ToString("o"); }
             }
 
@@ -248,93 +249,156 @@ namespace JustGiving.Api.Sdk.ApiClients
             public List<Link> Links { get; set; }
 
             [DataMember(Name = "entry")]
-            public List<Entry> Entries { get; set; } 
+            public List<Entry> Entries { get; set; }
         }
 
+        [DataContract]
         public class Entry
         {
+            [DataMember(Name = "id")]
             public string Id { get; set; }
+
+            [DataMember(Name = "title")]
             public Title Title { get; set; }
-            public DateTime Updated { get; set; }
+
+            [DataMember(Name = "updated")]
+            private string RawUpdatedDate { get; set; }
+
+            [IgnoreDataMember]
+            public DateTime Updated
+            {
+                get { return DateTime.Parse(RawUpdatedDate, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind); }
+                set { RawUpdatedDate = value.ToString("s"); }
+            }
+
+            [DataMember(Name = "author")]
             public Author Author { get; set; }
+
+            [DataMember(Name = "link")]
             public Link Link { get; set; }
+
+            [DataMember(Name = "content")]
             public Content Content { get; set; }
+
+            [DataMember(Name = "datatype")]
             public Datatype Datatype { get; set; }
+
+            [DataMember(Name = "pageShortName")]
             public PageShortName PageShortName { get; set; }
+
+            [DataMember(Name = "jgApiId")]
             public JgApiId JgApiId { get; set; }
+
+            [DataMember(Name = "images")]
             public Images Images { get; set; }
         }
 
+        [DataContract]
         public class Images
         {
+            [DataMember(Name = "xmlns")]
             public string Xmlns { get; set; }
+
+            [DataMember(Name = "image")]
             public Image Image { get; set; }
         }
 
+        [DataContract]
         public class Image
         {
+            [DataMember(Name = "xmlns")]
             public string Xmlns { get; set; }
+
+            [DataMember(Name = "size")]
             public string Size { get; set; }
+
+            [DataMember(Name = "uri")]
             public string Uri { get; set; }
         }
 
+        [DataContract]
         public class JgApiId : Datatype
         {
-            
+
         }
 
+        [DataContract]
         public class PageShortName : Datatype
         {
-            
+
         }
 
+        [DataContract]
         public class Datatype
         {
+            [DataMember(Name = "xmlns")]
             public string Xmlns { get; set; }
+
+            [DataMember(Name = "text")]
             public string Text { get; set; }
         }
 
+        [DataContract]
         public class Content : Title
         {
-            
+
         }
 
+        [DataContract]
         public class Author
         {
+            [DataMember(Name = "name")]
             public string Name { get; set; }
-            public string Uri { get; set; }
-            public string Email { get; set; }
-        } 
 
+            [DataMember(Name = "uri")]
+            public string Uri { get; set; }
+
+            [DataMember(Name = "email")]
+            public string Email { get; set; }
+        }
+
+        [DataContract]
         public class Link
         {
+            [DataMember(Name = "rel")]
             public string Rel { get; set; }
-            public string Type { get; set; }
-            public string Title { get; set; }
-            public string Href { get; set; }
 
+            [DataMember(Name = "type")]
+            public string Type { get; set; }
+
+            [DataMember(Name = "title")]
+            public string Title { get; set; }
+
+            [DataMember(Name = "href")]
+            public string Href { get; set; }
         }
 
+        [DataContract]
         public class Rights : Title
         {
-            
+
         }
 
+        [DataContract]
         public class Subtitle : Title
         {
-            
+
         }
 
+        [DataContract]
         public class Title
         {
+            [DataMember(Name = "type")]
             public string Type { get; set; }
+
+            [DataMember(Name = "text")]
             public string Text { get; set; }
-        } 
+        }
 
         [DataContract(Namespace = "", Name = "rateContentRequest")]
         public class RateContentRequest : Rating
         {
-            
+
         }
 
         [DataContract(Namespace = "", Name = "contentRatings")]
@@ -364,7 +428,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
             [DataMember(Name = "updated")]
             public DateTime Updated { get; set; }
-        } 
+        }
 
         [DataContract(Namespace = "", Name = "changePassword")]
         public class ChangePasswordRequest
@@ -376,7 +440,7 @@ namespace JustGiving.Api.Sdk.ApiClients
             public string NewPassword { get; set; }
 
             [DataMember(Name = "currentPassword")]
-            public string CurrentPassword { get; set; } 
+            public string CurrentPassword { get; set; }
         }
 
         [DataContract(Namespace = "", Name = "changePasswordResponse")]
@@ -385,5 +449,5 @@ namespace JustGiving.Api.Sdk.ApiClients
             [DataMember(Name = "success")]
             public bool Success { get; set; }
         }
-	}
+    }
 }
