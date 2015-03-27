@@ -246,11 +246,31 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        public bool ReplaceInterest(ReplaceInterestRequest interestRequest)
+        {
+            var resourceEndpoint = InterestResourceEndpoint();
+            var result = HttpChannel.PerformRawRequest("PUT", resourceEndpoint, interestRequest);
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         [DataContract(Name = "interests", Namespace = "")]
         public class UserInterest
         {
             [DataMember(Name = "interest")]
             public string Interest { get; set; }
+        }
+
+        [CollectionDataContract(Name = "interests", ItemName = "interest", Namespace = "")]
+        public class ReplaceInterestRequest : List<string>
+        {
+
         }
 
         [CollectionDataContract(Name = "interests", ItemName = "interest", Namespace = "")]

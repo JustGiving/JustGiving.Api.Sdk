@@ -219,6 +219,30 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsTrue(result);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void ReplaceInterest_WhenSuppliedValidCredentialsAndValidRequest_REturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client.HttpChannel);
+            var validRequest = CreateValidReplaceInterestRequest();
+
+            //act
+            var result = accountClient.ReplaceInterest(validRequest);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        private static AccountApi.ReplaceInterestRequest CreateValidReplaceInterestRequest()
+        {
+            return new AccountApi.ReplaceInterestRequest()
+                {
+                    "swimming" + Guid.NewGuid()
+                };
+        }
+
         private static AccountApi.UserInterest CreateValidUserInterestRequest()
         {
             return new AccountApi.UserInterest()
