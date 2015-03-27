@@ -12,5 +12,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         void RequestPasswordReminderAsync(string email);
         void IsEmailRegisteredAsync(string email, Action<bool> callback);
         void ContentRatingHistoryAsync(Action<AccountApi.ContentRatingHistoryResponse> callback);
+        void InterestAsync(Action<AccountApi.InterestResponse> callback);
     }
 }
