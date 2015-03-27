@@ -175,7 +175,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void ContentFeed_WhenSupplied_WhenSuppliedValidCredentials_ReturnContentFeed(WireDataFormat format)
+        public void ContentFeed_WhenSuppliedValidCredentials_ReturnContentFeed(WireDataFormat format)
         {
             //arrange
             var client = TestContext.CreateClientInvalidCredentials(format);
@@ -183,6 +183,21 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             //act
             var result = accountClient.ContentFeed();
+
+            //assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void Interest_WhenSuppliedValidCredentials_ReturnListOfInterest(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientInvalidCredentials(format);
+            var accountClient = new AccountApi(client.HttpChannel);
+            
+            //act
+            var result = accountClient.Interest();
 
             //assert
             Assert.IsNotNull(result);

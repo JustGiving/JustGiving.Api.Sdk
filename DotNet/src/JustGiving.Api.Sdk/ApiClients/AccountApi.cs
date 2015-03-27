@@ -214,6 +214,30 @@ namespace JustGiving.Api.Sdk.ApiClients
             return result;
         }
 
+        private string InterestResourceEndpoint()
+        {
+            return ResourceBase + "/interest";
+        }
+
+        public InterestResponse Interest()
+        {
+            var resourceEndpoint = InterestResourceEndpoint();
+            var result = HttpChannel.PerformRequest<InterestResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        public void InterestAsync(Action<AccountApi.InterestResponse> callback)
+        {
+            var resourceEndpoint = InterestResourceEndpoint();
+            HttpChannel.GetAsync(resourceEndpoint, callback);
+        }
+
+        [CollectionDataContract(Name = "interests", ItemName = "interest", Namespace = "")]
+        public class InterestResponse : List<string>
+        {
+            
+        }
+
         [DataContract(Namespace = "", Name = "contentFeedResponse")]
         public class ContentFeedResponse
         {

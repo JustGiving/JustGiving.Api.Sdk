@@ -1,4 +1,5 @@
-﻿using JustGiving.Api.Sdk.Model.Account;
+﻿using System.Collections.Generic;
+using JustGiving.Api.Sdk.Model.Account;
 using JustGiving.Api.Sdk.Model.Page;
 
 namespace JustGiving.Api.Sdk.ApiClients
@@ -15,5 +16,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         AccountApi.ContentRatingHistoryResponse ContentRatingHistory();
         bool RateContent(AccountApi.RateContentRequest rateContentRequest);
         AccountApi.ContentFeedResponse ContentFeed();
+        AccountApi.InterestResponse Interest();
     }
 }
