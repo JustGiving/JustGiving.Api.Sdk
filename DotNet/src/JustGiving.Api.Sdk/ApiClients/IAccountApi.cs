@@ -17,5 +17,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         bool RateContent(AccountApi.RateContentRequest rateContentRequest);
         AccountApi.ContentFeedResponse ContentFeed();
         AccountApi.InterestResponse Interest();
+        bool AddInterest(AccountApi.UserInterest interest);
     }
 }
