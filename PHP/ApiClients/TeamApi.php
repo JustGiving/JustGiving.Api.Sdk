@@ -34,7 +34,7 @@ class TeamApi extends ClientBase
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/" . $teamShortName;
 		$url = $this->BuildUrl($locationFormat);
-		$json = $this->curlWrapper->Head($url);
+		$httpInfo = $this->curlWrapper->Head($url);
 		if($httpInfo['http_code'] == 200)
 		{
 			return true;
@@ -50,7 +50,7 @@ class TeamApi extends ClientBase
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/join" . $teamShortName;
 		$payload = json_encode($joinTeamRequest);
 		$url = $this->BuildUrl($locationFormat);
-		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+		$httpInfo = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 		if($httpInfo['http_code'] == 200)
 		{
 			return true;
