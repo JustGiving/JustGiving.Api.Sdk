@@ -1,6 +1,9 @@
 JustGiving API SDK
 ===================
 
+SDKs to help developers code against the JustGiving APIs.
+
+
 .NET Quickstart
 ---------------
 
@@ -22,7 +25,7 @@ The pageShortName is the page [slug](https://en.wikipedia.org/wiki/Semantic_URL#
 PHP Quickstart
 ---------------
 
-Download the latest package from downloads (or git pull master).
+Download the [latest snapshot](https://github.com/JustGiving/JustGiving.Api.Sdk/archive/master.zip) (or ```git pull master```).
 Reference JustGivingClient.php
 
 ```php
@@ -33,8 +36,6 @@ $page = $client->Page->Retrieve("pageShortName");
 Urls to visit
 -------------
 
-SDKs to help developers code against the JustGiving APIs.
-
 Some places to visit:
 
 * [GitHub repository with open source SDKs](https://github.com/JustGiving/JustGiving.Api.Sdk)
@@ -43,7 +44,7 @@ Some places to visit:
 * [Our little home page.](http://www.justgiving.com/developer)
 * [If you're trying to make donations using JustGiving](http://www.justgiving.com/developer/simple-donation-integration)
 * [For some quick hack-tastic examples in a few languages](https://github.com/JustGiving/JustGiving.Api.Sdk/wiki)
-* [Config file for Postman that has collection of our http end points. ](https://github.com/JustGiving/JustGiving.Api.Tools.Postman)
+* [Config file for Postman that has collections of our http endpoints. ](https://github.com/JustGiving/JustGiving.Api.Tools.Postman)
 	
 Further Support
 ---------------
