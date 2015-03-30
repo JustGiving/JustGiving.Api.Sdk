@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClients\CharityApi.cs" />
+    <Compile Include="ApiClients\CountryApi.cs" />
+    <Compile Include="ApiClients\ICountryApi.cs" />
+    <Compile Include="ApiClients\ICountryApiAsync.cs" />
     <Compile Include="ApiClients\IInMemoryApiAsync.cs" />
     <Compile Include="ApiClients\IInMemoryApi.cs" />
     <Compile Include="ApiClients\InMemoryApi.cs" />
