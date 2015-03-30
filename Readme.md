@@ -7,7 +7,9 @@ JustGiving API SDK
 If you want the C# SDK, you can install it from [NuGet](http://nuget.org/List/Packages/justgiving-sdk).
 Includes Silverlight support.
 
+```powershell
 PM> Install-Package justgiving-sdk
+```
 
 Then:
 ```csharp
