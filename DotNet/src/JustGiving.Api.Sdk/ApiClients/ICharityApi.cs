@@ -1,4 +1,5 @@
-﻿using JustGiving.Api.Sdk.Model.Charity;
+﻿using System.Collections.Generic;
+using JustGiving.Api.Sdk.Model.Charity;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
@@ -8,5 +9,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         CharityEvents RetrieveEvents(int charityId);
         CharityEvents RetrieveEvents(int charityId, int pageNumber, int pageSize);
     	CharityAuthenticationResult Authenticate(AuthenticateCharityUserRequest request);
+        CharityApi.CharityDonationsResult CharityDonations(int charityId);
     }
 }
