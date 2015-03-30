@@ -62,5 +62,20 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //assert
             CollectionAssert.IsNotEmpty(result.Donations);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void CharityCategories_WhenDoesntSuppliedCredentials_ReturnCategories(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var charityResources = new CharityApi(client.HttpChannel);
+            
+            //act
+            var result = charityResources.CharityCategories();
+
+            //assert
+            CollectionAssert.IsNotEmpty(result);
+        }
     }
 }

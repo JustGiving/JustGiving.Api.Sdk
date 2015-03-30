@@ -86,6 +86,34 @@ namespace JustGiving.Api.Sdk.ApiClients
             return result;
         }
 
+        public string CharityCategoriesResourceEndpoint()
+        {
+            return ResourceBase + "/categories";
+        }
+
+        public CharityCategoriesResponse CharityCategories()
+        {
+            var resourceEndpoint = CharityCategoriesResourceEndpoint();
+            var result = HttpChannel.PerformRequest<CharityCategoriesResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        [CollectionDataContract(Name = "categories", ItemName = "category", Namespace = "")]
+        public class CharityCategoriesResponse : List<CharityCategory>
+        {
+
+        }
+
+        [DataContract(Name = "category", Namespace = "")]
+        public class CharityCategory
+        {
+            [DataMember(Name = "id")]
+            public int CategoryId { get; set; }
+
+            [DataMember(Name = "category")]
+            public string Category { get; set; }
+        }
+
         [DataContract(Name = "charityDonations", Namespace = "")]
         public class CharityDonationsResult
         {
