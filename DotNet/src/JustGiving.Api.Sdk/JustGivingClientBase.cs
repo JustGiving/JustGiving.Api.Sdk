@@ -14,6 +14,7 @@ namespace JustGiving.Api.Sdk
         public IEventApi Event { get; set; }
         public ITeamApi Team { get; set; }
         public IOneSearchApi OneSearch { get; set; }
+        public ICountryApi Country { get; set; }
 
         public string WhiteLabelDomain { get; private set; }
     	public IHttpClient HttpClient { get; private set; }
@@ -22,21 +23,22 @@ namespace JustGiving.Api.Sdk
         public HttpChannel HttpChannel { get; private set; }
 
         protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null, null)
+            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null, null, null)
         {
         }
 
-        protected JustGivingClientBase(ClientConfiguration clientConfiguration, 
-										IHttpClient httpClient, 
-										IAccountApi accountApi, 
-										IDonationApi donationApi, 
-										IPageApi pageApi, 
-										ISearchApi searchApi, 
-										ICharityApi charityApi, 
-										IEventApi eventApi,
-										ITeamApi teamApi, IOneSearchApi oneSearch)
+        protected JustGivingClientBase(ClientConfiguration clientConfiguration,
+                                       IHttpClient httpClient,
+                                       IAccountApi accountApi,
+                                       IDonationApi donationApi,
+                                       IPageApi pageApi,
+                                       ISearchApi searchApi,
+                                       ICharityApi charityApi,
+                                       IEventApi eventApi,
+                                       ITeamApi teamApi, IOneSearchApi oneSearch,
+                                       ICountryApi country)
         {
-            if(httpClient == null)
+            if (httpClient == null)
             {
                 throw new ArgumentNullException("httpClient", "httpClient must not be null to access the api.");
             }
@@ -52,6 +54,7 @@ namespace JustGiving.Api.Sdk
             Event = eventApi;
             Team = teamApi;
             OneSearch = oneSearch;
+            Country = country;
 
             Configuration = clientConfiguration;
 
@@ -76,6 +79,7 @@ namespace JustGiving.Api.Sdk
 			Event = Event ?? new EventApi(HttpChannel);
 			Team = Team ?? new TeamApi(HttpChannel);
             OneSearch = OneSearch ?? new OneSearchApi(HttpChannel);
+            Country = Country ?? new CountryApi(HttpChannel);
         }
 
         public void UpdateConfiguration(ClientConfiguration configuration)

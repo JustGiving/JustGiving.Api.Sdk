@@ -8,23 +8,24 @@ namespace JustGiving.Api.Sdk
     public class JustGivingClient: JustGivingClientBase
     {
         public JustGivingClient(string apiKey)
-            : base(new ClientConfiguration(apiKey), new HttpClientWrapper(), null, null, null, null, null, null, null, null)
+            : base(new ClientConfiguration(apiKey), new HttpClientWrapper(), null, null, null, null, null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration)
-			: base(clientConfiguration, new HttpClientWrapper(), null, null, null, null, null, null, null, null)
+			: base(clientConfiguration, new HttpClientWrapper(), null, null, null, null, null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-			: base(clientConfiguration, httpClient, null, null, null, null, null, null, null, null)
+			: base(clientConfiguration, httpClient, null, null, null, null, null, null, null, null, null)
         {
         }
 
         public JustGivingClient(ClientConfiguration clientConfiguration, IHttpClient httpClient, IAccountApi accountApi,
                                 IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi, ICharityApi charityApi,
-                                IEventApi eventApi, ITeamApi teamApi, IOneSearchApi oneSearch): base(clientConfiguration, httpClient, accountApi, donationApi, pageApi, searchApi, charityApi, eventApi, teamApi, oneSearch)
+                                IEventApi eventApi, ITeamApi teamApi, IOneSearchApi oneSearch, ICountryApi countryApi)
+            : base(clientConfiguration, httpClient, accountApi, donationApi, pageApi, searchApi, charityApi, eventApi, teamApi, oneSearch, countryApi)
         {
         }
     }
