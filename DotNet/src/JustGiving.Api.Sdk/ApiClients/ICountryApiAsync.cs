@@ -7,6 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public interface ICountryApiAsync
     {
-
+        void CountriesAsync(Action<CountryApi.CountryCollection> callback);
     }
 }

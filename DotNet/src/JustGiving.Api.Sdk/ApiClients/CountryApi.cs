@@ -26,6 +26,12 @@ namespace JustGiving.Api.Sdk.ApiClients
             return result;
         }
 
+        public void CountriesAsync(Action<CountryCollection> callback)
+        {
+            var resourceEndpoint = ResourceBase;
+            HttpChannel.GetAsync(resourceEndpoint, callback);
+        }
+
         [DataContract(Name = "country", Namespace = "")]
         public class Country
         {
