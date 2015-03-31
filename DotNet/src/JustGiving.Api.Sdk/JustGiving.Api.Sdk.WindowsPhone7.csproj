@@ -60,6 +60,7 @@
     <Compile Include="ApiClients\ApiClientBase.cs" />
     <Compile Include="ApiClients\CharityApi.cs" />
     <Compile Include="ApiClients\CountryApi.cs" />
+    <Compile Include="ApiClients\CurrencyApi.cs" />
     <Compile Include="ApiClients\DonationApi.cs" />
     <Compile Include="ApiClients\EventApi.cs" />
     <Compile Include="ApiClients\IAccountApi.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="ApiClients\ICharityApiAsync.cs" />
     <Compile Include="ApiClients\ICountryApi.cs" />
     <Compile Include="ApiClients\ICountryApiAsync.cs" />
+    <Compile Include="ApiClients\ICurrencyApi.cs" />
+    <Compile Include="ApiClients\ICurrencyApiAsync.cs" />
     <Compile Include="ApiClients\IDonationApi.cs" />
     <Compile Include="ApiClients\IDonationApiAsync.cs" />
     <Compile Include="ApiClients\IEventApi.cs" />

@@ -4,20 +4,20 @@ using JustGiving.Api.Sdk.WindowsPhone7.Http.SilverlightPhone7;
 
 namespace JustGiving.Api.Sdk.WindowsPhone7
 {
-    public class JustGivingMobileClient: JustGivingClientBase
+    public class JustGivingMobileClient : JustGivingClientBase
     {
         public JustGivingMobileClient(string apiKey)
-            : base(new ClientConfiguration(apiKey), new SilverlightHttpClient(), null, null, null, null, null, null, null, null, null)
+            : base(new ClientConfiguration(apiKey), new SilverlightHttpClient(), null, null, null, null, null, null, null, null, null, null)
         {
         }
 
         public JustGivingMobileClient(ClientConfiguration clientConfiguration)
-			: base(clientConfiguration, new SilverlightHttpClient(), null, null, null, null, null, null, null, null, null)
+            : base(clientConfiguration, new SilverlightHttpClient(), null, null, null, null, null, null, null, null, null, null)
         {
         }
 
         public JustGivingMobileClient(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-			: base(clientConfiguration, httpClient, null, null, null, null, null, null, null, null, null)
+            : base(clientConfiguration, httpClient, null, null, null, null, null, null, null, null, null, null)
         {
         }
 
@@ -26,10 +26,10 @@ namespace JustGiving.Api.Sdk.WindowsPhone7
                                       IDonationApi donationApi, IPageApi pageApi, ISearchApi searchApi,
                                       ICharityApi charityApi,
                                       IEventApi eventApi, ITeamApi teamApi, IOneSearchApi oneSearchApi,
-                                      ICountryApi countryApi)
+                                      ICountryApi countryApi, ICurrencyApi currencyApi)
             : base(
                 clientConfiguration, httpClient, accountApi, donationApi, pageApi, searchApi, charityApi, eventApi,
-                teamApi, oneSearchApi, countryApi)
+                teamApi, oneSearchApi, countryApi, currencyApi)
         {
         }
     }
