@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public interface ICurrencyApi : ICurrencyApiAsync
     {
+        CurrencyApi.Currencies ValidCurrencyCodes();
     }
 }
