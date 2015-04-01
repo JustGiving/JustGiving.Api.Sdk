@@ -6,5 +6,6 @@ namespace JustGiving.Api.Sdk.ApiClients
     {
         Donation Retrieve(int donationId);
         DonationStatus RetrieveStatus(int donationId);
+        DonationApi.ReferencedDonation Retrieve(string reference);
     }
 }
