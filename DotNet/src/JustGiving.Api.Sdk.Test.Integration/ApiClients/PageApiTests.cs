@@ -64,36 +64,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
-        {
-            var client = TestContext.CreateClientValidRflCredentials(format);
-            var domain = TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflDomain);
-            client.SetWhiteLabelDomain(domain);
-
-			var pageClient = new PageApi(client.HttpChannel);
-            
-            var pageShortName = "api-test-" + Guid.NewGuid();
-            
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = null,
-                Attribution =  null,
-                CharityId = 2050,
-                PageShortName = pageShortName,
-                PageTitle = "Page created on domain " + domain + " by an integration test",
-                EventDate = null,
-                EventName = null,
-                EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.RflEventReference), //Was 1 for local
-                TargetAmount = null
-            };
-
-            var registrationResponse = pageClient.Create(pageCreationRequest);
-
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
-        }
-
-        [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
         public void RegisterWhenProvidedWithADomainThatDoesNotExist_ThrowsException(WireDataFormat format)
         {
             const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
@@ -148,6 +118,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithCompanyAppealId_CanRetrieveCompanyId(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
@@ -164,9 +135,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
-
             pageClient.Create(pageCreationRequest);
-            Assert.That(pageClient.Retrieve(pageShortName).CompanyAppealId, Is.EqualTo(companyAppealId));
+
+            //act
+            var result = pageClient.Retrieve(pageShortName);
+
+            //assert
+            Assert.That(result.CompanyAppealId, Is.EqualTo(companyAppealId));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -207,22 +182,19 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(suggestion.Names.Length, Is.GreaterThan(0));
         }
 
-        /// <summary>
-        /// This test assumes that the Valid Credentials in the test context has more than 1 page
-        /// Which it will do if you run these integration tests at least once.
-        /// Might fail first time around if you change the account.
-        /// </summary>
-        /// <param name="format"></param>
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void ListPages_WhenProvidedCredentials_ReturnsPages(WireDataFormat format)
         {
-            var client = TestContext.CreateClientValidCredentials(format, "apiunittests2@justgiving.com", "123456");
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
 
-            var pageData = pageClient.ListAll();
+            //act
+            var result = pageClient.ListAll();
 
-            Assert.That(pageData.Count, Is.GreaterThan(0));
+            //assert
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -234,32 +206,12 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageClient = new PageApi(client.HttpChannel);
 
             //act
-            var result = pageClient.Retrieve("jrowett-201408022359");
+            var result = pageClient.Retrieve("my-test-890");
 
             //assert
             Assert.IsNotEmpty(result.Teams);
         }
 
-        [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
-        public void RetrivePage_WhenProvidedShortName_ReturnsNullCollectionOfTeam(WireDataFormat format)
-        {
-            //arrange
-            var client = TestContext.CreateClientNoCredentials(format);
-            var pageClient = new PageApi(client.HttpChannel);
-
-            //act
-            var result = pageClient.Retrieve("alwyn-2014-08-01-12-53");
-
-            //assert
-            Assert.IsNull(result.Teams);
-
-        }
-
-        /// <summary>
-        /// Assumes that Rasha25 exists in the given environment.
-        /// </summary>
-        /// <param name="format"></param>
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void RetrievePage_WhenProvidedWithAKnownPage_ReturnsPublicPageView(WireDataFormat format)
@@ -463,11 +415,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void IsPageShortNameRegistered_WhenSuppliedPageNameUnlikelyToExistOnNonDefaultDomain_ReturnsFalse(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientInvalidCredentials(format);
 			var pageClient = new PageApi(client.HttpChannel);
 
+            //act
             var exists = pageClient.IsPageShortNameRegistered("rasha25", TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflDomain));
 
+            //assert
             Assert.IsFalse(exists);
         }
 
@@ -487,7 +442,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		//[Ignore("Not yet live")]
         public void AddFundraisingPageImage_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
@@ -754,8 +708,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
         }
 
-
-
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void Register_WithWhatAndWhy_CreatesCorrectly(WireDataFormat format)
@@ -785,6 +737,4 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.PageSummaryWhy, Is.EqualTo("because I'm Batman"));
         }
     }
-
-    
 }
