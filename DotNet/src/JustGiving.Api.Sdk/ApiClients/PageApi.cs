@@ -332,6 +332,19 @@ namespace JustGiving.Api.Sdk.ApiClients
             var potentialErrors = HttpChannel.TryExtractErrorsFromResponse(response.Content);
             throw ErrorResponseExceptionFactory.CreateException(response, potentialErrors);
         }
-    }
+
+        private string RetrieveDonationsForPageByReferenceLocationFormat(string pageShortName, string reference)
+        {
+            var locationFormat = ResourceBase + "/pages/" + pageShortName + "/donations" + "/ref/" + reference;
+            return locationFormat;
+        }
+
+        public FundraisingPageDonations RetrieveDonationsForPageByReference(string pageShortName, string reference)
+        {
+            var locationFormat = RetrieveDonationsForPageByReferenceLocationFormat(pageShortName, reference);
+            var result = HttpChannel.PerformRequest<FundraisingPageDonations>("GET", locationFormat);
+            return result;
+        }
+	}
 }
 
