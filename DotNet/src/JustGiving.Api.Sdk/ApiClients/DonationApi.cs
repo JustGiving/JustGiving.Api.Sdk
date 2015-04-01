@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Donation;
 
@@ -48,6 +49,23 @@ namespace JustGiving.Api.Sdk.ApiClients
         {
             var locationFormat = RetrieveStatusLocationFormat(donationId);
             HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
+        }
+
+        private string RetrieveResourceEndpoint(string reference)
+        {
+            return ResourceBase + "/ref/" + reference;
+        }
+
+        public ReferencedDonation Retrieve(string reference)
+        {
+            var resourceEndpoint = RetrieveResourceEndpoint(reference);
+            var result = HttpChannel.PerformRequest<ReferencedDonation>("GET", resourceEndpoint);
+            return result;
+        }
+
+        [DataContract(Name = "donationsByReference", Namespace = "")]
+        public class ReferencedDonation : Donation
+        {
         }
     }
 }
