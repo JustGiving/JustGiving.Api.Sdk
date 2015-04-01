@@ -756,5 +756,20 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsNotNull(result);
             CollectionAssert.IsNotEmpty(result.Donations);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void PageUpdates_ReturnPageUpdates(WireDataFormat format)
+        {
+          //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            const string validPageShortName = "my-test-8901";
+            //act
+            var result = fundraisingResources.PageUpdates(validPageShortName);
+
+            //assert
+            Assert.IsNotNull(result);
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         FundraisingPageImages GetImages(GetFundraisingPageImagesRequest request);
         FundraisingPageVideos GetVideos(GetFundraisingPageVideosRequest request);
         FundraisingPageDonations RetrieveDonationsForPageByReference(string pageShortName, string reference);
+        PageApi.Updates PageUpdates(string pageShortName);
     }
 }

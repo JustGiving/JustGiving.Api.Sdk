@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 using JustGiving.Api.Sdk.Model.Page;
@@ -348,6 +350,39 @@ namespace JustGiving.Api.Sdk.ApiClients
             var locationFormat = RetrieveDonationsForPageByReferenceLocationFormat(pageShortName, reference);
             var result = HttpChannel.PerformRequest<FundraisingPageDonations>("GET", locationFormat);
             return result;
+        }
+
+        private string PageUpdatesLocationFormat(string pageShortName)
+        {
+            return ResourceBase + "/pages/" + pageShortName + "/updates";
+        }
+
+        public Updates PageUpdates(string pageShortName)
+        {
+            var resourceEndpoint = PageUpdatesLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRequest<Updates>("GET", resourceEndpoint);
+            return result;
+        }
+
+        [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
+        public class Updates : List<Update>
+        {
+        }
+
+        [DataContract(Name = "Update", Namespace = "")]
+        public class Update
+        {
+            [DataMember]
+            public int? Id { get; set; }
+
+            [DataMember]
+            public string Video { get; set; }
+
+            [DataMember]
+            public DateTime? CreatedDate { get; set; }
+            
+            [DataMember]
+            public string Message { get; set; }
         }
     }
 }
