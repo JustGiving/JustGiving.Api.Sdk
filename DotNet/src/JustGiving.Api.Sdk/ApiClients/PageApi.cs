@@ -364,6 +364,13 @@ namespace JustGiving.Api.Sdk.ApiClients
             return result;
         }
 
+        public void PageUpdatesAsync(string pageShortName, Action<Updates> callback)
+        {
+            var resourceEndpoint = PageUpdatesLocationFormat(pageShortName);
+            HttpChannel.GetAsync(resourceEndpoint, callback);
+        }
+
+
         [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
         public class Updates : List<Update>
         {
