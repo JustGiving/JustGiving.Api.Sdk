@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using JustGiving.Api.Sdk.ApiClients;
@@ -735,6 +736,25 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             Assert.That(page.PageSummaryWhat, Is.EqualTo("saving the universe"));
             Assert.That(page.PageSummaryWhy, Is.EqualTo("because I'm Batman"));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveDonationsForPageByReference_WhileSuppliedCorrectReference_ReturnDonations(
+            WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var fundraisinResources = new PageApi(client.HttpChannel);
+            const string validPageShortName = "";
+            const string validReference = "";
+
+            //act
+            var result = fundraisinResources.RetrieveDonationsForPageByReference(validPageShortName, validReference);
+
+            //assert
+            Assert.IsNotNull(result);
+            CollectionAssert.IsNotEmpty(result.Donations);
         }
     }
 }
