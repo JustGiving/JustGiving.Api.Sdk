@@ -402,6 +402,20 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        public bool PageUpdatesAddPost(string pageShortName, Update updateRequest)
+        {
+            var resourceEndpoint = PageUpdatesLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("POST", resourceEndpoint, updateRequest);
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
         public class Updates : List<Update>
         {

@@ -791,6 +791,25 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
+        public void PageUpdatesAddPost_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
+        {
+         //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResource = new PageApi(client.HttpChannel);
+            var validUpdateRequest = ValidUpdateRequest();
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            var resultOfRegisterPage = fundraisingResource.Create(validRegisterPageRequest);
+            
+            //act
+            var result = fundraisingResource.PageUpdatesAddPost(validRegisterPageRequest.PageShortName,
+                                                                validUpdateRequest);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
         public void DeletePageUpdate_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
         {
             //arrage
@@ -813,6 +832,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                     EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.ValidEventId),
                     TargetAmount = 20M,
                     EventDate = DateTime.Now.AddDays(5)
+                };
+        }
+
+        public static PageApi.Update ValidUpdateRequest()
+        {
+            return new PageApi.Update()
+                {
+                    Message = "Unit test story"
                 };
         }
         
