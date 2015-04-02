@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
@@ -813,10 +814,21 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void DeletePageUpdate_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
         {
             //arrage
-           
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResource = new PageApi(client.HttpChannel);
+            var validUpdateRequest = ValidUpdateRequest();
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResource.Create(validRegisterPageRequest);
+            fundraisingResource.PageUpdatesAddPost(validRegisterPageRequest.PageShortName,
+                                                   validUpdateRequest);
+            var pageUpdatesResult = fundraisingResource.PageUpdates(validRegisterPageRequest.PageShortName);
+            var update = pageUpdatesResult.First();
+
             //act
+            var result = fundraisingResource.DeletePageUpdate(validRegisterPageRequest.PageShortName, update.Id.Value);
 
             //assert
+            Assert.IsTrue(result);
         }
 
         public static RegisterPageRequest ValidRegisterPageRequest()
