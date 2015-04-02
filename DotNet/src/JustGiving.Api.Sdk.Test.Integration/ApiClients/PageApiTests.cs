@@ -771,5 +771,22 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //assert
             Assert.IsNotNull(result);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void PageUpdate_ReturnPageUpdate(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            const string validPageShortName = "my-test-8901";
+            const int validUpdateId = 100142;
+
+            //act
+            var result = fundraisingResources.PageUpdate(validPageShortName, validUpdateId);
+
+            //assert
+            Assert.IsNotNull(result);
+        }
     }
 }
