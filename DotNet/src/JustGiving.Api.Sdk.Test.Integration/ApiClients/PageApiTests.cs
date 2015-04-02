@@ -788,5 +788,33 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //assert
             Assert.IsNotNull(result);
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void DeletePageUpdate_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrage
+           
+            //act
+
+            //assert
+        }
+
+        public static RegisterPageRequest ValidRegisterPageRequest()
+        {
+            return new RegisterPageRequest
+                {
+                    ActivityType = null,
+                    PageShortName = "test-frp-" + Guid.NewGuid(),
+                    PageTitle =
+                        "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
+                    EventName = "The Other Occasion of ApTest and APITest",
+                    CharityId = 2050,
+                    EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.ValidEventId),
+                    TargetAmount = 20M,
+                    EventDate = DateTime.Now.AddDays(5)
+                };
+        }
+        
     }
 }

@@ -388,6 +388,20 @@ namespace JustGiving.Api.Sdk.ApiClients
             HttpChannel.GetAsync(resurcesEndpoint, callback);
         }
 
+        public bool DeletePageUpdate(string pageShortName, int updateId)
+        {
+            var resourceEndpoint = PageUpdateLocationFormat(pageShortName, updateId);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
         public class Updates : List<Update>
         {
