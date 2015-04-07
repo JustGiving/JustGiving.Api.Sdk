@@ -416,6 +416,34 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        private string FundraisingPageAttributionLocationFormat(string pageShortName)
+        {
+            return ResourceBase + "/pages/" + pageShortName + "/attribution";
+        }
+
+        public GetFundraisingPageAttributionResponse FundraisingPageAttribution(string pageShortName)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRequest<GetFundraisingPageAttributionResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        public bool AppendToFundraisingPageAttribution(string pageShortName,
+                                               UpdateFundraisingPageAttributionRequest
+                                                   updateFundraisingPageAttributionRequest)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("POST", resourceEndpoint, updateFundraisingPageAttributionRequest);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
         public class Updates : List<Update>
         {
@@ -432,9 +460,26 @@ namespace JustGiving.Api.Sdk.ApiClients
 
             [DataMember]
             public DateTime? CreatedDate { get; set; }
-            
+
             [DataMember]
             public string Message { get; set; }
+        }
+
+        [DataContract(Name = "fundraisingPage", Namespace = "")]
+        public class GetFundraisingPageAttributionResponse
+        {
+            [DataMember(Name = "attribution")]
+            public string Attribution { get; set; }
+
+            [DataMember(Name = "attributionLabel")]
+            public string AttributionLabel { get; set; }
+        }
+
+        [DataContract(Name = "fundraisingPage", Namespace = "")]
+        public class UpdateFundraisingPageAttributionRequest
+        {
+            [DataMember(Name = "attribution")]
+            public string Attribution { get; set; }
         }
     }
 }

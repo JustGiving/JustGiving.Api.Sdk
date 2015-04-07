@@ -831,6 +831,25 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsTrue(result);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AppendToFundraisingPageAttribution_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(
+            WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResource = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            var createdPage = fundraisingResource.Create(validRegisterPageRequest);
+            var validRequest = ValidAppendFundraisingPageAttributionRequest();
+
+            //act
+            var result = fundraisingResource.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                                validRequest);
+            //assert
+            Assert.IsTrue(result);
+        }
+        
         public static RegisterPageRequest ValidRegisterPageRequest()
         {
             return new RegisterPageRequest
@@ -854,6 +873,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                     Message = "Unit test story"
                 };
         }
-        
+
+        public static PageApi.UpdateFundraisingPageAttributionRequest ValidAppendFundraisingPageAttributionRequest()
+        {
+            return new PageApi.UpdateFundraisingPageAttributionRequest
+                {
+                    Attribution = "Jon, Jez, Jules"
+                };
+        }
     }
 }
