@@ -904,6 +904,23 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsTrue(result);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void CancelPage_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+
+            //act
+            var result = fundraisingResources.CancelPage(validRegisterPageRequest.PageShortName);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
         public static RegisterPageRequest ValidRegisterPageRequest()
         {
             return new RegisterPageRequest
