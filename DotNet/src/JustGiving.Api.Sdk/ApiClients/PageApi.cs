@@ -289,10 +289,17 @@ namespace JustGiving.Api.Sdk.ApiClients
             return HttpChannel.PerformRequest<FundraisingPageVideos>("GET", locationFormat);
         }
 
+        private string FundraisingPageImagesLocationFormat(string pageShortName, string fileName)
+        {
+            var baseEndpoint = FundraisingPageImagesLocationFormat(pageShortName);
+            return baseEndpoint + "/" + fileName;
+        }
+
         private string FundraisingPageImagesLocationFormat(string pageShortName)
         {
             return ResourceBase + "/pages/" + pageShortName + "/images";
         }
+
         private string FundraisingPageVideosLocationFormat(string pageShortName)
         {
             return ResourceBase + "/pages/" + pageShortName + "/videos";
@@ -463,6 +470,20 @@ namespace JustGiving.Api.Sdk.ApiClients
         public bool DeleteFundraisingPageAttribution(string pageShortName)
         {
             var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteImage(string pageShortName, string fileName)
+        {
+            var resourceEndpoint = FundraisingPageImagesLocationFormat(pageShortName, fileName);
             var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
             if (result.StatusCode == HttpStatusCode.OK)
             {

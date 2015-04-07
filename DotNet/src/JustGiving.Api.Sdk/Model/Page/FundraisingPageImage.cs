@@ -10,7 +10,11 @@ namespace JustGiving.Api.Sdk.Model.Page
     {
         [DataMember(Name = "caption")]
         public string Caption { get; set; }
+
         [DataMember(Name = "url")]
         public string Url { get; set; }
+
+        [DataMember(Name = "absoluteUrl")]
+        public string AbsoluteUrl { get; set; }
     }
 }

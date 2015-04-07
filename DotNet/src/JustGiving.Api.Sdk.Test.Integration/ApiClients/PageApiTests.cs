@@ -452,10 +452,10 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
             var addImageRequest = new AddFundraisingPageImageRequest { Url = "", Caption = "", PageShortName = pageCreationRequest.PageShortName };
-            
+
             //act
             var response = Assert.Throws<ErrorResponseException>(() => pageClient.AddImage(addImageRequest));
-            
+
             //assert
             Assert.That(response.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
@@ -470,10 +470,10 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
             var addVideoRequest = new AddFundraisingPageVideoRequest { Url = "", Caption = "", PageShortName = pageCreationRequest.PageShortName };
-            
+
             //act
             var response = Assert.Throws<ErrorResponseException>(() => pageClient.AddVideo(addVideoRequest));
-           
+
             //arrange
             Assert.That(response.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
@@ -488,10 +488,10 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
             var validAddImageRequest = ValidAddFundraisingPageImageRequest(pageCreationRequest.PageShortName);
-            
+
             //act
             var result = pageClient.AddImage(validAddImageRequest);
-            
+
             //assert
             Assert.IsNotNullOrEmpty(result.Next.Rel);
         }
@@ -506,7 +506,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
             var addVideoRequest = new AddFundraisingPageVideoRequest { Url = "http://www.youtube.com/watch?v=MSxjbF18BBM", Caption = "neckbrace", PageShortName = pageCreationRequest.PageShortName };
-            
+
             //act
             var result = pageClient.AddVideo(addVideoRequest);
 
@@ -874,7 +874,32 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                                                                     validAppendRequest);
             //act
             var result = fundraisingResources.DeleteFundraisingPageAttribution(validRegisterPageRequest.PageShortName);
-            
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void DeleteImage_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validAddImageRequest = ValidAddFundraisingPageImageRequest(validRegisterPageRequest.PageShortName);
+            fundraisingResources.AddImage(validAddImageRequest);
+            var images =
+                fundraisingResources.GetImages(new GetFundraisingPageImagesRequest
+                    {
+                        PageShortName = validRegisterPageRequest.PageShortName
+                    });
+            var image = images.First();
+
+            //act
+            var result = fundraisingResources.DeleteImage(validRegisterPageRequest.PageShortName, image.Url);
+
             //assert
             Assert.IsTrue(result);
         }

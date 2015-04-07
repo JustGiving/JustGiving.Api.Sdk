@@ -32,5 +32,6 @@ namespace JustGiving.Api.Sdk.ApiClients
                                                   updateFundraisingPageAttributionRequest);
 
         bool DeleteFundraisingPageAttribution(string pageShortName);
+        bool DeleteImage(string pageShortName, string fileName);
     }
 }
