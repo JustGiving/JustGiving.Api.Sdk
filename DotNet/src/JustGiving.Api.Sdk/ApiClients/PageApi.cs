@@ -460,6 +460,20 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        public bool DeleteFundraisingPageAttribution(string pageShortName)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
         public class Updates : List<Update>
         {

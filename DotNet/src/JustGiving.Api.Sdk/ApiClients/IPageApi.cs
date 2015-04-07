@@ -30,5 +30,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         bool UpdateFundraisingPageAttribution(string pageShortName,
                                               PageApi.UpdateFundraisingPageAttributionRequest
                                                   updateFundraisingPageAttributionRequest);
+
+        bool DeleteFundraisingPageAttribution(string pageShortName);
     }
 }

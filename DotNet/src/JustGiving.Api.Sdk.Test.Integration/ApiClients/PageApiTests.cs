@@ -872,21 +872,40 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void UpdateFundraisingPageAttribution_WhileSupportedValidCredentialsAndValidRequest(WireDataFormat format)
+        public void UpdateFundraisingPageAttribution_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
         {
             //arrange
             var client = TestContext.CreateClientValidCredentials(format);
             var fundraisingResources = new PageApi(client.HttpChannel);
             var validRegisterPageRequest = ValidRegisterPageRequest();
             fundraisingResources.Create(validRegisterPageRequest);
-            var validUpdateRequest = ValidAppendFundraisingPageAttributionRequest();
+            var validAppendRequest = ValidAppendFundraisingPageAttributionRequest();
             fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
-                                                                    validUpdateRequest);
+                                                                    validAppendRequest);
             var validRequest = ValidUpdateFundraisingPageAttributionRequest();
 
             //act
             var result = fundraisingResources.UpdateFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
                                                                                validRequest);
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void DeleteFundraisingPageAttribution_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validAppendRequest = ValidAppendFundraisingPageAttributionRequest();
+            fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                    validAppendRequest);
+            //act
+            var result = fundraisingResources.DeleteFundraisingPageAttribution(validRegisterPageRequest.PageShortName);
+            
             //assert
             Assert.IsTrue(result);
         }
