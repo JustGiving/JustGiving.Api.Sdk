@@ -444,6 +444,22 @@ namespace JustGiving.Api.Sdk.ApiClients
             }
         }
 
+        public bool UpdateFundraisingPageAttribution(string pageShortName,
+                                                     UpdateFundraisingPageAttributionRequest
+                                                         updateFundraisingPageAttributionRequest)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("PUT", resourceEndpoint, updateFundraisingPageAttributionRequest);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
         public class Updates : List<Update>
         {

@@ -870,6 +870,27 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsNotNullOrEmpty(result.Attribution);
         }
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void UpdateFundraisingPageAttribution_WhileSupportedValidCredentialsAndValidRequest(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validUpdateRequest = ValidAppendFundraisingPageAttributionRequest();
+            fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                    validUpdateRequest);
+            var validRequest = ValidUpdateFundraisingPageAttributionRequest();
+
+            //act
+            var result = fundraisingResources.UpdateFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                               validRequest);
+            //assert
+            Assert.IsTrue(result);
+        }
+
         public static RegisterPageRequest ValidRegisterPageRequest()
         {
             return new RegisterPageRequest
@@ -899,6 +920,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             return new PageApi.UpdateFundraisingPageAttributionRequest
                 {
                     Attribution = "Jon, Jez, Jules"
+                };
+        }
+
+        public static PageApi.UpdateFundraisingPageAttributionRequest ValidUpdateFundraisingPageAttributionRequest()
+        {
+            return new PageApi.UpdateFundraisingPageAttributionRequest
+                {
+                    Attribution = "Jonno, Jezze, Julesse"
                 };
         }
     }
