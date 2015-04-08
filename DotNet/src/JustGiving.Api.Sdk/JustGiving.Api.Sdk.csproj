@@ -70,9 +70,12 @@
     <Compile Include="ApiClients\InMemoryApi.cs" />
     <Compile Include="ApiClients\IOneSearchApi.cs" />
     <Compile Include="ApiClients\IOneSearchApiAsync.cs" />
+    <Compile Include="ApiClients\IProjectApi.cs" />
+    <Compile Include="ApiClients\IProjectApiAsync.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
     <Compile Include="ApiClients\OneSearchApi.cs" />
+    <Compile Include="ApiClients\ProjectApi.cs" />
     <Compile Include="ApiClients\TeamApi.cs" />
     <Compile Include="ApiClients\EventApi.cs" />
     <Compile Include="ApiClients\IAccountApiAsync.cs" />
