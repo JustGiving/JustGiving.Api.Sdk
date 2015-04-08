@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public interface IProjectApiAsync
     {
+        void GlobalProjectByIdAsync(int projectId, Action<ProjectApi.GlobalProject> callback);
     }
 }
