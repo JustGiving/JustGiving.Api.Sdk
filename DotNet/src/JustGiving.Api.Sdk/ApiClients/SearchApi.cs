@@ -2,7 +2,7 @@
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Search;
 
-// ReSharper disable SpecifyACultureInStringConversionExplicitly
+
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class SearchApi : ApiClientBase, ISearchApi
@@ -109,7 +109,6 @@ namespace JustGiving.Api.Sdk.ApiClients
         private string InMemorySearchLocationFormat(int? id, string firstName, string lastName, string town, int? pageNumber, int? pageSize)
         {
             var locationFormat = ResourceBase;
-
             locationFormat += "?id=" + (id==null ? string.Empty : id.ToString());
             locationFormat += "&firstName=" + Uri.EscapeDataString(firstName ?? string.Empty);
             locationFormat += "&lastName=" + Uri.EscapeDataString(lastName ?? string.Empty);
@@ -121,4 +120,3 @@ namespace JustGiving.Api.Sdk.ApiClients
         }
     }
 }
-// ReSharper restore SpecifyACultureInStringConversionExplicitly

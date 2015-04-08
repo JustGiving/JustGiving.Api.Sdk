@@ -12,11 +12,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
 
+            //act
             var items = searchClient.CharitySearch("cancer");
 
+            //assert
             Assert.IsTrue(items.Results.Any());
         }
 
@@ -24,10 +27,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void EventSearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
 
+            //act
             var items = searchClient.EventSearch("Test");
+            
+            //assert
             Assert.IsTrue(items.Results.Any());
         }
 
@@ -35,10 +42,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void InMemorySearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
             
-            var items = searchClient.InMemorySearch(null, "James", "Morrison", null);
+            //act
+            var items = searchClient.InMemorySearch(null, "test", "test", null);
+
+            //assert
             Assert.IsTrue(items.Results.Any());
         }
 
