@@ -10,5 +10,10 @@ namespace JustGiving.Api.Sdk.ApiClients
         EventSearchResults EventSearch(string searchTerms, int? pageNumber, int? pageSize);
         InMemorySearchResults InMemorySearch(int? id, string firstName, string lastName, string town);
         InMemorySearchResults InMemorySearch(int? id, string firstName, string lastName, string town, int? pageNumber, int? pageSize);
+
+        SearchApi.FundraiserSearchResponse FundraiserSearch(string query, int? pageNumber = null, int? pageSize = null,
+                                                            int? causeId = null,
+                                                            int? eventId = null, int? charityId = null,
+                                                            int? designId = null);
     }
 }

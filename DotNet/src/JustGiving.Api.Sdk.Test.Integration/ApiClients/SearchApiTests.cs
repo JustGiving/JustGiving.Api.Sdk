@@ -80,5 +80,20 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Errors[0].Id, Is.EqualTo("InvalidFirstName"));
             Assert.That(exception.Errors[0].Description, Is.EqualTo("The first name of the person you're remembering cannot be empty."));
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void FundraiserSearch_KeywordWithKnownResult_SearchResultPresent(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var searchResources = new SearchApi(client.HttpChannel);
+
+            //act
+            var result = searchResources.FundraiserSearch("pawel");
+
+            //assert
+            Assert.IsTrue(result.SearchResults.Any());
+        }
     }
 }
