@@ -16,15 +16,16 @@ namespace JustGiving.Api.Sdk
         public IOneSearchApi OneSearch { get; set; }
         public ICountryApi Country { get; set; }
         public ICurrencyApi Currency { get; set; }
+        public IProjectApi Project { get; set; }
 
         public string WhiteLabelDomain { get; private set; }
-    	public IHttpClient HttpClient { get; private set; }
+        public IHttpClient HttpClient { get; private set; }
 
         protected internal ClientConfiguration Configuration { get; private set; }
         public HttpChannel HttpChannel { get; private set; }
 
         protected JustGivingClientBase(ClientConfiguration clientConfiguration, IHttpClient httpClient)
-            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null, null, null, null)
+            : this(clientConfiguration, httpClient, null, null, null, null, null, null, null, null, null, null, null)
         {
         }
 
@@ -37,7 +38,8 @@ namespace JustGiving.Api.Sdk
                                        ICharityApi charityApi,
                                        IEventApi eventApi,
                                        ITeamApi teamApi, IOneSearchApi oneSearch,
-                                       ICountryApi country, ICurrencyApi currency)
+                                       ICountryApi country, ICurrencyApi currency,
+                                       IProjectApi project)
         {
             if (httpClient == null)
             {
@@ -57,6 +59,7 @@ namespace JustGiving.Api.Sdk
             OneSearch = oneSearch;
             Country = country;
             Currency = currency;
+            Project = project;
 
             Configuration = clientConfiguration;
 
@@ -73,16 +76,17 @@ namespace JustGiving.Api.Sdk
         {
             HttpChannel = new HttpChannel(clientConfiguration, httpClient);
 
-        	Account = Account ?? new AccountApi(HttpChannel);
-			Donation = Donation ?? new DonationApi(HttpChannel);
-			Page = Page ?? new PageApi(HttpChannel);
-			Search = Search ?? new SearchApi(HttpChannel);
-			Charity = Charity ?? new CharityApi(HttpChannel);
-			Event = Event ?? new EventApi(HttpChannel);
-			Team = Team ?? new TeamApi(HttpChannel);
+            Account = Account ?? new AccountApi(HttpChannel);
+            Donation = Donation ?? new DonationApi(HttpChannel);
+            Page = Page ?? new PageApi(HttpChannel);
+            Search = Search ?? new SearchApi(HttpChannel);
+            Charity = Charity ?? new CharityApi(HttpChannel);
+            Event = Event ?? new EventApi(HttpChannel);
+            Team = Team ?? new TeamApi(HttpChannel);
             OneSearch = OneSearch ?? new OneSearchApi(HttpChannel);
             Country = Country ?? new CountryApi(HttpChannel);
             Currency = Currency ?? new CurrencyApi(HttpChannel);
+            Project = Project ?? new ProjectApi(HttpChannel);
         }
 
         public void UpdateConfiguration(ClientConfiguration configuration)
