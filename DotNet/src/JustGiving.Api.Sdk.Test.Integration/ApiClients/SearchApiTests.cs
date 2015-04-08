@@ -95,5 +95,20 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //assert
             Assert.IsTrue(result.SearchResults.Any());
         }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void TeamSearch_KeywordWithKnownResult_SearchResultPresent(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var searchResources = new SearchApi(client.HttpChannel);
+
+            //act
+            var result = searchResources.TeamSearch("test");
+
+            //assert
+            Assert.IsTrue(result.Results.Any());
+        }
     }
 }

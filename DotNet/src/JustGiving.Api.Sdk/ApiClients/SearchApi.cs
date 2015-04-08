@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model;
 using JustGiving.Api.Sdk.Model.Search;
+using JustGiving.Api.Sdk.Model.Team;
 
 
 namespace JustGiving.Api.Sdk.ApiClients
@@ -97,11 +98,23 @@ namespace JustGiving.Api.Sdk.ApiClients
             HttpChannel.PerformRequestAsync("GET", locationFormat, callback);
         }
 
-        public void FundraiserSearchAsync(string query, Action<FundraiserSearchResponse> callback, int? pageNumber = null, int? pageSize = null,
-                                          int? causeId = null, int? eventId = null, int? charityId = null, int? designId = null)
+        public void FundraiserSearchAsync(string query, Action<FundraiserSearchResponse> callback,
+                                          int? pageNumber = null, int? pageSize = null,
+                                          int? causeId = null, int? eventId = null, int? charityId = null,
+                                          int? designId = null)
         {
             var resourceEndpoint = FundraiserSearchLocationFormat(query, pageNumber, pageSize, causeId, eventId,
                                                                   charityId, designId);
+            HttpChannel.PerformRequestAsync("GET", resourceEndpoint, callback);
+        }
+
+        public void TeamSearchAsync(string teamName, Action<TeamSearchResponse> callback, string teamShortName = null, int? teamId = null, int? page = null,
+                                    int? pageSize = null, int? teamMemberPageId = null, int? teamMemberPageShortName = null,
+                                    int? teamMemberPageOwnerName = null)
+        {
+            var resourceEndpoint = TeamSearchLocationFormat(teamName, teamShortName, teamId, page, pageSize,
+                                                            teamMemberPageId, teamMemberPageShortName,
+                                                            teamMemberPageOwnerName);
             HttpChannel.PerformRequestAsync("GET", resourceEndpoint, callback);
         }
 
@@ -135,7 +148,8 @@ namespace JustGiving.Api.Sdk.ApiClients
             return locationFormat;
         }
 
-        private string FundraiserSearchLocationFormat(string query, int? pageNumber = null, int? pageSize = null, int? causeId = null,
+        private string FundraiserSearchLocationFormat(string query, int? pageNumber = null, int? pageSize = null,
+                                                      int? causeId = null,
                                                       int? eventId = null, int? charityId = null, int? designId = null)
         {
             var locationFormat = ResourceBase;
@@ -150,13 +164,53 @@ namespace JustGiving.Api.Sdk.ApiClients
             return locationFormat;
         }
 
-        public FundraiserSearchResponse FundraiserSearch(string query, int? pageNumber = null, int? pageSize = null, int? causeId = null,
-                                                      int? eventId = null, int? charityId = null, int? designId = null)
+        public FundraiserSearchResponse FundraiserSearch(string query, int? pageNumber = null, int? pageSize = null,
+                                                         int? causeId = null,
+                                                         int? eventId = null, int? charityId = null,
+                                                         int? designId = null)
         {
             var resourceEndpoint = FundraiserSearchLocationFormat(query, pageNumber, pageSize, causeId, eventId,
                                                                   charityId, designId);
             var result = HttpChannel.PerformRequest<FundraiserSearchResponse>("GET", resourceEndpoint);
             return result;
+        }
+
+        public TeamSearchResponse TeamSearch(string teamName, string teamShortName = null, int? teamId = null, int? page = null,
+                                                int? pageSize = null, int? teamMemberPageId = null, int? teamMemberPageShortName = null,
+                                                int? teamMemberPageOwnerName = null)
+        {
+            var resourceEndpoint = TeamSearchLocationFormat(teamName, teamShortName, teamId, page, pageSize,
+                                                            teamMemberPageId, teamMemberPageShortName,
+                                                            teamMemberPageOwnerName);
+            var result = HttpChannel.PerformRequest<TeamSearchResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        private string TeamSearchLocationFormat(string teamName, string teamShortName = null, int? teamId = null, int? page = null,
+                                                int? pageSize = null, int? teamMemberPageId = null, int? teamMemberPageShortName = null,
+                                                int? teamMemberPageOwnerName = null)
+        {
+            var locationFormat = ResourceBase;
+            locationFormat += "?teamName=" + teamName;
+            if (!string.IsNullOrEmpty(teamShortName))
+            {
+                locationFormat += "&teamShortName=" + teamShortName;
+            }
+            locationFormat += "&teamId=" + (teamId.HasValue ? teamId.Value.ToString() : string.Empty);
+            locationFormat += "&page=" + page.GetValueOrDefault(1);
+            locationFormat += "&pageSize=" + pageSize.GetValueOrDefault(20);
+            locationFormat += "&teamMemberPageId=" +
+                              (teamMemberPageId.HasValue ? teamMemberPageId.Value.ToString() : string.Empty);
+            locationFormat += "&teamMemberPageShortName=" +
+                              (teamMemberPageShortName.HasValue
+                                   ? teamMemberPageShortName.Value.ToString()
+                                   : string.Empty);
+            locationFormat += "&teamMemberPageOwnerName=" +
+                              (teamMemberPageOwnerName.HasValue
+                                   ? teamMemberPageOwnerName.Value.ToString()
+                                   : string.Empty);
+            locationFormat = locationFormat.Replace("/charity/", "/team/");
+            return locationFormat;
         }
 
         [DataContract(Name = "FundraiserSearch", Namespace = "")]
@@ -224,7 +278,18 @@ namespace JustGiving.Api.Sdk.ApiClients
             [DataMember]
             public string EventName { get; set; }
         }
-    }
 
+        [DataContract(Name = "teamSearch", Namespace = "")]
+        public class TeamSearchResponse
+        {
+            [DataMember(Name = "results")]
+            public List<Team> Results { get; set; }
+
+            public TeamSearchResponse()
+            {
+                Results = new List<Team>();
+            }
+        }
+    }
 }
 

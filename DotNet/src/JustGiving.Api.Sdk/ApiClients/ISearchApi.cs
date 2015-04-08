@@ -15,5 +15,11 @@ namespace JustGiving.Api.Sdk.ApiClients
                                                             int? causeId = null,
                                                             int? eventId = null, int? charityId = null,
                                                             int? designId = null);
+
+        SearchApi.TeamSearchResponse TeamSearch(string teamName, string teamShortName = null, int? teamId = null,
+                                                int? page = null,
+                                                int? pageSize = null, int? teamMemberPageId = null,
+                                                int? teamMemberPageShortName = null,
+                                                int? teamMemberPageOwnerName = null);
     }
 }
