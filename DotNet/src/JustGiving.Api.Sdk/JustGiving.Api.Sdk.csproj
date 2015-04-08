@@ -72,10 +72,13 @@
     <Compile Include="ApiClients\IOneSearchApiAsync.cs" />
     <Compile Include="ApiClients\IProjectApi.cs" />
     <Compile Include="ApiClients\IProjectApiAsync.cs" />
+    <Compile Include="ApiClients\ISmsApi.cs" />
+    <Compile Include="ApiClients\ISmsApiAsync.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
     <Compile Include="ApiClients\OneSearchApi.cs" />
     <Compile Include="ApiClients\ProjectApi.cs" />
+    <Compile Include="ApiClients\SmsApi.cs" />
     <Compile Include="ApiClients\TeamApi.cs" />
     <Compile Include="ApiClients\EventApi.cs" />
     <Compile Include="ApiClients\IAccountApiAsync.cs" />

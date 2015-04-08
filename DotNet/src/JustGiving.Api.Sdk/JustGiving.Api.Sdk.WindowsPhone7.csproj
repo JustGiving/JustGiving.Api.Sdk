@@ -86,12 +86,15 @@
     <Compile Include="ApiClients\IProjectApiAsync.cs" />
     <Compile Include="ApiClients\ISearchApi.cs" />
     <Compile Include="ApiClients\ISearchApiAsync.cs" />
+    <Compile Include="ApiClients\ISmsApi.cs" />
+    <Compile Include="ApiClients\ISmsApiAsync.cs" />
     <Compile Include="ApiClients\ITeamApi.cs" />
     <Compile Include="ApiClients\ITeamApiAsync.cs" />
     <Compile Include="ApiClients\OneSearchApi.cs" />
     <Compile Include="ApiClients\PageApi.cs" />
     <Compile Include="ApiClients\ProjectApi.cs" />
     <Compile Include="ApiClients\SearchApi.cs" />
+    <Compile Include="ApiClients\SmsApi.cs" />
     <Compile Include="ApiClients\TeamApi.cs" />
     <Compile Include="ApiClients\TeamCreatedResponse.cs" />
     <Compile Include="ClientConfiguration.cs" />
