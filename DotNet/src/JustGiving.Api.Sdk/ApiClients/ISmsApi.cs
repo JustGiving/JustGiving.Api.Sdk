@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public interface ISmsApi : ISmsApiAsync
     {
+        SmsApi.SmsInfo RetrievePageSmsCode(string pageShortName);
     }
 }
