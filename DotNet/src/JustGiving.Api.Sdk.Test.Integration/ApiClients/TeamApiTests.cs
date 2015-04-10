@@ -40,21 +40,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //arrange
             var client = TestContext.CreateClientValidCredentials(format);
             var teamResources = new TeamApi(client.HttpChannel);
-        	var team = new Team
-        	             	{
-        	             		Name = "My Awesome event",
-								Target = 1000.0m,
-								Story = "My kick ass story",
-								TargetType = TeamTargetType.Fixed.ToString(),
-								TeamShortName = Guid.NewGuid().ToString(),
-                                TeamType = TeamType.ByInvitationOnly.ToString(),
-                                TeamMembers = new List<TeamMember> { new TeamMember { PageShortName = "api-test-c166ab39-fc80-4cf1-aed0-9236974740ca" } }
-        	             	};
-
-            teamResources.CreateOrUpdate(team);
+            var fundraiseResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraiseResources.Create(validRegisterPageRequest);
+            var validRequest = ValidTeamRequest(validRegisterPageRequest.PageShortName);
+            teamResources.CreateOrUpdate(validRequest);
 
             //act
-            var result = teamResources.TeamExists(team.TeamShortName);
+            var result = teamResources.TeamExists(validRequest.TeamShortName);
 
             //act
             Assert.That(result, Is.True);
@@ -82,23 +75,17 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //arrange
             var client = TestContext.CreateClientValidCredentials(format);
             var teamResources = new TeamApi(client.HttpChannel);
-			var team1 = new Team
-			{
-				Name = "My Awesome event",
-				Target = 1000.00m,
-				Story = "My kick ass story",
-				TargetType = TeamTargetType.Fixed.ToString(),
-				TeamShortName = Guid.NewGuid().ToString(),
-                TeamType = TeamType.ByInvitationOnly.ToString(),
-                TeamMembers = new List<TeamMember> { new TeamMember { PageShortName = "api-test-c166ab39-fc80-4cf1-aed0-9236974740ca" } }
-			};
-            var teamId = teamResources.CreateOrUpdate(team1).Id;
+            var fundraiseResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraiseResources.Create(validRegisterPageRequest);
+            var validRequest = ValidTeamRequest(validRegisterPageRequest.PageShortName);
+            var response = teamResources.CreateOrUpdate(validRequest);
 
             //act
-            var team2 = teamResources.Retrieve(team1.TeamShortName);
+		    var result = teamResources.Retrieve(validRequest.TeamShortName);
 
             //assert
-			Assert.That(team2.Id, Is.EqualTo(teamId));
+		    Assert.That(result.Id, Is.EqualTo(response.Id));
 		}
 
         private static RegisterPageRequest ValidRegisterPageRequest()
