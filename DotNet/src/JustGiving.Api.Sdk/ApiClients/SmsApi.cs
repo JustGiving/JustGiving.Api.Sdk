@@ -10,7 +10,8 @@ namespace JustGiving.Api.Sdk.ApiClients
 {
     public class SmsApi : ApiClientBase, ISmsApi
     {
-        public SmsApi(HttpChannel channel) : base(channel)
+        public SmsApi(HttpChannel channel)
+            : base(channel)
         {
         }
 
@@ -57,9 +58,28 @@ namespace JustGiving.Api.Sdk.ApiClients
             return result;
         }
 
+        private string UpdatePageSmsCodeResourceEndpoint(string pageShortName)
+        {
+            return ResourceBase + "/fundraising/pages/" + pageShortName + "/sms";
+        }
+
+        public bool UpdatePageSmsCode(string pageShortName, SmsUpdate smsUpdate)
+        {
+            var resourceEndpoint = UpdatePageSmsCodeResourceEndpoint(pageShortName);
+            var result = HttpChannel.PerformRawRequest("PUT", resourceEndpoint, smsUpdate);
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public class DummyRequest
-        {}
-        
+        { }
+
         [DataContract(Namespace = "", Name = "smsInfo")]
         public class SmsInfo
         {
@@ -77,6 +97,13 @@ namespace JustGiving.Api.Sdk.ApiClients
             public string[] Alternatives { get; set; }
 
 
+        }
+
+        [DataContract(Namespace = "", Name = "smsInfo")]
+        public class SmsUpdate
+        {
+            [DataMember(Name = "urn", EmitDefaultValue = false)]
+            public string Urn { get; set; }
         }
     }
 }

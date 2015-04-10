@@ -38,20 +38,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             //arrange
             var client = TestContext.CreateClientValidCredentials(format);
             var smsResources = new SmsApi(client.HttpChannel);
-            string validSmsCode = string.Empty;
-            for (int i = 0; i < 6; i++)
-            {
-                Random rnd = new Random(5);
-
-                if (i == 4 || i == 5)
-                {
-                    validSmsCode += (char) rnd.Next(48, 57);
-                }
-                else
-                {
-                    validSmsCode += (char)rnd.Next(97, 122);
-                }
-            }
+            string validSmsCode = GenerateRandomSmsCode();
 
             //act
             var result = smsResources.CheckSmsCodeAvailability(validSmsCode);
@@ -60,7 +47,27 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.IsTrue(result.IsAvailable);
         }
 
-        public static RegisterPageRequest ValidRegisterPageRequest()
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void UpdatePageSmsCode_WhenProvidedValidRequestAndValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var smsResources = new SmsApi(client.HttpChannel);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterRequest);
+            var randomSmsCodeToUpdate = GenerateRandomSmsCode();
+            var validRequest = new SmsApi.SmsUpdate {Urn = randomSmsCodeToUpdate};
+
+            //act
+            var result = smsResources.UpdatePageSmsCode(validRegisterRequest.PageShortName, validRequest);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        private static RegisterPageRequest ValidRegisterPageRequest()
         {
             return new RegisterPageRequest
             {
@@ -74,6 +81,18 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
+        }
+
+        private string GenerateRandomSmsCode()
+        {
+            string validSmsCode = string.Empty;
+            Random rnd = new Random();
+            for (int i = 0; i < 4; i++)
+            {
+                validSmsCode += (char)rnd.Next(97, 122);
+            }
+            validSmsCode += rnd.Next(47, 99);
+            return validSmsCode;
         }
     }
 }
