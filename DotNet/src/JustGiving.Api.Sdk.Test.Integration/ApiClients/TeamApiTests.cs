@@ -88,6 +88,29 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 		    Assert.That(result.Id, Is.EqualTo(response.Id));
 		}
 
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void JointTeam_WhenProvidedValidRequestAndValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+          //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var teamResources = new TeamApi(client.HttpChannel);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validTeamRequest = ValidTeamRequest(validRegisterPageRequest.PageShortName);
+            teamResources.CreateOrUpdate(validTeamRequest);
+            var validRegisterPageRequestSecond = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequestSecond);
+            var validJoinTeamRequest = ValidJoinTeamRequest(validRegisterPageRequestSecond.PageShortName);
+
+            //act
+            var result = teamResources.JointTeam(validTeamRequest.TeamShortName, validJoinTeamRequest);
+            
+            //assert
+            Assert.IsTrue(result);
+        }
+
         private static RegisterPageRequest ValidRegisterPageRequest()
         {
             return new RegisterPageRequest
@@ -119,6 +142,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                             {
                                 new TeamMember {PageShortName = pageShortName}
                             }
+                };
+        }
+
+        private static TeamApi.JoinTeamRequest ValidJoinTeamRequest(string pageShortName)
+        {
+            return new TeamApi.JoinTeamRequest
+                {
+                    PageShortName = pageShortName
                 };
         }
     }
