@@ -25,7 +25,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void AuthenticateCharityUser_ValidUser_ReturnsIsValidAndCharityId(WireDataFormat format)
         {
-            var client = TestContext.CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientNoCredentials(format);
 			var charityClient = new CharityApi(client.HttpChannel);
             var authenticateCharityUserRequest = new AuthenticateCharityUserRequest()
             {
@@ -39,14 +39,43 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		[Ignore("Not yet live")]
-        public void RetrieveEvents_ReturnsEventsDto(WireDataFormat format)
+        public void RetrieveEvents_WhenDoesntSuppliedCredentials_ReturnsEvents(WireDataFormat format)
         {
-            var client = TestContext.CreateClientValidCredentials(format);
+            var client = TestContext.CreateClientNoCredentials(format);
 			var charityClient = new CharityApi(client.HttpChannel);
             var response = charityClient.RetrieveEvents(2357);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.CharityId, Is.Not.EqualTo(0));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void CharityDonations_WhenDoesntSuppliedCredentials_ReturnsDonations(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var charityResources = new CharityApi(client.HttpChannel);
+            const int charityId = 2050;
+            //act
+            var result = charityResources.CharityDonations(charityId);
+
+            //assert
+            CollectionAssert.IsNotEmpty(result.Donations);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void CharityCategories_WhenDoesntSuppliedCredentials_ReturnCategories(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var charityResources = new CharityApi(client.HttpChannel);
+            
+            //act
+            var result = charityResources.CharityCategories();
+
+            //assert
+            CollectionAssert.IsNotEmpty(result);
         }
     }
 }

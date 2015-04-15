@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Http.DataPackets;
 using JustGiving.Api.Sdk.Model.Page;
@@ -7,29 +9,30 @@ using JustGiving.Api.Sdk.Model.Page;
 namespace JustGiving.Api.Sdk.ApiClients
 {
     public class PageApi : ApiClientBase, IPageApi
-	{
-		public override string ResourceBase
-		{
-			get { return "{apiKey}/v{apiVersion}/fundraising"; }
-		}
+    {
+        public override string ResourceBase
+        {
+            get { return "{apiKey}/v{apiVersion}/fundraising"; }
+        }
 
-        public PageApi(HttpChannel channel) : base(channel)
+        public PageApi(HttpChannel channel)
+            : base(channel)
         {
         }
-        
+
         public string ListAllLocationFormat()
         {
-			if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
+            if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
             {
                 throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
             }
 
             return ResourceBase + "/pages";
-        }    
-    
+        }
+
         public string ListAllLocationPaginatedFormat()
         {
-			if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
+            if (string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Username) || string.IsNullOrEmpty(HttpChannel.ClientConfiguration.Password))
             {
                 throw new Exception("Authentication required to list pages.  Please set a valid configuration object.");
             }
@@ -77,7 +80,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RetrieveLocationFormat(string pageShortName)
         {
-            return ResourceBase +  "/pages/" + pageShortName;
+            return ResourceBase + "/pages/" + pageShortName;
         }
 
         public FundraisingPage Retrieve(string pageShortName)
@@ -94,7 +97,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RetrieveDonationsForPageLocationFormat(string pageShortName, int? pageSize, int? pageNumber)
         {
-            var locationFormat = ResourceBase +  "/pages/" + pageShortName + "/donations";
+            var locationFormat = ResourceBase + "/pages/" + pageShortName + "/donations";
             locationFormat += "?PageSize=" + pageSize.GetValueOrDefault(50);
             locationFormat += "&PageNum=" + pageNumber.GetValueOrDefault(1);
             return locationFormat;
@@ -137,10 +140,10 @@ namespace JustGiving.Api.Sdk.ApiClients
             var locationFormat = CreateLocationFormat(request);
             return HttpChannel.PerformRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, request);
         }
-        
+
         public PageRegistrationByEventRefConfirmation Create(string eventRef, RegisterPageRequest request)
         {
-			string locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
+            string locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
             return HttpChannel.PerformRequest<RegisterPageRequest, PageRegistrationByEventRefConfirmation>("POST", locationFormat, request);
         }
 
@@ -152,7 +155,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public void CreateAsync(string eventRef, RegisterPageRequest request, Action<PageRegistrationByEventRefConfirmation> callback)
         {
-			var locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
+            var locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
             HttpChannel.PerformRequestAsync("POST", locationFormat, request, callback);
         }
 
@@ -175,7 +178,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string UpdateStoryLocationFormat(string pageShortName)
         {
-            return ResourceBase +  "/pages/" + pageShortName;
+            return ResourceBase + "/pages/" + pageShortName;
         }
 
         public void UpdateStory(string pageShortName, string storyUpdate)
@@ -187,23 +190,26 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void UpdateStoryAsync(string pageShortName, string storyUpdate)
         {
             var locationFormat = UpdateStoryLocationFormat(pageShortName);
-            HttpChannel.PerformRequestAsync<StoryUpdateRequest, StoryUpdateResponse>("POST", locationFormat, new StoryUpdateRequest { StorySupplement = storyUpdate }, response=>{});
+            HttpChannel.PerformRequestAsync<StoryUpdateRequest, StoryUpdateResponse>("POST", locationFormat, new StoryUpdateRequest { StorySupplement = storyUpdate }, response => { });
         }
 
         public string IsPageShortNameRegisteredLocationFormat(string pageShortName, string domain)
         {
             if (string.IsNullOrEmpty(pageShortName))
+            {
                 throw new ArgumentNullException("pageShortName", "pageShortName cannot be null.");
-
+            }
             if (!string.IsNullOrEmpty(domain))
-                domain = string.Format("?domain={0}",domain);
+            {
+                domain = string.Format("?domain={0}", domain);
+            }
 
             return ResourceBase + "/pages/" + pageShortName + domain;
         }
-		
+
         public bool IsPageShortNameRegistered(string pageShortName)
         {
-        	return IsPageShortNameRegistered(pageShortName, null);
+            return IsPageShortNameRegistered(pageShortName, null);
         }
 
         public bool IsPageShortNameRegistered(string pageShortName, string domain)
@@ -216,12 +222,12 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void IsPageShortNameRegisteredAsync(string pageShortName, string domain, Action<bool> callback)
         {
             var locationFormat = IsPageShortNameRegisteredLocationFormat(pageShortName, domain);
-            HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response=>IsPageShortNameRegisteredAsyncEnd(response, callback));
+            HttpChannel.PerformRawRequestAsync("HEAD", locationFormat, response => IsPageShortNameRegisteredAsyncEnd(response, callback));
         }
 
         public void IsPageShortNameRegisteredAsync(string pageShortName, Action<bool> callback)
         {
-        	IsPageShortNameRegisteredAsync(pageShortName, null, callback);
+            IsPageShortNameRegisteredAsync(pageShortName, null, callback);
         }
 
         private static void IsPageShortNameRegisteredAsyncEnd(HttpResponseMessage response, Action<bool> clientCallback)
@@ -251,7 +257,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
         {
             var locationFormat = UploadImageLocationFormat(pageShortName, caption);
-            var response = HttpChannel.PerformRawRequest("POST", locationFormat, imageContentType, imageBytes); 
+            var response = HttpChannel.PerformRawRequest("POST", locationFormat, imageContentType, imageBytes);
             ProcessUploadImageResponse(response);
         }
 
@@ -283,13 +289,20 @@ namespace JustGiving.Api.Sdk.ApiClients
             return HttpChannel.PerformRequest<FundraisingPageVideos>("GET", locationFormat);
         }
 
+        private string FundraisingPageImagesLocationFormat(string pageShortName, string fileName)
+        {
+            var baseEndpoint = FundraisingPageImagesLocationFormat(pageShortName);
+            return baseEndpoint + "/" + fileName;
+        }
+
         private string FundraisingPageImagesLocationFormat(string pageShortName)
         {
             return ResourceBase + "/pages/" + pageShortName + "/images";
         }
+
         private string FundraisingPageVideosLocationFormat(string pageShortName)
         {
-			return ResourceBase + "/pages/" + pageShortName + "/videos";
+            return ResourceBase + "/pages/" + pageShortName + "/videos";
         }
 
         public void UploadImageAsync(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
@@ -315,7 +328,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void GetImagesAsync(GetFundraisingPageImagesRequest request, Action<FundraisingPageImages> callback)
         {
             var locationFormat = FundraisingPageImagesLocationFormat(request.PageShortName);
-            HttpChannel.PerformRequestAsync("GET",locationFormat,request,callback);
+            HttpChannel.PerformRequestAsync("GET", locationFormat, request, callback);
         }
 
         public void GetVideosAsync(GetFundraisingPageVideosRequest request, Action<FundraisingPageVideos> callback)
@@ -327,10 +340,211 @@ namespace JustGiving.Api.Sdk.ApiClients
         private void ProcessUploadImageResponse(HttpResponseMessage response)
         {
             if (response.StatusCode == HttpStatusCode.OK)
-                return; 
-   
+                return;
+
             var potentialErrors = HttpChannel.TryExtractErrorsFromResponse(response.Content);
             throw ErrorResponseExceptionFactory.CreateException(response, potentialErrors);
+        }
+
+        private string RetrieveDonationsForPageByReferenceLocationFormat(string pageShortName, string reference)
+        {
+            var locationFormat = ResourceBase + "/pages/" + pageShortName + "/donations" + "/ref/" + reference;
+            return locationFormat;
+        }
+
+        public FundraisingPageDonations RetrieveDonationsForPageByReference(string pageShortName, string reference)
+        {
+            var locationFormat = RetrieveDonationsForPageByReferenceLocationFormat(pageShortName, reference);
+            var result = HttpChannel.PerformRequest<FundraisingPageDonations>("GET", locationFormat);
+            return result;
+        }
+
+        private string PageUpdatesLocationFormat(string pageShortName)
+        {
+            return ResourceBase + "/pages/" + pageShortName + "/updates";
+        }
+
+        public Updates PageUpdates(string pageShortName)
+        {
+            var resourceEndpoint = PageUpdatesLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRequest<Updates>("GET", resourceEndpoint);
+            return result;
+        }
+
+        public void PageUpdatesAsync(string pageShortName, Action<Updates> callback)
+        {
+            var resourceEndpoint = PageUpdatesLocationFormat(pageShortName);
+            HttpChannel.GetAsync(resourceEndpoint, callback);
+        }
+
+        private string PageUpdateLocationFormat(string pageShortName, int updateId)
+        {
+            return ResourceBase + "/pages/" + pageShortName + "/updates/" + updateId;
+        }
+
+        public Update PageUpdate(string pageShortName, int updateId)
+        {
+            var resourceEndpoint = PageUpdateLocationFormat(pageShortName, updateId);
+            var result = HttpChannel.PerformRequest<Update>("GET", resourceEndpoint);
+            return result;
+        }
+
+        public void PageUpdateAsync(string pageShortName, int updateId, Action<Update> callback)
+        {
+            var resurcesEndpoint = PageUpdateLocationFormat(pageShortName, updateId);
+            HttpChannel.GetAsync(resurcesEndpoint, callback);
+        }
+
+        public bool DeletePageUpdate(string pageShortName, int updateId)
+        {
+            var resourceEndpoint = PageUpdateLocationFormat(pageShortName, updateId);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool PageUpdatesAddPost(string pageShortName, Update updateRequest)
+        {
+            var resourceEndpoint = PageUpdatesLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("POST", resourceEndpoint, updateRequest);
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private string FundraisingPageAttributionLocationFormat(string pageShortName)
+        {
+            return ResourceBase + "/pages/" + pageShortName + "/attribution";
+        }
+
+        public GetFundraisingPageAttributionResponse FundraisingPageAttribution(string pageShortName)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRequest<GetFundraisingPageAttributionResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        public bool AppendToFundraisingPageAttribution(string pageShortName,
+                                               UpdateFundraisingPageAttributionRequest
+                                                   updateFundraisingPageAttributionRequest)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("POST", resourceEndpoint, updateFundraisingPageAttributionRequest);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateFundraisingPageAttribution(string pageShortName,
+                                                     UpdateFundraisingPageAttributionRequest
+                                                         updateFundraisingPageAttributionRequest)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("PUT", resourceEndpoint, updateFundraisingPageAttributionRequest);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteFundraisingPageAttribution(string pageShortName)
+        {
+            var resourceEndpoint = FundraisingPageAttributionLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteImage(string pageShortName, string fileName)
+        {
+            var resourceEndpoint = FundraisingPageImagesLocationFormat(pageShortName, fileName);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CancelPage(string pageShortName)
+        {
+            var resourceEndpoint = RetrieveLocationFormat(pageShortName);
+            var result = HttpChannel.PerformRawRequest("DELETE", resourceEndpoint);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [CollectionDataContract(Name = "Updates", ItemName = "update", Namespace = "")]
+        public class Updates : List<Update>
+        {
+        }
+
+        [DataContract(Name = "Update", Namespace = "")]
+        public class Update
+        {
+            [DataMember]
+            public int? Id { get; set; }
+
+            [DataMember]
+            public string Video { get; set; }
+
+            [DataMember]
+            public DateTime? CreatedDate { get; set; }
+
+            [DataMember]
+            public string Message { get; set; }
+        }
+
+        [DataContract(Name = "fundraisingPage", Namespace = "")]
+        public class GetFundraisingPageAttributionResponse
+        {
+            [DataMember(Name = "attribution")]
+            public string Attribution { get; set; }
+
+            [DataMember(Name = "attributionLabel")]
+            public string AttributionLabel { get; set; }
+        }
+
+        [DataContract(Name = "fundraisingPage", Namespace = "")]
+        public class UpdateFundraisingPageAttributionRequest
+        {
+            [DataMember(Name = "attribution")]
+            public string Attribution { get; set; }
         }
     }
 }

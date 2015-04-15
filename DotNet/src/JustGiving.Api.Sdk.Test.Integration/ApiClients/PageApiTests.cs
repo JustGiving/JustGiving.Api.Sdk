@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using JustGiving.Api.Sdk.ApiClients;
 using JustGiving.Api.Sdk.Http;
@@ -20,7 +22,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenProvidedWithValidAuthenticationAndDetails_CreatesANewPage(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -43,7 +45,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_CreatesANewPage(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -64,36 +66,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void Register_WhenProvidedWithANonDefaultDomain_CreatesANewPageOnThatDomain(WireDataFormat format)
-        {
-            var client = TestContext.CreateClientValidRflCredentials(format);
-            var domain = TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflDomain);
-            client.SetWhiteLabelDomain(domain);
-
-			var pageClient = new PageApi(client.HttpChannel);
-            
-            var pageShortName = "api-test-" + Guid.NewGuid();
-            
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = null,
-                Attribution =  null,
-                CharityId = 2050,
-                PageShortName = pageShortName,
-                PageTitle = "Page created on domain " + domain + " by an integration test",
-                EventDate = null,
-                EventName = null,
-                EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.RflEventReference), //Was 1 for local
-                TargetAmount = null
-            };
-
-            var registrationResponse = pageClient.Create(pageCreationRequest);
-
-            Assert.That(registrationResponse.Next.Uri, Is.StringContaining(domain));
-        }
-
-        [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
         public void RegisterWhenProvidedWithADomainThatDoesNotExist_ThrowsException(WireDataFormat format)
         {
             const string domainThatDoesNotExistOnJustGiving = "Incorrect.com";
@@ -101,7 +73,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var client = TestContext.CreateClientValidCredentials(format);
             client.SetWhiteLabelDomain(domainThatDoesNotExistOnJustGiving);
 
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -125,7 +97,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_WhenProvidedWithValidAuthenticationAndDetailsAndAnEmptyActivityType_TheResponseContainsThePageId(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -148,8 +120,9 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithCompanyAppealId_CanRetrieveCompanyId(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             const int companyAppealId = 200002;
             var pageCreationRequest = new RegisterPageRequest
@@ -164,9 +137,13 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
                 TargetAmount = 20M,
                 EventDate = DateTime.Now.AddDays(5)
             };
-
             pageClient.Create(pageCreationRequest);
-            Assert.That(pageClient.Retrieve(pageShortName).CompanyAppealId, Is.EqualTo(companyAppealId));
+
+            //act
+            var result = pageClient.Retrieve(pageShortName);
+
+            //assert
+            Assert.That(result.CompanyAppealId, Is.EqualTo(companyAppealId));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -174,7 +151,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Register_SuppliedValidAuthenticationAndValidRegisterPageRequestWithInMemName_CanRetrieveNameFromAttribution(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             const string inMemName = "Matheu";
             var pageCreationRequest = new RegisterPageRequest
@@ -199,7 +176,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void SuggestPageShortNames_SuppliedDesiredName_ReturnsSuggestions(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             const string desiredName = "david";
 
             var suggestion = pageClient.SuggestPageShortNames(desiredName);
@@ -207,22 +184,19 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(suggestion.Names.Length, Is.GreaterThan(0));
         }
 
-        /// <summary>
-        /// This test assumes that the Valid Credentials in the test context has more than 1 page
-        /// Which it will do if you run these integration tests at least once.
-        /// Might fail first time around if you change the account.
-        /// </summary>
-        /// <param name="format"></param>
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void ListPages_WhenProvidedCredentials_ReturnsPages(WireDataFormat format)
         {
-            var client = TestContext.CreateClientValidCredentials(format, "apiunittests2@justgiving.com", "123456");
-			var pageClient = new PageApi(client.HttpChannel);
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var pageClient = new PageApi(client.HttpChannel);
 
-            var pageData = pageClient.ListAll();
+            //act
+            var result = pageClient.ListAll();
 
-            Assert.That(pageData.Count, Is.GreaterThan(0));
+            //assert
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -234,7 +208,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             var pageClient = new PageApi(client.HttpChannel);
 
             //act
-            var result = pageClient.Retrieve("jrowett-201408022359");
+            var result = pageClient.Retrieve("my-test-890");
 
             //assert
             Assert.IsNotEmpty(result.Teams);
@@ -242,53 +216,33 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-        public void RetrivePage_WhenProvidedShortName_ReturnsNullCollectionOfTeam(WireDataFormat format)
-        {
-            //arrange
-            var client = TestContext.CreateClientNoCredentials(format);
-            var pageClient = new PageApi(client.HttpChannel);
-
-            //act
-            var result = pageClient.Retrieve("alwyn-2014-08-01-12-53");
-
-            //assert
-            Assert.IsNull(result.Teams);
-
-        }
-
-        /// <summary>
-        /// Assumes that Rasha25 exists in the given environment.
-        /// </summary>
-        /// <param name="format"></param>
-        [TestCase(WireDataFormat.Json)]
-        [TestCase(WireDataFormat.Xml)]
         public void RetrievePage_WhenProvidedWithAKnownPage_ReturnsPublicPageView(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             // Create Page
             var pageShortName = "api-test-" + Guid.NewGuid();
-        	var pageCreationRequest = new RegisterPageRequest
-        	                          	{
-        	                          		ActivityType = ActivityType.OtherCelebration,
-        	                          		PageShortName = pageShortName,
-        	                          		PageTitle = "Page Created For Update Story Integration Test",
-        	                          		EventName = "Story Update Testing",
-        	                          		CharityId = 2050,
-        	                          		TargetAmount = 20M,
-        	                          		EventDate = DateTime.Now.AddDays(5),
-        	                          		CustomCodes =
-        	                          			new PageCustomCodes
-        	                          				{
-        	                          					CustomCode1 = "code1",
-        	                          					CustomCode2 = "code2",
-        	                          					CustomCode3 = "code3",
-        	                          					CustomCode4 = "code4",
-        	                          					CustomCode5 = "code5",
-        	                          					CustomCode6 = "code6"
-        	                          				}
-        	                          	};
+            var pageCreationRequest = new RegisterPageRequest
+                                        {
+                                            ActivityType = ActivityType.OtherCelebration,
+                                            PageShortName = pageShortName,
+                                            PageTitle = "Page Created For Update Story Integration Test",
+                                            EventName = "Story Update Testing",
+                                            CharityId = 2050,
+                                            TargetAmount = 20M,
+                                            EventDate = DateTime.Now.AddDays(5),
+                                            CustomCodes =
+                                                new PageCustomCodes
+                                                    {
+                                                        CustomCode1 = "code1",
+                                                        CustomCode2 = "code2",
+                                                        CustomCode3 = "code3",
+                                                        CustomCode4 = "code4",
+                                                        CustomCode5 = "code5",
+                                                        CustomCode6 = "code6"
+                                                    }
+                                        };
             pageClient.Create(pageCreationRequest);
 
             // Act
@@ -309,7 +263,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RetrievePage_WhenProvidedWithABadPage_ThrowsResourceNotFoundException(WireDataFormat format)
         {
             var client = TestContext.CreateClientNoCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             var exception = Assert.Throws<ResourceNotFoundException>(() => pageClient.Retrieve(Guid.NewGuid().ToString()));
 
@@ -321,8 +275,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void RetrieveDonationsForPage_WhenProvidedWithAKnownPageAndRequesterIsAnon_ReturnsDonations(WireDataFormat format)
         {
             var client = TestContext.CreateClientNoCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
-            
+            var pageClient = new PageApi(client.HttpChannel);
+
             var pageData = pageClient.RetrieveDonationsForPage("rasha25");
 
             Assert.That(pageData.Donations.Count, Is.GreaterThan(0));
@@ -357,7 +311,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsPageShortNameRegistered_WhenSuppliedKnownExistingPage_ReturnsTrue(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             var exists = pageClient.IsPageShortNameRegistered("rasha25");
 
@@ -369,7 +323,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void UpdatePageStory_WhenProvidedCredentialsAndValidPage_PostsUpdate(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             // Create Page
             var pageShortName = "api-test-" + Guid.NewGuid();
@@ -400,8 +354,8 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void UploadImage_WhenProvidedCredentialsAndValidPageAndImage_UploadsImage(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
-            
+            var pageClient = new PageApi(client.HttpChannel);
+
             // Create Page
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -417,7 +371,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
             var imageName = Guid.NewGuid().ToString();
             pageClient.UploadImage(pageCreationRequest.PageShortName, imageName, File.ReadAllBytes("jpg.jpg"), "image/jpeg");
-            
+
             // Assert
             var pageData = pageClient.Retrieve(pageCreationRequest.PageShortName);
             Assert.That(pageData.Media.Images[0].Caption, Is.StringContaining(imageName));
@@ -428,7 +382,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void UploadImage_WhenProvidedInvaildCredentialsAndValidPageAndImage_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             var exception = Assert.Throws<ErrorResponseException>(() => pageClient.UploadImage("rasha25", "my image", File.ReadAllBytes("jpg.jpg"), "image/jpeg"));
 
@@ -440,7 +394,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void UploadImage_WhenProvidedVaildCredentialsAndInvalidPage_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             var exception = Assert.Throws<ErrorResponseException>(() => pageClient.UploadImage(Guid.NewGuid().ToString(), "my image", File.ReadAllBytes("jpg.jpg"), "image/jpeg"));
 
@@ -452,7 +406,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsPageShortNameRegistered_WhenSuppliedPageNameUnlikelyToExist_ReturnsFalse(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
             var exists = pageClient.IsPageShortNameRegistered(Guid.NewGuid().ToString());
 
@@ -463,11 +417,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void IsPageShortNameRegistered_WhenSuppliedPageNameUnlikelyToExistOnNonDefaultDomain_ReturnsFalse(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
 
+            //act
             var exists = pageClient.IsPageShortNameRegistered("rasha25", TestConfigurationsHelper.GetProperty<ITestConfigurations, string>(x => x.RflDomain));
 
+            //assert
             Assert.IsFalse(exists);
         }
 
@@ -476,7 +433,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void IsPageShortNameRegistered_WhenSuppliedUnknownDomain_ThrowsException(WireDataFormat format)
         {
             var client = TestContext.CreateClientInvalidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             const string unknownDomain = "unknownDomain.justgiving.com";
 
             var exception = Assert.Throws<ErrorResponseException>(() => pageClient.IsPageShortNameRegistered("rasha25", unknownDomain));
@@ -487,106 +444,74 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		//[Ignore("Not yet live")]
         public void AddFundraisingPageImage_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
-
-            // Create Page
-            var pageShortName = "api-test-" + Guid.NewGuid();
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = ActivityType.OtherCelebration,
-                PageShortName = pageShortName,
-                PageTitle = "Page Created For Update Story Integration Test",
-                EventName = "Story Update Testing",
-                CharityId = 2050,
-                TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5)
-            };
-
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
+            var addImageRequest = new AddFundraisingPageImageRequest { Url = "", Caption = "", PageShortName = pageCreationRequest.PageShortName };
 
-            var addImageRequest = new AddFundraisingPageImageRequest {Url = "", Caption = "", PageShortName=pageCreationRequest.PageShortName};
-            var response = Assert.Throws<ErrorResponseException>(()=>pageClient.AddImage(addImageRequest));
+            //act
+            var response = Assert.Throws<ErrorResponseException>(() => pageClient.AddImage(addImageRequest));
+
+            //assert
             Assert.That(response.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
+        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestNotValid_ThrowsException(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
-
-            // Create Page
-            var pageShortName = "api-test-" + Guid.NewGuid();
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = ActivityType.OtherCelebration,
-                PageShortName = pageShortName,
-                PageTitle = "Page Created For Update Story Integration Test",
-                EventName = "Story Update Testing",
-                CharityId = 2050,
-                TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5)
-            };
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
-
             var addVideoRequest = new AddFundraisingPageVideoRequest { Url = "", Caption = "", PageShortName = pageCreationRequest.PageShortName };
+
+            //act
             var response = Assert.Throws<ErrorResponseException>(() => pageClient.AddVideo(addVideoRequest));
+
+            //arrange
             Assert.That(response.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+        public void AddFundraisingPageImage_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
-
-            // Create Page
-            var pageShortName = "api-test-" + Guid.NewGuid();
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = ActivityType.OtherCelebration,
-                PageShortName = pageShortName,
-                PageTitle = "Page Created For Update Story Integration Test",
-                EventName = "Story Update Testing",
-                CharityId = 2050,
-                TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5)
-            };
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
+            var validAddImageRequest = ValidAddFundraisingPageImageRequest(pageCreationRequest.PageShortName);
 
-            var addImageRequest = new AddFundraisingPageImageRequest { Url = "http://placehold.it/350x150", Caption = "test image", PageShortName = pageCreationRequest.PageShortName };
-            pageClient.AddImage(addImageRequest);
+            //act
+            var result = pageClient.AddImage(validAddImageRequest);
+
+            //assert
+            Assert.IsNotNullOrEmpty(result.Next.Rel);
         }
 
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
-		public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
+        public void AddFundraisingPageVideo_WhenCredentialsValidAndRequestValid_ReturnsSuccessful(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
-
-            // Create Page
-            var pageShortName = "api-test-" + Guid.NewGuid();
-            var pageCreationRequest = new RegisterPageRequest
-            {
-                ActivityType = ActivityType.OtherCelebration,
-                PageShortName = pageShortName,
-                PageTitle = "Page Created For Update Story Integration Test",
-                EventName = "Story Update Testing",
-                CharityId = 2050,
-                TargetAmount = 20M,
-                EventDate = DateTime.Now.AddDays(5)
-            };
+            var pageClient = new PageApi(client.HttpChannel);
+            var pageCreationRequest = ValidRegisterPageRequest();
             pageClient.Create(pageCreationRequest);
-
             var addVideoRequest = new AddFundraisingPageVideoRequest { Url = "http://www.youtube.com/watch?v=MSxjbF18BBM", Caption = "neckbrace", PageShortName = pageCreationRequest.PageShortName };
-            pageClient.AddVideo(addVideoRequest);
+
+            //act
+            var result = pageClient.AddVideo(addVideoRequest);
+
+            //assert
+            Assert.IsNotNullOrEmpty(result.Next.Rel);
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -594,7 +519,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Cannot_Create_Page_For_Event_Using_Event_Reference_And_Id(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -609,7 +534,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             };
 
             var ex = Assert.Throws<ErrorResponseException>(() => pageClient.Create("foo", pageCreationRequest));
-            Assert.That(ex.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));           
+            Assert.That(ex.Response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase(WireDataFormat.Json)]
@@ -617,7 +542,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public void Can_Create_Page_For_Event_Using_Event_Reference(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -643,7 +568,7 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         public string Create_Page_With_Custom_Theme(WireDataFormat format)
         {
             var client = TestContext.CreateClientValidCredentials(format);
-			var pageClient = new PageApi(client.HttpChannel);
+            var pageClient = new PageApi(client.HttpChannel);
             var pageShortName = "api-test-" + Guid.NewGuid();
             var pageCreationRequest = new RegisterPageRequest
             {
@@ -754,8 +679,6 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.RememberedPersonSummary.Next.Uri, Is.StringContaining(String.Format("remember/{0}", page.RememberedPersonSummary.Id)));
         }
 
-
-
         [TestCase(WireDataFormat.Json)]
         [TestCase(WireDataFormat.Xml)]
         public void Register_WithWhatAndWhy_CreatesCorrectly(WireDataFormat format)
@@ -784,7 +707,268 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(page.PageSummaryWhat, Is.EqualTo("saving the universe"));
             Assert.That(page.PageSummaryWhy, Is.EqualTo("because I'm Batman"));
         }
-    }
 
-    
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void RetrieveDonationsForPageByReference_WhileSuppliedCorrectReference_ReturnDonations(
+            WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var fundraisinResources = new PageApi(client.HttpChannel);
+            const string validPageShortName = "";
+            const string validReference = "";
+
+            //act
+            var result = fundraisinResources.RetrieveDonationsForPageByReference(validPageShortName, validReference);
+
+            //assert
+            Assert.IsNotNull(result);
+            CollectionAssert.IsNotEmpty(result.Donations);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void PageUpdates_ReturnPageUpdates(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            const string validPageShortName = "my-test-8901";
+            //act
+            var result = fundraisingResources.PageUpdates(validPageShortName);
+
+            //assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void PageUpdate_ReturnPageUpdate(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            const string validPageShortName = "my-test-8901";
+            const int validUpdateId = 100142;
+
+            //act
+            var result = fundraisingResources.PageUpdate(validPageShortName, validUpdateId);
+
+            //assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void PageUpdatesAddPost_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResource = new PageApi(client.HttpChannel);
+            var validUpdateRequest = ValidUpdateRequest();
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            var resultOfRegisterPage = fundraisingResource.Create(validRegisterPageRequest);
+
+            //act
+            var result = fundraisingResource.PageUpdatesAddPost(validRegisterPageRequest.PageShortName,
+                                                                validUpdateRequest);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void DeletePageUpdate_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrage
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResource = new PageApi(client.HttpChannel);
+            var validUpdateRequest = ValidUpdateRequest();
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResource.Create(validRegisterPageRequest);
+            fundraisingResource.PageUpdatesAddPost(validRegisterPageRequest.PageShortName,
+                                                   validUpdateRequest);
+            var pageUpdatesResult = fundraisingResource.PageUpdates(validRegisterPageRequest.PageShortName);
+            var update = pageUpdatesResult.First();
+
+            //act
+            var result = fundraisingResource.DeletePageUpdate(validRegisterPageRequest.PageShortName, update.Id.Value);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void AppendToFundraisingPageAttribution_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(
+            WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            var createdPage = fundraisingResources.Create(validRegisterPageRequest);
+            var validRequest = ValidAppendFundraisingPageAttributionRequest();
+
+            //act
+            var result = fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                                validRequest);
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void FundraisingPageAttribution_WhileSupportedValidCredentials_ReturnFundraisingPageAttribution(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            var createdPage = fundraisingResources.Create(validRegisterPageRequest);
+            var validRequest = ValidAppendFundraisingPageAttributionRequest();
+            var appendAttributeRequest =
+                fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                        validRequest);
+            //act
+            var result = fundraisingResources.FundraisingPageAttribution(validRegisterPageRequest.PageShortName);
+
+            //assert
+            Assert.IsNotNullOrEmpty(result.Attribution);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void UpdateFundraisingPageAttribution_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validAppendRequest = ValidAppendFundraisingPageAttributionRequest();
+            fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                    validAppendRequest);
+            var validRequest = ValidUpdateFundraisingPageAttributionRequest();
+
+            //act
+            var result = fundraisingResources.UpdateFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                               validRequest);
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void DeleteFundraisingPageAttribution_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validAppendRequest = ValidAppendFundraisingPageAttributionRequest();
+            fundraisingResources.AppendToFundraisingPageAttribution(validRegisterPageRequest.PageShortName,
+                                                                    validAppendRequest);
+            //act
+            var result = fundraisingResources.DeleteFundraisingPageAttribution(validRegisterPageRequest.PageShortName);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void DeleteImage_WhileSupportedValidCredentialsAndValidRequest_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+            var validAddImageRequest = ValidAddFundraisingPageImageRequest(validRegisterPageRequest.PageShortName);
+            fundraisingResources.AddImage(validAddImageRequest);
+            var images =
+                fundraisingResources.GetImages(new GetFundraisingPageImagesRequest
+                    {
+                        PageShortName = validRegisterPageRequest.PageShortName
+                    });
+            var image = images.First();
+
+            //act
+            var result = fundraisingResources.DeleteImage(validRegisterPageRequest.PageShortName, image.Url);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void CancelPage_WhileSupportedValidCredentials_ReturnTrue(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientValidCredentials(format);
+            var fundraisingResources = new PageApi(client.HttpChannel);
+            var validRegisterPageRequest = ValidRegisterPageRequest();
+            fundraisingResources.Create(validRegisterPageRequest);
+
+            //act
+            var result = fundraisingResources.CancelPage(validRegisterPageRequest.PageShortName);
+
+            //assert
+            Assert.IsTrue(result);
+        }
+
+        public static RegisterPageRequest ValidRegisterPageRequest()
+        {
+            return new RegisterPageRequest
+                {
+                    ActivityType = null,
+                    PageShortName = "test-frp-" + Guid.NewGuid(),
+                    PageTitle =
+                        "When Provided With Valid Authentication Details And An Empty Activity Type - Creates New Page",
+                    EventName = "The Other Occasion of ApTest and APITest",
+                    CharityId = 2050,
+                    EventId = TestConfigurationsHelper.GetProperty<ITestConfigurations, int>(x => x.ValidEventId),
+                    TargetAmount = 20M,
+                    EventDate = DateTime.Now.AddDays(5)
+                };
+        }
+
+        public static PageApi.Update ValidUpdateRequest()
+        {
+            return new PageApi.Update()
+                {
+                    Message = "Unit test story"
+                };
+        }
+
+        public static PageApi.UpdateFundraisingPageAttributionRequest ValidAppendFundraisingPageAttributionRequest()
+        {
+            return new PageApi.UpdateFundraisingPageAttributionRequest
+                {
+                    Attribution = "Jon, Jez, Jules"
+                };
+        }
+
+        public static PageApi.UpdateFundraisingPageAttributionRequest ValidUpdateFundraisingPageAttributionRequest()
+        {
+            return new PageApi.UpdateFundraisingPageAttributionRequest
+                {
+                    Attribution = "Jonno, Jezze, Julesse"
+                };
+        }
+
+        public static AddFundraisingPageImageRequest ValidAddFundraisingPageImageRequest(string pageShortName)
+        {
+            return new AddFundraisingPageImageRequest
+                {
+                    Url = "http://placehold.it/350x150",
+                    Caption = "test image",
+                    PageShortName = pageShortName
+                };
+        }
+    }
 }

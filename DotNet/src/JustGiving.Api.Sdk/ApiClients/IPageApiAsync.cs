@@ -20,5 +20,7 @@ namespace JustGiving.Api.Sdk.ApiClients
         void AddVideoAsync(AddFundraisingPageVideoRequest request, Action<AddFundraisingPageVideoConfirmation> callback);
         void GetImagesAsync(GetFundraisingPageImagesRequest request, Action<FundraisingPageImages> callback);
         void GetVideosAsync(GetFundraisingPageVideosRequest request, Action<FundraisingPageVideos> callback);
+        void PageUpdatesAsync(string pageShortName, Action<PageApi.Updates> callback);
+        void PageUpdateAsync(string pageShortName, int updateId, Action<PageApi.Update> callback);
     }
 }

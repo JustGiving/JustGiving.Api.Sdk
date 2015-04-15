@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using JustGiving.Api.Sdk.Http;
 using JustGiving.Api.Sdk.Model.Charity;
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
-    public class CharityApi: ApiClientBase, ICharityApi
-	{
-		public override string ResourceBase
-		{
-			get { return "{apiKey}/v{apiVersion}/charity"; }
-		}
+    public class CharityApi : ApiClientBase, ICharityApi
+    {
+        public override string ResourceBase
+        {
+            get { return "{apiKey}/v{apiVersion}/charity"; }
+        }
 
         public CharityApi(HttpChannel channel)
             : base(channel)
@@ -18,7 +20,7 @@ namespace JustGiving.Api.Sdk.ApiClients
 
         public string RetrieveLocationFormat(int charityId)
         {
-			return ResourceBase + "/" + charityId;
+            return ResourceBase + "/" + charityId;
         }
 
         public string RetrieveAuthenticationLocationFormat()
@@ -66,10 +68,95 @@ namespace JustGiving.Api.Sdk.ApiClients
             return HttpChannel.PerformRequest<AuthenticateCharityUserRequest, CharityAuthenticationResult>("POST", locationFormat, request);
         }
 
-		public void AuthenticateAsync(AuthenticateCharityUserRequest request, Action<CharityAuthenticationResult> callback)
+        public void AuthenticateAsync(AuthenticateCharityUserRequest request, Action<CharityAuthenticationResult> callback)
         {
             var locationFormat = RetrieveAuthenticationLocationFormat();
-			HttpChannel.PerformRequestAsync("POST", locationFormat, callback);
+            HttpChannel.PerformRequestAsync("POST", locationFormat, callback);
+        }
+
+        public string CharityDonationsResourceEndpoint(int charityId)
+        {
+            return ResourceBase + "/" + charityId + "/donations";
+        }
+
+        public CharityDonationsResult CharityDonations(int charityId)
+        {
+            var resourceEndpoint = CharityDonationsResourceEndpoint(charityId);
+            var result = HttpChannel.PerformRequest<CharityDonationsResult>("GET", resourceEndpoint);
+            return result;
+        }
+
+        public string CharityCategoriesResourceEndpoint()
+        {
+            return ResourceBase + "/categories";
+        }
+
+        public CharityCategoriesResponse CharityCategories()
+        {
+            var resourceEndpoint = CharityCategoriesResourceEndpoint();
+            var result = HttpChannel.PerformRequest<CharityCategoriesResponse>("GET", resourceEndpoint);
+            return result;
+        }
+
+        [CollectionDataContract(Name = "categories", ItemName = "category", Namespace = "")]
+        public class CharityCategoriesResponse : List<CharityCategory>
+        {
+
+        }
+
+        [DataContract(Name = "category", Namespace = "")]
+        public class CharityCategory
+        {
+            [DataMember(Name = "id")]
+            public int CategoryId { get; set; }
+
+            [DataMember(Name = "category")]
+            public string Category { get; set; }
+        }
+
+        [DataContract(Name = "charityDonations", Namespace = "")]
+        public class CharityDonationsResult
+        {
+            [DataMember(Name = "donations")]
+            public DonationsCollection Donations { get; set; }
+
+        }
+
+        [CollectionDataContract(Name = "donations", ItemName = "donation", Namespace = "")]
+        public class DonationsCollection : List<CharityDonationResult>
+        {
+
+        }
+
+        [DataContract(Name = "donation", Namespace = "")]
+        public class CharityDonationResult
+        {
+            [DataMember(Name = "donorDisplayName")]
+            public string DonorDisplayName { get; set; }
+
+            [DataMember(Name = "message")]
+            public string Message { get; set; }
+
+            [DataMember(Name = "amount")]
+            public decimal? Amount { get; set; }
+
+            [DataMember(Name = "estimatedTaxReclaim")]
+            public decimal? EstimatedTaxReclaim { get; set; }
+
+            [DataMember(Name = "imageUrl")]
+            public string ImageUrl { get; set; }
+
+            [DataMember(Name = "donationDate")]
+            public DateTime DonationDate { get; set; }
+
+            [DataMember(Name = "currencyCode")]
+            public string CurrencyCode { get; set; }
+
+            [DataMember(Name = "donorLocalAmount")]
+            public decimal? DonorLocalAmount { get; set; }
+
+            [DataMember(Name = "donorLocalCurrencyCode")]
+            public string DonorLocalCurrencyCode { get; set; }
         }
     }
 }

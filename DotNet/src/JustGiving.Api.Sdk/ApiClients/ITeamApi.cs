@@ -7,5 +7,6 @@ namespace JustGiving.Api.Sdk.ApiClients
 		Team Retrieve(string teamShortName);
 		TeamCreatedResponse CreateOrUpdate(Team team);
 		bool TeamExists(string teamShortName);
+	    bool JointTeam(string teamShortName, TeamApi.JoinTeamRequest joinTeamRequest);
 	}
 }

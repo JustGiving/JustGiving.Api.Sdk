@@ -2,7 +2,7 @@
 
 namespace JustGiving.Api.Sdk.ApiClients
 {
-    public interface IPageApi: IPageApiAsync
+    public interface IPageApi : IPageApiAsync
     {
         FundraisingPageSummaries ListAll();
         FundraisingPageSummariesPaginated ListAll(int? page, int? pageSize, string inMemoryPersonSearch);
@@ -18,5 +18,21 @@ namespace JustGiving.Api.Sdk.ApiClients
         AddFundraisingPageVideoConfirmation AddVideo(AddFundraisingPageVideoRequest request);
         FundraisingPageImages GetImages(GetFundraisingPageImagesRequest request);
         FundraisingPageVideos GetVideos(GetFundraisingPageVideosRequest request);
+        FundraisingPageDonations RetrieveDonationsForPageByReference(string pageShortName, string reference);
+        PageApi.Updates PageUpdates(string pageShortName);
+        PageApi.Update PageUpdate(string pageShortName, int updateId);
+        bool DeletePageUpdate(string pageShortName, int updateId);
+        bool PageUpdatesAddPost(string pageShortName, PageApi.Update updateRequest);
+        PageApi.GetFundraisingPageAttributionResponse FundraisingPageAttribution(string pageShortName);
+        bool AppendToFundraisingPageAttribution(string pageShortName,
+                                                PageApi.UpdateFundraisingPageAttributionRequest
+                                                    updateFundraisingPageAttributionRequest);
+        bool UpdateFundraisingPageAttribution(string pageShortName,
+                                              PageApi.UpdateFundraisingPageAttributionRequest
+                                                  updateFundraisingPageAttributionRequest);
+
+        bool DeleteFundraisingPageAttribution(string pageShortName);
+        bool DeleteImage(string pageShortName, string fileName);
+        bool CancelPage(string pageShortName);
     }
 }

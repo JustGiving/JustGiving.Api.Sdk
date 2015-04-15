@@ -12,11 +12,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void CharitySearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
 
+            //act
             var items = searchClient.CharitySearch("cancer");
 
+            //assert
             Assert.IsTrue(items.Results.Any());
         }
 
@@ -24,10 +27,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void EventSearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
 
+            //act
             var items = searchClient.EventSearch("Test");
+            
+            //assert
             Assert.IsTrue(items.Results.Any());
         }
 
@@ -35,10 +42,14 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
         [TestCase(WireDataFormat.Xml)]
         public void InMemorySearch_KeywordWithKnownResults_SearchResultsPresent(WireDataFormat format)
         {
+            //arrange
             var client = TestContext.CreateClientNoCredentials(format);
             var searchClient = new SearchApi(client.HttpChannel);
             
-            var items = searchClient.InMemorySearch(null, "James", "Morrison", null);
+            //act
+            var items = searchClient.InMemorySearch(null, "test", "test", null);
+
+            //assert
             Assert.IsTrue(items.Results.Any());
         }
 
@@ -68,6 +79,36 @@ namespace JustGiving.Api.Sdk.Test.Integration.ApiClients
             Assert.That(exception.Errors.Count, Is.EqualTo(1));
             Assert.That(exception.Errors[0].Id, Is.EqualTo("InvalidFirstName"));
             Assert.That(exception.Errors[0].Description, Is.EqualTo("The first name of the person you're remembering cannot be empty."));
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void FundraiserSearch_KeywordWithKnownResult_SearchResultPresent(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var searchResources = new SearchApi(client.HttpChannel);
+
+            //act
+            var result = searchResources.FundraiserSearch("pawel");
+
+            //assert
+            Assert.IsTrue(result.SearchResults.Any());
+        }
+
+        [TestCase(WireDataFormat.Json)]
+        [TestCase(WireDataFormat.Xml)]
+        public void TeamSearch_KeywordWithKnownResult_SearchResultPresent(WireDataFormat format)
+        {
+            //arrange
+            var client = TestContext.CreateClientNoCredentials(format);
+            var searchResources = new SearchApi(client.HttpChannel);
+
+            //act
+            var result = searchResources.TeamSearch("test");
+
+            //assert
+            Assert.IsTrue(result.Results.Any());
         }
     }
 }
