@@ -47,10 +47,10 @@ class TeamApi extends ClientBase
 
 	public function JoinTeam($teamShortName, $joinTeamRequest)
 	{
-		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/join" . $teamShortName;
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/join/" . $teamShortName;
 		$payload = json_encode($joinTeamRequest);
 		$url = $this->BuildUrl($locationFormat);
-		$httpInfo = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+		$httpInfo = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
 		if($httpInfo['http_code'] == 200)
 		{
 			return true;
