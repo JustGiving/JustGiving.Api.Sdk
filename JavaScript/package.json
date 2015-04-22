@@ -1,0 +1,25 @@
+{
+  "name": "justgiving-apiclient",
+  "version": "0.5.0",
+  "homepage": "https://api.justgiving.com/",
+  "license": "Apache v2.0",
+  "description": "JustGiving API Client",
+  "devDependencies": {
+    "babel-eslint": "^3.0.1",
+    "del": "^1.1.1",
+    "es6-promise": "^2.1.0",
+    "eslint": "^0.19.0",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.1.0",
+    "gulp-eslint": "^0.9.0",
+    "gulp-header": "^1.2.2",
+    "gulp-mocha": "^2.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-webserver": "^0.9.0",
+    "node-fetch": "^1.1.1",
+    "should": "^6.0.1",
+    "sinon": "^1.14.1"
+  }
+}
