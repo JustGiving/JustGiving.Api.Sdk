@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head><title>justgiving-apiclient JavaScript SDK sample</title></head>
+<body>
+
+Please see the DevTools console for all output.
+
+<!-- polyfills -->
+<script src="../bower_components/fetch/fetch.js"></script>
+<script src="../bower_components/es6-promise/promise.js"></script>
+
+<script src="../dist/justgiving-apiclient.js"></script>
+<script src="credentials.js"></script>
+<script>
+(function() {
+  "use strict";
+
+  <!-- Put your credentials into credentials.js -->
+  var jg = new JustGiving.ApiClient('https://api-sandbox.justgiving.com', credentials.appId, credentials.basicAuthToken);
+  var jgAnon = new JustGiving.ApiClient('https://api-sandbox.justgiving.com', credentials.appId);
+
+  var log = function(context) {return console.log.bind(console, context);};
+  var errorLog = function(context) {return console.error.bind(console, context);};
+
+  jg.getAccount()
+    .then(log('getAccount'))
+    .catch(errorLog('getAccount'));
+
+  jgAnon.getCountries()
+    .then(log('getCountries'))
+    .catch(errorLog('getCountries'));
+
+  jgAnon.getCurrencies()
+    .then(log('getCurrencies'))
+    .catch(errorLog('getCurrencies'));
+
+  jgAnon.getCharityCategories()
+    .then(log('getCharityCategories'))
+    .catch(errorLog('getCharityCategories'));
+
+  jgAnon.validateAccount('myAwesomeEmail@something.com', 'myPassword')
+    .then(log('validateAccount'))
+    .catch(errorLog('validateAccount'));
+
+  jgAnon.getFundraisingPagesForUser('myAwesomeEmail@something.com')
+    .then(log('getFundraisingPagesForUser'))
+    .catch(errorLog('getFundraisingPagesForUser'));
+
+  jg.getDonationsForUser(1, 1, 50)
+    .then(log('getDonationsForUser'))
+    .catch(errorLog('getDonationsForUser'));
+
+  jg.getAccountRating(1, 5)
+    .then(log('getAccountRating'))
+    .catch(errorLog('getAccountRating'));
+
+  jg.getContentFeed()
+    .then(log('getContentFeed'))
+    .catch(errorLog('getContentFeed'));
+
+  jg.getInterests()
+    .then(log('getInterests'))
+    .catch(errorLog('getInterests'));
+
+  jg.addInterest('grim fandango')
+    .then(log('addInterest'))
+    .catch(errorLog('addInterest'));
+
+  jg.replaceInterests('swimming', 'walking', 'meshuggah', 'strapping young lad')
+    .then(log('replaceInterests'))
+    .catch(errorLog('replaceInterests'));
+
+  jgAnon.checkAccountAvailability('myAwesomeEmail@something.com')
+    .then(log('checkAccountAvailability'))
+    .catch(errorLog('checkAccountAvailability'));
+
+  jgAnon.getCharity(50)
+    .then(log('getCharity'))
+    .catch(errorLog('getCharity'));
+
+  jgAnon.getEventsByCharity(50, 5, 1)
+    .then(log('getEventsByCharity'))
+    .catch(errorLog('getEventsByCharity'));
+
+  jg.getFundraisingPages()
+    .then(log('getFundraisingPages'))
+    .catch(errorLog('getFundraisingPages'));
+
+  jgAnon.getFundraisingPage('run-developer')
+    .then(log('getFundraisingPage'))
+    .catch(errorLog('getFundraisingPage'));
+
+  jg.getFundraisingPages()
+    .then(function(pages) {
+      var pagePromises = pages.map(function(page) {return jgAnon.getFundraisingPage(page.pageShortName);});
+      return Promise.all(pagePromises);
+    })
+    .then(log('getFundraisingPages chained'))
+    .catch(errorLog('getFundraisingPages chained'));
+
+  jgAnon.suggestPageShortName('Giving For Good')
+    .then(log('suggestPageShortName'))
+    .catch(errorLog('suggestPageShortName'));
+
+  jgAnon.getEvent(420307)
+    .then(log('getEvent'))
+    .catch(errorLog('getEvent'));
+
+  jgAnon.getEventPages(420307, 10, 1)
+    .then(log('getEventPages'))
+    .catch(errorLog('getEventPages'));
+
+  jg.registerEvent({name:'Playing Mario for 48 hours for charity', eventType: "OtherCelebration"})
+    .then(log('registerEvent'))
+    .catch(errorLog('registerEvent'));
+})();
+</script>
+</body>
+</html>

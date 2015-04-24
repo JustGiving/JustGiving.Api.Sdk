@@ -1,0 +1,25 @@
+{
+  "name": "justgiving-apiclient",
+  "version": "0.5.0",
+  "homepage": "https://github.com/JustGiving/JustGiving.Api.Sdk",
+  "authors": [
+    "JustGiving <apisupport@justgiving.com>"
+  ],
+  "description": "JustGiving API Client",
+  "main": "dist/justgiving-apiclient.js",
+  "keywords": [
+    "justgiving"
+  ],
+  "license": "Apache v2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "devDependencies": {
+    "fetch": "~0.7.0",
+    "es6-promise": "~2.1.0",
+    "knockout": "~3.3.0"
+  }
+}
