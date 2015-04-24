@@ -6,7 +6,7 @@
     "JustGiving <apisupport@justgiving.com>"
   ],
   "description": "JustGiving API Client",
-  "main": "dist/justgiving-apiclient.js",
+  "main": "JavaScript/dist/justgiving-apiclient.js",
   "keywords": [
     "justgiving"
   ],
