@@ -1,6 +1,6 @@
 /**
  * justgiving-apiclient - JustGiving API Client
- * @version v0.5.0
+ * @version v0.5.1
  * @link https://api.justgiving.com/
  * @license Apache v2.0
  */

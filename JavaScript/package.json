@@ -1,6 +1,6 @@
 {
   "name": "justgiving-apiclient",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://api.justgiving.com/",
   "license": "Apache v2.0",
   "description": "JustGiving API Client",
