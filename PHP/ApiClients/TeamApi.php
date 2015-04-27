@@ -15,7 +15,7 @@ class TeamApi extends ClientBase
 
     public function Create($team)
 	{
-		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/" + $team->teamShortName;
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/team/" . $team->teamShortName;
 		$url = $this->BuildUrl($locationFormat);
 		$payload = json_encode($team);
 		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
