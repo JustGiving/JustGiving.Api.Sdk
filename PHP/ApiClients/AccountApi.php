@@ -2,6 +2,12 @@
 include_once 'ClientBase.php';
 include_once 'Http/CurlWrapper.php';
 
+class HTTPResponse
+{
+	public $httpStatusCode;	
+	public $bodyResponse;
+}
+
 class AccountApi extends ClientBase
 {		
 	public $Parent;
@@ -13,11 +19,22 @@ class AccountApi extends ClientBase
 		$this->curlWrapper	= new CurlWrapper();
 	}
 
+	public function AccountDetailsV2()
+	{	
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account";
+		$url = $this->BuildUrl($locationFormat);
+		$result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;
+	}
+
 	public function AccountDetails()
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account";
 		$url = $this->BuildUrl($locationFormat);
-		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());		
 		return json_decode($json);
 	}
 	
