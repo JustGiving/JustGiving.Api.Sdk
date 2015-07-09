@@ -106,6 +106,27 @@ class CurlWrapper
 		curl_close($ch);		
 		return $info;
 	}
+
+	public function HeadV2($url, $base64Credentials = "")
+	{
+		$ch = curl_init();
+		$httpResponse = new HTTPRawResponse();
+		
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		
+		$this->SetCredentials($ch, $base64Credentials);
+		
+		$buffer = curl_exec($ch);
+		$info = curl_getinfo($ch);		
+		curl_close($ch);
+		$httpResponse->httpInfo = $info;
+		$httpResponse->bodyResponse = $buffer;
+		$httpResponse->httpStatusCode = $info['http_code'];
+		return $httpResponse;		
+	}	
 	
 	public function Head($url, $base64Credentials = "")
 	{

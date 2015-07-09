@@ -1,5 +1,12 @@
 <?php
 
+class HTTPResponse
+{
+	public $httpStatusCode;	
+	public $bodyResponse;
+}
+
+
 class ClientBase
 {		
 	public $debug;

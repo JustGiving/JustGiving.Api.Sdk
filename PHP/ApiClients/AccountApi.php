@@ -2,12 +2,6 @@
 include_once 'ClientBase.php';
 include_once 'Http/CurlWrapper.php';
 
-class HTTPResponse
-{
-	public $httpStatusCode;	
-	public $bodyResponse;
-}
-
 class AccountApi extends ClientBase
 {		
 	public $Parent;
@@ -53,6 +47,17 @@ class AccountApi extends ClientBase
 		$url = $this->BuildUrl($locationFormat);		
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json); 
+	}
+
+	public function IsEmailRegisteredV2($email)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/" . $email;
+		$url = $this->BuildUrl($locationFormat);		
+		$result = $this->curlWrapper->HeadV2($url, $this->BuildAuthenticationValue());
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;
 	}
 	
 	public function IsEmailRegistered($email)

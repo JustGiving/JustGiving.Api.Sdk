@@ -21,6 +21,17 @@ class EventApi extends ClientBase
 		$json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
 		return json_decode($json);
 	}
+
+	public function RetrieveV2($eventId)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/event/" . $eventId;
+		$url = $this->BuildUrl($locationFormat);
+		$result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;
+	}
 	
 	public function Retrieve($eventId)
 	{
