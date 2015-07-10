@@ -15,6 +15,18 @@ class PageApi extends ClientBase
 		$this->Parent		=	$justGivingApi;
 		$this->curlWrapper	= new CurlWrapper();
 	}
+
+	public function CreateV2($pageCreationRequest)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($pageCreationRequest);		
+		$result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;	
+	}
 	
 	public function Create($pageCreationRequest)
 	{
@@ -23,6 +35,17 @@ class PageApi extends ClientBase
 		$payload = json_encode($pageCreationRequest);		
 		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 		return json_decode($json); 
+	}
+
+	public function IsShortNameRegisteredV2($pageShortName)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName;
+		$url = $this->BuildUrl($locationFormat);		
+		$result = $this->curlWrapper->HeadV2($url, $this->BuildAuthenticationValue());	
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;		
 	}
 	
 	public function IsShortNameRegistered($pageShortName)
