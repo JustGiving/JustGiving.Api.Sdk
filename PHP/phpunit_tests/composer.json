@@ -1,0 +1,13 @@
+{
+    "name": "justgiving/phpunit_test",
+    "description": "php unit tests for the justgiving api",
+    "require": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "authors": [
+        {
+            "name": "timmarsh",
+            "email": "tim@positivestudio.co.uk"
+        }
+    ]
+}
