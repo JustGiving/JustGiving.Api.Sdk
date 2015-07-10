@@ -110,28 +110,5 @@ class AccountTest extends Base {
     public function testGetRatingHistory_WhenSuppliedAuthentication_ReturnListOfRatings() {
         $response = $this->client->Account->RatingHistory();
         $this->assertNotNull($response);
-    }
-    public function testRateContent_WhenSuppliedAuthenticationAndProperRate_Return_True() {
-        $rateContentRequest = new RateContentRequest();
-        $rateContentRequest->intent = "Like";
-        $rateContentRequest->type = "FundraisingPage";
-        $rateContentRequest->contentData = "Pawel-SawiczTest1";
-        $response = $this->client->Account->RateContent($rateContentRequest);
-        $this->assertEquals($response, 1);
-    }
-    public function testGetContentFeed_WhenSuppliedAuthenticatio_ReturnFeed() {
-        $response = $this->client->Account->ContentFeed();
-        $this->assertTrue(count($response->entry) > 0);
-    }
-    public function testAddInterest_WhenSuppliedAuthenticationAndProperName_Return_True() {
-        $request = new AddInterestRequest();
-        $request->interest = "swimming";
-        $response = $this->client->Account->AddInterest($request);
-        $this->assertEquals($response, 1);
-    }
-    public function testReplaceInterest_WhenSuppliedAuthenticationAndCorrectListOfInterest_Return_True() {
-        $request = array("Swimming", "Cricket");
-        $response = $this->client->Account->ReplaceInterest($request);
-        $this->assertEquals($response, 1);
-    }
+    }    
 }
