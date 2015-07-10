@@ -51,6 +51,33 @@ class CurlWrapper
 		$info = curl_getinfo($ch);
 		curl_close($ch);		
 		return $buffer;
+	}
+
+	public function PutV2($url, $base64Credentials = "", $payload)
+	{	
+		$httpResponse = new HTTPRawResponse();
+		$fh = fopen('php://temp', 'r+');
+		fwrite($fh, $payload);
+		rewind($fh);
+	
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_PUT, true);
+		curl_setopt($ch, CURLOPT_INFILE, $fh);
+		curl_setopt($ch, CURLOPT_INFILESIZE, strlen($payload));
+		
+		$this->SetCredentials($ch, $base64Credentials);
+		
+		$buffer = curl_exec($ch);
+		$info = curl_getinfo($ch);
+		curl_close($ch);
+		$httpResponse->httpInfo = $info;
+		$httpResponse->bodyResponse = $buffer;
+		$httpResponse->httpStatusCode = $info['http_code'];
+		return $httpResponse;
+		
 	}	
 	
 	public function Put($url, $base64Credentials = "", $payload, $getHttpStatus = false)
@@ -111,7 +138,7 @@ class CurlWrapper
 	{
 		$ch = curl_init();
 		$httpResponse = new HTTPRawResponse();
-		
+
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

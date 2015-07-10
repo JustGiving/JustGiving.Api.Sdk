@@ -31,6 +31,18 @@ class AccountApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());		
 		return json_decode($json);
 	}
+
+	public function CreateV2($createAccountRequest)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($createAccountRequest);		
+		$result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;
+	}
 	
 	public function Create($createAccountRequest)
 	{
@@ -78,6 +90,17 @@ class AccountApi extends ClientBase
 		{
 			throw new Exception('IsEmailRegistered returned a status code it wasn\'t expecting. Returned ' . $httpInfo['http_code']);
 		}
+	}
+
+	public function RequestPasswordReminderV2($email)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/account/" . $email . "/requestpasswordreminder";
+		$url = $this->BuildUrl($locationFormat);		
+		$result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;
 	}
 	
 	public function RequestPasswordReminder($email)
