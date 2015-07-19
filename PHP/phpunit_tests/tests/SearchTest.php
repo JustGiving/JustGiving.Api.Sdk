@@ -5,7 +5,7 @@ class SearchTest extends Base {
         $response = $this->client->Search->CharitySearch('the demo charity1');
         foreach ($response->charitySearchResults as $charity) {
             if ($charity->charityId == 2050) {
-                $this->assertEquals(strtolower($charity->name), 'the demo charity1');
+                $this->assertEquals(strtolower($charity->name), 'the demo charity (justgiving demo)');
             }
         }
     }
