@@ -29,7 +29,7 @@ Download the [latest snapshot](https://github.com/JustGiving/JustGiving.Api.Sdk/
 Reference JustGivingClient.php
 
 ```php
-$client = new JustGivingClient("https://api-sandbox.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");
+$client = new JustGivingClient("https://api.sandbox.justgiving.com/", "your-api-key", 1, "apiunittests@justgiving.com", "password");
 $page = $client->Page->Retrieve("pageShortName");
 ```
 
