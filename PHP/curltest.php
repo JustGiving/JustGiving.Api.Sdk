@@ -12,7 +12,7 @@ if (!_iscurl()) {
 	echo "Curl enabled<br/>"; 
     echo "pre_init<br/>";
 	
-	$url = "https://api-sandbox.justgiving.com/docs";
+	$url = "https://api.sandbox.justgiving.com/docs";
     $ch = curl_init($url);
   
 	echo "post_init<br/>";
