@@ -24,7 +24,7 @@ if (isset($donationId)) { ?>
 
 include_once 'JustGivingClient.php';
 	
-$client = new JustGivingClient("https://api-sandbox.justgiving.com/", "c1072ac8", 1);
+$client = new JustGivingClient("https://api.sandbox.justgiving.com/", "c1072ac8", 1);
 
 $response = $client->Donation->Retrieve($donationId);
   
