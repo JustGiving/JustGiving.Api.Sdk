@@ -215,6 +215,7 @@ class CurlWrapper
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
 		$this->SetCredentials($ch, $base64Credentials, $contentType);
+		$buffer = curl_exec($ch);
 		$info = curl_getinfo($ch);
 		curl_close($ch);
 		return $info;
