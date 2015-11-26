@@ -36,6 +36,9 @@ namespace JustGiving.Api.Sdk.Model.Donation
         [DataMember(Name = "source", EmitDefaultValue = false, IsRequired = false)]
         public string Source { get; set; }
 
+        [DataMember(Name = "thirdPartyReference", EmitDefaultValue = false, IsRequired = false)]
+        public string ThirdPartyReference { get; set; }
+
         public Donation()
         {
             DonorDisplayName = "Anonymous";
