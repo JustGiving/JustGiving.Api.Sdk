@@ -1,4 +1,4 @@
-JustGiving API SDK - Workshop HackKing
+JustGiving API SDK
 ===================
 
 SDKs to help developers code against the JustGiving APIs.
