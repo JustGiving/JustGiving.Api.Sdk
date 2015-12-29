@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/fpsjkd3fnbmd9uo1?svg=true)](https://ci.appveyor.com/project/api-justgiving/justgiving-api-sdk)
+
 JustGiving API SDK
 ===================
 
