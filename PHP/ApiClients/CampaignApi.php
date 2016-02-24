@@ -23,4 +23,14 @@ class CampaignApi extends ClientBase
 		$json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 		return json_decode($json);
 	}
+
+	public function Create($campaignCreationRequest)
+	{
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/campaigns";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($campaignCreationRequest);
+		$json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+		return json_decode($json);
+	}
+
 }
