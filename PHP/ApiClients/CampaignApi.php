@@ -66,4 +66,15 @@ class CampaignApi extends ClientBase
 		$httpResponse->httpStatusCode = $result->httpStatusCode;	
 		return $httpResponse;
 	}
+
+	public function CampaignsByCharityId($charityId)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/campaigns/". $charityId;
+		$url = $this->BuildUrl($locationFormat);
+		$result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;	
+		return $httpResponse;
+	}
 }
