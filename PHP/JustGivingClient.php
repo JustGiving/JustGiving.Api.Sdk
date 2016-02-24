@@ -13,6 +13,7 @@ include_once 'ApiClients/OneSearchApi.php';
 include_once 'ApiClients/ProjectApi.php';
 include_once 'ApiClients/SmsApi.php';
 include_once 'ApiClients/LeaderboardApi.php';
+include_once 'ApiClients/CampaignApi.php';
 
 class JustGivingClient
 {	
@@ -35,6 +36,7 @@ class JustGivingClient
 	public $Project;
 	public $Sms;
 	public $Leaderboard;
+	public $Campaign;
 
 	public function __construct($rootDomain, $apiKey, $apiVersion, $username="", $password="")
 	{
@@ -60,5 +62,6 @@ class JustGivingClient
 		$this->Project 			= new ProjectApi($this);
 		$this->Sms 				= new SmsApi($this);
 		$this->Leaderboard 		= new LeaderboardApi($this);
+		$this->Campaign			= new CampaignApi($this);
 	}
 }

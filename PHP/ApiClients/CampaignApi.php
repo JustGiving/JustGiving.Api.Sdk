@@ -2,8 +2,7 @@
 
 include_once 'ClientBase.php';
 include_once 'Http/CurlWrapper.php';
-include_once 'Model/RegisterPageRequest.php';
-include_once 'Model/StoryUpdateRequest.php';
+include_once 'Model/RegisterCampaignRequest.php';
 
 class CampaignApi extends ClientBase
 {		
@@ -24,6 +23,17 @@ class CampaignApi extends ClientBase
 		return json_decode($json);
 	}
 
+	public function RetrieveV2($charityName, $campaignName)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/campaigns/". $charityName ."/". $campaignName;
+		$url = $this->BuildUrl($locationFormat);
+		$result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;
+		return $httpResponse;
+	}
+
 	public function Create($campaignCreationRequest)
 	{
 		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/campaigns";
@@ -33,4 +43,15 @@ class CampaignApi extends ClientBase
 		return json_decode($json);
 	}
 
+	public function CreateV2($campaignCreationRequest)
+	{
+		$httpResponse = new HTTPResponse();
+		$locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/campaigns";
+		$url = $this->BuildUrl($locationFormat);
+		$payload = json_encode($campaignCreationRequest);
+		$result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
+		$httpResponse->bodyResponse = json_decode($result->bodyResponse);
+		$httpResponse->httpStatusCode = $result->httpStatusCode;
+		return $httpResponse;
+	}
 }
