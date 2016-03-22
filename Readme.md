@@ -39,10 +39,9 @@ Urls to visit
 Some places to visit:
 
 * [GitHub repository with open source SDKs](https://github.com/JustGiving/JustGiving.Api.Sdk)
-* [Sign up for an API account and create API keys](http://apimanagement.justgiving.com/)
+* [Developer Portal.](http://developer.justgiving.com)
 * [Documentation home page and usage information](https://api.justgiving.com)
-* [Our little home page.](http://www.justgiving.com/developer)
-* [If you're trying to make donations using JustGiving](http://www.justgiving.com/developer/simple-donation-integration)
+* [If you're trying to make donations using JustGiving](https://justgivingdeveloper.zendesk.com/hc/en-us/sections/201202061-Simple-Donation-Integration-SDI-)
 * [For some quick hack-tastic examples in a few languages](https://github.com/JustGiving/JustGiving.Api.Sdk/wiki)
 * [Config file for Postman that has collections of our http endpoints. ](https://github.com/JustGiving/JustGiving.Api.Tools.Postman)
 	
