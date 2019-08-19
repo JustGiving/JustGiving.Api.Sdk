@@ -74,5 +74,23 @@ namespace JustGiving.Api.Data.Sdk.Model.Pages
 
         [DataMember]
         public bool IsApiCreated { get; set; }
+
+        [DataMember]
+        public bool FundraiserPageConsent { get; set; }
+
+        [DataMember]
+        public DateTime FundraiserPageConsentDate { get; set; }
+
+        [DataMember]
+        public string FundraiserPagePrivacyNoticeVersion { get; set; }
+
+        [DataMember]
+        public string FundraiserPageConsentStatement { get; set; }
+
+        [DataMember]
+        public string FundraisingPageTeamId { get; set; }
+
+        [DataMember]
+        public string FundraisingPageTeamMemberRole { get; set; }
     }
 }

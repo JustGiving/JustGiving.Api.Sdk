@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.Test.Integration", "JustGiving.Api.Sdk.Test.Integration\JustGiving.Api.Sdk.Test.Integration.csproj", "{B5507C4E-42C7-41B0-B255-2EBCDAD58818}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Sdk.WindowsPhone7", "JustGiving.Api.Sdk\JustGiving.Api.Sdk.WindowsPhone7.csproj", "{4978E921-10F7-4610-AAD2-B9E951B67590}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Data.Sdk", "JustGiving.Api.Data.Sdk\JustGiving.Api.Data.Sdk.csproj", "{E340569B-11E3-4C7C-920F-72A41A891F73}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustGiving.Api.Data.Sdk.Test.Integration", "JustGiving.Api.Data.Sdk.Test.Integration\JustGiving.Api.Data.Sdk.Test.Integration.csproj", "{FB29656A-44E7-473F-8522-99F3592147E5}"
@@ -57,16 +55,6 @@ Global
 		{B5507C4E-42C7-41B0-B255-2EBCDAD58818}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B5507C4E-42C7-41B0-B255-2EBCDAD58818}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B5507C4E-42C7-41B0-B255-2EBCDAD58818}.Release|x86.ActiveCfg = Release|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{4978E921-10F7-4610-AAD2-B9E951B67590}.Release|x86.ActiveCfg = Release|Any CPU
 		{E340569B-11E3-4C7C-920F-72A41A891F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E340569B-11E3-4C7C-920F-72A41A891F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E340569B-11E3-4C7C-920F-72A41A891F73}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -110,5 +98,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E4A96B77-35B1-40E2-AA7D-246FBFF020B1}
 	EndGlobalSection
 EndGlobal
