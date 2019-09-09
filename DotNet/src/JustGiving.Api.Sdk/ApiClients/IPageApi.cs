@@ -10,10 +10,12 @@ namespace JustGiving.Api.Sdk.ApiClients
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName);
         FundraisingPageDonations RetrieveDonationsForPage(string pageShortName, int? pageSize, int? pageNumber);
         PageRegistrationConfirmation Create(RegisterPageRequest request);
+        PageRegistrationConfirmation CreateUnClaimed(RegisterPageRequest request);
         SuggestedNames SuggestPageShortNames(string preferedName);
         void UpdateStory(string pageShortName, string storyUpdate);
         bool IsPageShortNameRegistered(string pageShortName, string domain);
         void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType);
+        void UploadDefaultImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType);
         AddFundraisingPageImageConfirmation AddImage(AddFundraisingPageImageRequest request);
         AddFundraisingPageVideoConfirmation AddVideo(AddFundraisingPageVideoRequest request);
         FundraisingPageImages GetImages(GetFundraisingPageImagesRequest request);

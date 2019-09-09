@@ -4,6 +4,7 @@ namespace JustGiving.Api.Sdk
 {
     public class ClientConfiguration
     {
+        public readonly string ApiSecretKey;
         public string ApiKey { get; set; }
         public int ApiVersion { get; set; }
         public string Username { get; set; }
@@ -17,6 +18,12 @@ namespace JustGiving.Api.Sdk
         public ClientConfiguration(string apiKey): this("https://api.justgiving.com/", apiKey, 1)
         { 
         }
+
+        public ClientConfiguration(string apiKey, string apiSecretKey): this("https://api.justgiving.com/", apiKey, 1)
+        {
+            ApiSecretKey = apiSecretKey;
+        }
+
         public ClientConfiguration(string rootDomain, string apiKey, int apiVersion)
         {
             if (string.IsNullOrEmpty(rootDomain))

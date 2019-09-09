@@ -141,6 +141,12 @@ namespace JustGiving.Api.Sdk.ApiClients
             return HttpChannel.PerformRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, request);
         }
 
+        public PageRegistrationConfirmation CreateUnClaimed(RegisterPageRequest request)
+        {
+            var locationFormat = ResourceBase + "/unclaimedpages";
+            return HttpChannel.PerformRequest<RegisterPageRequest, PageRegistrationConfirmation>("PUT", locationFormat, request);
+        }
+
         public PageRegistrationByEventRefConfirmation Create(string eventRef, RegisterPageRequest request)
         {
             string locationFormat = "{apiKey}/v{apiVersion}/event/ref/" + eventRef + "/pages";
@@ -257,6 +263,13 @@ namespace JustGiving.Api.Sdk.ApiClients
         public void UploadImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
         {
             var locationFormat = UploadImageLocationFormat(pageShortName, caption);
+            var response = HttpChannel.PerformRawRequest("POST", locationFormat, imageContentType, imageBytes);
+            ProcessUploadImageResponse(response);
+        }
+
+        public void UploadDefaultImage(string pageShortName, string caption, byte[] imageBytes, string imageContentType)
+        {
+            var locationFormat = ResourceBase + "/pages/" + pageShortName + "/images/default" + "?caption=" + Uri.EscapeDataString(caption);
             var response = HttpChannel.PerformRawRequest("POST", locationFormat, imageContentType, imageBytes);
             ProcessUploadImageResponse(response);
         }

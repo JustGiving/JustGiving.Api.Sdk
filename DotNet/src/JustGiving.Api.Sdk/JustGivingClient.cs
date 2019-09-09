@@ -14,6 +14,13 @@ namespace JustGiving.Api.Sdk
         {
         }
 
+        public JustGivingClient(string apiKey, string secretKey)
+            : base(
+                new ClientConfiguration(apiKey,secretKey), new HttpClientWrapper(), null, null, null, null, null, null, null, null,
+                null, null, null)
+        {
+        }
+
         public JustGivingClient(ClientConfiguration clientConfiguration)
             : base(
                 clientConfiguration, new HttpClientWrapper(), null, null, null, null, null, null, null, null, null, null, null
