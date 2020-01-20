@@ -17,12 +17,17 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
             get { return BaseRoot + "/pages/created"; }
         }
 
+        public string ResourceBaseModified
+        {
+            get { return BaseRoot + "/pages/modified"; }
+        }
+
         public PagesCreated RetrievePagesCreated(DateTime startDate, DateTime endDate, int eventId = 0)
         {
             var uri = BaseRoot + BuildUrl(startDate, endDate, eventId);
             return HttpChannel.PerformRequest<PagesCreated>("GET", uri);
         }
-        
+
         public byte[] RetrievePagesCreated(DateTime startDate, DateTime endDate, DataFileFormat fileFormat)
         {
             var uri = BaseRoot + BuildUrl(startDate, endDate);
@@ -37,9 +42,25 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
             return HttpChannel.PerformRequest<PagesCreated>("GET", uri);
         }
 
-        public byte[] Search(PageCreatedSearchQuery query, DateTime startDate, DateTime endDate, DataFileFormat fileFormat)
+        public byte[] Search(PageCreatedSearchQuery query, DateTime startDate, DateTime endDate,
+            DataFileFormat fileFormat)
         {
             var uri = BuildFormatUriForSearch(query, startDate, endDate);
+            var response = HttpChannel.PerformRawRequest("GET", uri, ContentTypes.GetAcceptContentType(fileFormat));
+
+            return response.Content.Content;
+        }
+
+
+        public PagesCreated RetrievePagesModified(DateTime startDate, DateTime endDate, int eventId = 0)
+        {
+            var uri = BaseRoot + BuildUrlModifed(startDate, endDate, eventId);
+            return HttpChannel.PerformRequest<PagesCreated>("GET", uri);
+        }
+
+        public byte[] RetrievePagesModified(DateTime startDate, DateTime endDate, DataFileFormat fileFormat)
+        {
+            var uri = BaseRoot + BuildUrlModifed(startDate, endDate);
             var response = HttpChannel.PerformRawRequest("GET", uri, ContentTypes.GetAcceptContentType(fileFormat));
 
             return response.Content.Content;
@@ -48,15 +69,30 @@ namespace JustGiving.Api.Data.Sdk.ApiClients
         private string BuildUrl(DateTime startDate, DateTime endDate, int eventId = 0)
         {
             var uriDatePart = string.Format("/{0:yyyy-MM-dd};{1:yyyy-MM-dd}", startDate.Date, endDate.Date);
-            return eventId == 0 ? "/pages/created" + uriDatePart : "/events/" + eventId + "/pages/created" + uriDatePart;
+            return eventId == 0
+                ? "/pages/created" + uriDatePart
+                : "/events/" + eventId + "/pages/created" + uriDatePart;
+        }
+
+        private string BuildUrlModifed(DateTime startDate, DateTime endDate, int eventId = 0)
+        {
+            var uriDatePart = string.Format("/{0:yyyy-MM-dd};{1:yyyy-MM-dd}", startDate.Date, endDate.Date);
+            return eventId == 0
+                ? "/pages/modified" + uriDatePart
+                : "/events/" + eventId + "/pages/modified" + uriDatePart;
         }
 
         private string BuildFormatUriForSearch(PageCreatedSearchQuery query, DateTime startDate, DateTime endDate)
         {
-            return ResourceBase + string.Format("/{0:yyyy-MM-dd};{1:yyyy-MM-dd}/search?{2}", startDate.Date, endDate.Date, query.GetQueryStringPairs());
+            return ResourceBase + string.Format("/{0:yyyy-MM-dd};{1:yyyy-MM-dd}/search?{2}", startDate.Date,
+                       endDate.Date, query.GetQueryStringPairs());
         }
 
-
-        
+        private string BuildFormatUriForSearchModified(PageCreatedSearchQuery query, DateTime startDate,
+            DateTime endDate)
+        {
+            return ResourceBaseModified + string.Format("/{0:yyyy-MM-dd};{1:yyyy-MM-dd}/search?{2}", startDate.Date,
+                       endDate.Date, query.GetQueryStringPairs());
+        }
     }
 }

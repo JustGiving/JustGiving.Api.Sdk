@@ -33,6 +33,19 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
         }
 
         [Test]
+        public void PagesModified_DateRange_CannotExceedThreeMonths()
+        {
+            // Arrange
+            var clientConfiguration = GetDefaultDataClientConfiguration();
+
+            var client = new JustGivingDataClient(clientConfiguration);
+            var pagesClient = CreatePagesClient(client);
+            var excep = Assert.Throws<ErrorResponseException>(() => pagesClient.RetrievePagesModified(new DateTime(2011, 4, 28), DateTime.Now));
+            Assert.That(excep.Message.Contains("400"));
+        }
+
+
+        [Test]
         public void DateRange_HasContent()
         {
             var clientConfiguration = GetDefaultDataClientConfiguration(); 
@@ -40,6 +53,18 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
             var client = new JustGivingDataClient(clientConfiguration);
             var pagesClient = CreatePagesClient(client);
             var report = pagesClient.RetrievePagesCreated(_startDate, _endDate);
+
+            Assert.That(report.Pages.Count, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void PagesModified_DateRange_HasContent()
+        {
+            var clientConfiguration = GetDefaultDataClientConfiguration();
+
+            var client = new JustGivingDataClient(clientConfiguration);
+            var pagesClient = CreatePagesClient(client);
+            var report = pagesClient.RetrievePagesModified(_startDate, _endDate);
 
             Assert.That(report.Pages.Count, Is.GreaterThan(0));
         }

@@ -22,7 +22,9 @@ namespace JustGiving.Api.Data.Sdk.Test.Integration.ApiClients
                            IsZipSupportedByClient = false,
                            Username = TestContext.TestUsername,
                            Password = TestContext.TestValidPassword,
-                           ConnectionTimeOut = TimeSpan.FromMinutes(20)
+                           ConnectionTimeOut = TimeSpan.FromMinutes(20),
+                           CharityId = 2050
+                           
                        };
         }
 
