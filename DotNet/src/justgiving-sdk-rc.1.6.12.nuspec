@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>justgiving-sdk-rc</id>
+        <version>1.6.12</version>
+        <title>JustGiving SDK RC</title>
+        <authors>JustGiving</authors>
+        <owners>JustGiving</owners>
+        <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
+        <projectUrl>https://github.com/JustGiving/JustGiving.Api.Sdk</projectUrl>
+        <iconUrl>https://pbs.twimg.com/profile_images/462148373533822977/1suw-l8t_400x400.jpeg</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A client for the JustGiving API available at https://api.justgiving.com
+RC version!</description>
+		<releaseNotes>Add data api search by last modified date</releaseNotes>
+        <language>en-US</language>
+        <tags>justgiving api firstgiving givinggroup .net20 .net35 .net40</tags>
+    </metadata>
+	<files>
+     <file src="JustGiving.Api.Data.Sdk\bin\Release\*" target="lib/net35" />
+     <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.dll" target="lib/net35" />
+     <file src="JustGiving.Api.Sdk\bin\Release\Microsoft.Http.Extensions.pdb" target="lib/net35" />
+	</files>
+</package>
